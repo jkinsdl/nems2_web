@@ -1,0 +1,55 @@
+.alertPopupContainer{
+  width: 400px;
+}
+
+.alertPopupContainer .alertTitle {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.alertPopupContainer .alertTitle .text{
+  width: calc(100% - 25px);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.alertPopupContainer .alertTitle img{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.alertPopupContainer .alertBtnBox{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.alertPopupContainer .alertBtnBox .btn{
+  width: 60px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.alertPopupContainer .alertBtnBox .ok{
+  border: 1px solid blue;
+  background-color: blue;
+}
+
+.alertPopupContainer .alertBtnBox .cancel{
+  border: 1px solid gray;
+  background-color: gray;
+}
+
+.alertPopupContainer .alertBtnBox .confirm{
+  border: 1px solid red;
+  background-color: red;
+}

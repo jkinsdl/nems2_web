@@ -1,0 +1,62 @@
+<div class="addUserConatiner">
+
+  <div class="popupTitle">
+    <div class="text">
+      User Profile
+    </div>
+    <img class="closeImg" src="../../../assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">User ID <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label"> Region </div>
+    <div class="value">
+      <select>
+        <option>Test</option>
+        <option>Test1</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label"> Role <span>*</span> </div>
+    <div class="value">
+      <select>
+        <option>Test</option>
+        <option>Test1</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label"> Locale <span>*</span> </div>
+    <div class="value">
+      <select>
+        <option>Test</option>
+        <option>Test1</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="btnBox">
+
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+      Add
+    </div>
+
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+      Modify
+    </div>
+
+    <div class="btn cancel" (click)="close()">
+      Cancel
+    </div>
+
+  </div>
+</div>

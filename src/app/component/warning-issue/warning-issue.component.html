@@ -1,0 +1,49 @@
+<div class="warningIssueContainer">
+  <div class="popupTitle">
+    <div class="text">
+      Warning Issue
+    </div>
+    <img class="closeImg" src="../../../assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="warningVinName">
+    LJDWAA2FBG000000027
+  </div>
+
+  <div class="warningIssueInfo">
+    <div class="label">Create Time</div>
+    <div class="value">0000-00-00 00:00:00</div>
+  </div>
+
+  <div class="warningIssueInfo">
+    <div class="label">State <span>*</span></div>
+    <div class="value">
+      <select>
+        <option>Open</option>
+        <option>Progress</option>
+        <option>Resolve</option>
+        <option>Closed</option>
+        <option>Error</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="warningIssueInfo">
+    <div class="label">Comments</div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+
+
+  <div class="btnBox">
+    <div class="btn modify">
+      Modify
+    </div>
+    <div class="btn cancel" (click)="close()">
+      Cancel
+    </div>
+  </div>
+
+</div>

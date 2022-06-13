@@ -1,0 +1,31 @@
+<div class="OTAInformationConatiner">
+
+  <div class="OTAInformationLayout whiteBoardBoax"  >
+    <app-sub-title [title]="'OTA information'"></app-sub-title>
+    <div class="gridFilterBox">
+      <div class="filter">
+        <div class="label">VIN</div>
+        <div class="value">
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn">
+          Search
+        </div>
+      </div>
+    </div>
+
+    <div class="OTAInformationContents">
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+
+  </div>
+</div>

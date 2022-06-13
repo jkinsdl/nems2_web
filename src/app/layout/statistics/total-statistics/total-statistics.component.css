@@ -1,0 +1,302 @@
+.totalStatisticsContainer{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+
+.totalStatisticsContainer .leftLayout{
+  width: 500px;
+  height: calc(100% - 20px);
+  float: left;
+  border-right: 1px solid #eeeef5;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox{
+  width: 100%;
+  height: 50%;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlanCreateBox{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlanCreateBox .statisticsPlanCreate{
+  width: 80%;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #197de1;
+  cursor: pointer;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan{
+  margin-top: 10px;
+  width: 100%;
+  height: calc(100% - 80px);
+
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow{
+  width: 100%;
+  height: 30px;
+  margin: 5px 0;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFirstCell{
+  width: 60%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFirstCell .statisticsPlanOption,
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueThirdCell .statisticsPlanOption{
+  height: 25px;
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #999;
+  border-radius: 3px;
+
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFirstCell .statisticsPlanOption div,
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueThirdCell .statisticsPlanOption div {
+  padding: 0 10px;
+  width: 25%;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFirstCell .statisticsPlanOption .region,
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFirstCell .statisticsPlanOption .purpose,
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFirstCell .statisticsPlanOption .period,
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueThirdCell .statisticsPlanOption .region,
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueThirdCell .statisticsPlanOption .purpose,
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueThirdCell .statisticsPlanOption .period,
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueThirdCell .statisticsPlanOption .adhoc{
+  border-left:  2px solid #999;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanSecondCell{
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanSecondCell div{
+  padding: 5px 10px;
+  height: 15px;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanSecondCell .repeatedly{
+  border: 2px solid #516dd2;
+  color: #0006ff;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanSecondCell .manual{
+  border: 2px solid #38a966;
+  color: #38a966;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanThirdCell{
+  width: 10%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanThirdCell img,
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFourthCell img,
+.statisticsWorkingQueueFourthCell img,
+.statisticsJobFifthCell img{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsPlanBox .statisticsPlan .statisticsPlanRow .statisticsPlanFourthCell{
+  width: 10%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+}
+
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox{
+  width: 100%;
+  height: 50%;
+  border-top: 1px solid #eeeef5;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow{
+  width: 100%;
+  height: 30px;
+  margin: 5px 0;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueFirstCell{
+  width: 13%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueFirstCell .status,
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobFirstCell .status{
+  padding: 5px 10px;
+  height: 15px;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ce9700;
+  color: #ce9700;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueSecondCell{
+  width: 27%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueSecondCell .date,
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobSecondCell .date,
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobThirdCell .adhoc {
+  padding: 5px 10px;
+  height: 15px;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #999;
+}
+
+
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueThirdCell{
+  width: 50%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .leftLayout .statisticsWorkingQueueBox .statisticsWorkingQueue .statisticsWorkingQueueRow .statisticsWorkingQueueFourthCell{
+  width: 10%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .statisticsJobBox{
+  width: 500px;
+  height: calc(100% - 20px);
+  float: left;
+  border-right: 1px solid #eeeef5;
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow{
+  width: 100%;
+  height: 30px;
+  margin: 5px 0;
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobFirstCell{
+  width: 13%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobSecondCell{
+  width: 27%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobThirdCell{
+  width: 20%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobFourthCell{
+  width: 30%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobFourthCell .showReport{
+  background-color: #19aa0c;
+  width: 100px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: white;
+
+  opacity: 0.5;
+}
+
+.totalStatisticsContainer .statisticsJobBox .statisticsJob .statisticsJobRow .statisticsJobFifthCell{
+  width: 10%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

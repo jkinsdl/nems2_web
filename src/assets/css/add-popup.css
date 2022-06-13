@@ -1,0 +1,94 @@
+
+.popupTitle{
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.popupTitle .text{
+  width: calc(100% - 20px);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.popupTitle .closeImg{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.addInfoFilter{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addInfoFilter .label{
+  width: calc(40% - 20px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-right: 20px;
+  font-size: 12px;
+}
+
+.addInfoFilter .label span{
+  color: red;
+}
+
+.addInfoFilter .value{
+  width: 60%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addInfoFilter .value input{
+  width: 90%;
+  height: 25px;
+  border: 1px solid #eeeef5;
+  border-radius: 5px;
+  margin-right: 10%;
+}
+
+.addInfoFilter .value select{
+  width: 90%;
+  height: 30px;
+  border: 1px solid #eeeef5;
+  border-radius: 5px;
+  margin-right: 10%;
+}
+
+.btnBox{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.btnBox .btn{
+  width: 60px;
+  padding: 5px 10px;
+  text-align: center;
+  margin: 0 5px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.btnBox .add{
+  background-color: blue;
+}
+
+.btnBox .modify{
+  background-color: blue;
+}
+
+.btnBox .cancel{
+  background-color: gray;
+}

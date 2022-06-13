@@ -1,0 +1,88 @@
+<div class="addPublicPlatformManagementContainer">
+
+  <div class="popupTitle">
+    <div class="text">
+      Public Platform Management
+    </div>
+    <img class="closeImg" src="../../../assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">name <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">IP <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">port <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">platform ID <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">platform password <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">name <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">encryption mode <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">encryption key <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">option </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+
+
+  <div class="btnBox">
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+      Add
+    </div>
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+      Modify
+    </div>
+    <div class="btn cancel" (click)="close()">
+      Cancel
+    </div>
+  </div>
+
+
+</div>

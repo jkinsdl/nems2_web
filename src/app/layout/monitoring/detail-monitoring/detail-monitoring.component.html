@@ -1,0 +1,95 @@
+<div class="detailMonitoringContainer">
+
+  <div class="firstLeftLayout firstTopLayout detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'VEHICLE'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('vehicle')">
+    </div>
+    <div class="contents">
+      <app-monitoring-vehicle></app-monitoring-vehicle>
+    </div>
+  </div>
+
+  <div class="firstTopLayout detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'LOCATION'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('location')">
+    </div>
+    <div class="contents" style="overflow: hidden;">
+      <app-monitoring-location></app-monitoring-location>
+    </div>
+  </div>
+
+
+  <div class="firstTopLayout detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'ENGINE'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('engine')">
+    </div>
+    <div class="contents">
+      <app-monitoring-engine></app-monitoring-engine>
+    </div>
+  </div>
+
+  <div class="firstLeftLayout detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'FUEL BATTERY'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('fuel_battery')">
+    </div>
+
+    <div class="contents">
+      <app-monitoring-fuel-battery></app-monitoring-fuel-battery>
+    </div>
+
+  </div>
+
+  <div class="detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'WARNING'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('warning')">
+    </div>
+    <div class="contents">
+      <app-monitoring-warning></app-monitoring-warning>
+    </div>
+  </div>
+
+  <div class="detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'EXTREME VALUE'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('extreme_value')">
+    </div>
+    <div class="contents">
+      <app-monitoring-extreme-value></app-monitoring-extreme-value>
+    </div>
+  </div>
+
+  <div class="firstLeftLayout detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'MOTOR'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('motor')">
+    </div>
+    <div class="contents">
+      <app-monitoring-motor></app-monitoring-motor>
+    </div>
+  </div>
+
+  <div class="detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'POWER BATTERY TEMPERATURE'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('power_battery_temperature')">
+    </div>
+    <div class="contents">
+      <app-monitoring-power-battery-temperature></app-monitoring-power-battery-temperature>
+    </div>
+  </div>
+
+  <div class="detailMonitoringLayout whiteBoardBoax">
+    <app-sub-title [title]="'POWER BATTERY INFOMATION'"></app-sub-title>
+    <div class="layoutZoom">
+      <img src="../../../../assets/icon/layout_zoom_in.png" (click)="zoomIn('power_battery_infomation')">
+    </div>
+    <div class="contents">
+      <app-monitoring-power-battery-infomation></app-monitoring-power-battery-infomation>
+    </div>
+  </div>
+</div>

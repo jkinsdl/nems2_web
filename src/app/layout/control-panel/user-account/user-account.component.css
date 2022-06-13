@@ -1,0 +1,22 @@
+.userAccountContainer{
+  width: 100%;
+  height: 100%;
+}
+
+.userAccountContainer .userAccountLayout{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.userAccountContainer .userAccountLayout .userAccountControlBox{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.userAccountContainer .userAccountLayout .userAccountContents{
+  width: 100%;
+  height: calc(100% - 110px);
+}
+

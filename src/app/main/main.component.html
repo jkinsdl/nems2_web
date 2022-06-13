@@ -1,0 +1,115 @@
+<div class="mainContainer">
+
+  <div class="titleManuContainer">
+    <div class="titleLogoBox">
+      <img src="../../assets/icon/nems_logo.png">
+    </div>
+
+    <div class="titleVinSearchBox">
+      <div class="vinSearchLable"> VIN </div>
+      <div class="vinSearch" >
+        <input class="vinSearchInput" type="text" placeholder="Search...">
+        <img class="vinSearchImg" src="../../assets/icon/search_icon.png">
+      </div>
+    </div>
+
+    <div class="titleRightLayout">
+      <div class="alarm">
+        <img src="../../assets/icon/red_alarm_icon.png">
+        <div class="alarmCount">123</div>
+      </div>
+
+      <div class="alarm">
+        <img src="../../assets/icon/orange_alarm_icon.png">
+        <div class="alarmCount">456</div>
+      </div>
+
+      <div class="alarm">
+        <img src="../../assets/icon/yellow_alarm_icon.png">
+        <div class="alarmCount">789</div>
+      </div>
+
+      <div class="signOut" (click)="signOut()">
+        <img src="../../assets/icon/sign_out_icon.png">
+        Sign Out
+      </div>
+    </div>
+  </div>
+
+  <div class="contentsContainer" >
+    <div class="menuLayout">
+
+      <div class="menuBox">
+        <div class="headline">MAIN</div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('dashboard') > -1 }" [routerLink]="['/nems/dashboard']" (click)="changeMenu('DASHBOARD')">
+          <img src="../../assets/icon/dashboard_icon.png">
+          Dashboard
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('monitoring') > -1 }" [routerLink]="['/nems/monitoring']" (click)="changeMenu('REALTIME MONITORING')">
+          <img src="../../assets/icon/realtime_monitoring_icon.png">
+          Realtime Monitoring
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('status') > -1 }" [routerLink]="['/nems/status']" (click)="changeMenu('REALTIME STATUS')">
+          <img src="../../assets/icon/realtime_status_icon.png">
+          Realtime Status
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('statistics') > -1 }" [routerLink]="['/nems/statistics/total']" (click)="changeMenu('STATISTICS')">
+          <img src="../../assets/icon/statistics_icon.png">
+          Statistics
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('failure') > -1 }" [routerLink]="['/nems/failure']" (click)="changeMenu('FAILURE')">
+          <img src="../../assets/icon/failure_icon.png">
+          Failure
+        </div>
+      </div>
+
+      <div class="menuBox">
+        <div class="headline">CONTROL PANEL</div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('userAccount') > -1 }" [routerLink]="['/nems/control/userAccount']" (click)="changeMenu('USER ACCOUNT')">
+          <img src="../../assets/icon/user_account_icon.png">
+          User Account
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('vehicleSettings') > -1 }" [routerLink]="['/nems/control/vehicleSettings']" (click)="changeMenu('VEHICLE SETTINGS')">
+          <img src="../../assets/icon/vehicle_settings_icon.png">
+          Vehicle Settings
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('publicPlatformManagement') > -1 }" [routerLink]="['/nems/control/publicPlatformManagement']" (click)="changeMenu('PUBLIC PLATFORM')">
+          <img src="../../assets/icon/public_platform_icon.png">
+          Public Platform
+        </div>
+        <!--<div class="menu" [ngClass]="{select: router.url.indexOf('shanghaiInfo') > -1 }" [routerLink]="['/nems/control/shanghaiInfo']">Shanghai Info</div>-->
+        <div class="menu" [ngClass]="{select: router.url.indexOf('serverLogs') > -1 }" [routerLink]="['/nems/control/serverLogs']" (click)="changeMenu('SERVER LOG')">
+          <img src="../../assets/icon/server_log_icon.png">
+          Server Log
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('otaInformation') > -1 }" [routerLink]="['/nems/control/otaInformation']" (click)="changeMenu('OTA INFORMATION')">
+          <img src="../../assets/icon/ota_information_icon.png">
+          OTA Information
+        </div>
+        <!--<div class="menu" [ngClass]="{select: router.url.indexOf('terminal') > -1 }" [routerLink]="['/nems/control/terminal']">Terminal</div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('remoteControl') > -1 }" [routerLink]="['/nems/control/remoteControl']">Remote Control</div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('otaManagement') > -1 }" [routerLink]="['/nems/control/otaManagement']">OTA Management</div>-->
+        <div class="menu" [ngClass]="{select: router.url.indexOf('pushAlarm') > -1 }" [routerLink]="['/nems/control/pushAlarm']"  (click)="changeMenu('PUSH ALARM')">
+          <img src="../../assets/icon/push_alarm_icon.png">
+          Push Alarm
+        </div>
+        <div class="menu" [ngClass]="{select: router.url.indexOf('detectError') > -1 }" [routerLink]="['/nems/control/detectError']"  (click)="changeMenu('DETECT ERROR')">
+          <img src="../../assets/icon/datect_error_icon.png">
+          Detect Error
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footerText">
+          Copyright @ 2022 OOOOOO All right reserved.
+        </div>
+      </div>
+
+    </div>
+    <div class="contentsLayout">
+      <div class="contentTitle"> {{subTitle}} </div>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

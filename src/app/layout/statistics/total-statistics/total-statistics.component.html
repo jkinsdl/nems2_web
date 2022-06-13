@@ -1,0 +1,119 @@
+<div  class="totalStatisticsContainer">
+
+  <div class="leftLayout">
+    <div class="statisticsPlanBox">
+      <app-sub-title [title]="'Statistics Plan'"></app-sub-title>
+
+      <div class="statisticsPlan">
+        <div class="statisticsPlanRow" *ngFor="let item of statisticsPlanList" (click)="selectStatistics(item)">
+          <div class="statisticsPlanFirstCell">
+            <div class="statisticsPlanOption">
+              <div class="model">
+                {{item.model}}
+              </div>
+              <div class="region">
+                {{item.region}}
+              </div>
+              <div class="purpose">
+                {{item.purpose}}
+              </div>
+              <div class="period">
+                {{item.period}}
+              </div>
+            </div>
+          </div>
+          <div class="statisticsPlanSecondCell">
+            <div [ngClass]="{'manual': item.manual == 'Manual', 'repeatedly': item.manual == 'Repeatedly'}">{{item.manual}}</div>
+          </div>
+          <div class="statisticsPlanThirdCell">
+            <img src="../../../../assets/icon/play_icon.png" (click)="playStatisticsPlan(item)">
+          </div>
+          <div class="statisticsPlanFourthCell">
+            <img src="../../../../assets/icon/trash_can_icon.png" (click)="deleteStatisticsPlan(item)">
+          </div>
+        </div>
+      </div>
+
+      <div class="statisticsPlanCreateBox">
+        <div class="statisticsPlanCreate" (click)="createStatisticsPlan()">
+          Creater
+        </div>
+      </div>
+
+    </div>
+    <div class="statisticsWorkingQueueBox">
+      <app-sub-title [title]="'Statistics Working Queue'"></app-sub-title>
+      <div class="statisticsWorkingQueue">
+        <div class="statisticsWorkingQueueRow" *ngFor="let item of statisticsWorkingQueueList">
+          <div class="statisticsWorkingQueueFirstCell">
+            <div class="status">{{item.status}}</div>
+          </div>
+          <div class="statisticsWorkingQueueSecondCell">
+            <div class="date">{{item.date}}</div>
+          </div>
+          <div class="statisticsWorkingQueueThirdCell">
+            <div class="statisticsPlanOption">
+              <div class="model">
+                {{item.statisticsPlan.model}}
+              </div>
+              <div class="region">
+                {{item.statisticsPlan.region}}
+              </div>
+              <div class="purpose">
+                {{item.statisticsPlan.purpose}}
+              </div>
+              <div class="period">
+                {{item.statisticsPlan.period}}
+              </div>
+              <div class="adhoc">
+                Adhoc
+              </div>
+            </div>
+          </div>
+          <div class="statisticsWorkingQueueFourthCell">
+            <img src="../../../../assets/icon/trash_can_icon.png" (click)="deleteStatisticsWorkingQueue(item)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="statisticsJobBox">
+    <app-sub-title [title]="'Statistics Job'"></app-sub-title>
+    <div class="statisticsJob">
+      <div class="statisticsJobRow">
+
+        <div class="statisticsJobFirstCell">
+          <div class="status">
+            Waiting
+          </div>
+        </div>
+        <div class="statisticsJobSecondCell">
+          <div class="date">2022-06-02 11:22:11
+          </div>
+        </div>
+        <div class="statisticsJobThirdCell">
+          <div class="adhoc">
+            Adhoc
+          </div>
+        </div>
+        <div class="statisticsJobFourthCell">
+          <div class="showReport">
+            Show Report
+          </div>
+        </div>
+
+        <div class="statisticsJobFifthCell">
+          <img src="../../../../assets/icon/trash_can_icon.png">
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div>
+    Click on the Report button in the statistics job.
+  </div>
+
+</div>

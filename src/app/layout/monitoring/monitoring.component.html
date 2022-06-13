@@ -1,0 +1,150 @@
+<div class="monitoringContainer">
+  <div class="gridLayout whiteBoardBoax">
+    <app-sub-title [title]="'VEHICLE SUMMARY'"></app-sub-title>
+
+    <div class="grid">
+      <div class="gridColumn">
+        <div class="column login">
+          Login
+        </div>
+        <div class="column vin">
+          VIN
+        </div>
+        <div class="column regNumber">
+          Reg. number
+        </div>
+        <div class="column nemsSN">
+          NEMS S/N
+        </div>
+        <div class="column lastUpdated">
+          Last Updated
+        </div>
+        <div class="column accumulatedMile">
+          Accumulated Mile(km)
+        </div>
+        <div class="column packetCount">
+          Packet Count
+        </div>
+        <div class="column model">
+          model
+        </div>
+        <div class="column region">
+          region
+        </div>
+        <div class="column purpose" >
+          Purpose
+        </div>
+        <div class="column warning">
+          Warning
+        </div>
+        <div class="column soc">
+          SOC(%)
+        </div>
+      </div>
+
+      <div class="gridData">
+        <div class="rowData" (click)="moveDetaileMonitoring(1)">
+          <div class="cellData login">
+            <img src="../../../assets/icon/disconnection_car_icon.png">
+          </div>
+          <div class="cellData vin">
+            2051508135511005F
+          </div>
+          <div class="cellData regNumber">
+            Reg. number
+          </div>
+          <div class="cellData nemsSN">
+            4gTestUsimKKT09
+          </div>
+          <div class="cellData lastUpdated">
+            21/06/18 04:21:00:PM
+          </div>
+          <div class="cellData accumulatedMile">
+            0.0
+          </div>
+          <div class="cellData packetCount">
+            37,087
+          </div>
+          <div class="cellData model">
+            dummy
+          </div>
+          <div class="cellData region">
+            region
+          </div>
+          <div class="cellData purpose" >
+            Purpose
+          </div>
+          <div class="cellData warning">
+            <img src="../../../assets/icon/warning_red_icon.png">
+          </div>
+          <div class="cellData soc">
+            SOC(%)
+          </div>
+        </div>
+
+        <div class="rowData" (click)="moveDetaileMonitoring(2)">
+          <div class="cellData login">
+            <img src="../../../assets/icon/connection_car_icon.png">
+          </div>
+          <div class="cellData vin">
+            2051508135510957F
+          </div>
+          <div class="cellData regNumber">
+            Reg. number
+          </div>
+          <div class="cellData nemsSN">
+            4gTestUsimKKT08
+          </div>
+          <div class="cellData lastUpdated">
+            21/10/29 04:01:31 PM
+          </div>
+          <div class="cellData accumulatedMile">
+            0.0
+          </div>
+          <div class="cellData packetCount">
+            30
+          </div>
+          <div class="cellData model">
+            dummy
+          </div>
+          <div class="cellData region">
+            korea
+          </div>
+          <div class="cellData purpose" >
+            Purpose
+          </div>
+          <div class="cellData warning">
+            <img src="../../../assets/icon/warning_gray_icon.png">
+          </div>
+          <div class="cellData soc">
+            SOC(%)
+          </div>
+        </div>
+      </div>
+
+      <div class="gridPage">
+
+        <div class="page" (click)="changePage(1)">
+          <img src="../../../assets/icon/first_page_icon.png" >
+        </div>
+
+        <div class="page" (click)="previousPage()">
+          <img src="../../../assets/icon/previous_icon.png">
+        </div>
+
+        <div class="page" [ngClass]="{'pageSelect': currentPage == 1}" (click)="changePage(1)">1</div>
+        <div class="page" [ngClass]="{'pageSelect': currentPage == 2}" (click)="changePage(2)">2</div>
+        <div class="page" [ngClass]="{'pageSelect': currentPage == 3}" (click)="changePage(3)">3</div>
+
+
+        <div class="page" (click)="nextPage()">
+          <img src="../../../assets/icon/next_icon.png" >
+        </div>
+
+        <div class="page" (click)="changePage(3)">
+          <img src="../../../assets/icon/last_page_icon.png">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

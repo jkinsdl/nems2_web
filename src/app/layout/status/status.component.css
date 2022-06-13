@@ -1,0 +1,67 @@
+.statusContainer{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.statusContainer .statusLayout{
+  width: 100%;
+  height: 200px;
+}
+
+.statusContainer .statusLayout .statusContents{
+  width: 100%;
+  height: calc(100% - 30px);
+  display: flex;
+  align-items: center;
+}
+
+.statusContainer .statusLayout .statusContents .status{
+  width: 25%;
+  height: 100%;
+}
+
+.statusContainer .statusLayout .statusContents .statusLine{
+  width: 1px;
+  height: 80%;
+  background-color: #eeeef5;
+}
+
+.statusContainer .distributionByRegion,
+.statusContainer .vehicleFailureRate,
+.statusContainer .failureOccupancyRate,
+.statusContainer .top10VehicleByFailure{
+  width: calc(50% - 17px);
+  height: calc(50% - 132px);
+  margin-top: 30px;
+  float: left;
+}
+
+.statusContainer .vehicleFailureRate,
+.statusContainer .top10VehicleByFailure{
+  margin-left: 30px;
+}
+
+.status .statusValue,
+.status .statusLabel,
+.status .monitoringBarChart,
+.status .monitoringSubValue{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status .statusLabel{
+  color: #8b8b8b;
+}
+
+.status .statusValue{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.chartLayout{
+  width: 100%;
+  height: calc(100% - 30px);
+}

@@ -1,0 +1,14 @@
+.pushAlarmContainer{
+  width: 100%;
+  height: 100%;
+}
+
+.pushAlarmContainer .pushAlarmLayout{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.pushAlarmContainer .pushAlarmLayout .pushAlarmContents{
+  width: 100%;
+  height: calc(100% - 80px);
+}

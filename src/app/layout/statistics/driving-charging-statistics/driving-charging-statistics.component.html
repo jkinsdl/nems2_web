@@ -1,0 +1,12 @@
+<div class="drivingChargingStatisticsContainer">
+  <div class="drivingChargingStatisticsLayout">
+    <app-sub-title [title]="'Driving charging statistics'"></app-sub-title>
+  </div>
+
+  <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs">
+  </ag-grid-angular>
+
+</div>

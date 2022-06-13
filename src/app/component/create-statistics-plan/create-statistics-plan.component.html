@@ -1,0 +1,72 @@
+<div class="createStatisticsContainer">
+
+  <div class="title">
+    <div class="text">
+      Create Statistics
+    </div>
+    <div class="close">
+      <img src="../../../assets/icon/close_icon.png" (click)="closePopup()">
+    </div>
+  </div>
+
+  <div class="contents">
+
+    <div class="fild">
+      <div class="label">model</div>
+      <div class="value">
+        <select [(ngModel)]="statisticsPlanList.model">
+          <option [value]="'All'">ALL</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fild">
+      <div class="label">region</div>
+      <div class="value">
+        <select [(ngModel)]="statisticsPlanList.region">
+          <option [value]="'All'">ALL</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fild">
+      <div class="label">purpose</div>
+      <div class="value">
+        <select [(ngModel)]="statisticsPlanList.purpose">
+          <option [value]="'All'">ALL</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fild">
+      <div class="label">period</div>
+      <div class="value">
+        <select [(ngModel)]="statisticsPlanList.period">
+          <option [value]="'Daily'">Daily</option>
+          <option [value]="'Weekly'">Weekly</option>
+          <option [value]="'Monthly'">Monthly</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fild">
+      <div class="label">is Manual</div>
+      <div class="value">
+        <select [(ngModel)]="statisticsPlanList.manual">
+          <option [value]="'Repeatedly'">Repeatedly</option>
+          <option [value]="'Manual'">Manual</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="btnBox">
+
+    <div class="btn add" (click)="createStatistics()">Add</div>
+    <div class="btn cancel" (click)="closePopup()">Cancel</div>
+
+  </div>
+
+
+</div>

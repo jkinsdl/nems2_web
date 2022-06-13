@@ -1,0 +1,58 @@
+<div class="searchDataContainer">
+  <div class="drivingChargingStatisticsLayout">
+    <app-sub-title [title]="'Search Data'"></app-sub-title>
+  </div>
+
+  <div class="filterBaox">
+    <div class="filter">
+      <div class="label">Data Kind</div>
+      <div class="value">
+        <select>
+          <option selected>Vehicle</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filter">
+      <div class="label">Start Date/Time</div>
+      <div class="value">
+        <input [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()">
+        <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [showSeconds]="true" [stepHour]="1" [stepMinute]="1" [stepSecond]="1" [hideTime]="false"></ngx-mat-datetime-picker>
+      </div>
+    </div>
+
+    <div class="filter">
+      <div class="label">End Date/Time</div>
+      <div class="value">
+        <input [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()">
+        <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [showSeconds]="true" [stepHour]="1" [stepMinute]="1" [stepSecond]="1" [hideTime]="false"></ngx-mat-datetime-picker>
+      </div>
+    </div>
+
+    <div class="filter">
+      <div class="btn">Save Preset</div>
+    </div>
+
+    <div class="filter">
+      <div class="btn">Delete Preset</div>
+    </div>
+
+    <div class="filter">
+      <div class="btn">Clear</div>
+    </div>
+
+    <div class="filter">
+      <div class="btn">Search</div>
+    </div>
+  </div>
+
+  <div class="searDataGrid">
+    <ag-grid-angular style="width: 100%; height: 100%"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs">
+  </ag-grid-angular>
+
+  </div>
+
+</div>

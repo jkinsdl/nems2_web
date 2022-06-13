@@ -1,0 +1,24 @@
+<div class="alertPopupContainer">
+
+  <div class="alertTitle">
+    <div class="text">
+      {{title}}
+    </div>
+    <img src="../../../assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="alertContents">
+    <div>
+      {{contents}}
+    </div>
+  </div>
+
+  <div class="alertBtnBox">
+    <div class="btn ok" *ngIf="popupType == constant.POPUP_CHOICE" (click)="ok()">OK</div>
+    <div class="btn cancel" *ngIf="popupType == constant.POPUP_CHOICE" (click)="close()">Cancel</div>
+    <div class="btn confirm" *ngIf="popupType == constant.POPUP_CONFIRM" (click)="close()">Confirm</div>
+
+
+  </div>
+
+</div>

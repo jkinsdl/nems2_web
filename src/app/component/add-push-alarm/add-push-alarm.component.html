@@ -1,0 +1,57 @@
+<div class="addPushAlarmContainer">
+
+  <div class="popupTitle">
+    <div class="text">
+      Push Info
+    </div>
+    <img class="closeImg" src="../../../assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">name <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">phone number <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">e-Mail <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">Alicloud texture ID <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">Alicloud Voice ID <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="btnBox">
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+      Add
+    </div>
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+      Modify
+    </div>
+    <div class="btn cancel" (click)="close()">
+      Cancel
+    </div>
+  </div>
+
+</div>

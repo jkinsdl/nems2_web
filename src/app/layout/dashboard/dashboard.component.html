@@ -1,0 +1,112 @@
+<div class="dashboardContainer">
+
+  <div class="dashboardTopLayout">
+    <div class="dashboardPanel whiteBoardBoax">
+
+      <div class="panel">
+        <app-sub-title [title]="'TOTAL VEHICLES'"></app-sub-title>
+
+        <div class="contents">
+          <img src="../../../assets/icon/total_vehicles_icon.png">
+          17293
+        </div>
+      </div>
+
+      <div class="panelVerticalLine"></div>
+
+      <div class="panel">
+        <app-sub-title [title]="'TOTAL MILEAGE'"></app-sub-title>
+
+        <div class="contents">
+          <img src="../../../assets/icon/total_mileage.png">
+          17293
+        </div>
+      </div>
+
+      <div class="panelHorizontalLine"></div>
+
+      <div class="panel">
+        <app-sub-title [title]="'VEHICLES IN OPERATION'"></app-sub-title>
+
+        <div class="contents">
+          <img src="../../../assets/icon/vehicles_in_operation.png">
+          17293
+        </div>
+      </div>
+
+      <div class="panelVerticalLine"></div>
+
+      <div class="panel">
+        <app-sub-title [title]="'VEHICLE IN CHARGING'"></app-sub-title>
+        <div class="contents">
+          <img src="../../../assets/icon/vehicle_in_charging.png">
+          17293
+        </div>
+      </div>
+    </div>
+
+    <div class="warningStatusByLevel whiteBoardBoax">
+      <app-sub-title [title]="'WARNING STATUS BY LEVEL'"></app-sub-title>
+    </div>
+  </div>
+
+  <div class="dashboardMiddleLayout">
+    <div class="vehicleRegisteringTrend whiteBoardBoax">
+      <app-sub-title [title]="'VEHICLE REGISTERING TREND'"></app-sub-title>
+
+      <div class="trendPanel">
+
+        <div class="panel">
+          <div class="trendPanelTitle">Total</div>
+          <div class="trendPanelValue">17293</div>
+        </div>
+
+        <div class="trendPanelVerticalLine"></div>
+
+        <div class="panel">
+          <div class="trendPanelTitle">New</div>
+          <div class="trendPanelValue">7293</div>
+        </div>
+
+        <div class="trendPanelVerticalLine"></div>
+
+        <div class="panel">
+          <div class="trendPanelTitle">Transferred</div>
+          <div class="trendPanelValue">193</div>
+        </div>
+
+      </div>
+
+      <div class="trendChart">
+        <canvas style="width: 100%; height: 100%;" baseChart
+        [datasets]="trendData"
+        [labels]="trendLables"
+        [options]="trendOptions"
+        [legend]="trendLegend"
+        [type]="'line'">
+      </canvas>
+
+      </div>
+    </div>
+
+    <div class="weeklyWarningSummaryByModel whiteBoardBoax">
+      <app-sub-title [title]="'WEEKLY WARNING SUMMARY BY MODEL'"></app-sub-title>
+    </div>
+  </div>
+
+  <div class="dashboardBottomLayout">
+
+    <div class="weeklyWarningTrand whiteBoardBoax">
+      <app-sub-title [title]="'WEEKLY WARNING TREND'"></app-sub-title>
+    </div>
+
+    <div class="weeklyWarningSummary whiteBoardBoax">
+      <app-sub-title [title]="'WEEKLY WARNING SUMMARY'"></app-sub-title>
+    </div>
+
+    <div class="level3Warning whiteBoardBoax">
+      <app-sub-title [title]="'LEVEL 3 WARNING'"></app-sub-title>
+    </div>
+  </div>
+
+</div>

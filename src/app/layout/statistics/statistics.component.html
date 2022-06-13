@@ -1,0 +1,23 @@
+<div class="statisticsContainer ">
+  <div class="statisticsLayout whiteBoardBoax">
+    <div class="statisticsTab">
+      <div class="tab" [ngClass]="{select: router.url.indexOf('total') > -1 }" [routerLink]="['/nems/statistics/total']">
+        Total
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('driving') > -1 }" [routerLink]="['/nems/statistics/driving']">
+        Driving charging
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('single') > -1 }" [routerLink]="['/nems/statistics/single']">
+        Single
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('search') > -1 }" [routerLink]="['/nems/statistics/search']">
+        Search Data
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <router-outlet></router-outlet>
+
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="failureContainer">
+  <div class="failureLayout whiteBoardBoax">
+    <app-sub-title [title]="'Search Failure Data'"></app-sub-title>
+
+    <div class="gridFilterBox">
+      <div class="filter">
+        <div class="label">Issue State</div>
+        <div class="value">
+          <select>
+            <option selected>All</option>
+            <option>Open</option>
+            <option>Progress</option>
+            <option>Resolve</option>
+            <option>Closed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">Max Waring</div>
+        <div class="value">
+          <select>
+            <option selected>All</option>
+            <option>Level 1</option>
+            <option>Level 2</option>
+            <option>Level 3</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn">
+          Search
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn export">
+          Export
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn modify" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedNodes().length != 0}" (click)="openModify()">
+          Modify
+        </div>
+      </div>
+    </div>
+
+    <div class="failureGrid">
+
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [rowSelection]="rowSelection"
+        [columnDefs]="columnDefs"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+.failureContainer{
+  width: 100%;
+  height: 100%;
+
+}
+
+.failureContainer .failureLayout{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.failureContainer .failureGrid{
+  width: 100%;
+  height: calc(100% - 50px);
+}
+
+.export{
+  background-color: blue !important;
+}
+
+.modify{
+  background-color: blue !important;
+  opacity: 0.5;
+}
+
+.selectItem{
+  opacity: 1;
+}

@@ -1,0 +1,73 @@
+<div class="addVehicleConatiner">
+
+  <div class="popupTitle">
+    <div class="text">
+      Vehicle
+    </div>
+    <img class="closeImg" src="../../../assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">VIN <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">ICCID <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">NEMS S/N <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">BATTERY CODE <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">MODEL <span>*</span> </div>
+    <div class="value">
+      <select>
+        <option> test 1 </option>
+        <option> test 2 </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">REGION </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="btnBox">
+
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+      Add
+    </div>
+
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+      Modify
+    </div>
+
+    <div class="btn cancel" (click)="close()">
+      Cancel
+    </div>
+
+
+
+  </div>
+
+</div>

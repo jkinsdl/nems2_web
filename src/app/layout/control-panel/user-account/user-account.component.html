@@ -1,0 +1,50 @@
+<div class="userAccountContainer">
+  <div class="userAccountLayout whiteBoardBoax">
+    <app-sub-title [title]="'User Account'"></app-sub-title>
+
+    <div class="gridFilterBox">
+      <div class="filter">
+        <div class="label">User Name</div>
+        <div class="value">
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn">
+          Search
+        </div>
+      </div>
+    </div>
+
+    <div class="gridControlBox">
+
+      <div class="btn add" (click)="addUser()">
+        Add
+      </div>
+
+      <div class="btn modify" [ngClass]="{'selectItem': selectNodeID != null}" (click)="modifyUser()">
+        Modify
+      </div>
+
+      <div class="btn delete" [ngClass]="{'selectItem': selectNodeID != null}" (click)="deleteUser()">
+        Delete
+      </div>
+
+    </div>
+
+    <div claSS="userAccountContents">
+
+      <ag-grid-angular style="width: 100%; height: calc(100% - 20px)"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection"
+        (cellClicked)="userClick($event)"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+
+    </div>
+
+  </div>
+</div>

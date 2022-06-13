@@ -1,0 +1,46 @@
+.detailMonitoringContainer{
+  width: 100%;
+  height: 100%;
+}
+
+.detailMonitoringContainer .firstLeftLayout{
+  margin-left: 0 !important;
+}
+
+.detailMonitoringContainer .firstTopLayout{
+  margin-top: 0 !important;
+}
+
+.detailMonitoringContainer .detailMonitoringLayout{
+  width: calc(33% - 30px);
+  height: calc(33% - 30px);
+  float: left;
+  margin-left: 30px;
+  margin-top: 30px;
+  position: relative;
+
+}
+
+.detailMonitoringContainer .detailMonitoringLayout app-sub-title{
+  position: absolute;
+}
+
+.detailMonitoringContainer .detailMonitoringLayout .layoutZoom{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.detailMonitoringContainer .detailMonitoringLayout .layoutZoom img{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.detailMonitoringContainer .detailMonitoringLayout .contents{
+  display: block;
+  margin-top: 50px;
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+}

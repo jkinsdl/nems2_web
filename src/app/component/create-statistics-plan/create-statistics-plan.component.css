@@ -1,0 +1,98 @@
+.createStatisticsContainer{
+  width: 400px;
+  height: 350px;
+}
+
+.createStatisticsContainer .title{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+
+.createStatisticsContainer .title .text{
+  width: 90%;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.createStatisticsContainer .title .close{
+  width: 10%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.createStatisticsContainer .title .close img{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.createStatisticsContainer .contents{
+  width: 100%;
+  height: calc(100% - 100px);
+}
+
+.createStatisticsContainer .contents .fild{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.createStatisticsContainer .contents .fild .label{
+  width: 30%;
+  height: 100%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  float: left;
+}
+
+.createStatisticsContainer .contents .fild .value{
+  width: 60%;
+  margin-left: 5%;
+  float: left;
+}
+
+.createStatisticsContainer .contents .fild .value select{
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.createStatisticsContainer .contents .fild .value select option{
+  height: 30px;
+}
+
+.createStatisticsContainer .btnBox{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.createStatisticsContainer .btnBox .btn{
+  width: 100px;
+  height: 30px;
+  margin: 0 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.createStatisticsContainer .btnBox .add{
+  background-color: #197de1;
+  color: white;
+}
+
+.createStatisticsContainer .btnBox .cancel{
+  background-color: #555555;
+  color: white;
+}

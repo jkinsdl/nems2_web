@@ -1,0 +1,32 @@
+<div class="pushAlarmContainer">
+
+  <div class="pushAlarmLayout whiteBoardBoax">
+
+    <app-sub-title [title]="'Push Alarm'"></app-sub-title>
+
+    <div class="gridControlBox">
+      <div class="btn add" (click)="addAlarm()">
+        Add
+      </div>
+      <div class="btn modify" [ngClass]="{'selectItem':  gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyAlarm()">
+        Modify
+      </div>
+      <div class="btn delete" [ngClass]="{'selectItem':  gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteAlarm()">
+        Delete
+      </div>
+    </div>
+
+    <div class="pushAlarmContents">
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+
+  </div>
+
+
+</div>

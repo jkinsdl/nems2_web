@@ -1,0 +1,86 @@
+.loginMainContainer{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginLayout{
+  width: 20%;
+  height: 50%;
+}
+
+.loginMainContainer .loginForm{
+  width: 80%;
+  height: 45%;
+  padding: 10%;
+  border: 1px solid #f7f7f7;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px #afafaf;
+}
+
+.loginMainContainer .loginForm .label{
+  font-size: 11px;
+  color: #585858;
+}
+
+.loginMainContainer .loginForm .inputBox{
+  margin: 10px 0;
+}
+
+
+.loginMainContainer .loginForm .inputBox .errorMessage{
+  position: absolute;
+  color: red;
+  font-size: 11px;
+}
+
+input[type="text"],
+input[type="password"]{
+  border-radius: 5px;
+  height: 30px;
+  width: 95.5%;
+  font-size: 11px;
+  padding-left: 10px;
+
+}
+
+.loginBtnBox{
+  margin: 0;
+}
+
+.loginBtnBox .loginBtn{
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #38cab3;
+  background-color: #38cab3;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.languageBox{
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.languageBox .language{
+  margin: 5px;
+  cursor: pointer;
+}
+
+.footer{
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}

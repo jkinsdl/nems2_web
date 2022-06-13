@@ -1,0 +1,45 @@
+<div class="addPublicPlatformMappingContainer">
+
+  <div class="popupTitle">
+    <div class="text">
+      Public Platform Mapping
+    </div>
+    <img class="closeImg" src="../../../assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">VIN <span>*</span> </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">Vehicle Infor Snapshot </div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">last sync(server time) </div>
+    <div class="value">
+      <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="datePicker">
+      <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+    </div>
+  </div>
+
+  <div class="btnBox">
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+      Add
+    </div>
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+      Modify
+    </div>
+    <div class="btn cancel" (click)="close()">
+      Cancel
+    </div>
+  </div>
+
+
+</div>
