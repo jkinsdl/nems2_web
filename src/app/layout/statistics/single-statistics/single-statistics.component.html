@@ -18,22 +18,13 @@
       <div class="value">N/A</div>
       <div class="label">Failures</div>
     </div>
+
   </div>
-
-
 
   <div class="singleStatisticsCumulativeLayout">
-
     <app-sub-title [title]="'Cumulative Data'"></app-sub-title>
-
-    <ag-grid-angular style="width: 100%; height: calc(100% - 30px)"
-      class="ag-theme-alpine"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs">
-    </ag-grid-angular>
+    <ag-grid-angular style="width: 100%; height: calc(100% - 30px)" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"> </ag-grid-angular>
   </div>
-
-
 
   <div class="singleStatisticsHistoryLayout">
     <div class="socChargeHistory">

@@ -1,11 +1,14 @@
 .mainContainer{
   width: 100%;
   height: 100%;
+  min-width: 1920px;
+  min-height: 1080px;
+  overflow: auto;
 }
 
 .mainContainer .titleManuContainer{
   width: 100%;
-  height: calc(5% - 1px);
+  height: calc(5% - 5px);
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eeeef5;
@@ -25,21 +28,38 @@
   float: left;
   background-color: white;
   box-shadow: 1px 0px 5px #eeeef5;
+  transition: all ease 0.5s;
+}
+
+.mainContainer .contentsContainer .menuLayoutReduction{
+  width: 50px !important;
 }
 
 .mainContainer .contentsContainer .contentsLayout{
-  width: calc(100% - 311px);
+  width: calc(100% - 314px);
   height: 100%;
   padding: 0 30px;
   float: left;
+  transition: all ease 0.5s;
 }
 
-.mainContainer .contentsContainer .contentsLayout .contentTitle{
+.mainContainer .contentsContainer .contentsLayoutEnlargement{
+  width: calc(100% - 111px);
+}
+
+.contentTitleContainer{
   width: 100%;
   height: 80px;
   display: flex;
   align-items: center;
-  font-size: 14px;
+}
+
+.mainContainer .contentsContainer .contentsLayout .contentTitle{
+  width: 95%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
   color: #3f4472;
 }
 
@@ -51,12 +71,13 @@
 .mainContainer .contentsContainer .menuLayout .menuBox{
   width: 85%;
   padding-left: 15%;
+  padding-bottom: 20px;
 }
 
 .mainContainer .contentsContainer .menuLayout .menuBox .headline{
   width: 100%;
   height: 40px;
-  padding-top: 20px;
+
   display: flex;
   align-items: center;
   color: #949494;
@@ -79,13 +100,14 @@
 }
 
 .mainContainer .contentsContainer .menuLayout .footer{
-  position: absolute;
-  bottom: 0;
+  /*position: absolute;
+  bottom: 0;*/
+  width: 100%;
 }
 
 .mainContainer .contentsContainer .menuLayout .footer .footerText{
-  width: calc(100% - 120px);
-  margin: 10px 20px;
+  width: 100%;
+  padding: 10px;
   color: #9295af;
   font-size: 10px;
 }
@@ -100,7 +122,7 @@
 }
 
 .mainContainer .titleManuContainer .titleLogoBox img{
-  height: 50px;
+  height: 25px;
 }
 
 .mainContainer .titleManuContainer .titleVinSearchBox{
@@ -160,10 +182,11 @@
 }
 
 .mainContainer .titleManuContainer .titleRightLayout .alarm{
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   margin: 0 10px;
   position: relative;
+  cursor: pointer;
 }
 
 .mainContainer .titleManuContainer .titleRightLayout .alarm img{
@@ -181,6 +204,8 @@
   left: 10px;
   color: white;
   font-size: 10px;
+  border-radius: 3px;
+  padding: 2px;
 }
 
 .mainContainer .titleManuContainer .titleLeftBox{
@@ -209,4 +234,49 @@
   height: 30px;
   margin-right: 20px;
   cursor: pointer;
+}
+
+.mainControlBox{
+  width: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.btn{
+  width: 25px;
+  height: 25px;
+  border: 1px solid #eeeef5;
+  background-color: white;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.btn img{
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  padding: 5px;
+}
+
+.enableDisableBtn{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  cursor: pointer;
+  transition: all ease 0.5s;
+}
+
+.enableDisableBtn img{
+  width: 30px;
+  height: 30px;
+  transition: all ease 0.5s;
+}
+
+.enableDisableBtnRotate{
+  transform: rotate( 180deg );
+}
+
+.enableDisableBtnCentor{
+  width: 80% !important;
 }

@@ -62,8 +62,10 @@ export class FailureComponent implements OnInit {
   }];
   rowSelection = 'multiple';
   gridApi!: GridApi;
+
   ngOnInit(): void {
   }
+
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
   }

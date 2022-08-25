@@ -1,0 +1,205 @@
+.alarmContainer{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.alarmLeftLayout{
+  width: calc(60% - 15px);
+  height: 100%;
+  float: left;
+  margin-right: 5px;
+}
+
+.alarmListFilterBox{
+  width: 100%;
+  height: 50px;
+}
+
+.alarmRightLayout{
+  width: 40%;
+  height: 100%;
+  float: left;
+}
+
+.grayLine{
+  width: 98%;
+  margin: 0 1%;
+  height: 2px;
+  background-color: #efecec;
+}
+
+.alarmBtnBox{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.alarmGrid{
+  width: 100%;
+  height: calc(100% - 100px);
+}
+
+.alarmDetailStatus{
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #efecec;
+}
+
+.alarmDetailStatus .statusLeft,
+.alarmDetailStatus .statusRight{
+  width: calc(50% - 1px);
+  height: 100%;
+}
+
+.alarmDetailStatus .detailStatusBox{
+  width: 33%;
+  height: 100%;
+  float: left;
+}
+
+.detailStatusHorizontalLine{
+  width: 2px;
+  height: 60%;
+  background-color: #efecec;
+}
+
+.alarmDetailStatus .detailStatusBox .detailLable,
+.alarmDetailStatus .detailStatusBox .datailValue{
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alarmDetailStatus .detailStatusBox .detailLable{
+  font-size: 12px;
+}
+
+.alarmDetailStatus .detailStatusBox .datailValue{
+  font-size: 16px;
+}
+
+.alarmDetailStatus .detailStatusBox .labelColorGreen{
+  color: rgb(20, 223, 20);
+}
+
+.alarmDetailStatus .detailStatusBox .labelColorBlue{
+  color: rgb(64, 64, 233);
+}
+
+.alarmDetailStatus .detailStatusBox .labelColorOrange{
+  color: rgb(248, 181, 56);
+}
+
+.alarmDetailStatus .detailStatusBox .labelColorRed{
+  color: rgb(241, 81, 81)
+}
+
+.alarmDetailStatus .detailStatusBox .labelColorYellow{
+  color: rgb(230, 230, 36);
+}
+
+.alarmDetailStatus .detailStatusBox .labelColorIndigo{
+  color: rgb(89, 7, 148)
+}
+
+.alarmDetailContents{
+  width: 100%;
+  height: calc(100% - 80px);
+}
+
+.alarmTitle{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.alarmDetailArea{
+  width: 100%;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #efecec;
+}
+
+.alarmTitle .titleBar{
+  width: 7px;
+  height: 60%;
+  background-color: #49a6fd;
+  margin: 0 10px;
+}
+
+.alarmTitle .titleText{
+  width: calc(95% - 20px);
+  height: 100;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.alarmAreaLeft,
+.alarmAreaRight {
+  width: 50%;
+  height: 100%;
+}
+
+.alarmDetailFild{
+  width: 90%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  margin-left: 10%;
+}
+
+.alarmDetailFild .alarmfildLable{
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: rgb(155, 148, 148);
+  font-size: 14px;
+}
+
+.alarmDetailFild .alarmfildValue{
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.alarmDetailCarInformation{
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #efecec;
+
+}
+
+.alarmDetailTest{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #efecec;
+}
+
+.alarmDetailMap{
+  width: 100%;
+  height: calc(100% - 480px);
+}
+
+.map{
+  width: 100%;
+  height: 100%;
+}

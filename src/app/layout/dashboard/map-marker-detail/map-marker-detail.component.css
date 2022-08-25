@@ -1,0 +1,225 @@
+.markerDetailPopupContainer{
+  width: 1200px;
+  height: 850px;
+}
+
+.markerDetialPopupTop{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.markerDetialTitle{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.markerDetialPopupContents{
+  width: 100%;
+  height: calc(100% - 50px);
+}
+
+.popupLeftLayout{
+  width: calc(20% - 20px);
+  height: calc(100% - 12px);
+  float: left;
+  background-color: white;
+  margin-right: 20px;
+  box-shadow: 3px 0px 10px 1px #999999;
+}
+
+.popupMenu{
+  width: calc(100% - 40px);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin: 10px 20px;
+  cursor: pointer;
+}
+
+.popupLeftLayout .select{
+    color: #135ecd;
+    text-align: center;
+    background-color: rgba( 89, 189, 255, 0.3 );
+}
+
+.popupRightLayout{
+  width: 80%;
+  height: 100%;
+  float: left;
+}
+
+.popupChartBox{
+  width: 100%;
+  height: 300px;
+}
+
+.popupChart{
+  width: calc(50% - 12px);
+  height: calc(100% - 22px);
+  float: left;
+  border: 1px solid #c3c3c3;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.popupVehicleInformationBox{
+  width: 92%;
+  height: calc(90% - 310px);
+  border: 1px solid #c3c3c3;
+  padding: 4%;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.informationMenuBox{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.informationMenu{
+  width: 120px;
+  height: 100%;
+  border-radius: 5px;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.informationMenuBox .select{
+  color: #135ecd;
+  text-align: center;
+  background-color: rgba( 89, 189, 255, 0.3 );
+}
+
+.InformationTitle{
+  width: 100%;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+
+.informationContents{
+  width: 100%;
+  height: calc(100% - 50px);
+}
+
+.informationFild{
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #bbbbbb;
+  display: flex;
+}
+
+.informationLable{
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.informationValue{
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: black;
+}
+
+.menuContainer{
+  width: 100%;
+  height: 100%;
+}
+
+.batteryInformation,
+.carRideInformation{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c3c3c3;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.batteryInformation .batteryImage,
+.carRideInformation .carRideImage{
+  width: 40px;
+  height: 40px;
+}
+
+.batteryInformation .batteryImage img,
+.carRideInformation .carRideImage img{
+  width: 100%;
+  height: 100%;
+}
+
+.batteryInformationLable,
+.carRideInformationLable{
+  margin-left: 20px;
+  font-size: 14px;
+  color: gray;
+}
+
+.batteryInformationValue,
+.carRideInformationValue{
+  margin: 5px;
+  font-size: 16px;
+  color: #57b557;
+}
+
+.batteryInformationChartContainer,
+.carRideInformationCalendar{
+  width: 100%;
+  height: calc(98% - 80px);
+  margin-top: 20px;
+  border: 1px solid #c3c3c3;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.carRideInformationCalendar .carRideCalendar{
+  width: 100%;
+  height: 100%;
+}
+
+.carRideCalendar .calendarRow{
+  width: 100%;
+  height: 7.5%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.carRideCalendar .calendarRow .calendarCell{
+  width: 3%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #e5e5e5;
+}
+
+.carRideCalendar .calendarRow .calendarCell img{
+  width: 20px;
+  height: 20px;
+}
+
+.lastBorder {
+  border: none;
+}

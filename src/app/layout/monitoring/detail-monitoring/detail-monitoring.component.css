@@ -1,6 +1,6 @@
 .detailMonitoringContainer{
   width: 100%;
-  height: 100%;
+  height: calc(100% - 30px);
 }
 
 .detailMonitoringContainer .firstLeftLayout{
@@ -43,4 +43,9 @@
   width: 100%;
   height: calc(100% - 50px);
   overflow-y: auto;
+}
+
+.map{
+  width: 100%;
+  height: 100%;
 }

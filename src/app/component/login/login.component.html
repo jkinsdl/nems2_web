@@ -1,4 +1,43 @@
+
 <div class="loginMainContainer">
+  <div class="loginBox">
+
+    <div class="loginBoxLayout">
+      <div class="logo">
+        <img src="assets/icon/nems_logo2.png">
+      </div>
+
+      <div class="loginTitleMessage">
+        Login to your account
+      </div>
+
+
+      <div class="inputBox">
+        <input #ID type="text" [placeholder]="idPlaceholderText" (keyup.enter)="passwordInput.focus()" [(ngModel)]="id" >
+        <div class="errorMessage" *ngIf="isIdError">{{isIdErrorMessage}}</div>
+      </div>
+
+      <div class="inputBox">
+        <input #passwordInput type="password" [placeholder]="passwordPlaceholderText" (keyup.enter)="checkUser()" [(ngModel)]="pw" >
+        <div class="errorMessage" *ngIf="isPasswordError">{{isPasswordErrorMessage}}</div>
+      </div>
+      <div class="loginBtnBox">
+        <div Class="loginBtn" (click)="checkUser()">Sign in</div>
+      </div>
+
+      <div class="signUpBox">
+        <div class="signUp">Reset Password</div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+
+<!--<div class="loginMainContainer">
 
   <div class="loginLayout">
     <div class="header">
@@ -19,18 +58,6 @@
       <div class="loginBtnBox">
         <div Class="loginBtn" (click)="checkUser()">Sign in</div>
       </div>
-
-
-      <div class="languageBox">
-        <div class="language">
-          <img src="assets/icon/chinese_flag_icon.png">
-        </div>
-        <div class="language">
-          <img src="assets/icon/american_flag_icon.png">
-        </div>
-      </div>
-
-
     </div>
 
     <div class="footer">
@@ -39,3 +66,4 @@
     </div>
   </div>
 </div>
+-->

@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="gridFilterBox">
+    <div class="filter">
+      <div class="label">Test2</div>
+      <div class="value">
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="filter">
+      <div class="label">VIN</div>
+      <div class="value">
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="filter">
+      <div class="label">ABCD</div>
+      <div class="value">
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="filter">
+      <div class="label">ICCID</div>
+      <div class="value">
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="filter">
+      <div class="btn">
+        Search
+      </div>
+    </div>
+  </div>
+
+  <div class="testBtnBox">
+    <div class="defaultButton"> Button1 </div>
+
+    <div class="linkDiv" style="margin-right: 50px;">ABC</div>
+    <div class="linkDiv">DEF</div>
+  </div>
+
+
+  <div class="testGrid">
+    <ag-grid-angular style="width: 100%; height: 100%"
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [rowSelection]="rowSelection"
+      [columnDefs]="columnDefs"
+      [pagination]="true"
+      [paginationPageSize]="17"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+
+</div>

@@ -1,0 +1,61 @@
+<div class="dataForwardingContainer">
+  <div class="dataForwardingLayout whiteBoardBoax">
+    <div class="gridFilterBox">
+      <div class="filter">
+        <div class="label">Data Forwarding</div>
+        <div class="value">
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">VIN</div>
+        <div class="value">
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">Date</div>
+        <div class="value">
+          <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [(ngModel)]="startDatePicker">
+          <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+        </div>
+      </div>
+
+      <div>~</div>
+
+      <div class="filter">
+        <div class="value">
+          <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDatePicker">
+          <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn">
+          Search
+        </div>
+      </div>
+    </div>
+
+    <div class="dataForwardingBtnBox">
+      <div class="defaultButton"> Button1 </div>
+
+      <div class="linkDiv">ABC</div>
+    </div>
+
+    <div class="dataForwardingGrid">
+      <ag-grid-angular style="width: 100%; height: 100%"
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [rowSelection]="rowSelection"
+      [columnDefs]="columnDefs"
+      [pagination]="true"
+      [paginationPageSize]="17"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+    </div>
+
+  </div>
+</div>

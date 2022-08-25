@@ -17,7 +17,7 @@ export class MonitoringComponent implements OnInit {
   }
 
   moveDetaileMonitoring(index : number ){
-    this.router.navigateByUrl('/nems/monitoring/detail').then(
+    this.router.navigateByUrl('/main/monitoring/detail').then(
       nav => {
         console.log(nav);
       },

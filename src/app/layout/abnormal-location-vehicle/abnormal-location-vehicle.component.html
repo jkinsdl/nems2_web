@@ -1,0 +1,17 @@
+<div class="abnormalLocationVehicleContainer ">
+  <div class="abnormalLocationVehicleLayout whiteBoardBoax">
+    <div class="abnormalLocationVehicleTab">
+      <div class="tab" [ngClass]="{select: router.url.indexOf('test1') > -1 }" [routerLink]="['/main/abnormalLocationVehicle/test1']">
+        Test 1
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('test2') > -1 }" [routerLink]="['/main/abnormalLocationVehicle/test2']">
+        Test 2
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <router-outlet></router-outlet>
+
+  </div>
+</div>

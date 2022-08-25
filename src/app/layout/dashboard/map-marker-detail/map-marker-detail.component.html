@@ -1,0 +1,681 @@
+<div class="markerDetailPopupContainer">
+  <div class="markerDetialPopupTop">
+
+    <div class="markerDetialTitle">
+      Title
+    </div>
+
+    <div class="popupClose" (click)="closePopup()">
+      <img src="assets/icon/close_icon.png">
+    </div>
+
+  </div>
+
+  <div class="markerDetialPopupContents">
+
+    <div class="popupLeftLayout">
+      <div class="popupMenu" [ngClass]="{'select': menu == 'menu1'}" (click)="changeMenu('menu1')"> <span>menu 1</span> </div>
+      <div class="popupMenu" [ngClass]="{'select': menu == 'menu2'}" (click)="changeMenu('menu2')"> <span>menu 2</span> </div>
+      <div class="popupMenu" [ngClass]="{'select': menu == 'menu3'}" (click)="changeMenu('menu3')"> <span>menu 3</span> </div>
+      <div class="popupMenu" [ngClass]="{'select': menu == 'menu4'}" (click)="changeMenu('menu4')"> <span>menu 4</span> </div>
+    </div>
+
+    <div class="popupRightLayout">
+
+      <div class="menuContainer" *ngIf="menu == 'menu1'">
+        <div class="popupChartBox">
+          <div class="popupChart" id="batteryChart" style="margin-right: 20px;"></div>
+          <div class="popupChart" id="speedChart"></div>
+        </div>
+
+        <div class="popupVehicleInformationBox">
+          <div class="informationMenuBox">
+            <div class="informationMenu" [ngClass]="{'select': informationMenu == 'menu1'}" (click)="changeInformationMenu('menu1')"> menu 1 </div>
+            <div class="informationMenu" [ngClass]="{'select': informationMenu == 'menu2'}" (click)="changeInformationMenu('menu2')"> menu 2 </div>
+            <div class="informationMenu" [ngClass]="{'select': informationMenu == 'menu3'}" (click)="changeInformationMenu('menu3')"> menu 3 </div>
+          </div>
+
+          <div class="InformationTitle">
+            <img src="assets/icon/car_icon.png" style="width: 25px; height: 25px; margin-right: 5px;">
+            Vehicle Information
+          </div>
+
+          <div class="informationContents">
+            <div class="informationFild">
+              <div class="informationLable">
+                EV Ready
+              </div>
+              <div class="informationValue">
+                Starting
+              </div>
+              <div class="informationLable">
+                DC-DC Status
+              </div>
+              <div class="informationValue">
+                Start
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Chargy Status
+              </div>
+              <div class="informationValue">
+                No Charge
+              </div>
+              <div class="informationLable">
+                Accel
+              </div>
+              <div class="informationValue">
+                On
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Run Mode
+              </div>
+              <div class="informationValue">
+                Electric
+              </div>
+              <div class="informationLable">
+                Brake
+              </div>
+              <div class="informationValue">
+                Off
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Vehicle Speed(km/h)
+              </div>
+              <div class="informationValue">
+                102.3
+              </div>
+              <div class="informationLable">
+                Gear Steate
+              </div>
+              <div class="informationValue">
+                D
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Accumulated Mile(km)
+              </div>
+              <div class="informationValue">
+                26,182.4
+              </div>
+              <div class="informationLable">
+                Insulation Resistance(kΩ)
+              </div>
+              <div class="informationValue">
+                5305
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                PTB Out Volt(V)
+              </div>
+              <div class="informationValue">
+                326.7
+              </div>
+              <div class="informationLable">
+                Accelerator Pedal Status
+              </div>
+              <div class="informationValue">
+                11
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                PTB Out Arm(A)
+              </div>
+              <div class="informationValue">
+                14.6
+              </div>
+              <div class="informationLable">
+                Brake Pedal Status
+              </div>
+              <div class="informationValue">
+                0
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                SOC(%)
+              </div>
+              <div class="informationValue">
+                73
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="menuContainer" *ngIf="menu == 'menu2'">
+        <div class="batteryInformation">
+          <div class="batteryImage">
+            <img src="assets/icon/battery_icon.png">
+          </div>
+          <div class="batteryInformationLable">SOC</div>
+          <div class="batteryInformationValue">73(%)</div>
+
+          <div class="batteryInformationLable">Volt</div>
+          <div class="batteryInformationValue">326.7(V)</div>
+
+          <div class="batteryInformationLable">Arm</div>
+          <div class="batteryInformationValue">14.6(A)</div>
+
+          <div class="batteryInformationLable">Max Temp</div>
+          <div class="batteryInformationValue">98(°C)</div>
+
+          <div class="batteryInformationLable">Min Temp</div>
+          <div class="batteryInformationValue">15(°C)</div>
+        </div>
+
+        <div class="batteryInformationChartContainer">
+          <div id="batteryInformationChart" style="width: 100%; height: 100%;"></div>
+        </div>
+
+      </div>
+
+      <div class="menuContainer" *ngIf="menu == 'menu3'">
+        <div class="carRideInformation">
+
+          <div class="carRideInformationLable">Total : </div>
+          <div class="carRideInformationValue">26,400</div>
+
+          <div class="carRideImage">
+            <img src="assets/icon/car_driving_red_icon.png">
+          </div>
+          <div class="carRideInformationLable">200 or more : </div>
+          <div class="carRideInformationValue">10</div>
+
+          <div class="carRideImage">
+            <img src="assets/icon/car_driving_green_icon.png">
+          </div>
+          <div class="carRideInformationLable">100 ~ 200 : </div>
+          <div class="carRideInformationValue">20</div>
+
+          <div class="carRideImage">
+            <img src="assets/icon/car_driving_blue_icon.png">
+          </div>
+          <div class="carRideInformationLable">0 ~ 100 : </div>
+          <div class="carRideInformationValue">30</div>
+
+          <div class="carRideImage">
+            <img src="assets/icon/car_driving_gray_icon.png">
+          </div>
+          <div class="carRideInformationLable">Doesn't run : </div>
+          <div class="carRideInformationValue">40</div>
+        </div>
+
+        <div class="carRideInformationCalendar">
+
+          <div class="carRideCalendar">
+            <div class="calendarRow">
+              <div class="calendarCell"></div>
+              <div class="calendarCell">1</div>
+              <div class="calendarCell">2</div>
+              <div class="calendarCell">3</div>
+              <div class="calendarCell">4</div>
+              <div class="calendarCell">5</div>
+              <div class="calendarCell">6</div>
+              <div class="calendarCell">7</div>
+              <div class="calendarCell">8</div>
+              <div class="calendarCell">9</div>
+              <div class="calendarCell">10</div>
+              <div class="calendarCell">11</div>
+              <div class="calendarCell">12</div>
+              <div class="calendarCell">13</div>
+              <div class="calendarCell">14</div>
+              <div class="calendarCell">15</div>
+              <div class="calendarCell">16</div>
+              <div class="calendarCell">17</div>
+              <div class="calendarCell">18</div>
+              <div class="calendarCell">19</div>
+              <div class="calendarCell">20</div>
+              <div class="calendarCell">21</div>
+              <div class="calendarCell">22</div>
+              <div class="calendarCell">23</div>
+              <div class="calendarCell">24</div>
+              <div class="calendarCell">25</div>
+              <div class="calendarCell">26</div>
+              <div class="calendarCell">27</div>
+              <div class="calendarCell">28</div>
+              <div class="calendarCell">29</div>
+              <div class="calendarCell">30</div>
+              <div class="calendarCell lastBorder">31</div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">1</div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_blue_icon.png"></div>
+              <div class="calendarCell lastBorder"><img src="assets/icon/car_driving_blue_icon.png"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">2</div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_red_icon.png"></div>
+              <div class="calendarCell lastBorder"><img src="assets/icon/car_driving_red_icon.png"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">3</div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_green_icon.png"></div>
+              <div class="calendarCell lastBorder"><img src="assets/icon/car_driving_green_icon.png"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">4</div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell"><img src="assets/icon/car_driving_gray_icon.png"></div>
+              <div class="calendarCell lastBorder"><img src="assets/icon/car_driving_gray_icon.png"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">5</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">6</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">7</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">8</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">9</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">10</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+            <div class="calendarRow">
+              <div class="calendarCell">11</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+            <div class="calendarRow lastBorder">
+              <div class="calendarCell">12</div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell"></div>
+              <div class="calendarCell lastBorder"></div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+      <div class="menuContainer" *ngIf="menu == 'menu4'">
+
+
+        <div id="map1" style="width: 100%; height: 98%;"></div>
+
+      </div>
+    </div>
+  </div>
+</div>

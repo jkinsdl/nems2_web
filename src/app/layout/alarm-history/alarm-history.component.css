@@ -1,0 +1,21 @@
+.alarmHistoryContainer{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+.alarmHistoryLayout{
+  width: 100%;
+  height: 100%;
+}
+
+.alarmHistoryBtnBox{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.alarmHistoryGrid{
+  width: 100%;
+  height: calc(100% - 100px);
+}

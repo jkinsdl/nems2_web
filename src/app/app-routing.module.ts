@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
+import { AbnormalLocationVehicleComponent } from './layout/abnormal-location-vehicle/abnormal-location-vehicle.component';
+import { Test1Component } from './layout/abnormal-location-vehicle/test1/test1.component';
+import { Test2Component } from './layout/abnormal-location-vehicle/test2/test2.component';
+import { AlarmHistoryComponent } from './layout/alarm-history/alarm-history.component';
+import { AlarmComponent } from './layout/alarm/alarm.component';
 import { ControlPanelComponent } from './layout/control-panel/control-panel.component';
 import { DatectErrorComponent } from './layout/control-panel/datect-error/datect-error.component';
 import { OTAInformationComponent } from './layout/control-panel/otainformation/otainformation.component';
@@ -14,6 +19,7 @@ import { TerminalComponent } from './layout/control-panel/terminal/terminal.comp
 import { UserAccountComponent } from './layout/control-panel/user-account/user-account.component';
 import { VehicleSettingsComponent } from './layout/control-panel/vehicle-settings/vehicle-settings.component';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
+import { DataForwardingComponent } from './layout/data-forwarding/data-forwarding.component';
 import { FailureComponent } from './layout/failure/failure.component';
 import { DetailMonitoringComponent } from './layout/monitoring/detail-monitoring/detail-monitoring.component';
 import { MonitoringDetailZoomComponent } from './layout/monitoring/detail-monitoring/monitoring-detail-zoom/monitoring-detail-zoom.component';
@@ -38,7 +44,7 @@ import { MainComponent } from './main/main.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'nems', component: MainComponent, children:[
+  { path: 'main', component: MainComponent, children:[
     { path: 'dashboard', component: DashboardComponent },
     { path: 'monitoring', component: MonitoringComponent },
     { path: 'monitoring/detail', component: DetailMonitoringComponent },
@@ -52,7 +58,6 @@ const routes: Routes = [
       { path: 'motor', component: MonitoringMotorComponent },
       { path: 'power_battery_temperature', component: MonitoringPowerBatteryTemperatureComponent },
       { path: 'power_battery_infomation', component: MonitoringPowerBatteryInfomationComponent },
-
     ]},
     { path: 'status', component: StatusComponent },
     { path: 'statistics', component: StatisticsComponent, children:[
@@ -62,6 +67,13 @@ const routes: Routes = [
       { path: 'search', component: SearchDataComponent },
     ]},
     { path: 'failure', component: FailureComponent },
+    { path: 'alarm', component:AlarmComponent},
+    { path: 'history', component:AlarmHistoryComponent},
+    { path: 'abnormalLocationVehicle', component:AbnormalLocationVehicleComponent, children:[
+      {path : 'test1', component:Test1Component},
+      {path : 'test2', component:Test2Component}
+    ]},
+    {path:'dataForwarding', component:DataForwardingComponent},
     { path: 'control', component: ControlPanelComponent, children:[
       { path: 'userAccount', component: UserAccountComponent },
       { path: 'vehicleSettings', component: VehicleSettingsComponent },
@@ -79,7 +91,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash : true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
       this.isPasswordError = false
     }
 
-    this.router.navigateByUrl('/nems/monitoring').then(
+    this.router.navigateByUrl('/main/dashboard').then(
       nav => {
         console.log(nav);
       },

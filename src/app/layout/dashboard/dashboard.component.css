@@ -1,6 +1,7 @@
 .dashboardContainer{
   width: 100%;
-  height: 100%;
+  height: calc(100% - 30px);
+  position:relative;
 }
 
 .dashboardContainer .dashboardTopLayout{
@@ -128,4 +129,223 @@
   width: calc(25% - 2px);
   height: calc(100% - 2px);
   float: left;
+}
+
+.map{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.dashBorderLeft{
+  position: absolute;
+  left: 5px;
+}
+
+.dashBorderLeft .mapBoundariesNavigator{
+  display: flex;
+  align-items: center;
+  background-color: rgb(92 92 92);
+  margin-top: 5px;
+}
+
+.dashBorderLeft .mapBoundariesNavigator .mapBoundaries{
+  color: white;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.dashBorderLeft .mapBoundariesNavigator .select{
+  background-color: rgb(163 163 163);
+}
+
+.dashBorderRight{
+  position: absolute;
+  right: 5px;
+  background-color: rgba(238,238,245,0.3);
+  width: 15%;
+  height: 100%;
+}
+
+.dashBorderRight .dashBorderStatus{
+  width: 100%;
+  height: calc(20% - 10px);
+  background-color: white;
+  border-radius: 10px;
+  opacity: 1;
+  margin: 5px 0px;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine.total{
+  height: 24%;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine{
+  width: 100%;
+  height: 19%;
+  display: flex;
+  align-items: center;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusLabel{
+  margin-left: 5px;
+  width: calc(30% - 5px);
+  height: 100%;
+  font-size: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue{
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .numpad{
+  width: 10%;
+  height: 80%;
+  margin: 0 2px;
+  border: 1px solid #adadad;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #000080;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .colorGray{
+  color: #cecece !important;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .percentBox{
+  width: calc(8% - 2px);
+  height: 12px;
+  border: 1px solid rgba(238,238,245);
+  background-color: rgba(238,238,245,0.5);
+  margin: 0 1px;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .purple{
+  background-color: #a55cee !important;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .blue{
+  background-color: #5151ff !important;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .mint{
+  background-color: #5cd4e9 !important;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .red{
+  background-color: #eb5151 !important;
+}
+
+.dashBorderRight .dashBorderPieChart{
+  width: 100%;
+  height: calc(30% - 5px);
+  background-color: white;
+  border-radius: 5px;
+  margin: 5px 0px;
+}
+
+.dashBorderRight .dashBorderAlarmGrid{
+  width: 100%;
+  height: calc(50% - 5px);
+  background-color: white;
+  border-radius: 5px;
+  margin: 5px 0px;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGridHeader{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGridHeader .alarmStatus{
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGridHeader .green {
+  background-color: rgb(36, 230, 36);
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGridHeader .alarmTitle{
+  width: calc(100% - 95px);
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGridHeader .alarmIcon{
+  width: 25px;
+  height: 25px;
+  margin: 0px 20px;
+  cursor: pointer;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGridHeader .alarmIcon img{
+  width: 100%;
+  height: 100%;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid{
+  width: 100%;
+  height: calc(100% - 50px);
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridHeader{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridHeader .header{
+  text-align: center;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridHeader .first,
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .gridRowData .first{
+  width: 50%;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridHeader .second,
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .gridRowData .second{
+  width: 25%;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridHeader .third,
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .gridRowData .third{
+  width: 25%;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents{
+  width: 100%;
+  height: calc(100% - 50px);
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .gridRowData{
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .gridRowData:hover{
+  background-color: #c2c2c2;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .gridRowData .gridCell{
+  text-align: center;
+}
+
+.dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .evenRow{
+  background-color: #eeeef5;
 }

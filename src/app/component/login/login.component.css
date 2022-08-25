@@ -4,34 +4,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: gray;
 }
 
-.loginLayout{
-  width: 20%;
-  height: 50%;
-}
-
-.loginMainContainer .loginForm{
-  width: 80%;
-  height: 45%;
-  padding: 10%;
-  border: 1px solid #f7f7f7;
-  border-radius: 20px;
+.loginBox{
+  width: 750px;
+  height: 450px;
+  /* background-color: rgb(38,92,138,0.7); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: white;
-  box-shadow: 2px 2px 2px 2px #afafaf;
+  border-radius: 15px;
 }
 
-.loginMainContainer .loginForm .label{
+.loginBox .loginBoxLayout{
+  width: 60%;
+  height: 80%;
+}
+
+.logo{
+  width: 100%;
+  display: flex;
+}
+
+.logo img {
+  width: 100%;
+}
+
+.loginTitleMessage{
+  font-size: 20px;
+}
+
+.loginMainContainer .label{
   font-size: 11px;
   color: #585858;
 }
 
-.loginMainContainer .loginForm .inputBox{
-  margin: 10px 0;
+.loginMainContainer .inputBox{
+  margin: 30px 0;
 }
 
 
-.loginMainContainer .loginForm .inputBox .errorMessage{
+.loginMainContainer .inputBox .errorMessage{
   position: absolute;
   color: red;
   font-size: 11px;
@@ -44,7 +59,11 @@ input[type="password"]{
   width: 95.5%;
   font-size: 11px;
   padding-left: 10px;
+  border: 2px solid rgb(187 187 187);
+}
 
+input::placeholder {
+  color: rgb(187 187 187);
 }
 
 .loginBtnBox{
@@ -60,8 +79,8 @@ input[type="password"]{
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #38cab3;
-  background-color: #38cab3;
+  border: 1px solid #0069d9;
+  background-color: #0069d9;
   border-radius: 5px;
   margin-top: 15px;
 }
@@ -83,4 +102,15 @@ input[type="password"]{
   width: 100%;
   text-align: center;
   margin-top: 10px;
+}
+
+.signUpBox{
+  width: 100%;
+  margin-top: 10px;
+}
+
+.signUpBox .signUp{
+  color: #4aa8d8;
+  cursor: pointer;
+  font-size: 12px;
 }
