@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
+import * as forge from 'node-forge';
+
 
 @Component({
   selector: 'app-login',
@@ -8,8 +11,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  forge = require('node-forge');
+
   constructor(
     private router: Router,
+    private authService : AuthService
   ) { }
 
   id : string = "";
@@ -51,16 +57,35 @@ export class LoginComponent implements OnInit {
       this.isPasswordError = false
     }
 
-    this.router.navigateByUrl('/main/dashboard').then(
-      nav => {
-        console.log(nav);
-      },
-      err => {
-        console.log(err);
-      });
+    this.authService.getPublickKey().subscribe(
+      res=>{
+        console.log(res)
+        let publicKeyRsa = this.forge.pki.publicKeyFromPem(res.body.publicKey);
+        let text  = publicKeyRsa.encrypt(this.pw,'RSAES-PKCS1-V1_5')
 
+        let parameter = {
+          email : this.id,
+          password : forge.util.encode64(text)
+        }
+        this.authService.checkLogin(parameter).subscribe(
+          res2=>{
+            console.log(res2)
 
+            if(res2.status == 200){
+              this.router.navigateByUrl('/main/dashboard').then(
+                nav => {
+                  console.log(nav);
+                },
+                err => {
+                  console.log(err);
+                });
+            }
+        },error =>{
+          console.log(error)
+        })
+      },error =>{
+        console.log(error)
+      }
+    )
   }
-
-
 }

@@ -1,0 +1,38 @@
+export class SearchFilter{
+  offset : number
+  limit : number
+  vin : string
+  configureName : string
+  displayName : string
+  errorState : string
+  startDate : string
+  endDate : string
+  beginTime : string
+  endTime : string
+
+  serverTime:string
+  asc : string[]
+  desc : string[]
+
+  name : string
+
+  begin : string
+  end : string
+
+  templateId : string
+
+  status : string
+  event : string
+
+  packetTime : string
+
+  iccid : string
+  nemsSn : string
+  registrationPlate : string
+  region : string
+
+  zipCode : number
+
+  level : string
+  state : string
+}
