@@ -12,10 +12,11 @@ export class RealtimedataService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer ;
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api" ;
 
-  getNotifications(filter : SearchFilter){
-    var url = `${this.Url}/vehicledata/vehiclelist`;
+
+  getRealtimedata(filter : SearchFilter){
+    var url = `${this.Url}/realtimedata`;
     let httpParams = new HttpParams()
 
     if(filter.vin != undefined){
@@ -30,7 +31,7 @@ export class RealtimedataService {
   }
 
   getVehicledataVehiclelist(filter : SearchFilter){
-    var url = `${this.Url}/realtimedata`;
+    var url = `${this.Url}/vehicledata/vehiclelist`;
     let httpParams = new HttpParams()
 
     if(filter.vin != undefined){

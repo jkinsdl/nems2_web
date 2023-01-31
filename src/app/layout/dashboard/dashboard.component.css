@@ -143,6 +143,7 @@
 }
 
 .dashBorderLeft .mapBoundariesNavigator{
+  width: 285px;
   display: flex;
   align-items: center;
   background-color: rgb(92 92 92);
@@ -159,11 +160,78 @@
   background-color: rgb(163 163 163);
 }
 
+
+.dashBorderLeft .dashboardInfoCountContainer{
+  display: flex;
+  padding: 10px;
+
+}
+
+.dashBorderLeft .dashboardInfoCountContainer .dashboardCountLayout{
+  width: 190px;
+  height: 60px;
+  margin: 0 10px;
+  background-color: black;
+  font-size: 30px;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.dashBorderLeft .dashboardInfoCountContainer .dashboardCountLayout p{
+  font-size: 14px;
+  margin: 0;
+}
+
+.dashBorderBottom{
+  position: absolute;
+  bottom: 0;
+  padding: 20px;
+}
+
+.dashboardRoundLayout{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  width: 200px;
+  height: 200px;
+  background-color: black;
+  margin: 20px 0;
+  border-radius: 100%;
+}
+
+
+
+.dashboardRoundLayout .infoBox .infoTitle{
+  display: flex;
+  align-items: center;
+}
+
+.dashboardRoundLayout .infoBox .infoTitle img{
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.dashboardRoundLayout .infoBox p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.dashboardRoundLayout .infoBox .infoValue{
+  text-align: center;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .dashBorderRight{
   position: absolute;
   right: 5px;
   background-color: rgba(238,238,245,0.3);
-  width: 15%;
+  width: 20%;
   height: 100%;
 }
 

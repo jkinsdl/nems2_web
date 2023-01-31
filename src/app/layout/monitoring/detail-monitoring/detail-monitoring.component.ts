@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import mapboxgl from 'mapbox-gl';
+import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/service/ui.service';
 import { MapMarkerDetailComponent } from '../../dashboard/map-marker-detail/map-marker-detail.component';
-
+import * as echarts from 'echarts';
 @Component({
   selector: 'app-detail-monitoring',
   templateUrl: './detail-monitoring.component.html',
@@ -13,13 +15,19 @@ import { MapMarkerDetailComponent } from '../../dashboard/map-marker-detail/map-
 export class DetailMonitoringComponent implements OnInit {
 
   constructor(private router: Router,
-    private dialog: MatDialog,) { }
+    private dialog: MatDialog,
+    private uiService : UiService) { }
 
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/dark-v10'
   lat = 35.8617;
   lng = 104.1954;
   mapPopup : any
+
+  listBtn$ : Subscription
+
+  isBatteryPanelOnOff : boolean = false
+  isSpeedPanelOnOff : boolean = false
 
   ngOnInit(): void {
     setTimeout(()=>{
@@ -137,8 +145,9 @@ export class DetailMonitoringComponent implements OnInit {
         this.mapPopup = new mapboxgl.Popup({closeButton: false})
         .setLngLat(coordinates)
         .setHTML(
-        `lng : ${lng}<br>
-         lat : ${lagt}`
+        /*lng : ${lng}<br>
+         lat : ${lagt}<br>*/
+         ` Car Information`
         )
         .addTo(this.map);
       });
@@ -154,6 +163,20 @@ export class DetailMonitoringComponent implements OnInit {
     .setHTML("test")
     .addTo(this.map);*/
     },1)
+
+    this.listBtn$ = this.uiService.listBtn$.subscribe(result=>{
+      console.log(result)
+      this.router.navigateByUrl('/main/monitoring').then(
+        nav => {
+          console.log(nav);
+        },
+        err => {
+          console.log(err);
+        });
+    })
+
+    this.setSpeedChart()
+    this.setBatteryChart()
   }
 
   zoomIn(url : string){
@@ -164,6 +187,245 @@ export class DetailMonitoringComponent implements OnInit {
       err => {
         console.log(err);
       });
+  }
+
+  batteryPanelOnOff(){
+    this.isBatteryPanelOnOff = !this.isBatteryPanelOnOff
+  }
+
+  setSpeedPanelOnOff(){
+    this.isSpeedPanelOnOff = !this.isSpeedPanelOnOff
+  }
+
+  setSpeedChart(){
+    console.log("setSpeedChart")
+    var dom = document.getElementById('speedChartContiner');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    var option;
+
+    option = {
+      series: [
+        {
+          type: 'gauge',
+          startAngle: 180,
+          endAngle: 0,
+          min: 0,
+          max: 240,
+          splitNumber: 12,
+          itemStyle: {
+            color: '#58D9F9',
+            shadowColor: 'rgba(0,138,255,0.45)',
+            shadowBlur: 10,
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+          },
+          progress: {
+            show: true,
+            roundCap: true,
+            width: 9
+          },
+          pointer: {
+            icon: 'path://M2090.36389,615.30999 L2090.36389,615.30999 C2091.48372,615.30999 2092.40383,616.194028 2092.44859,617.312956 L2096.90698,728.755929 C2097.05155,732.369577 2094.2393,735.416212 2090.62566,735.56078 C2090.53845,735.564269 2090.45117,735.566014 2090.36389,735.566014 L2090.36389,735.566014 C2086.74736,735.566014 2083.81557,732.63423 2083.81557,729.017692 C2083.81557,728.930412 2083.81732,728.84314 2083.82081,728.755929 L2088.2792,617.312956 C2088.32396,616.194028 2089.24407,615.30999 2090.36389,615.30999 Z',
+            length: '75%',
+            width: 8,
+            offsetCenter: [0, '5%']
+          },
+          axisLine: {
+            roundCap: true,
+            lineStyle: {
+              width: 9
+            }
+          },
+          axisTick: {
+            splitNumber: 2,
+            lineStyle: {
+              width: 2,
+              color: '#999'
+            }
+          },
+          splitLine: {
+            length: 6,
+            lineStyle: {
+              width: 3,
+              color: '#999'
+            }
+          },
+          axisLabel: {
+            distance: 30,
+            color: '#999',
+            fontSize: 8
+          },
+          title: {
+            show: false
+          },
+          detail: {
+            backgroundColor: '#fff',
+            borderColor: '#999',
+            borderWidth: 2,
+            lineHeight: 20,
+            height: 20,
+            borderRadius: 8,
+            offsetCenter: [0, '35%'],
+            valueAnimation: true,
+            formatter: function (value : any) {
+              return '{value|' + value.toFixed(0) + '}{unit|km/h}';
+            },
+            rich: {
+              value: {
+                fontSize: 20,
+                fontWeight: 'bolder',
+                color: '#777'
+              },
+              unit: {
+                fontSize: 10,
+                color: '#999',
+                padding: [0, 0, 0, 10]
+              }
+            }
+          },
+          data: [
+            {
+              value: 100
+            }
+          ]
+        }
+      ]
+    };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+  }
+
+
+  setBatteryChart(){
+    var chartDom = document.getElementById('batteryChartContiner')!;
+    var myChart = echarts.init(chartDom);
+    var option: echarts.EChartsOption;
+
+    const gaugeData = [
+      {
+        value: 30,
+        name: 'SOC',
+        title: {
+          offsetCenter: ['0%', '-20%']
+        },
+        detail: {
+          valueAnimation: true,
+          offsetCenter: ['0%', '0%']
+        }
+      }
+    ];
+
+    option = {
+      series: [
+        {
+          type: 'gauge',
+          startAngle: 90,
+          endAngle: -270,
+          pointer: {
+            show: false
+          },
+          progress: {
+            show: true,
+            overlap: false,
+            roundCap: true,
+            clip: false,
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                /*{
+                  offset: 0,
+                  color: 'rgb(0, 255, 0)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgb(103, 200, 255)'
+                }*/
+                {
+                  offset: 0,
+                  color: 'rgb(15, 246, 3)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgb(191, 252, 249)'
+                }])
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              width: 20
+            }
+          },
+          splitLine: {
+            show: false,
+            distance: 0,
+            length: 10
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false,
+            distance: 50
+          },
+          data: gaugeData,
+          title: {
+            fontSize: 20
+          },
+          detail: {
+            width: 50,
+            height: 20,
+            fontSize: 20,
+            formatter: function (value : any) {
+              return '{value|' + value.toFixed(0) + '}{unit|%}';
+            },
+            rich: {
+              value: {
+                fontSize: 30,
+                fontWeight: 'bolder',
+                color: '#ffffff',
+              },
+              unit: {
+                fontSize: 15,
+                color: '#ffffff',
+                padding: [0, 0, 0, 5]
+              }
+            }
+          }
+        }
+      ]
+    };
+
+    option && myChart.setOption(option);
+  }
+
+  openBattery(e : any){
+    console.log('openBattery')
+    e.stopPropagation()
+    const dialogRef = this.dialog.open( MapMarkerDetailComponent, {
+      data:{},
+      panelClass : 'bakcgroundColorGray'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+
+      }
+    });
+
+  }
+
+
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.listBtn$)this.listBtn$.unsubscribe()
   }
 
 }

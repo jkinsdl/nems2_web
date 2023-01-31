@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -9,7 +11,9 @@ import { CommonConstant } from 'src/app/util/common-constant';
 })
 export class DatectErrorComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
-  constructor() { }
+  constructor(
+    private vehiclewarningService : VehiclewarningService
+  ) { }
 
   columnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN' },
@@ -55,11 +59,22 @@ export class DatectErrorComponent implements OnInit {
   ngOnInit(): void {
     this.startDate = new Date(new Date().getTime() -1*1000*60*60*24);
     this.endDate = new Date(new Date().getTime());
+
+    this.getVehiclewarning()
+
   }
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
     this.gridApi.sizeColumnsToFit()
+  }
+
+  getVehiclewarning(){
+    this.vehiclewarningService.getVehiclewarnging(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
 }

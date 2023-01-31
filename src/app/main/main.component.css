@@ -55,7 +55,6 @@
 }
 
 .mainContainer .contentsContainer .contentsLayout .contentTitle{
-  width: 95%;
   height: 80px;
   display: flex;
   align-items: center;
@@ -237,14 +236,15 @@
 }
 
 .mainControlBox{
-  width: 5%;
   display: flex;
   align-items: center;
+  position: absolute;
+  right: 50px;
 }
 
 .btn{
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border: 1px solid #eeeef5;
   background-color: white;
   margin: 0 5px;

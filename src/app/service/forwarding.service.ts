@@ -12,7 +12,7 @@ export class ForwardingService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + "/forwarding" ;
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/forwarding" ;
 
 
   getForwarding(filter : SearchFilter){

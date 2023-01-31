@@ -12,7 +12,7 @@ export class GbpacketService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + "/gbpacket" ;
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/gbpacket" ;
 
   getGbpacketInvalidpacket(filter : SearchFilter){ // description
     var url = `${this.Url}/invalidpacket`;

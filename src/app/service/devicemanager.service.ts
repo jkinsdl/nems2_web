@@ -12,7 +12,7 @@ export class DevicemanagerService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + "/devicemanagers" ;
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/devicemanagers" ;
 
   getDevicemanagersFirmware(filter : SearchFilter){ // 펌웨어 리스트 조회
     var url = `${this.Url}/firmware`;
@@ -130,7 +130,7 @@ export class DevicemanagerService {
   }
 
   postTerminal(parameter : any){
-    var url = environment.httpText + environment.apiServer + "/terminal";
+    var url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/terminal";
     return this.http.post<any>(url, JSON.stringify(parameter), { observe: "response" })
   }
 

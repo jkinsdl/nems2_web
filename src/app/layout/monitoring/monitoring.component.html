@@ -2,6 +2,43 @@
   <div class="gridLayout whiteBoardBoax">
     <app-sub-title [title]="'VEHICLE SUMMARY'"></app-sub-title>
 
+    <div class="gridFilterBox">
+      <div class="filter">
+        <div class="label">VIN</div>
+        <div class="value">
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">Start Date</div>
+        <div class="value">
+          <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [max]="endDate" [(ngModel)]="startDate">
+          <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+        </div>
+      </div>
+
+      <div class="filter">
+          ~
+      </div>
+
+      <div class="filter">
+        <div class="label">End Date</div>
+        <div class="value">
+          <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="startDate">
+          <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn">
+          Search
+        </div>
+      </div>
+    </div>
+
+
+
     <div class="grid">
       <div class="gridColumn">
         <div class="column login">

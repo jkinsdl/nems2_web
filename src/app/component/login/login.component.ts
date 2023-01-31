@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import * as forge from 'node-forge';
-
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
   forge = require('node-forge');
@@ -49,14 +50,6 @@ export class LoginComponent implements OnInit {
       this.isPasswordError = false
     }
 
-    if(false){
-      this.isPasswordError = true;
-      this.isPasswordErrorMessage = "Please check your ID and password"
-      return;
-    }else {
-      this.isPasswordError = false
-    }
-
     this.authService.getPublickKey().subscribe(
       res=>{
         console.log(res)
@@ -68,9 +61,9 @@ export class LoginComponent implements OnInit {
           password : forge.util.encode64(text)
         }
         this.authService.checkLogin(parameter).subscribe(
-          res2=>{
+          (res2: HttpResponse<any>)=>{
             console.log(res2)
-
+            console.log(res2.headers)
             if(res2.status == 200){
               this.router.navigateByUrl('/main/dashboard').then(
                 nav => {
@@ -82,6 +75,8 @@ export class LoginComponent implements OnInit {
             }
         },error =>{
           console.log(error)
+          this.isPasswordError = true;
+          this.isPasswordErrorMessage = "Please check your ID and password"
         })
       },error =>{
         console.log(error)

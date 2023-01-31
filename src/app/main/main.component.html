@@ -165,6 +165,19 @@
             <img src="assets/icon/warning_icon.png">
           </div>
         </div>
+
+        <div class="mainControlBox" *ngIf="router.url.indexOf('monitoring') > -1 ">
+          <div class="btn" (click)="clickMaps()">
+            <img src="assets/icon/map.png">
+          </div>
+        </div>
+
+        <div class="mainControlBox" *ngIf="router.url.indexOf('monitoring/detail') > -1 ">
+          <div class="btn" (click)="clickList()">
+            <img src="assets/icon/list-interface-symbol.png">
+          </div>
+        </div>
+
       </div>
       <div class="content">
         <router-outlet></router-outlet>

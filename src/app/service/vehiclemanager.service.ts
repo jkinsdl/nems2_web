@@ -12,7 +12,7 @@ export class VehiclemanagerService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + "/vehiclemanager";
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/vehiclemanager";
 
   getVehiclemanagerModel(filter : SearchFilter){
     var url = `${this.Url}/model`;

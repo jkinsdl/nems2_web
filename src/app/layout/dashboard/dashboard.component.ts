@@ -698,7 +698,6 @@ export class DashboardComponent implements OnInit {
       },
       series: [
         {
-          name: 'Test',
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
@@ -722,9 +721,9 @@ export class DashboardComponent implements OnInit {
             show: false
           },
           data: [
-            { value: 1048, name: 'A' },
-            { value: 735, name: 'B' },
-            { value: 580, name: 'C' },
+            { value: 1048, name: 'Level 3' },
+            { value: 735, name: 'Level 2' },
+            { value: 580, name: 'Level 1' },
           ]
         }
       ]

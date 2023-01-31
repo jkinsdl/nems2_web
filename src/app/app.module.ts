@@ -66,7 +66,10 @@ import { Test2Component } from './layout/abnormal-location-vehicle/test2/test2.c
 import { MapMarkerDetailComponent } from './layout/dashboard/map-marker-detail/map-marker-detail.component';
 import { DataForwardingComponent } from './layout/data-forwarding/data-forwarding.component';
 import { MapMarkerDetailVehicleInformationComponent } from './layout/dashboard/map-marker-detail/map-marker-detail-vehicle-information/map-marker-detail-vehicle-information.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NoopInterceptor } from './shared/intercept/noop-interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {MatButtonModule} from '@angular/material/button';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -154,10 +157,14 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     AgGridModule,
     LeafletModule,
     HttpClientModule,
-    LeafletMarkerClusterModule
+    LeafletMarkerClusterModule,
+    DragDropModule,
+    MatButtonModule
+
   ],
   providers: [
-    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS}
+    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS},
+    { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

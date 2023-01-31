@@ -70,4 +70,12 @@ export class MainComponent implements OnInit {
 
   }
 
+  clickMaps(){
+    this.uiService.clickMapsBtn()
+  }
+
+  clickList(){
+    this.uiService.clickListBtn()
+  }
+
 }

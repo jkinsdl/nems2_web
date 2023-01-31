@@ -12,7 +12,7 @@ export class NotificationService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + "/notifications" ;
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/notifications" ;
 
   getNotifications(filter : SearchFilter){
     var url = `${this.Url}`;

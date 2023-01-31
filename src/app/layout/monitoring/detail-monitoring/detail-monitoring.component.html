@@ -1,7 +1,56 @@
 <div class="detailMonitoringContainer">
 
-  <div class="map" id="map"></div>
+  <div class="infoBox" cdkDrag cdkDragBoundary=".detailMonitoringContainer" >
+    <div class="infoBoxTitle" [ngClass]="{'titleGray': isBatteryPanelOnOff}" (click)="batteryPanelOnOff()"  >
+      <div class="infoBoxHandle" cdkDragHandle (click)="$event.stopPropagation()">
+        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+          <path d="M0 0h24v24H0z" fill="none"></path>
+        </svg>
+      </div>
 
+      <div class="infoBoxTitleText">
+        Battery
+      </div>
+
+      <div class="infoBoxTitleRight">
+        <button mat-raised-button (click)="openBattery($event)">
+          <span>Detail</span>
+
+        </button>
+      </div>
+
+
+      <div class="infoBoxTitleArrow" [ngClass]="{'onContentsImage': isBatteryPanelOnOff}">
+        <img src="assets/icon/panelArrow.png">
+      </div>
+    </div>
+
+    <div class="inforBoxContent" [ngClass]="{'contentsActive': isBatteryPanelOnOff}">
+      <div id="batteryChartContiner"></div>
+    </div>
+  </div>
+
+  <div class="infoBox" style="left: 350px;" cdkDrag cdkDragBoundary=".detailMonitoringContainer">
+    <div class="infoBoxTitle" [ngClass]="{'titleGray': isSpeedPanelOnOff}"  (click)="setSpeedPanelOnOff()"  >
+      <div class="infoBoxHandle" cdkDragHandle (click)="$event.stopPropagation()">
+        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+          <path d="M0 0h24v24H0z" fill="none"></path>
+        </svg>
+      </div>
+      <div class="infoBoxTitleText">
+        Speed
+      </div>
+      <div class="infoBoxTitleArrow" [ngClass]="{'onContentsImage': isSpeedPanelOnOff}">
+        <img src="assets/icon/panelArrow.png">
+      </div>
+    </div>
+    <div class="inforBoxContent" [ngClass]="{'contentsActive': isSpeedPanelOnOff}" >
+      <div id="speedChartContiner"></div>
+    </div>
+  </div>
+  <div class="map" id="map"></div>
 
   <!--
   <div class="firstLeftLayout firstTopLayout detailMonitoringLayout whiteBoardBoax">

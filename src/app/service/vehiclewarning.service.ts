@@ -12,7 +12,7 @@ export class VehiclewarningService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer ;
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api";
 
   getVehicleWarning(filter : SearchFilter){
     var url = `${this.Url}/vehicle_warning`;
