@@ -7,7 +7,11 @@ import { Test2Component } from './layout/abnormal-location-vehicle/test2/test2.c
 import { AlarmHistoryComponent } from './layout/alarm-history/alarm-history.component';
 import { AlarmComponent } from './layout/alarm/alarm.component';
 import { ControlPanelComponent } from './layout/control-panel/control-panel.component';
+import { AbnormalVehicleHistoryComponent } from './layout/control-panel/datect-error/abnormal-vehicle-history/abnormal-vehicle-history.component';
+import { AbnormalVehicleRealTimeComponent } from './layout/control-panel/datect-error/abnormal-vehicle-real-time/abnormal-vehicle-real-time.component';
 import { DatectErrorComponent } from './layout/control-panel/datect-error/datect-error.component';
+import { OfflineVehicleHistoryComponent } from './layout/control-panel/datect-error/offline-vehicle-history/offline-vehicle-history.component';
+import { OfflineVehicleRealTimeComponent } from './layout/control-panel/datect-error/offline-vehicle-real-time/offline-vehicle-real-time.component';
 import { OTAInformationComponent } from './layout/control-panel/otainformation/otainformation.component';
 import { OTAManagementComponent } from './layout/control-panel/otamanagement/otamanagement.component';
 import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform-management/public-platform-management.component';
@@ -85,7 +89,12 @@ const routes: Routes = [
       { path: 'remoteControl', component: RemoteControlComponent },
       { path: 'otaManagement', component: OTAManagementComponent },
       { path: 'pushAlarm', component: PushAlarmComponent },
-      { path: 'detectError', component: DatectErrorComponent },
+      { path: 'detectError', component: DatectErrorComponent, children:[
+        {path : 'abnormalVehicleRealTime', component:AbnormalVehicleRealTimeComponent},
+        {path : 'abnormalVehicleHistory', component:AbnormalVehicleHistoryComponent},
+        {path : 'offlineVehicleRealTime', component:OfflineVehicleRealTimeComponent},
+        {path : 'offlineVehicleHistory', component:OfflineVehicleHistoryComponent}
+      ]},
     ]},
   ]},
 ];

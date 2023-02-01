@@ -1,63 +1,25 @@
 <div class="datectErrorContainer">
 
   <div class="datectErrorLayout whiteBoardBoax">
-    <app-sub-title [title]="'Detect Error'"></app-sub-title>
-    <div class="gridFilterBox">
-      <div class="filter">
-        <div class="label">VIN</div>
-        <div class="value">
-          <input type="text">
-        </div>
+
+    <div class="tabListContainer">
+      <div class="tab" [ngClass]="{select: router.url.indexOf('abnormalVehicleRealTime') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleRealTime']">
+        Abnormal vehicle real-time
       </div>
-
-      <div class="filter">
-        <div class="label">Error State</div>
-        <div class="value">
-          <select>
-            <option>All</option>
-          </select>
-        </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('abnormalVehicleHistory') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleHistory']">
+        Abnormal vehicle history
       </div>
-
-      <div class="filter">
-        <div class="label">Start Date</div>
-        <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [max]="endDate" [(ngModel)]="startDate">
-          <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
-        </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('offlineVehicleRealTime') > -1 }" [routerLink]="['/main/control/detectError/offlineVehicleRealTime']">
+        Offline vehicle real-time
       </div>
-
-      <div class="filter">
-
-          ~
-
-      </div>
-
-      <div class="filter">
-        <div class="label">End Date</div>
-        <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="startDate">
-          <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="btn">
-          Search
-        </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('offlineVehicleHistory') > -1 }" [routerLink]="['/main/control/detectError/offlineVehicleHistory']">
+        Offline vehicle history
       </div>
     </div>
 
+    <div class="line"></div>
 
-    <div class="datectErrorContents">
-      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
-        class="ag-theme-alpine"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
-        [rowSelection]="rowSelection"
-        (gridReady)="onGridReady($event)">
-      </ag-grid-angular>
-    </div>
+    <router-outlet></router-outlet>
 
   </div>
 

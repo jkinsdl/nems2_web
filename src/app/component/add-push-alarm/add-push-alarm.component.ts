@@ -20,6 +20,14 @@ export class AddPushAlarmComponent implements OnInit {
 
   }
 
+  addAlarm(){
+    this.dialogRef.close(true)
+  }
+
+  modifyAlarm(){
+    this.dialogRef.close(true)
+  }
+
   close(){
     this.dialogRef.close()
   }

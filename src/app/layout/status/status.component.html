@@ -3,12 +3,10 @@
   <div class="statusLayout whiteBoardBoax">
     <app-sub-title [title]="'STATUS'"></app-sub-title>
     <div class="statusContents">
-
       <div class="status">
-        <div class="statusValue">100</div>
-        <div class="statusLabel">Monitoring</div>
+        <div class="statusValue">{{statisticsVehiclesSummary.totalVehicles}}</div>
+        <div class="statusLabel">Total Vehicles</div>
         <div class="monitoringBarChart" id="monitoringBarChart">
-
         </div>
         <div class="monitoringSubValue"> 在线 0     离线 7</div>
       </div>
@@ -16,23 +14,31 @@
       <div class="statusLine"></div>
 
       <div class="status">
-          <div class="statusValue">200</div>
+          <div class="statusValue">{{statisticsVehiclesSummary.totalMileage}}</div>
           <div class="statusLabel">Total Mileage</div>
       </div>
 
       <div class="statusLine"></div>
 
       <div class="status">
-          <div class="statusValue">300</div>
-          <div class="statusLabel">Electrical energy consumption(kWh)</div>
+          <div class="statusValue">{{statisticsVehiclesSummary.loginVehicles}}</div>
+          <div class="statusLabel">Login Vehicels</div>
           <div class="monitoringBarChart" id="energyBarChart"></div>
       </div>
 
       <div class="statusLine"></div>
 
       <div class="status">
-          <div class="statusValue">400</div>
-          <div class="statusLabel">Failures</div>
+          <div class="statusValue">{{statisticsVehiclesSummary.loginVehicles}}</div>
+          <div class="statusLabel">Login Vehicles</div>
+          <div class="monitoringBarChart" id="failuresBarChart"></div>
+      </div>
+
+      <div class="statusLine"></div>
+
+      <div class="status">
+          <div class="statusValue">{{statisticsVehiclesSummary.totalEnergyUsage}}</div>
+          <div class="statusLabel">Total Energy Usage</div>
           <div class="monitoringBarChart" id="failuresBarChart"></div>
       </div>
 

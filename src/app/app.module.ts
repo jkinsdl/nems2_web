@@ -70,6 +70,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NoopInterceptor } from './shared/intercept/noop-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
+import { AbnormalVehicleRealTimeComponent } from './layout/control-panel/datect-error/abnormal-vehicle-real-time/abnormal-vehicle-real-time.component';
+import { AbnormalVehicleHistoryComponent } from './layout/control-panel/datect-error/abnormal-vehicle-history/abnormal-vehicle-history.component';
+import { OfflineVehicleRealTimeComponent } from './layout/control-panel/datect-error/offline-vehicle-real-time/offline-vehicle-real-time.component';
+import { OfflineVehicleHistoryComponent } from './layout/control-panel/datect-error/offline-vehicle-history/offline-vehicle-history.component';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -138,6 +142,10 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     MapMarkerDetailComponent,
     DataForwardingComponent,
     MapMarkerDetailVehicleInformationComponent,
+    AbnormalVehicleRealTimeComponent,
+    AbnormalVehicleHistoryComponent,
+    OfflineVehicleRealTimeComponent,
+    OfflineVehicleHistoryComponent,
 
   ],
   imports: [

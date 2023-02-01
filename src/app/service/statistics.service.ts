@@ -78,4 +78,18 @@ export class StatisticsService {
     return this.http.get<any>(url, { observe: "response" })
   }
 
+  getStatisticsWarningsSummary(filter : SearchFilter){
+    var url = `${this.Url}/warnings/summary`;
+    let httpParams = new HttpParams()
+
+    if(filter.begin != undefined){
+      httpParams = httpParams.set("begin",filter.begin)
+    }
+
+    if(filter.end != undefined){
+      httpParams = httpParams.set("end",filter.end)
+    }
+    return this.http.get<any>(url, {params:httpParams, observe: "response" })
+  }
+
 }

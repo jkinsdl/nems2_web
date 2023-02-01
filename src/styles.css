@@ -153,3 +153,59 @@ input:focus{
 .bakcgroundColorGray .mat-dialog-container{
   background-color: #f7f7f7  !important;
 }
+
+.tabListContainer{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.tabListContainer .tab{
+  margin: 0 10px;
+  padding: 0 20px;
+  font-size: 14px;
+  color: #3f4472;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tabListContainer .tab.select{
+  color: #2fc8b0 !important;
+  height: calc(100% - 1px);
+  border-bottom: 1px solid #2fc8b0;
+}
+
+.informationContents{
+  width: 100%;
+  height: calc(100% - 50px);
+}
+
+.informationFild{
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #bbbbbb;
+  display: flex;
+}
+
+.informationLable{
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.informationValue{
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: black;
+  justify-content: end;
+  margin-right: 30px;
+}

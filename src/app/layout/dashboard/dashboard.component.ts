@@ -7,6 +7,8 @@ import { MapMarkerDetailComponent } from './map-marker-detail/map-marker-detail.
 import * as echarts from 'echarts';
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
+import { StatisticsService } from 'src/app/service/statistics.service';
+import { SearchFilter } from 'src/app/object/searchFilter';
 
 
 @Component({
@@ -20,51 +22,13 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private uiService : UiService
+    private uiService : UiService,
+    private statisticsService : StatisticsService
   ) { }
 
 
   menuMode$ : Subscription
 
-  /*data = {
-    labels: [
-      'label 1',
-      'label 2',
-      'label 3'
-    ],
-    datasets: [{
-      label: 'My First Dataset',
-      data: [300, 50, 100],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
-      hoverOffset: 4
-    }]
-  };*/
-  /*trendData : any[] = [{
-    label: 'label 1',
-    data: [65, 59, 80, 81, 56, 55, 40],
-  },
-  {
-    label: 'label 2',
-    data: [60, 61, 62, 63, 64, 65, 66],
-  }]
-  trendLables : string[] = [
-    new Date(new Date().setDate(new Date().getDate() - 6)).getDate() + "",
-    new Date(new Date().setDate(new Date().getDate() - 5)).getDate() + "",
-    new Date(new Date().setDate(new Date().getDate() - 4)).getDate() + "",
-    new Date(new Date().setDate(new Date().getDate() - 3)).getDate() + "",
-    new Date(new Date().setDate(new Date().getDate() - 2)).getDate() + "",
-    new Date(new Date().setDate(new Date().getDate() - 1)).getDate() + "",
-    new Date().getDate() + "",
-  ];
-  trendLegend = false;
-  trendOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };*/
 
   map: mapboxgl.Map;
   //style = 'mapbox://styles/mapbox/streets-v11';
@@ -76,9 +40,22 @@ export class DashboardComponent implements OnInit {
 
   currentBoundaries : string = ""
   hoveredStateId : any = null;
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
+
+  statisticsCurrent : any = {
+    totalVehicles: 0,
+    totalLoginVehicles: 0,
+    totalLogoutVehicles: 0,
+    todayRegistVehicles: 0
+  }
+
+  arrayTotalVehicles : string[] = []
+
+  statisticsVehiclesSummary : any = {
+    totalVehicles: 0,
+    newVehicles: 0,
+    loginVehicles: 0,
+    totalMileage: 0,
+    totalEnergyUsage: 0
   }
 
   ngOnInit(): void {
@@ -101,14 +78,6 @@ export class DashboardComponent implements OnInit {
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
-
-    /*for(let i = 0; i< 100; i++){
-      let location : mapboxgl.LngLatLike = [(Math.floor(Math.random() * 30000)/1000) + 90, (Math.floor(Math.random() * 15000)/1000) + 25 ]
-      let marker = new mapboxgl.Marker().setLngLat(location).addTo(this.map)
-      marker.on('click',e=>{
-        console.log(e)
-      })
-    }*/
 
     this.map.on('load', () => {
       this.map.addSource('test', {
@@ -676,7 +645,73 @@ export class DashboardComponent implements OnInit {
     },1)
 
     this.setPieChart()
+    this.getStatisticsCurrent()
+    //this.getStatisticsMileages()
+    //this.getStatisticsRegistrationCount()
+    //this.getStatisticsRegistrationSummary()
+    this.getStatisticsVehiclesSummary()
+    //this.getStatisticsWarningsSummary()
   }
+
+  getStatisticsCurrent(){
+    this.statisticsService.getStatisticsCurrent().subscribe(res=>{
+      console.log(res)
+      this.statisticsCurrent = res.body
+      this.arrayTotalVehicles = Array.from(String(this.statisticsCurrent.totalVehicles)).reverse()
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getStatisticsMileages(){
+    this.statisticsService.getStatisticsMileages(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getStatisticsRegistrationCount(){
+    this.statisticsService.getStatisticsRegistrationCount(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getStatisticsRegistrationSummary(){
+    this.statisticsService.getStatisticsRegistrationSummary(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getStatisticsVehiclesSummary(){
+    this.statisticsService.getStatisticsVehiclesSummary().subscribe(res=>{
+      console.log(res)
+      this.statisticsVehiclesSummary = res.body
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getStatisticsWarnings(){
+    this.statisticsService.getStatisticsWarnings().subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getStatisticsWarningsSummary(){
+    this.statisticsService.getStatisticsWarnings().subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
 
 
   pageMoveAlarm(){

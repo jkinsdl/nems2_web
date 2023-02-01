@@ -126,17 +126,17 @@
     <div class="dashboardInfoCountContainer">
       <div class="dashboardCountLayout" style="background-color: #e14a7b;" >
         <p>Total count of vehicles</p>
-        000
+        {{statisticsVehiclesSummary.totalVehicles}}
       </div>
 
       <div class="dashboardCountLayout" style="background-color:#4a60e1">
         <p>Count of new vehicles</p>
-        111
+        {{statisticsVehiclesSummary.newVehicles}}
       </div>
 
       <div class="dashboardCountLayout" style="background-color : #5eb92b">
         <p>Count of vehicles logged in</p>
-        222
+        {{statisticsVehiclesSummary.loginVehicles}}
       </div>
     </div>
   </div>
@@ -150,8 +150,8 @@
           <p>Total mileage</p>
         </div>
         <div class="infoValue">
-          123
-          <p style="font-size: 14px; margin-left: 5px;">KM</p>
+          {{statisticsVehiclesSummary.totalMileage}}
+          <p style="font-size: 14px; margin-left: 5px;">mile</p>
         </div>
       </div>
 
@@ -165,7 +165,7 @@
           <p>Total power used</p>
         </div>
         <div class="infoValue">
-          123
+          {{statisticsVehiclesSummary.totalEnergyUsage}}
           <p style="font-size: 14px; margin-left: 5px;">W</p>
         </div>
       </div>
@@ -180,103 +180,64 @@
           Total Vehicles
         </div>
         <div class="statusValue">
-          <div class="numpad colorGray" >
-            0
+          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[6]}">
+            {{arrayTotalVehicles[6] ? arrayTotalVehicles[6] : 0}}
           </div>
-          <div class="numpad colorGray">
-            0
+          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[5]}">
+            {{arrayTotalVehicles[5] ? arrayTotalVehicles[5] : 0}}
           </div>
-          <div class="numpad colorGray">
-            0
+          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[4]}">
+            {{arrayTotalVehicles[4] ? arrayTotalVehicles[4] : 0}}
           </div>
-          <div class="numpad">
-            3
+          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[3]}">
+            {{arrayTotalVehicles[3] ? arrayTotalVehicles[3] : 0}}
           </div>
-          <div class="numpad">
-            3
+          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[2]}">
+            {{arrayTotalVehicles[2] ? arrayTotalVehicles[2] : 0}}
           </div>
-          <div class="numpad">
-            9
+          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[1]}">
+            {{arrayTotalVehicles[1] ? arrayTotalVehicles[1] : 0}}
           </div>
-          <div class="numpad">
-            3
+          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[0]}">
+            {{arrayTotalVehicles[0] ? arrayTotalVehicles[0] : 0}}
           </div>
         </div>
       </div>
 
       <div class="statusLine">
         <div class="statusLabel">
-          Current Online Vehicles
+          Total Login Vehicles
         </div>
         <div class="statusValue">
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
-          <div class="percentBox purple"></div>
+          <div class="valueText purple" >
+            {{statisticsCurrent.totalLoginVehicles}}
+          </div>
+        </div>
+      </div>
+
+      <div class="statusLine">
+        <div class="statusLabel ">
+          Total Logout Vehicles
+        </div>
+        <div class="statusValue">
+          <div class="valueText blue">
+            {{statisticsCurrent.totalLogoutVehicles}}
+          </div>
         </div>
       </div>
 
       <div class="statusLine">
         <div class="statusLabel">
-          Today Login Vehicle
+          Today Regist Vehicles
         </div>
         <div class="statusValue">
-          <div class="percentBox blue"></div>
-          <div class="percentBox blue"></div>
-          <div class="percentBox blue"></div>
-          <div class="percentBox blue"></div>
-          <div class="percentBox blue"></div>
-          <div class="percentBox blue"></div>
-          <div class="percentBox blue"></div>
-          <div class="percentBox blue"></div>
-          <div class="percentBox"></div>
-          <div class="percentBox"></div>
+          <div class="valueText mint">
+            {{statisticsCurrent.todayRegistVehicles}}
+          </div>
         </div>
       </div>
-
-      <div class="statusLine">
-        <div class="statusLabel">
-          Today Offline Vehicles
-        </div>
-        <div class="statusValue">
-          <div class="percentBox mint"></div>
-          <div class="percentBox mint"></div>
-          <div class="percentBox mint"></div>
-          <div class="percentBox mint"></div>
-          <div class="percentBox mint"></div>
-          <div class="percentBox mint"></div>
-          <div class="percentBox "></div>
-          <div class="percentBox "></div>
-          <div class="percentBox "></div>
-          <div class="percentBox "></div>
-        </div>
-      </div>
-
-      <div class="statusLine">
-        <div class="statusLabel">
-          label 5
-        </div>
-        <div class="statusValue">
-          <div class="percentBox red"></div>
-          <div class="percentBox red"></div>
-          <div class="percentBox red"></div>
-          <div class="percentBox"></div>
-          <div class="percentBox"></div>
-          <div class="percentBox"></div>
-          <div class="percentBox"></div>
-          <div class="percentBox"></div>
-          <div class="percentBox"></div>
-          <div class="percentBox"></div>
-        </div>
-      </div>
-
     </div>
+
     <div class="dashBorderPieChart">
 
       <div id="pieChart" style="width: 100%; height: 100%;"></div>

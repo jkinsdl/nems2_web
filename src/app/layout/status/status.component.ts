@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { StatisticsService } from 'src/app/service/statistics.service';
 
 @Component({
   selector: 'app-status',
@@ -9,15 +10,44 @@ import { Chart } from 'chart.js';
 
 export class StatusComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private statisticsService : StatisticsService
+  ) { }
 
   chart! : Chart;
+
+  statisticsVehiclesSummary : any = {
+    totalVehicles: 0,
+    newVehicles: 0,
+    loginVehicles: 0,
+    totalMileage: 0,
+    totalEnergyUsage: 0
+  }
 
   ngOnInit(): void {
     this.setPieChart('chart');
     this.setPieChart('chart1');
     this.setPieChart('chart2');
     this.setPieChart('chart3');
+    this.getStatisticsVehiclesSummary()
+    this.getStatisticsWarnings()
+  }
+
+  getStatisticsVehiclesSummary(){
+    this.statisticsService.getStatisticsVehiclesSummary().subscribe(res=>{
+      console.log(res)
+      this.statisticsVehiclesSummary = res.body
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getStatisticsWarnings(){
+    this.statisticsService.getStatisticsWarnings().subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
   setPieChart(chartID : string){

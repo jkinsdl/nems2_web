@@ -1,0 +1,57 @@
+
+    <div class="gridFilterBox">
+      <div class="filter">
+        <div class="label">VIN</div>
+        <div class="value">
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">Error State</div>
+        <div class="value">
+          <select>
+            <option>All</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">Start Date</div>
+        <div class="value">
+          <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [max]="endDate" [(ngModel)]="startDate">
+          <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+        </div>
+      </div>
+
+      <div class="filter">
+
+          ~
+
+      </div>
+
+      <div class="filter">
+        <div class="label">End Date</div>
+        <div class="value">
+          <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="startDate">
+          <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn">
+          Search
+        </div>
+      </div>
+    </div>
+
+
+    <div class="datectErrorContents">
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>

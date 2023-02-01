@@ -37,6 +37,16 @@ export class MonitoringComponent implements OnInit {
 
   }
 
+
+
+
+
+
+
+
+
+
+
   getVehicledataVehiclelist(){
     this.realtimedataService.getVehicledataVehiclelist(new SearchFilter()).subscribe(
       res=>{

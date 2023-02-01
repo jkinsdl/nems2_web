@@ -66,11 +66,11 @@
             <span *ngIf="menuMode == 1">Statistics</span>
           </div>
 
-          <div class="menu" [ngClass]="{select: router.url.indexOf('failure') > -1 }" [routerLink]="['/main/failure']" (click)="changeMenu('FAILURE')">
+          <!--<div class="menu" [ngClass]="{select: router.url.indexOf('failure') > -1 }" [routerLink]="['/main/failure']" (click)="changeMenu('FAILURE')">
             <img src="assets/icon/failure_icon.png">
             <span *ngIf="menuMode == 1">Failure</span>
           </div>
-
+        -->
           <div class="menu" [ngClass]="{select: router.url.indexOf('alarm') > -1 }" [routerLink]="['/main/alarm']" (click)="changeMenu('ALARM')">
             <img src="assets/icon/push_alarm_icon.png">
             <span *ngIf="menuMode == 1">Alarm</span>
@@ -138,7 +138,7 @@
             <img src="assets/icon/push_alarm_icon.png">
             <span *ngIf="menuMode == 1">Push Alarm</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('detectError') > -1 }" [routerLink]="['/main/control/detectError']"  (click)="changeMenu('DETECT ERROR')">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('detectError') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleRealTime']"  (click)="changeMenu('DETECT ERROR')">
             <img src="assets/icon/datect_error_icon.png">
             <span *ngIf="menuMode == 1">Detect Error</span>
           </div>

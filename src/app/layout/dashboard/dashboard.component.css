@@ -257,7 +257,7 @@
 
 .dashBorderRight .dashBorderStatus .statusLine .statusLabel{
   margin-left: 5px;
-  width: calc(30% - 5px);
+  width: calc(40% - 5px);
   height: 100%;
   font-size: 5px;
   display: flex;
@@ -265,10 +265,16 @@
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue{
-  width: 70%;
+  width: 60%;
   height: 100%;
   display: flex;
   align-items: center;
+}
+
+.dashBorderRight .dashBorderStatus .statusLine .statusValue .valueText{
+  position: absolute;
+  right: 25px;
+  font-size: 20px;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue .numpad{
@@ -297,19 +303,19 @@
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue .purple{
-  background-color: #a55cee !important;
+  color: #a55cee !important;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue .blue{
-  background-color: #5151ff !important;
+  color: #5151ff !important;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue .mint{
-  background-color: #5cd4e9 !important;
+  color: #5cd4e9 !important;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue .red{
-  background-color: #eb5151 !important;
+  color: #eb5151 !important;
 }
 
 .dashBorderRight .dashBorderPieChart{

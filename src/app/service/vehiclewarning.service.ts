@@ -14,41 +14,13 @@ export class VehiclewarningService {
 
   private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api";
 
-  getVehicleWarning(filter : SearchFilter){
-    var url = `${this.Url}/vehicle_warning`;
-    let httpParams = new HttpParams()
-
-    if(filter.offset != undefined){
-      httpParams = httpParams.set("offset",filter.offset)
-    }
-
-    if(filter.limit != undefined){
-      httpParams = httpParams.set("limit",filter.limit)
-    }
-
-    if(filter.vin != undefined){
-      httpParams = httpParams.set("vin ",filter.vin )
-    }
-
-    if(filter.level != undefined){
-      httpParams = httpParams.set("level ",filter.level )
-    }
-
-    if(filter.state  != undefined){
-      httpParams = httpParams.set("state  ",filter.state )
-    }
-
-    return this.http.get<any>(url, { params:httpParams, observe: "response" })
-  }
-
-
   putVehicleWarningVin(vin : string, parameter : any){
     var url = `${this.Url}/vehicle_warning/${vin}`;
 
     return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
   }
 
-  getVehiclewarnging(filter : SearchFilter){
+  getVehiclewarning(filter : SearchFilter){
     var url = `${this.Url}/vehiclewarning`;
     let httpParams = new HttpParams()
 

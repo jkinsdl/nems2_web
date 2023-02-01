@@ -147,14 +147,133 @@ export class DetailMonitoringComponent implements OnInit {
         .setHTML(
         /*lng : ${lng}<br>
          lat : ${lagt}<br>*/
-         ` Car Information`
-        )
-        .addTo(this.map);
+         `<div class="informationContents">
+            <div style="display:flex">
+              <img src="assets/icon/car_icon.png" style="width: 25px; height: 25px; margin-right: 5px;">
+              Vehicle Information
+            </div>
+
+
+            <div class="informationFild">
+              <div class="informationLable">
+                EV Ready
+              </div>
+              <div class="informationValue">
+                Starting
+              </div>
+              <div class="informationLable">
+                DC-DC Status
+              </div>
+              <div class="informationValue">
+                Start
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Chargy Status
+              </div>
+              <div class="informationValue">
+                No Charge
+              </div>
+              <div class="informationLable">
+                Accel
+              </div>
+              <div class="informationValue">
+                On
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Run Mode
+              </div>
+              <div class="informationValue">
+                Electric
+              </div>
+              <div class="informationLable">
+                Brake
+              </div>
+              <div class="informationValue">
+                Off
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Vehicle Speed(km/h)
+              </div>
+              <div class="informationValue">
+                102.3
+              </div>
+              <div class="informationLable">
+                Gear Steate
+              </div>
+              <div class="informationValue">
+                D
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                Accumulated Mile(km)
+              </div>
+              <div class="informationValue">
+                26,182.4
+              </div>
+              <div class="informationLable">
+                Insulation Resistance(kΩ)
+              </div>
+              <div class="informationValue">
+                5305
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                PTB Out Volt(V)
+              </div>
+              <div class="informationValue">
+                326.7
+              </div>
+              <div class="informationLable">
+                Accelerator Pedal Status
+              </div>
+              <div class="informationValue">
+                11
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                PTB Out Arm(A)
+              </div>
+              <div class="informationValue">
+                14.6
+              </div>
+              <div class="informationLable">
+                Brake Pedal Status
+              </div>
+              <div class="informationValue">
+                0
+              </div>
+            </div>
+
+            <div class="informationFild">
+              <div class="informationLable">
+                SOC(%)
+              </div>
+              <div class="informationValue" style="width:75%">
+                73
+              </div>
+            </div>
+          </div>`
+        ).setMaxWidth(null).addTo(this.map);
       });
 
       this.map.on('mouseleave', 'unclustered-point', () => {
         this.map.getCanvas().style.cursor = '';
-        this.mapPopup.remove()
+        //this.mapPopup.remove()
       });
     });
 
@@ -204,7 +323,6 @@ export class DetailMonitoringComponent implements OnInit {
       renderer: 'canvas',
       useDirtyRect: false
     });
-    var app = {};
 
     var option;
 
@@ -334,9 +452,9 @@ export class DetailMonitoringComponent implements OnInit {
           },
           progress: {
             show: true,
-            overlap: false,
             roundCap: true,
             clip: false,
+            width: 5,
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 /*{
@@ -350,16 +468,13 @@ export class DetailMonitoringComponent implements OnInit {
                 {
                   offset: 0,
                   color: 'rgb(15, 246, 3)'
-                },
-                {
-                  offset: 1,
-                  color: 'rgb(191, 252, 249)'
                 }])
             }
           },
           axisLine: {
             lineStyle: {
-              width: 20
+              width: 5,
+              color: [[1, '#100c2a']]
             }
           },
           splitLine: {
