@@ -76,7 +76,13 @@ import { OfflineVehicleRealTimeComponent } from './layout/control-panel/datect-e
 import { OfflineVehicleHistoryComponent } from './layout/control-panel/datect-error/offline-vehicle-history/offline-vehicle-history.component';
 import { AddOTAManagementComponent } from './component/add-otamanagement/add-otamanagement.component';
 import { UploadOTAManagementComponent } from './component/upload-otamanagement/upload-otamanagement.component';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { NgTerminalModule } from 'ng-terminal';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: 'l, LTS'
@@ -171,8 +177,14 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     HttpClientModule,
     LeafletMarkerClusterModule,
     DragDropModule,
-    MatButtonModule
-
+    MatButtonModule,
+    MatTabsModule,
+    NgTerminalModule,
+    MatFormFieldModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSlideToggleModule,
   ],
   providers: [
     {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS},

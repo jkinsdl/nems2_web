@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { NgTerminal, NgTerminalComponent } from 'ng-terminal';
+import { FormControl } from '@angular/forms';
+// import { DisplayOption } from 'ng-terminal';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Terminal } from 'xterm';
+import { FunctionsUsingCSI } from 'ng-terminal';
 
 @Component({
   selector: 'app-terminal',
@@ -6,10 +13,99 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./terminal.component.css']
 })
 export class TerminalComponent implements OnInit {
+  readonly title = 'NgTerminal Live Example';
+  readonly color = 'accent';
+  readonly prompt = '\n' + FunctionsUsingCSI.cursorColumn(1) + '$ ';
+
+  _rows: number = undefined;
+  _cols: number = undefined;
+  _draggable: boolean = undefined;
+
+  public fixed = false;
+
+  disabled = false;
+  inputControl = new FormControl();
+
+  underlying: Terminal;
+
+  @ViewChild('term', {static: false}) child: NgTerminal;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
+
+  ngAfterViewInit() {
+    this.underlying = this.child.underlying;
+    this.underlying.options.fontSize = 20;
+    console.debug("example: font apply" );
+    //this.underlying.loadAddon(new WebLinksAddon());
+    this.invalidate();
+    this.child.setXtermOptions({
+      fontFamily: '"Cascadia Code", Menlo, monospace',
+      theme: this.baseTheme,
+      cursorBlink: true
+    });
+    this.child.write('$ NgTerminal Live Example');
+    this.child.write(this.prompt);
+    this.child.onData().subscribe((input) => {
+      if (input === '\r') { // Carriage Return (When Enter is pressed)
+        this.child.write(this.prompt);
+      } else if (input === '\u007f') { // Delete (When Backspace is pressed)
+        if (this.child.underlying.buffer.active.cursorX > 2) {
+          this.child.write('\b \b');
+        }
+      } else if (input === '\u0003') { // End of Text (When Ctrl and C are pressed)
+          this.child.write('^C');
+          this.child.write(this.prompt);
+      }else
+        this.child.write(input);
+    })
+
+    this.child.onKey().subscribe(e => {
+      //onData() is used more often.
+    });
+    this._cols = 158
+    this._rows = 40
+  }
+
+  invalidate() {
+  }
+
+  writeSubject = new Subject<string>();
+  write() {
+    this.writeSubject.next(eval(`'${this.inputControl.value}'`));
+  }
+
+  onKeyInput(event: string) {
+
+  }
+
+  get displayOptionForLiveUpdate() {
+    return {rows: 40, cols: 158, draggable: true};
+  }
+
+  baseTheme = {
+    foreground: '#F8F8F8',
+    background: '#2D2E2C',
+    selectionBackground: '#5DA5D533',
+    black: '#1E1E1D',
+    brightBlack: '#262625',
+    red: '#CE5C5C',
+    brightRed: '#FF7272',
+    green: '#5BCC5B',
+    brightGreen: '#72FF72',
+    yellow: '#CCCC5B',
+    brightYellow: '#FFFF72',
+    blue: '#5D5DD3',
+    brightBlue: '#7279FF',
+    magenta: '#BC5ED1',
+    brightMagenta: '#E572FF',
+    cyan: '#5DA5D5',
+    brightCyan: '#72F0FF',
+    white: '#F8F8F8',
+    brightWhite: '#FFFFFF',
+    border: '#85858a'
+  };
 
 }
