@@ -83,6 +83,10 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { RemoteControlStateComponent } from './layout/control-panel/remote-control/remote-control-state/remote-control-state.component';
+import { ConfigureComponent } from './layout/control-panel/remote-control/configure/configure.component';
+import { AddRegisterRemoteSettingComponent } from './component/add-register-remote-setting/add-register-remote-setting.component';
+import { AddRemoteParameterConfigurationInfoComponent } from './component/add-remote-parameter-configuration-info/add-remote-parameter-configuration-info.component';
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: 'l, LTS'
@@ -156,6 +160,10 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     OfflineVehicleHistoryComponent,
     AddOTAManagementComponent,
     UploadOTAManagementComponent,
+    RemoteControlStateComponent,
+    ConfigureComponent,
+    AddRegisterRemoteSettingComponent,
+    AddRemoteParameterConfigurationInfoComponent,
 
   ],
   imports: [

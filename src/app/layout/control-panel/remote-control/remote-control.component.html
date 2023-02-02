@@ -1,3 +1,20 @@
-<div class="">
+<div class="remoteControlContainer">
+
+  <div class="remoteControlLayout whiteBoardBoax">
+
+    <div class="tabListContainer">
+      <div class="tab" [ngClass]="{select: router.url.indexOf('state') > -1 }" [routerLink]="['/main/control/remoteControl/state']">
+        Remote control
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('configure') > -1 }" [routerLink]="['/main/control/remoteControl/configure']">
+        CONFIGURE
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <router-outlet></router-outlet>
+
+  </div>
 
 </div>

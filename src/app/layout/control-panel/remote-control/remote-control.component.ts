@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
   selector: 'app-remote-control',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RemoteControlComponent implements OnInit {
 
-  constructor() { }
+  constant : CommonConstant = new CommonConstant()
+  constructor(
+    public router: Router,
+  ) { }
 
   ngOnInit(): void {
+
   }
+
 
 }

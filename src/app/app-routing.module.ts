@@ -16,6 +16,8 @@ import { OTAInformationComponent } from './layout/control-panel/otainformation/o
 import { OTAManagementComponent } from './layout/control-panel/otamanagement/otamanagement.component';
 import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform-management/public-platform-management.component';
 import { PushAlarmComponent } from './layout/control-panel/push-alarm/push-alarm.component';
+import { ConfigureComponent } from './layout/control-panel/remote-control/configure/configure.component';
+import { RemoteControlStateComponent } from './layout/control-panel/remote-control/remote-control-state/remote-control-state.component';
 import { RemoteControlComponent } from './layout/control-panel/remote-control/remote-control.component';
 import { ServerLogsComponent } from './layout/control-panel/server-logs/server-logs.component';
 import { ShanghaiInfoComponent } from './layout/control-panel/shanghai-info/shanghai-info.component';
@@ -86,7 +88,10 @@ const routes: Routes = [
       { path: 'serverLogs', component: ServerLogsComponent },
       { path: 'otaInformation', component: OTAInformationComponent },
       { path: 'terminal', component: TerminalComponent },
-      { path: 'remoteControl', component: RemoteControlComponent },
+      { path: 'remoteControl', component: RemoteControlComponent, children:[
+        {path : 'state', component:RemoteControlStateComponent},
+        {path : 'configure', component:ConfigureComponent}
+      ]},
       { path: 'otaManagement', component: OTAManagementComponent },
       { path: 'pushAlarm', component: PushAlarmComponent },
       { path: 'detectError', component: DatectErrorComponent, children:[

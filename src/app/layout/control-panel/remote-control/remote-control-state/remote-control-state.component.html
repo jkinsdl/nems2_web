@@ -1,0 +1,25 @@
+<div class="gridFilterBox">
+  <div class="filter">
+    <div class="label">VIN</div>
+    <div class="value">
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="filter">
+    <div class="btn">
+      Search
+    </div>
+  </div>
+</div>
+
+
+<div style="width: 100%; height: calc(100% - 80px)">
+  <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [rowSelection]="rowSelection"
+    (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+</div>

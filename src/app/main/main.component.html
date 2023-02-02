@@ -119,7 +119,7 @@
             <span *ngIf="menuMode == 1">OTA Information</span>
           </div>
 
-          <div class="menu" [ngClass]="{select: router.url.indexOf('remoteControl') > -1 }" [routerLink]="['/main/control/remoteControl']" (click)="changeMenu('Remote Control')">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('remoteControl') > -1 }" [routerLink]="['/main/control/remoteControl/state']" (click)="changeMenu('Remote Control')">
             <img src="assets/icon/remote_control_icon.png">
             <span *ngIf="menuMode == 1">Remote Control</span>
           </div>
