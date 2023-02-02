@@ -13,24 +13,16 @@
     </div>
 
     <div class="leftListBox">
-      <div class="listItem">
-        <div class="rowTitle" (click)="rowOpen()">lqenew2111</div>
-        <div class="rowContent" [ngClass]="{'openRowContent': selectRow}">
+      <div class="listItem" *ngFor="let firmware of firmwareList.entities">
+        <div class="rowTitle" (click)="rowOpen(firmware)">{{firmware.firmwareName}}</div>
+        <div class="rowContent" [ngClass]="{'openRowContent': selectFirmware == firmware}">
           <div style="padding: 10px;">
-            <div class="rowFild">
-              <div class="contentLabel">
-                Reg.No :
-              </div>
-              <div class="contentValue">
-                1794591889
-              </div>
-            </div>
             <div class="rowFild">
               <div class="contentLabel">
                 H/W ver :
               </div>
               <div class="contentValue">
-                5.2.0
+                {{firmware.hwVersion}}
               </div>
             </div>
 
@@ -39,21 +31,14 @@
                 F/W ver :
               </div>
               <div class="contentValue">
-                2.1.11
+                {{firmware.fwVersion}}
               </div>
             </div>
             <div class="rowFild">
-              19/10/25 14:26:20
+              {{firmware.createdAt}}
             </div>
-
           </div>
         </div>
-      </div>
-      <div class="listItem">
-        <div class="rowTitle">4.7.7</div>
-      </div>
-      <div class="listItem">
-        <div class="rowTitle">SHOW ALL</div>
       </div>
     </div>
   </div>
@@ -102,20 +87,17 @@
           <img src="assets/icon/check-box-empty.png">
         </div>
       </div>
-
     </div>
-
 
     <div style="height: calc(100% - 40px);">
       <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
         class="ag-theme-alpine"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
+        [rowData]="firmwareVehiclesList.entities"
+        [columnDefs]="firmwareVehiclesColumn"
         [rowSelection]="rowSelection"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>
+
     </div>
-
   </div>
-
 </div>

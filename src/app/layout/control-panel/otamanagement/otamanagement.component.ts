@@ -6,6 +6,8 @@ import { AddOTAManagementComponent } from 'src/app/component/add-otamanagement/a
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { CommonConstant } from 'src/app/util/common-constant';
 import { UploadOTAManagementComponent } from 'src/app/component/upload-otamanagement/upload-otamanagement.component';
+import { DevicemanagerService } from 'src/app/service/devicemanager.service';
+import { SearchFilter } from 'src/app/object/searchFilter';
 
 @Component({
   selector: 'app-otamanagement',
@@ -16,10 +18,11 @@ export class OTAManagementComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
   constructor(
     private otaService : OtaService,
+    private devicemanageService : DevicemanagerService,
     private dialog: MatDialog,
   ) { }
 
-  selectRow : boolean = false;
+
 
   gridApi!: GridApi;
   selectNodeID : string = null;
@@ -28,23 +31,40 @@ export class OTAManagementComponent implements OnInit {
   startDate : any
   endDate :any
 
-
-  columnDefs: ColDef[] = [
+  firmwareVehiclesColumn: ColDef[] = [
     { field: 'vin', headerName: 'VIN' },
-    { field: 'need_ota', headerName: 'need OTA'},
-    { field: 'state', headerName : 'State'},
-    { field: 'last_ota_start_time', headerName : 'last OTA start time'},
-    { field: 'last_response_time', headerName : 'last response time'},
-    { field: 'firmware', headerName : 'firmware(MD5)'},
-    { field: 'reserve_time', headerName : 'reserve time'},
-    { field: 'firmware_name', headerName : 'Firmware Name'},
-    { field: 'force_ota', headerName : 'Force Ota'},
+    { field: 'currentState', headerName: 'currentState'},
+    { field: 'updatedAt', headerName : 'updatedAt'}
   ];
 
   rowData : any[]= [];
 
+  firmwareList : any = {
+    count : 0,
+    entities : [],
+    link : {}
+  }
+
+  firmwareVehiclesList : any = {
+    count : 0,
+    entities : [],
+    link : {}
+  }
+
+  selectFirmware : any = {};
+
   ngOnInit(): void {
-    this.getOtaFirmware()
+    //this.getOtaFirmware()
+    this.getDevicemanagersFirmware()
+  }
+
+  getDevicemanagersFirmware(){
+    this.devicemanageService.getDevicemanagersFirmware(new SearchFilter).subscribe(res=>{
+      console.log(res)
+      this.firmwareList = res.body
+    },error=>{
+      console.log(error)
+    })
   }
 
   getOtaFirmware(){
@@ -74,6 +94,13 @@ export class OTAManagementComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
+        console.log(result)
+
+        this.devicemanageService.postDevicemanagersFirmware(result).subscribe(res=>{
+          console.log(res)
+        },error=>{
+          console.log(error)
+        })
 
       }
     });
@@ -106,45 +133,16 @@ export class OTAManagementComponent implements OnInit {
     });
   }
 
-  rowOpen(){
-    this.selectRow = !this.selectRow
-    if(this.selectRow){
-      this.rowData =[
-        {
-          vin: 'vin',
-          need_ota: 'need_ota',
-          state: 'state',
-          last_ota_start_time: 'last_ota_start_time',
-          last_response_time: 'last_response_time',
-          firmware: 'firmware',
-          reserve_time : 'reserve_time',
-          firmware_name : 'firmware_name',
-          force_ota : 'force_ota'
-        },
-        {
-          vin: 'vin',
-          need_ota: 'need_ota',
-          state: 'state',
-          last_ota_start_time: 'last_ota_start_time',
-          last_response_time: 'last_response_time',
-          firmware: 'firmware',
-          reserve_time : 'reserve_time',
-          firmware_name : 'firmware_name',
-          force_ota : 'force_ota'
-        },
-        {
-          vin: 'vin',
-          need_ota: 'need_ota',
-          state: 'state',
-          last_ota_start_time: 'last_ota_start_time',
-          last_response_time: 'last_response_time',
-          firmware: 'firmware',
-          reserve_time : 'reserve_time',
-          firmware_name : 'firmware_name',
-          force_ota : 'force_ota'
-        }]
-    }else {
-      this.rowData = []
-    }
+  rowOpen(item : any){
+    this.selectFirmware = item
+
+
+
+    this.devicemanageService.getDevicemanagersFirmwareFirmwareNameVehicles(item.firmwareName).subscribe(res=>{
+      console.log(res)
+      this.firmwareVehiclesList = res.body
+    },error=>{
+      console.log(error)
+    })
   }
 }

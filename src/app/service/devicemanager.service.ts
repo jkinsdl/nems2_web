@@ -33,18 +33,10 @@ export class DevicemanagerService {
     return this.http.post<any>(url, JSON.stringify(parameter), { observe: "response" })
   }
 
-  getDevicemanagersFirmwareFirmwareNo(filter : SearchFilter, firmwareNo : number){ // Firmware에 대한 상세 정보와 해당 펌웨어를 적용받는 차량 ID 리스트 조회
-    var url = `${this.Url}/firmware/${firmwareNo}`;
-    let httpParams = new HttpParams()
-    if(filter.offset != undefined){
-      httpParams = httpParams.set('offset', filter.offset)
-    }
+  getDevicemanagersFirmwareFirmwareNo(firmwareName : string){ // Firmware에 대한 상세 정보 조회
+    var url = `${this.Url}/firmware/${firmwareName}`;
 
-    if(filter.limit != undefined){
-      httpParams = httpParams.set('limit', filter.limit)
-    }
-
-    return this.http.get<any>(url, { params : httpParams, observe: "response" })
+    return this.http.get<any>(url, {observe: "response" })
   }
 
   postDevicemanagersFirmwareFirmwareNo(firmwareNo : number){ // 펌웨어를 적용받는 차량 추가
@@ -52,8 +44,8 @@ export class DevicemanagerService {
     return this.http.post<any>(url, { observe: "response" })
   }
 
-  getDevicemanagersFirmwareFirmwareNoVin(firmwareNo : number, vin : string){ // Deprecate: 펌웨어를 적용받는 차량에 대한 상세 정보
-    var url = `${this.Url}/firmware/${firmwareNo}/${vin}`;
+  getDevicemanagersFirmwareFirmwareNameVehicles(firmwareName : string){ // 해당 펌웨어를 적용받는 차량 리스트
+    var url = `${this.Url}/firmware/${firmwareName}/vehicles`;
 
     return this.http.get<any>(url, { observe: "response" })
   }

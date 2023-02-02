@@ -10,25 +10,32 @@
   <div class="addInfoFilter">
     <div class="label">Firmware Name <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="firmware.meta.firmwareName">
     </div>
   </div>
 
   <div class="addInfoFilter">
     <div class="label">H/W Version <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="firmware.meta.hwVersion">
     </div>
   </div>
 
   <div class="addInfoFilter">
     <div class="label">F/W Version <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="firmware.meta.fwVersion">
     </div>
   </div>
 
   <div class="addInfoFilter">
+    <div class="label">Model Name <span>*</span> </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="firmware.meta.modelName">
+    </div>
+  </div>
+
+  <!--<div class="addInfoFilter">
     <div class="label">UPLOAD FIRMWARE FILE </div>
     <div class="value">
       <label for="ex_file">Upload</label>
@@ -40,7 +47,7 @@
     <div class="label">Upload State </div>
     <div class="value" style="color: gray;">   Empty    </div>
   </div>
-
+  -->
   <div class="btnBox">
     <div class="btn add" (click)="addOTAManagement()">
       OK

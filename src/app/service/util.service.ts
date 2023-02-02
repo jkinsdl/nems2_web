@@ -47,7 +47,21 @@ export class UtilService {
     return result;
   }
 
+  alertPopup(title : string, contents : string, alertType : number ){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : title,
+        alertContents : contents,
+        alertType : alertType,
+        popupType : this.constant.POPUP_CONFIRM,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
 
+      }
+    });
+  }
 
 
 }

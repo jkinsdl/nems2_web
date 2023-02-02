@@ -83,7 +83,6 @@ export class VehicleSettingsComponent implements OnInit {
           alertContents : "Do you want to delete the data ? (ICCID : " + this.gridApi.getSelectedRows()[0].iccid+ ")",
           alertType : this.constant.ALERT_WARNING,
           popupType : this.constant.POPUP_CHOICE,
-
         }
       });
       dialogRef.afterClosed().subscribe(result => {
