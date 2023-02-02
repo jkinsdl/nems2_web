@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-
+import { MatDialog } from '@angular/material/dialog';
+import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { CommonConstant } from '../util/common-constant';
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
-
-  constructor() { }
+  constant : CommonConstant = new CommonConstant()
+  constructor(
+    private dialog: MatDialog,
+  ) { }
 
   setDateFormat(date : Date) : string{
     let result : string = "";
@@ -42,4 +46,8 @@ export class UtilService {
 
     return result;
   }
+
+
+
+
 }

@@ -74,6 +74,8 @@ import { AbnormalVehicleRealTimeComponent } from './layout/control-panel/datect-
 import { AbnormalVehicleHistoryComponent } from './layout/control-panel/datect-error/abnormal-vehicle-history/abnormal-vehicle-history.component';
 import { OfflineVehicleRealTimeComponent } from './layout/control-panel/datect-error/offline-vehicle-real-time/offline-vehicle-real-time.component';
 import { OfflineVehicleHistoryComponent } from './layout/control-panel/datect-error/offline-vehicle-history/offline-vehicle-history.component';
+import { AddOTAManagementComponent } from './component/add-otamanagement/add-otamanagement.component';
+import { UploadOTAManagementComponent } from './component/upload-otamanagement/upload-otamanagement.component';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -146,6 +148,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     AbnormalVehicleHistoryComponent,
     OfflineVehicleRealTimeComponent,
     OfflineVehicleHistoryComponent,
+    AddOTAManagementComponent,
+    UploadOTAManagementComponent,
 
   ],
   imports: [

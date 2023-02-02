@@ -1,0 +1,46 @@
+<div class="uploadOtamanagementContainer">
+
+  <div class="popupTitle">
+    <div class="text">
+      FIRMWARE SETTING
+    </div>
+    <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">Firmware Name</div>
+    <div class="value">
+      <div class="value" style="color: gray;">   lqenew2111    </div>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">Explain</div>
+    <div class="value">
+      <div class="value" style="color: gray;">   if ota already exists, it will be delete except downloading state    </div>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">CSV MUST HAVE ONE COLUMN [VIN] </div>
+    <div class="value">
+      <label for="ex_file">Upload</label>
+      <input type="file" id="ex_file">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">Upload State </div>
+    <div class="value" style="color: gray;">   Empty    </div>
+  </div>
+
+  <div class="btnBox">
+    <div class="btn add" (click)="uploadOTAManagement()">
+      OK
+    </div>
+    <div class="btn cancel" (click)="close()">
+      Cancel
+    </div>
+  </div>
+
+</div>

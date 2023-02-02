@@ -1,15 +1,121 @@
 <div class="otaManagementContainer">
-  <div class="leftListLayout whiteBoardBoax">
-
+  <div class="leftLayout whiteBoardBoax">
     <div class="listBtnBox">
-      <div class="otaBtn add"></div>
-      <div class="otaBtn remove"></div>
-      <div class="otaBtn upload"></div>
+      <div class="otaBtn add" (click)="leftListAddModal()">
+        <img src="assets/icon/more.png">
+      </div>
+      <div class="otaBtn remove" (click)="leftListRemove()">
+        <img src="assets/icon/minus.png">
+      </div>
+      <div class="otaBtn upload" (click)="leftListUpload()">
+        <img src="assets/icon/upload.png">
+      </div>
     </div>
 
-    <div >
+    <div class="leftListBox">
+      <div class="listItem">
+        <div class="rowTitle" (click)="rowOpen()">lqenew2111</div>
+        <div class="rowContent" [ngClass]="{'openRowContent': selectRow}">
+          <div style="padding: 10px;">
+            <div class="rowFild">
+              <div class="contentLabel">
+                Reg.No :
+              </div>
+              <div class="contentValue">
+                1794591889
+              </div>
+            </div>
+            <div class="rowFild">
+              <div class="contentLabel">
+                H/W ver :
+              </div>
+              <div class="contentValue">
+                5.2.0
+              </div>
+            </div>
 
+            <div class="rowFild">
+              <div class="contentLabel">
+                F/W ver :
+              </div>
+              <div class="contentValue">
+                2.1.11
+              </div>
+            </div>
+            <div class="rowFild">
+              19/10/25 14:26:20
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="listItem">
+        <div class="rowTitle">4.7.7</div>
+      </div>
+      <div class="listItem">
+        <div class="rowTitle">SHOW ALL</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rightLayout whiteBoardBoax">
+    <div class="gridFilterBox">
+      <div class="filter">
+        <div class="label">VIN</div>
+        <div class="value">
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="btn">
+          Search
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="otaFilterBtn">
+          <img src="assets/icon/close.png">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="otaFilterBtn">
+          <img src="assets/icon/plus.png">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="otaFilterBtn">
+          <img src="assets/icon/minus2.png">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="otaFilterBtn">
+          <img src="assets/icon/check.png">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="otaFilterBtn">
+          <img src="assets/icon/check-box-empty.png">
+        </div>
+      </div>
+
+    </div>
+
+
+    <div style="height: calc(100% - 40px);">
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
     </div>
 
   </div>
+
 </div>
