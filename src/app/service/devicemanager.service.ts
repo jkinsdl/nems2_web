@@ -39,9 +39,9 @@ export class DevicemanagerService {
     return this.http.get<any>(url, {observe: "response" })
   }
 
-  postDevicemanagersFirmwareFirmwareNo(firmwareNo : number){ // 펌웨어를 적용받는 차량 추가
-    var url = `${this.Url}/firmware/${firmwareNo}`;
-    return this.http.post<any>(url, { observe: "response" })
+  postDevicemanagersFirmwareFirmwareNo(firmwareName : number, body : any){ // 펌웨어를 적용받는 차량 추가
+    var url = `${this.Url}/firmware/${firmwareName}/vehicles`;
+    return this.http.post<any>(url, JSON.stringify(body), { observe: "response" })
   }
 
   getDevicemanagersFirmwareFirmwareNameVehicles(firmwareName : string){ // 해당 펌웨어를 적용받는 차량 리스트
@@ -51,8 +51,8 @@ export class DevicemanagerService {
   }
 
 
-  deleteDevicemanagersFirmwareFirmwareNoVin(firmwareNo : number, vin : string){ // 펌웨어를 적용받는 차량 제거
-    var url = `${this.Url}/firmware/${firmwareNo}/${vin}`;
+  deleteDevicemanagersFirmwareFirmwareNameVehiclesVin(firmwareName : string, vin : string){ // 펌웨어를 적용받는 차량 제거
+    var url = `${this.Url}/firmware/${firmwareName}/vehicles/${vin}`;
 
     return this.http.delete<any>(url, { observe: "response" })
   }
@@ -124,6 +124,45 @@ export class DevicemanagerService {
   postTerminal(parameter : any){
     var url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/terminal";
     return this.http.post<any>(url, JSON.stringify(parameter), { observe: "response" })
+  }
+
+  getDevicemanagersVehicles(filter : SearchFilter){
+    var url = `${this.Url}/vehicles`;
+
+    let httpParams = new HttpParams()
+    if(filter.asc != undefined){
+      httpParams = httpParams.set('asc', filter.asc.join(", "))
+    }
+
+    if(filter.desc != undefined){
+      httpParams = httpParams.set('desc', filter.desc.join(", "))
+    }
+
+    if(filter.limit != undefined){
+      httpParams = httpParams.set('limit', filter.limit)
+    }
+
+    if(filter.offset != undefined){
+      httpParams = httpParams.set('offset', filter.offset)
+    }
+
+    if(filter.search != undefined){
+      httpParams = httpParams.set('search', filter.search)
+    }
+
+    if(filter.vin != undefined){
+      httpParams = httpParams.set('vin', filter.vin)
+    }
+
+    if(filter.firmware != undefined){
+      httpParams = httpParams.set('firmware', filter.firmware)
+    }
+
+    if(filter.configure != undefined){
+      httpParams = httpParams.set('configure', filter.configure)
+    }
+
+    return this.http.get<any>(url, { observe: "response" })
   }
 
 }

@@ -70,14 +70,15 @@
   margin-left: 20px;
 }
 
-.otaFilterBtn{
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  margin: 0 5px;
+.filter{
+  margin: 0;
 }
 
-.otaFilterBtn img{
-  width: 100%;
-  height: 100%;
+.filter img{
+  width: 20px;
+  height: 20px;
+}
+
+.imageDisabled{
+  opacity: 0.5;
 }

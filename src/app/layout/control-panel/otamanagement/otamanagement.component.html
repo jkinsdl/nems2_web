@@ -48,44 +48,39 @@
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text">
+          <input type="text" style="width:calc(100vh - 80px)" placeholder="vin" [(ngModel)]="inputVinText">
         </div>
       </div>
 
       <div class="filter">
-        <div class="btn">
-          Search
-        </div>
+        <button mat-icon-button (click)="inputVinTextClose()" [disabled]="inputVinText == ''">
+          <img src="assets/icon/close.png" [ngClass]="{'imageDisabled': inputVinText == ''}">
+        </button>
+
       </div>
 
       <div class="filter">
-        <div class="otaFilterBtn">
-          <img src="assets/icon/close.png">
-        </div>
+        <button mat-icon-button (click)="postDevicemanagersFirmwareFirmwareNo()" [disabled]="inputVinText == ''">
+          <img src="assets/icon/plus.png" [ngClass]="{'imageDisabled': inputVinText == ''}">
+        </button>
       </div>
 
       <div class="filter">
-        <div class="otaFilterBtn">
-          <img src="assets/icon/plus.png">
-        </div>
+        <button mat-icon-button (click)="deleteDevicemanagersFirmwareFirmwareNameVehiclesVin()" [disabled]="!gridApi || gridApi.getSelectedRows().length == 0">
+          <img src="assets/icon/minus2.png" [ngClass]="{'imageDisabled': !gridApi || gridApi.getSelectedRows().length == 0}">
+        </button>
       </div>
 
       <div class="filter">
-        <div class="otaFilterBtn">
-          <img src="assets/icon/minus2.png">
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="otaFilterBtn">
+        <button mat-icon-button>
           <img src="assets/icon/check.png">
-        </div>
+        </button>
       </div>
 
       <div class="filter">
-        <div class="otaFilterBtn">
+        <button mat-icon-button>
           <img src="assets/icon/check-box-empty.png">
-        </div>
+        </button>
       </div>
     </div>
 

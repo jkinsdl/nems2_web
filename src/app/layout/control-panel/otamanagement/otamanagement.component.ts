@@ -22,8 +22,6 @@ export class OTAManagementComponent implements OnInit {
     private dialog: MatDialog,
   ) { }
 
-
-
   gridApi!: GridApi;
   selectNodeID : string = null;
   rowSelection = 'multiple';
@@ -32,7 +30,9 @@ export class OTAManagementComponent implements OnInit {
   endDate :any
 
   firmwareVehiclesColumn: ColDef[] = [
-    { field: 'vin', headerName: 'VIN' },
+    { field: 'vin', headerName: 'VIN',
+    headerCheckboxSelection: true,
+    checkboxSelection: true, },
     { field: 'currentState', headerName: 'currentState'},
     { field: 'updatedAt', headerName : 'updatedAt'}
   ];
@@ -53,9 +53,21 @@ export class OTAManagementComponent implements OnInit {
 
   selectFirmware : any = {};
 
+  inputVinText : string = ""
+
   ngOnInit(): void {
     //this.getOtaFirmware()
     this.getDevicemanagersFirmware()
+    this.getDevicemanagersVehicles()
+
+  }
+
+  getDevicemanagersVehicles() {
+    this.devicemanageService.getDevicemanagersVehicles(new SearchFilter).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
   getDevicemanagersFirmware(){
@@ -135,14 +147,54 @@ export class OTAManagementComponent implements OnInit {
 
   rowOpen(item : any){
     this.selectFirmware = item
-
-
-
     this.devicemanageService.getDevicemanagersFirmwareFirmwareNameVehicles(item.firmwareName).subscribe(res=>{
       console.log(res)
       this.firmwareVehiclesList = res.body
     },error=>{
       console.log(error)
     })
+  }
+
+  inputVinTextClose(){
+    this.inputVinText = ""
+  }
+
+  postDevicemanagersFirmwareFirmwareNo(){
+
+    let parameter = {
+      vin : this.inputVinText
+    }
+    this.devicemanageService.postDevicemanagersFirmwareFirmwareNo(this.selectFirmware.firmwareName,parameter).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  deleteDevicemanagersFirmwareFirmwareNameVehiclesVin(){
+    console.log(this.gridApi.getSelectedRows())
+
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete OTA info",
+        alertContents : "Do you want to delete the data?  (Number of info : " + this.gridApi.getSelectedRows().length+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        let checkRowList : any[] = this.gridApi.getSelectedRows()
+
+        for(let i = 0; i < checkRowList.length; i++){
+          let vin = checkRowList[i].vin
+          this.devicemanageService.deleteDevicemanagersFirmwareFirmwareNameVehiclesVin(this.selectFirmware.firmwareName,vin).subscribe(res=>{
+            console.log(res)
+          },error=>{
+            console.log(error)
+          })
+        }
+      }
+    });
   }
 }

@@ -87,6 +87,8 @@ import { RemoteControlStateComponent } from './layout/control-panel/remote-contr
 import { ConfigureComponent } from './layout/control-panel/remote-control/configure/configure.component';
 import { AddRegisterRemoteSettingComponent } from './component/add-register-remote-setting/add-register-remote-setting.component';
 import { AddRemoteParameterConfigurationInfoComponent } from './component/add-remote-parameter-configuration-info/add-remote-parameter-configuration-info.component';
+import { MatIconModule } from '@angular/material/icon'
+
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: 'l, LTS'
@@ -193,6 +195,7 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     ReactiveFormsModule,
     MatInputModule,
     MatSlideToggleModule,
+    MatIconModule,
   ],
   providers: [
     {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS},

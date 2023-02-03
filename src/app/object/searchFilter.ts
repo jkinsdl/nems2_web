@@ -35,4 +35,8 @@ export class SearchFilter{
 
   level : string
   state : string
+
+  search : string
+  firmware : string
+  configure : string
 }
