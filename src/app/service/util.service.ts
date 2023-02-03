@@ -64,4 +64,19 @@ export class UtilService {
   }
 
 
+  getBase64(file : any) {
+    return new Promise<string | ArrayBuffer> ( (resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let result = reader.result
+
+        if(typeof result == "string"){
+          result = result.substr((result.indexOf("base64,")+7))
+        }
+        resolve(result);
+      }
+      reader.onerror = error => reject(error);
+    });
+  }
 }

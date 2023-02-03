@@ -60,8 +60,8 @@
       </div>
 
       <div class="filter">
-        <button mat-icon-button (click)="postDevicemanagersFirmwareFirmwareNo()" [disabled]="inputVinText == ''">
-          <img src="assets/icon/plus.png" [ngClass]="{'imageDisabled': inputVinText == ''}">
+        <button mat-icon-button (click)="postDevicemanagersFirmwareFirmwareNo()" [disabled]="inputVinText == '' || selectFirmware == null">
+          <img src="assets/icon/plus.png" [ngClass]="{'imageDisabled': inputVinText == ''  || selectFirmware == null}">
         </button>
       </div>
 

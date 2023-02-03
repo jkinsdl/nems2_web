@@ -35,4 +35,10 @@ export class UserService {
 
   }
 
+  getUsersProfile(){
+    var url = `${this.Url}/profile`;
+
+    return this.http.get<any>(url, {observe: "response" })
+  }
+
 }

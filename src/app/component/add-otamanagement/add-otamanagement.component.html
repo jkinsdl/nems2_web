@@ -31,19 +31,25 @@
   <div class="addInfoFilter">
     <div class="label">Model Name <span>*</span> </div>
     <div class="value">
-      <input type="text" [(ngModel)]="firmware.meta.modelName">
-    </div>
-  </div>
 
-  <!--<div class="addInfoFilter">
-    <div class="label">UPLOAD FIRMWARE FILE </div>
-    <div class="value">
-      <label for="ex_file">Upload</label>
-      <input type="file" id="ex_file">
+      <select [(ngModel)]="firmware.meta.modelName">
+        <option *ngFor="let model of modelList" [value]="model.modelName">{{model.modelName}}</option>
+      </select>
     </div>
   </div>
 
   <div class="addInfoFilter">
+    <div class="label">UPLOAD FIRMWARE FILE </div>
+    <div class="value">
+      <label for="file">Upload</label>
+      <input type="file" id="file" (change)="fileChang($event)">
+      <div style="min-width: 200px; margin-left: 15px; word-wrap: break-word;">
+        {{selectFileName}}
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="addInfoFilter">
     <div class="label">Upload State </div>
     <div class="value" style="color: gray;">   Empty    </div>
   </div>

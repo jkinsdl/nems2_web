@@ -17,6 +17,9 @@ export class UiService {
   listBtnSubject = new Subject();
   listBtn$ = this.listBtnSubject.asObservable()
 
+  alertMessageSubject = new Subject();
+  alertMessage$ = this.alertMessageSubject.asObservable()
+
   setMenuMode(mode : number){
     this.menuModeSubject.next(mode)
   }
@@ -28,5 +31,11 @@ export class UiService {
   clickListBtn(){
     this.listBtnSubject.next(null)
   }
+
+  setAlertMessage(message : string){
+    this.alertMessageSubject.next(message)
+  }
+
+
 
 }

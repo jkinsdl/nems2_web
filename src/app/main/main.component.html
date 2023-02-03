@@ -1,5 +1,4 @@
 <div class="mainContainer">
-
   <div class="titleManuContainer">
     <div class="titleLogoBox">
       <img src="assets/icon/nems_logo.png">
@@ -184,4 +183,12 @@
       </div>
     </div>
   </div>
+  <div class="alertBox" [ngClass]="{'alertMassageOpen': messageOn}">
+    <div class="alertMassage" >
+      {{alertMessage}}
+    </div>
+  </div>
 </div>
+
+
+

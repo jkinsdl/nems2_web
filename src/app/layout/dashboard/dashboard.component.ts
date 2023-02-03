@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UserService } from 'src/app/service/user.service';
 
 
 @Component({
@@ -23,12 +24,10 @@ export class DashboardComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private uiService : UiService,
-    private statisticsService : StatisticsService
+    private statisticsService : StatisticsService,
+    private userService : UserService
   ) { }
-
-
   menuMode$ : Subscription
-
 
   map: mapboxgl.Map;
   //style = 'mapbox://styles/mapbox/streets-v11';
@@ -651,6 +650,13 @@ export class DashboardComponent implements OnInit {
     //this.getStatisticsRegistrationSummary()
     this.getStatisticsVehiclesSummary()
     //this.getStatisticsWarningsSummary()
+
+    this.userService.getUsersProfile().subscribe(res=>{
+      console.log(res)
+      localStorage.setItem('user', JSON.stringify(res.body));
+    },error=>{
+      console.log(error)
+    })
   }
 
   getStatisticsCurrent(){

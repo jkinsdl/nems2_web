@@ -10,113 +10,113 @@
   <div class="addInfoFilter">
     <div class="label">configure name <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="configureName">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">car local save cycle (ms) </div>
+    <div class="label">Car Local Save Period </div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.carLocalSavePeriod">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">normal transmission cycle (ses)</div>
+    <div class="label">Normal Submit Period</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.normalSubmitPeriod">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">warning transmission cycle (ms)</div>
+    <div class="label">Warning Submit Period</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.warningSubmitPeriod">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">manage platform name</div>
+    <div class="label">Manage Platform Name</div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="configureData.managePlatformName">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">manage platform port</div>
+    <div class="label">Manage Platform Port</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.managePlatformPort">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">hardware Version(sw)</div>
+    <div class="label">hw Version</div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="configureData.hwVersion">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">firmware Version</div>
+    <div class="label">fw Version</div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="configureData.fwVersion">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">car heartBeat cycle (ses) </div>
+    <div class="label">Car Heart Beat Period</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.carHeartBeatPeriod">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">car response timeout (ses) </div>
+    <div class="label">Car Response Timeout</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.carResponseTimeout">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">platform response timeout (ses) </div>
+    <div class="label">Platform Response Timeout</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.platformResponseTimeout">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">next login interval (ses)</div>
+    <div class="label">Next Login Interval</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.nextLoginInterval">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">public platform name </div>
+    <div class="label">Public Platform Name</div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="configureData.publicPlatformName">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">public platform port</div>
+    <div class="label">Public Platform Port</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.publicPlatformPort">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">monitoring</div>
+    <div class="label">Monitoring</div>
     <div class="value">
-      <input type="text">
+      <input type="number" [(ngModel)]="configureData.monitoring">
     </div>
   </div>
 
   <div class="btnBox">
-    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addConfiguration()">
       Add
     </div>
-    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (click)="modifyConfiguration()">
       Modify
     </div>
     <div class="btn cancel" (click)="close()">

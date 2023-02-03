@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';
+import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -14,7 +16,8 @@ export class AddOTAManagementComponent implements OnInit {
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AddOTAManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private vehiclemanagersService : VehiclemanagerService
   ) { }
 
   firmware : any = {
@@ -27,7 +30,26 @@ export class AddOTAManagementComponent implements OnInit {
     contents : ""
   }
 
+
+
+
+
+
+  selectFileName : string = ""
+
+  modelList : any[] = []
+
   ngOnInit(): void {
+    this.getVehiclemanagerModel()
+  }
+
+  getVehiclemanagerModel(){
+    this.vehiclemanagersService.getVehiclemanagerModel(new SearchFilter).subscribe(res=>{
+      console.log(res)
+      this.modelList = res.body.modelList
+    },error=>{
+      console.log(error)
+    })
   }
 
   addOTAManagement(){
@@ -57,6 +79,17 @@ export class AddOTAManagementComponent implements OnInit {
 
   close(){
     this.dialogRef.close()
+  }
+
+  async fileChang(e : any){
+    console.log(e.target.files[0])
+
+    this.selectFileName = e.target.files[0].name
+
+    let base64 = await this.utilService.getBase64(e.target.files[0])
+
+    this.firmware.contents = base64
+
   }
 
 }

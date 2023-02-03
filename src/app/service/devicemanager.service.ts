@@ -39,9 +39,15 @@ export class DevicemanagerService {
     return this.http.get<any>(url, {observe: "response" })
   }
 
+  deleteDevicemanagersFirmwareFirmwareName(firmwareName : string){
+    var url = `${this.Url}/firmware/${firmwareName}`;
+
+    return this.http.delete<any>(url, {observe: "response" })
+  }
+
   postDevicemanagersFirmwareFirmwareNo(firmwareName : number, body : any){ // 펌웨어를 적용받는 차량 추가
     var url = `${this.Url}/firmware/${firmwareName}/vehicles`;
-    return this.http.post<any>(url, JSON.stringify(body), { observe: "response" })
+    return this.http.put<any>(url, JSON.stringify(body), { observe: "response" })
   }
 
   getDevicemanagersFirmwareFirmwareNameVehicles(firmwareName : string){ // 해당 펌웨어를 적용받는 차량 리스트
@@ -58,14 +64,26 @@ export class DevicemanagerService {
   }
 
   getDevicemanagersParameter(filter : SearchFilter,){ // Parameter Configuration 목록 조회
-    var url = `${this.Url}/parameter`;
+    var url = `${this.Url}/parameters`;
     let httpParams = new HttpParams()
-    if(filter.offset != undefined){
-      httpParams = httpParams.set('offset', filter.offset)
+    if(filter.asc != undefined){
+      httpParams = httpParams.set('asc', filter.asc.join(", "))
+    }
+
+    if(filter.desc != undefined){
+      httpParams = httpParams.set('desc', filter.desc.join(", "))
     }
 
     if(filter.limit != undefined){
       httpParams = httpParams.set('limit', filter.limit)
+    }
+
+    if(filter.search != undefined){
+      httpParams = httpParams.set('search', filter.search)
+    }
+
+    if(filter.offset != undefined){
+      httpParams = httpParams.set('offset', filter.offset)
     }
 
     return this.http.get<any>(url, {params : httpParams,  observe: "response" })
@@ -73,13 +91,48 @@ export class DevicemanagerService {
 
   getDevicemanagersParameterVehicle(){ // TODO: 필요 여부 확인 후 삭제 차량 - 설정 관계 정보 조회
     var url = `${this.Url}/parameter/vehicle`;
-
     return this.http.get<any>(url, { observe: "response" })
   }
 
-  putDevicemanagersParameterVehicle(parameter : any){ // 차량에 적용된 설정을 다른 설정으로 변경
-    var url = `${this.Url}/parameter/vehicle`;
-    return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
+  deleteDevicemanagersParametersConfigureName(configureName : string){ // Parameter Configuration 삭제
+    var url = `${this.Url}/parameters/${configureName}`;
+    return this.http.delete<any>(url,  { observe: "response" })
+  }
+
+  putDevicemanagersParameterVehicle(configureName : string, body : any){ // Parameter Configuration 수정 or 추가
+    var url = `${this.Url}/parameters/${configureName}`;
+    return this.http.put<any>(url, JSON.stringify(body), { observe: "response" })
+  }
+
+  getDevicemanagersParametersConfigureNameVehicles(configureName : string, filter : SearchFilter){ // 설정과 관련된 차량 리스트
+    var url = `${this.Url}/parameters/${configureName}/vehicles`;
+    let httpParams = new HttpParams()
+    if(filter.asc != undefined){
+      httpParams = httpParams.set('asc', filter.asc.join(", "))
+    }
+
+    if(filter.desc != undefined){
+      httpParams = httpParams.set('desc', filter.desc.join(", "))
+    }
+
+    if(filter.limit != undefined){
+      httpParams = httpParams.set('limit', filter.limit)
+    }
+
+    if(filter.search != undefined){
+      httpParams = httpParams.set('search', filter.search)
+    }
+
+    if(filter.offset != undefined){
+      httpParams = httpParams.set('offset', filter.offset)
+    }
+
+    return this.http.get<any>(url, {params : httpParams, observe: "response" })
+  }
+
+  putDevicemanagersParametersConfigureNameVehicles(configureName : string, body : any){
+    var url = `${this.Url}/parameters/${configureName}/vehicles`;
+    return this.http.put<any>(url, JSON.stringify(body), { observe: "response" })
   }
 
   deleteDevicemanagersParameterVehicleID(filter : SearchFilter){// 차량 - 설정 관계 삭제

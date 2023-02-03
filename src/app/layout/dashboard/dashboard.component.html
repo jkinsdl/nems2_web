@@ -113,14 +113,11 @@
   <div class="map" id="map"></div>
 
   <div class="dashBorderLeft">
-
     <div class="mapBoundariesNavigator">
-
       <div class="mapBoundaries" [ngClass]="{'select': currentBoundaries == 'country_territory'}" (click)="changeBoundaries('country_territory')">Country</div>
       <div class="mapBoundaries" [ngClass]="{'select': currentBoundaries == 'province'}" (click)="changeBoundaries('province')">Province</div>
       <div class="mapBoundaries" [ngClass]="{'select': currentBoundaries == 'sub_prefecture'}" (click)="changeBoundaries('sub_prefecture')">Sub Prefecture</div>
       <div class="mapBoundaries" [ngClass]="{'select': currentBoundaries == 'county'}" (click)="changeBoundaries('county')">County</div>
-
     </div>
 
     <div class="dashboardInfoCountContainer">

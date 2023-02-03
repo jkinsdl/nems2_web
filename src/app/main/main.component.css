@@ -280,3 +280,27 @@
 .enableDisableBtnCentor{
   width: 80% !important;
 }
+
+.alertBox{
+  width: 100%;
+  position: absolute;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
+}
+
+.alertMassage{
+  padding: 5px 10px;
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  border-radius: 10px;
+
+}
+
+.alertMassageOpen{
+  max-height: 100px;
+}

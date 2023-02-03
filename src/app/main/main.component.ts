@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UiService } from '../service/ui.service';
-
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private uiService :UiService
+    private uiService :UiService,
   ) { }
 
   language : string = "en"
@@ -20,6 +20,12 @@ export class MainComponent implements OnInit {
   subTitle : string = ""
 
   menuMode : number = 1;
+
+  alertMessage : string = ""
+
+  alertMessage$ : Subscription
+
+  messageOn : boolean = false
 
   ngOnInit(): void {
     if(this.router.url.indexOf("dashboard") > -1){
@@ -42,7 +48,13 @@ export class MainComponent implements OnInit {
       this.subTitle = "DATA FORWARDING"
     }
 
-
+    this.alertMessage$ = this.uiService.alertMessage$.subscribe((message:string) =>{
+      this.alertMessage = message;
+      this.messageOn = true
+      setTimeout(()=>{
+        this.messageOn = false
+      },5000)
+    })
   }
 
   signOut(){
@@ -76,6 +88,10 @@ export class MainComponent implements OnInit {
 
   clickList(){
     this.uiService.clickListBtn()
+  }
+
+  alertMassageOpen(){
+
   }
 
 }

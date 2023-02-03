@@ -78,6 +78,13 @@
   opacity: 0.5;
 }
 
+.gridControlBox .copy {
+  background-color: rgb(0, 163, 0);
+  opacity: 0.5;
+}
+
 .gridControlBox .selectItem{
   opacity: 1;
 }
+
+

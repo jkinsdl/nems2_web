@@ -8,6 +8,7 @@ import { CommonConstant } from 'src/app/util/common-constant';
 import { UploadOTAManagementComponent } from 'src/app/component/upload-otamanagement/upload-otamanagement.component';
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-otamanagement',
@@ -20,6 +21,7 @@ export class OTAManagementComponent implements OnInit {
     private otaService : OtaService,
     private devicemanageService : DevicemanagerService,
     private dialog: MatDialog,
+    private uiService : UiService
   ) { }
 
   gridApi!: GridApi;
@@ -51,14 +53,14 @@ export class OTAManagementComponent implements OnInit {
     link : {}
   }
 
-  selectFirmware : any = {};
+  selectFirmware : any = null;
 
   inputVinText : string = ""
 
   ngOnInit(): void {
     //this.getOtaFirmware()
     this.getDevicemanagersFirmware()
-    this.getDevicemanagersVehicles()
+    //this.getDevicemanagersVehicles()
 
   }
 
@@ -107,9 +109,18 @@ export class OTAManagementComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         console.log(result)
-
-        this.devicemanageService.postDevicemanagersFirmware(result).subscribe(res=>{
+        let body : any[] =[]
+        body=[
+          {
+              meta: result.meta
+          },
+          {
+              contents: result.contents
+          }
+        ]
+        this.devicemanageService.postDevicemanagersFirmware(body).subscribe(res=>{
           console.log(res)
+          this.getDevicemanagersFirmware()
         },error=>{
           console.log(error)
         })
@@ -119,6 +130,10 @@ export class OTAManagementComponent implements OnInit {
   }
 
   leftListRemove(){
+    if(this.selectFirmware.firmwareName == undefined){
+      return
+    }
+
     const dialogRef = this.dialog.open( AlertPopupComponent, {
       data:{
         alertTitle : "Delete Firmware",
@@ -129,10 +144,12 @@ export class OTAManagementComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-
+        this.deleteDevicemanagersFirmwareFirmwareName()
       }
     });
   }
+
+
 
   leftListUpload(){
     const dialogRef = this.dialog.open( UploadOTAManagementComponent, {
@@ -147,11 +164,16 @@ export class OTAManagementComponent implements OnInit {
 
   rowOpen(item : any){
     this.selectFirmware = item
-    this.devicemanageService.getDevicemanagersFirmwareFirmwareNameVehicles(item.firmwareName).subscribe(res=>{
+    this.getDevicemanagersFirmwareFirmwareNameVehicles()
+  }
+
+  getDevicemanagersFirmwareFirmwareNameVehicles(){
+    this.devicemanageService.getDevicemanagersFirmwareFirmwareNameVehicles(this.selectFirmware.firmwareName).subscribe(res=>{
       console.log(res)
       this.firmwareVehiclesList = res.body
     },error=>{
       console.log(error)
+      this.firmwareVehiclesList = []
     })
   }
 
@@ -160,12 +182,24 @@ export class OTAManagementComponent implements OnInit {
   }
 
   postDevicemanagersFirmwareFirmwareNo(){
-
     let parameter = {
       vin : this.inputVinText
     }
     this.devicemanageService.postDevicemanagersFirmwareFirmwareNo(this.selectFirmware.firmwareName,parameter).subscribe(res=>{
       console.log(res)
+    },error=>{
+      console.log(error)
+
+      this.uiService.setAlertMessage("does not exist : " + this.inputVinText)
+
+    })
+  }
+
+  deleteDevicemanagersFirmwareFirmwareName(){
+    this.devicemanageService.deleteDevicemanagersFirmwareFirmwareName(this.selectFirmware.firmwareName).subscribe(res=>{
+      console.log(res)
+      this.getDevicemanagersFirmware()
+      this.selectFirmware = {}
     },error=>{
       console.log(error)
     })
@@ -190,6 +224,9 @@ export class OTAManagementComponent implements OnInit {
           let vin = checkRowList[i].vin
           this.devicemanageService.deleteDevicemanagersFirmwareFirmwareNameVehiclesVin(this.selectFirmware.firmwareName,vin).subscribe(res=>{
             console.log(res)
+            if(i == checkRowList.length-1){
+              this.getDevicemanagersFirmwareFirmwareNameVehicles()
+            }
           },error=>{
             console.log(error)
           })

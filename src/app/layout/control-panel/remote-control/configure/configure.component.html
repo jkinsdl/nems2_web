@@ -1,28 +1,29 @@
 <div class="gridControlBox">
-  <div class="btn add" (click)="addManagement()">
+  <div class="btn add" (click)="addConfigure()">
     Add
   </div>
-  <div class="btn add" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="modifyManagement()">
+  <div class="btn copy" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}">
     Copy
   </div>
-  <div class="btn modify" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="modifyManagement()">
+  <div class="btn modify" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="modifyConfigure()">
     Modify
   </div>
-  <div class="btn delete" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="deleteManagement()">
+  <div class="btn delete" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="deleteConfigure()">
     Delete
   </div>
 </div>
 
 <ag-grid-angular style="width: 100%; height: calc(50% - 100px)"
   class="ag-theme-alpine"
-  [rowData]="managementRowData"
-  [columnDefs]="managementColumnDefs"
+  [rowData]="devicemanagersParameter.entities"
+  [columnDefs]="configurationColumnDefs"
   [rowSelection]="rowSelection"
-  (gridReady)="onServerGridReady($event)">
+  (gridReady)="onServerGridReady($event)"
+  (rowClicked)="onConfigureRowClicked($event)">
 </ag-grid-angular>
 
 <div class="gridControlBox">
-  <div class="btn add" (click)="addMapping()">
+  <div class="btn add" [ngClass]="{'disable': selectConfigureRow == null}" (click)="addVehicle()">
     Add
   </div>
   <div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
@@ -35,7 +36,7 @@
 
 <ag-grid-angular style="width: 100%; height: calc(50% - 100px)"
   class="ag-theme-alpine"
-  [rowData]="mappingRowData"
+  [rowData]="devicemanagersParameterVehicle.entities"
   [columnDefs]="mappingColumnDefs"
   [rowSelection]="rowSelection"
   (gridReady)="onMappingGridReady($event)">
