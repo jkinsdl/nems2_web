@@ -14,7 +14,7 @@ import { SingleStatisticsComponent } from './layout/statistics/single-statistics
 import { SearchDataComponent } from './layout/statistics/search-data/search-data.component';
 import { UserAccountComponent } from './layout/control-panel/user-account/user-account.component';
 import { VehicleSettingsComponent } from './layout/control-panel/vehicle-settings/vehicle-settings.component';
-import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform-management/public-platform-management.component';
+import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform/public-platform-management/public-platform-management.component';
 import { ShanghaiInfoComponent } from './layout/control-panel/shanghai-info/shanghai-info.component';
 import { ServerLogsComponent } from './layout/control-panel/server-logs/server-logs.component';
 import { OTAInformationComponent } from './layout/control-panel/otainformation/otainformation.component';
@@ -87,7 +87,9 @@ import { RemoteControlStateComponent } from './layout/control-panel/remote-contr
 import { ConfigureComponent } from './layout/control-panel/remote-control/configure/configure.component';
 import { AddRegisterRemoteSettingComponent } from './component/add-register-remote-setting/add-register-remote-setting.component';
 import { AddRemoteParameterConfigurationInfoComponent } from './component/add-remote-parameter-configuration-info/add-remote-parameter-configuration-info.component';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
+import { PublicPlatformForSpecificPeriodComponent } from './layout/control-panel/public-platform/public-platform-for-specific-period/public-platform-for-specific-period.component';
+import { PublicPlatformComponent } from './layout/control-panel/public-platform/public-platform.component'
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -166,6 +168,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     ConfigureComponent,
     AddRegisterRemoteSettingComponent,
     AddRemoteParameterConfigurationInfoComponent,
+    PublicPlatformForSpecificPeriodComponent,
+    PublicPlatformComponent,
 
   ],
   imports: [

@@ -1,0 +1,20 @@
+<div class="publicPlatformContainer">
+
+  <div class="publicPlatformLayout whiteBoardBoax">
+
+    <div class="tabListContainer">
+      <div class="tab" [ngClass]="{select: router.url.indexOf('publicPlatformManagement') > -1 }" [routerLink]="['/main/control/publicPlatform/publicPlatformManagement']">
+        Public Platform Management
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('publicPlatformForSpecificPeriod') > -1 }" [routerLink]="['/main/control/publicPlatform/publicPlatformForSpecificPeriod']">
+        Public Platform For Specific Period
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+</div>

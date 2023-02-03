@@ -1,0 +1,51 @@
+<div class="publicPlatformManagementContainer">
+
+  <div class="publicPlatformManagementLayout">
+    <div class="gridControlBox">
+      <div class="btn add" (click)="addManagement()">
+        Add
+      </div>
+      <div class="btn modify" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="modifyManagement()">
+        Modify
+      </div>
+      <div class="btn delete" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="deleteManagement()">
+        Delete
+      </div>
+    </div>
+
+    <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"
+      class="ag-theme-alpine"
+      [rowData]="managementRowData"
+      [columnDefs]="managementColumnDefs"
+      [rowSelection]="rowSelection"
+      (gridReady)="onServerGridReady($event)">
+    </ag-grid-angular>
+
+  </div>
+
+  <div class="publicPlatformMappingLayout">
+
+    <div class="gridControlBox">
+      <div class="btn add" (click)="addMapping()">
+        Add
+      </div>
+      <div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
+        Modify
+      </div>
+      <div class="btn delete" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
+        Delete
+      </div>
+    </div>
+
+    <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"
+      class="ag-theme-alpine"
+      [rowData]="mappingRowData"
+      [columnDefs]="mappingColumnDefs"
+      [rowSelection]="rowSelection"
+      (gridReady)="onMappingGridReady($event)">
+    </ag-grid-angular>
+  </div>
+
+
+</div>
+

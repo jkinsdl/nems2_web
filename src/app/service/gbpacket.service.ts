@@ -63,8 +63,8 @@ export class GbpacketService {
     return this.http.get<any>(url, { params : httpParams, observe: "response" })
   }
 
-  getForwardingId(filter : SearchFilter){ // 지정된 Packet 조회
-    var url = `${this.Url}/packet/${filter.vin}`;
+  getForwardingId(filter : SearchFilter, vin : string){ // 지정된 Packet 조회
+    var url = `${this.Url}/packet/${vin}`;
     let httpParams = new HttpParams()
     if(filter.serverTime != undefined){
       httpParams = httpParams.set("serverTime", filter.serverTime)

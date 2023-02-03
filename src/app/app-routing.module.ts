@@ -14,7 +14,9 @@ import { OfflineVehicleHistoryComponent } from './layout/control-panel/datect-er
 import { OfflineVehicleRealTimeComponent } from './layout/control-panel/datect-error/offline-vehicle-real-time/offline-vehicle-real-time.component';
 import { OTAInformationComponent } from './layout/control-panel/otainformation/otainformation.component';
 import { OTAManagementComponent } from './layout/control-panel/otamanagement/otamanagement.component';
-import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform-management/public-platform-management.component';
+import { PublicPlatformForSpecificPeriodComponent } from './layout/control-panel/public-platform/public-platform-for-specific-period/public-platform-for-specific-period.component';
+import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform/public-platform-management/public-platform-management.component';
+import { PublicPlatformComponent } from './layout/control-panel/public-platform/public-platform.component';
 import { PushAlarmComponent } from './layout/control-panel/push-alarm/push-alarm.component';
 import { ConfigureComponent } from './layout/control-panel/remote-control/configure/configure.component';
 import { RemoteControlStateComponent } from './layout/control-panel/remote-control/remote-control-state/remote-control-state.component';
@@ -83,7 +85,10 @@ const routes: Routes = [
     { path: 'control', component: ControlPanelComponent, children:[
       { path: 'userAccount', component: UserAccountComponent },
       { path: 'vehicleSettings', component: VehicleSettingsComponent },
-      { path: 'publicPlatformManagement', component: PublicPlatformManagementComponent },
+      { path: 'publicPlatform', component: PublicPlatformComponent, children:[
+        { path: 'publicPlatformManagement', component: PublicPlatformManagementComponent },
+        { path: 'publicPlatformForSpecificPeriod', component: PublicPlatformForSpecificPeriodComponent },
+      ]},
       { path: 'shanghaiInfo', component: ShanghaiInfoComponent },
       { path: 'serverLogs', component: ServerLogsComponent },
       { path: 'otaInformation', component: OTAInformationComponent },
