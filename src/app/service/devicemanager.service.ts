@@ -215,7 +215,7 @@ export class DevicemanagerService {
       httpParams = httpParams.set('configure', filter.configure)
     }
 
-    return this.http.get<any>(url, { observe: "response" })
+    return this.http.get<any>(url, {params : httpParams, observe: "response" })
   }
 
 }

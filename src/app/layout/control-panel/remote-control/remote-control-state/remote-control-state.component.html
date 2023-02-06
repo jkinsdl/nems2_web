@@ -2,12 +2,26 @@
   <div class="filter">
     <div class="label">VIN</div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getDevicemanagersVehicles()">
     </div>
   </div>
 
   <div class="filter">
-    <div class="btn">
+    <div class="label">firmware</div>
+    <div class="value">
+      <input type="text" [(ngModel)]="searchFilter.firmware" (keydown.enter)="getDevicemanagersVehicles()">
+    </div>
+  </div>
+
+  <div class="filter">
+    <div class="label">configure</div>
+    <div class="value">
+      <input type="text" [(ngModel)]="searchFilter.configure" (keydown.enter)="getDevicemanagersVehicles()">
+    </div>
+  </div>
+
+  <div class="filter">
+    <div class="btn" (click)="getDevicemanagersVehicles()">
       Search
     </div>
   </div>

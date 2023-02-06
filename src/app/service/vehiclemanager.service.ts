@@ -73,7 +73,7 @@ export class VehiclemanagerService {
     }
 
     if(filter.zipCode != undefined){
-      httpParams = httpParams.set("zipCode", filter.zipCode)
+      httpParams = httpParams.set("zipCode", filter.zipCode.toString())
     }
 
     if(filter.limit != undefined){

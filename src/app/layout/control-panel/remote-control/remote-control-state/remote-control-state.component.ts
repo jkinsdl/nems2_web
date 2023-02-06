@@ -51,12 +51,14 @@ export class RemoteControlStateComponent implements OnInit {
 
   rowData : any[] = [];
 
+  searchFilter : SearchFilter = new SearchFilter()
+
   ngOnInit(): void {
     this.getDevicemanagersVehicles()
   }
 
   getDevicemanagersVehicles(){
-    this.devicemanagersService.getDevicemanagersVehicles(new SearchFilter()).subscribe(res=>{
+    this.devicemanagersService.getDevicemanagersVehicles(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.devicemanagersVehicles = res.body
       this.rowData = []
