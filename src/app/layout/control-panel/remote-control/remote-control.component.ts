@@ -17,6 +17,4 @@ export class RemoteControlComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-
 }

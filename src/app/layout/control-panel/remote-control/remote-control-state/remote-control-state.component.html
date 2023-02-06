@@ -15,11 +15,15 @@
 
 
 <div style="width: 100%; height: calc(100% - 80px)">
+
   <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
     class="ag-theme-alpine"
     [rowData]="rowData"
     [columnDefs]="columnDefs"
     [rowSelection]="rowSelection"
+    [alwaysShowHorizontalScroll]="true"
+    [alwaysShowVerticalScroll]="true"
     (gridReady)="onGridReady($event)">
   </ag-grid-angular>
+
 </div>

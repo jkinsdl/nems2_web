@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 
 @Component({
   selector: 'app-remote-control-state',
@@ -8,57 +10,95 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 })
 export class RemoteControlStateComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private devicemanagersService : DevicemanagerService
+  ) { }
 
   columnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN' },
-    { field: 'date', headerName: 'date'},
-    { field: 'state', headerName : 'state'},
-    { field: 'car_local_save_cycle', headerName : 'car local save cycle(ms)'},
-    { field: 'normal_transmission_cycle', headerName : 'normal transmission cycle (sec)'},
-    { field: 'warning_transmission_cycle', headerName : 'warning transmission cycle (ms)'},
-    { field: 'manage_platform_name', headerName : 'manage platform name'},
-    { field: 'manage_platform_port', headerName : 'manage platform port'},
-    { field: 'hardware_version', headerName : 'hardware Version(sw)'},
-    { field: 'firmware_version', headerName : 'firmware Version'},
-    { field: 'car_heartbeat_cycle', headerName : 'car heartBeat cycle (sec)'},
-    { field: 'car_response_timeout', headerName : 'car response timeout (sec)'},
-    { field: 'platform_response_timeout', headerName : 'platform response timeout (sec)'},
-    { field: 'next_login_interval', headerName : 'next login interval (sec)'},
-    { field: 'public_platform_name', headerName : 'public platform port'},
+    { field: 'carHeartBeatPeriod', headerName: 'carHeartBeatPeriod'},
+    { field: 'carLocalSavePeriod', headerName : 'carLocalSavePeriod'},
+    { field: 'carResponseTimeout', headerName : 'carResponseTimeout'},
+    { field: 'configureName', headerName : 'configureName'},
+    { field: 'configureFwVersion', headerName : 'configureFwVersion'},
+    { field: 'configureHwVersion', headerName : 'configureHwVersion'},
+    { field: 'managePlatformName', headerName : 'managePlatformName'},
+    { field: 'managePlatformPort', headerName : 'managePlatformPort'},
     { field: 'monitoring', headerName : 'monitoring'},
+    { field: 'nextLoginInterval', headerName : 'nextLoginInterval'},
+    { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout'},
+    { field: 'publicPlatformName', headerName : 'publicPlatformName'},
+    { field: 'publicPlatformPort', headerName : 'publicPlatformPort'},
+    { field: 'updatedAt', headerName : 'updatedAt'},
+    { field: 'updatedUserId', headerName : 'updatedUserId'},
+    { field: 'dataFilePath', headerName : 'dataFilePath'},
+    { field: 'dataSize', headerName : 'dataSize'},
+    { field: 'firmwareName', headerName : 'firmwareName'},
+    { field: 'firmwareInfoFwVersion', headerName : 'firmwareInfoFwVersion'},
+    { field: 'firmwareInfoHwVersion', headerName : 'firmwareInfoHwVersion'},
+    { field: 'md5Hash', headerName : 'md5Hash'},
+    { field: 'modelName', headerName : 'modelName'}
   ];
-
-  rowData = [
-    {
-      vin: 'vin',
-      date: 'date',
-      state: 'state',
-      car_local_save_cycle: 'car_local_save_cycle',
-      normal_transmission_cycle: 'normal_transmission_cycle',
-      warning_transmission_cycle: 'warning_transmission_cycle',
-
-      manage_platform_name: 'manage_platform_name',
-      manage_platform_port: 'manage_platform_port',
-      hardware_version: 'hardware_version',
-      firmware_version: 'firmware_version',
-      car_heartbeat_cycle: 'car_heartbeat_cycle',
-      car_response_timeout: 'car_response_timeout',
-      platform_response_timeout: 'platform_response_timeout',
-      next_login_interval: 'next_login_interval',
-      public_platform_name: 'public_platform_name',
-      monitoring: 'monitoring',
-    }];
 
   gridApi!: GridApi;
   rowSelection = 'multiple';
 
+  devicemanagersVehicles : any ={
+    count : 0,
+    entities : [],
+    link : {}
+  }
+
+  rowData : any[] = [];
+
   ngOnInit(): void {
+    this.getDevicemanagersVehicles()
+  }
+
+  getDevicemanagersVehicles(){
+    this.devicemanagersService.getDevicemanagersVehicles(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+      this.devicemanagersVehicles = res.body
+      this.rowData = []
+      for(let i = 0; i < res.body.entities.length; i++) {
+        this.rowData.push({
+          vin : res.body.entities[i].vin,
+          carHeartBeatPeriod : res.body.entities[i].configure.carHeartBeatPeriod,
+          carLocalSavePeriod : res.body.entities[i].configure.carLocalSavePeriod,
+          carResponseTimeout : res.body.entities[i].configure.carResponseTimeout,
+          configureName : res.body.entities[i].configure.configureName,
+          configureFwVersion : res.body.entities[i].configure.fwVersion,
+          configureHwVersion : res.body.entities[i].configure.hwVersion,
+          managePlatformName : res.body.entities[i].configure.managePlatformName,
+          managePlatformPort : res.body.entities[i].configure.managePlatformPort,
+          monitoring : res.body.entities[i].configure.monitoring,
+          nextLoginInterval : res.body.entities[i].configure.nextLoginInterval,
+          platformResponseTimeout : res.body.entities[i].configure.platformResponseTimeout,
+          publicPlatformName : res.body.entities[i].configure.publicPlatformName,
+          publicPlatformPort : res.body.entities[i].configure.publicPlatformPort,
+          updatedAt : res.body.entities[i].configure.updatedAt,
+          updatedUserId : res.body.entities[i].configure.updatedUserId,
+          warningSubmitPeriod : res.body.entities[i].configure.warningSubmitPeriod,
+          createdAt : res.body.entities[i].firmwareInfo.createdAt,
+          createdUserId : res.body.entities[i].firmwareInfo.createdUserId,
+          dataFilePath : res.body.entities[i].firmwareInfo.dataFilePath,
+          dataSize : res.body.entities[i].firmwareInfo.dataSize,
+          firmwareName : res.body.entities[i].firmwareInfo.firmwareName,
+          firmwareInfoFwVersion : res.body.entities[i].firmwareInfo.fwVersion,
+          firmwareInfoHwVersion : res.body.entities[i].firmwareInfo.hwVersion,
+          md5Hash : res.body.entities[i].firmwareInfo.md5Hash,
+          modelName : res.body.entities[i].firmwareInfo.modelName,
+        })
+      }
+
+    },error=>{
+      console.log(error)
+    })
   }
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit()
+
   }
 
 }
