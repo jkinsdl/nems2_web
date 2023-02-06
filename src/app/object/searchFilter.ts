@@ -39,4 +39,6 @@ export class SearchFilter{
   search : string
   firmware : string
   configure : string
+
+  request : string[]
 }

@@ -6,64 +6,70 @@
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text">
+          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getGbpacket()">
         </div>
       </div>
 
       <div class="filter">
         <label class="label" for="login">login</label>
         <div class="value">
-          <input type="checkbox" id="login">
+          <input type="checkbox" id="login" [(ngModel)]="loginFilter">
         </div>
       </div>
 
       <div class="filter">
         <label class="label" for="logout">logout</label>
         <div class="value">
-          <input type="checkbox" id="logout">
+          <input type="checkbox" id="logout" [(ngModel)]="logoutFilter">
         </div>
       </div>
 
       <div class="filter">
         <label class="label" for="RealTime">RealTime</label>
         <div class="value">
-          <input type="checkbox" id="RealTime">
+          <input type="checkbox" id="RealTime" [(ngModel)]="realTimeFilter">
         </div>
       </div>
 
       <div class="filter">
         <label class="label" for="Addtiona">Addtiona</label>
         <div class="value">
-          <input type="checkbox" id="Addtiona">
+          <input type="checkbox" id="Addtiona" [(ngModel)]="addtionaFilter">
         </div>
       </div>
 
       <div class="filter">
         <label class="label" for="etc">etc</label>
         <div class="value">
-          <input type="checkbox" id="etc">
+          <input type="checkbox" id="etc" [(ngModel)]="etcFilter">
         </div>
       </div>
 
       <div class="filter">
         <label class="label" for="custom">custom</label>
         <div class="value">
-          <input type="checkbox" id="custom">
+          <input type="checkbox" id="custom" [(ngModel)]="customFilter">
         </div>
       </div>
 
-
       <div class="filter">
-        <div class="label">Date</div>
+        <div class="label">begin</div>
         <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [(ngModel)]="datePicker">
-          <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+          <input class="datePickerText" [ngxMatDatetimePicker]="beginPicker" readonly="true" (click)="beginPicker.open()" [(ngModel)]="beginDate" [max]="endDate">
+          <ngx-mat-datetime-picker #beginPicker [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
         </div>
       </div>
 
+      <div class="filter">
+        <div class="label">end</div>
+        <div class="value">
+          <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="beginDate">
+          <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+        </div>
+      </div>
 
       <div class="filter">
-        <div class="btn">
+        <div class="btn" (click)="getGbpacket()">
           Search
         </div>
       </div>
@@ -72,7 +78,7 @@
     <div class="serverLogsContents">
       <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
         class="ag-theme-alpine"
-        [rowData]="rowData"
+        [rowData]="gbpacket.entities"
         [columnDefs]="columnDefs"
         [rowSelection]="rowSelection"
         (gridReady)="onGridReady($event)">

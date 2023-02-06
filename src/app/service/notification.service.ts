@@ -18,11 +18,15 @@ export class NotificationService {
     var url = `${this.Url}`;
     let httpParams = new HttpParams()
     if(filter.asc != undefined){
-      httpParams.set("asc", filter.asc.join(", "))
+      for(let i = 0; i < filter.asc.length; i++){
+        httpParams = httpParams.append('asc', filter.asc[i]);
+      }
     }
 
     if(filter.desc != undefined){
-      httpParams.set("desc", filter.desc.join(", "))
+      for(let i = 0; i < filter.desc.length; i++){
+        httpParams = httpParams.append('desc', filter.desc[i]);
+      }
     }
 
     if(filter.limit != undefined){
