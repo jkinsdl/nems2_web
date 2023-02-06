@@ -1,0 +1,20 @@
+<div class="vehicleContainer">
+
+  <div class="vehicleLayout whiteBoardBoax">
+
+    <div class="tabListContainer">
+      <div class="tab" [ngClass]="{select: router.url.indexOf('vehicleSettings') > -1 }" [routerLink]="['/main/control/vehicle/vehicleSettings']">
+        Vehicle Settings
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('vehicleModel') > -1 }" [routerLink]="['/main/control/vehicle/vehicleModel']">
+        Vehicle Model
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+</div>

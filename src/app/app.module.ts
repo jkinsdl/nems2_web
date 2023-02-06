@@ -13,7 +13,7 @@ import { DrivingChargingStatisticsComponent } from './layout/statistics/driving-
 import { SingleStatisticsComponent } from './layout/statistics/single-statistics/single-statistics.component';
 import { SearchDataComponent } from './layout/statistics/search-data/search-data.component';
 import { UserAccountComponent } from './layout/control-panel/user-account/user-account.component';
-import { VehicleSettingsComponent } from './layout/control-panel/vehicle-settings/vehicle-settings.component';
+import { VehicleSettingsComponent } from './layout/control-panel/vehicle/vehicle-settings/vehicle-settings.component';
 import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform/public-platform-management/public-platform-management.component';
 import { ShanghaiInfoComponent } from './layout/control-panel/shanghai-info/shanghai-info.component';
 import { ServerLogsComponent } from './layout/control-panel/server-logs/server-logs.component';
@@ -89,7 +89,11 @@ import { AddRegisterRemoteSettingComponent } from './component/add-register-remo
 import { AddRemoteParameterConfigurationInfoComponent } from './component/add-remote-parameter-configuration-info/add-remote-parameter-configuration-info.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PublicPlatformForSpecificPeriodComponent } from './layout/control-panel/public-platform/public-platform-for-specific-period/public-platform-for-specific-period.component';
-import { PublicPlatformComponent } from './layout/control-panel/public-platform/public-platform.component'
+import { PublicPlatformComponent } from './layout/control-panel/public-platform/public-platform.component';
+import { VehicleModelComponent } from './layout/control-panel/vehicle/vehicle-model/vehicle-model.component';
+import { VehicleComponent } from './layout/control-panel/vehicle/vehicle.component';
+import { AddVehicleModelComponent } from './component/add-vehicle-model/add-vehicle-model.component'
+import { OnlyNumber } from './shared/directive/onlynumber.directive';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -170,7 +174,10 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     AddRemoteParameterConfigurationInfoComponent,
     PublicPlatformForSpecificPeriodComponent,
     PublicPlatformComponent,
-
+    VehicleModelComponent,
+    VehicleComponent,
+    AddVehicleModelComponent,
+    OnlyNumber
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,29 @@
+<div class="vehicleModelContainer">
+  <div class="vehicleModelLayout whiteBoardBoax">
+
+    <div class="gridControlBox">
+      <div class="btn add" (click)="addVehicleModel()">
+        Add
+      </div>
+      <div class="btn modify" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyVehicleModel()">
+        Modify
+      </div>
+      <div class="btn delete" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteVehicle()">
+        Delete
+      </div>
+    </div>
+
+    <div class="vehicleModelContents">
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="modelList"
+        [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+
+  </div>
+
+
+</div>

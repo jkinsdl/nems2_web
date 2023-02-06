@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CellClickedEvent, ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AddVehicleComponent } from 'src/app/component/add-vehicle/add-vehicle.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -15,36 +17,43 @@ export class VehicleSettingsComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
+    private vehiclemanagerService : VehiclemanagerService
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'iccid', headerName: 'ICCID' },
-    { field: 'vehicle_number', headerName: 'Vehicle Number'},
-    { field: 'batterycode', headerName : 'BATTERYCODE'},
+    { field: 'batteryCode', headerName: 'batteryCode' },
+    { field: 'engineNo', headerName: 'engineNo'},
+    { field: 'iccid', headerName : 'iccid'},
+    { field: 'modelName', headerName : 'modelName'},
+    { field: 'motorNo', headerName : 'motorNo'},
+    { field: 'nemsSn', headerName : 'nemsSn'},
+    { field: 'purpose', headerName : 'purpose'},
+    { field: 'region', headerName : 'region'},
+    { field: 'registDate', headerName : 'registDate'},
+    { field: 'registrationPlate', headerName : 'registrationPlate'},
+    { field: 'sOffDate', headerName : 'sOffDate'},
+    { field: 'vin', headerName : 'vin'},
+    { field: 'zipCode', headerName : 'zipCode'}
   ];
 
-  rowData = [
-      {
-      iccid: 'iccid',
-      vehicle_number: 'vehicle_number',
-      batterycode: 'batterycode'
-    },
-    {
-      iccid: 'iccid',
-      vehicle_number: 'vehicle_number',
-      batterycode: 'batterycode'
-    },
-    {
-      iccid: 'iccid',
-      vehicle_number: 'vehicle_number',
-      batterycode: 'batterycode'
-    }
-  ];
+  vehicleList : any[] = []
 
   gridApi!: GridApi;
   public rowSelection = 'multiple';
-  ngOnInit(): void {
 
+  searchFilter : SearchFilter = new SearchFilter()
+
+  ngOnInit(): void {
+    this.getVehiclemanagerStaticinfo()
+  }
+
+  getVehiclemanagerStaticinfo(){
+    this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.vehicleList = res.body.vehicleList
+    },error=>{
+      console.log(error)
+    })
   }
 
   addVehicle(){

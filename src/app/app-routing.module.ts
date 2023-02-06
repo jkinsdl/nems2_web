@@ -25,7 +25,9 @@ import { ServerLogsComponent } from './layout/control-panel/server-logs/server-l
 import { ShanghaiInfoComponent } from './layout/control-panel/shanghai-info/shanghai-info.component';
 import { TerminalComponent } from './layout/control-panel/terminal/terminal.component';
 import { UserAccountComponent } from './layout/control-panel/user-account/user-account.component';
-import { VehicleSettingsComponent } from './layout/control-panel/vehicle-settings/vehicle-settings.component';
+import { VehicleModelComponent } from './layout/control-panel/vehicle/vehicle-model/vehicle-model.component';
+import { VehicleSettingsComponent } from './layout/control-panel/vehicle/vehicle-settings/vehicle-settings.component';
+import { VehicleComponent } from './layout/control-panel/vehicle/vehicle.component';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { DataForwardingComponent } from './layout/data-forwarding/data-forwarding.component';
 import { FailureComponent } from './layout/failure/failure.component';
@@ -84,7 +86,10 @@ const routes: Routes = [
     {path:'dataForwarding', component:DataForwardingComponent},
     { path: 'control', component: ControlPanelComponent, children:[
       { path: 'userAccount', component: UserAccountComponent },
-      { path: 'vehicleSettings', component: VehicleSettingsComponent },
+      { path: 'vehicle', component: VehicleComponent, children :[
+        { path: 'vehicleSettings', component: VehicleSettingsComponent },
+        { path: 'vehicleModel', component: VehicleModelComponent },
+      ]},
       { path: 'publicPlatform', component: PublicPlatformComponent, children:[
         { path: 'publicPlatformManagement', component: PublicPlatformManagementComponent },
         { path: 'publicPlatformForSpecificPeriod', component: PublicPlatformForSpecificPeriodComponent },

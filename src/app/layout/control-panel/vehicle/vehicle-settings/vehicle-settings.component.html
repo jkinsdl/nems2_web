@@ -1,0 +1,93 @@
+<div class="vehicleSettingContainer">
+  <div class="vehicleSettingLayout whiteBoardBoax">
+    <div class="gridFilterBox">
+
+      <!--<div class="filter">
+        <div class="label">Filter</div>
+        <div class="value">
+          <select>
+            <option>iccid</option>
+            <option>VIN</option>
+            <option>NEMS S/N</option>
+            <option>Reg. number</option>
+            <option>region</option>
+          </select>
+        </div>
+      </div>
+-->
+      <div class="filter">
+        <div class="label">VIN</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getVehiclemanagerStaticinfo()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">iccid</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="searchFilter.iccid" (keydown.enter)="getVehiclemanagerStaticinfo()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">nemsSn</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="searchFilter.nemsSn" (keydown.enter)="getVehiclemanagerStaticinfo()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">registrationPlate</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="searchFilter.registrationPlate" (keydown.enter)="getVehiclemanagerStaticinfo()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">region</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="searchFilter.region" (keydown.enter)="getVehiclemanagerStaticinfo()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">zipCode</div>
+        <div class="value">
+          <input type="number" [OnlyNumber]="true" [(ngModel)]="searchFilter.zipCode" (keydown.enter)="getVehiclemanagerStaticinfo()">
+        </div>
+      </div>
+
+
+      <div class="filter">
+        <div class="btn" (click)="getVehiclemanagerStaticinfo()">
+          Search
+        </div>
+      </div>
+    </div>
+
+    <div class="gridControlBox">
+      <div class="btn add" (click)="addVehicle()">
+        Add
+      </div>
+      <div class="btn modify" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyVehicle()">
+        Modify
+      </div>
+      <div class="btn delete" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteVehicle()">
+        Delete
+      </div>
+    </div>
+
+    <div style="width: 100%; height: calc(100% - 100px)">
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="vehicleList"
+        [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+
+  </div>
+
+
+</div>

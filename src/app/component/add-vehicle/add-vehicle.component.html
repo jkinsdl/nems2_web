@@ -29,24 +29,17 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">BATTERY CODE <span>*</span> </div>
+    <div class="label">Model Name <span>*</span> </div>
     <div class="value">
-      <input type="text">
-    </div>
-  </div>
-
-  <div class="addInfoFilter">
-    <div class="label">MODEL <span>*</span> </div>
-    <div class="value">
-      <select>
-        <option> test 1 </option>
-        <option> test 2 </option>
+      <select (ngModelChange)="changeModel()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vehicleModel">
+        <option [value]="null"  disabled></option>
+        <option *ngFor="let model of modelList" [value]="model" > {{model.modelName}} </option>
       </select>
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">REGION </div>
+    <div class="label">zipCode </div>
     <div class="value">
       <input type="text">
     </div>
@@ -54,11 +47,11 @@
 
   <div class="btnBox">
 
-    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (cilck)="addVehicle()" >
       Add
     </div>
 
-    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (cilck)="modifyVehicle()" >
       Modify
     </div>
 

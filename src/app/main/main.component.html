@@ -100,11 +100,11 @@
             <img src="assets/icon/user_account_icon.png">
             <span *ngIf="menuMode == 1">User Account</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('vehicleSettings') > -1 }" [routerLink]="['/main/control/vehicleSettings']" (click)="changeMenu('VEHICLE SETTINGS')">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('vehicle') > -1 }" [routerLink]="['/main/control/vehicle/vehicleSettings']" (click)="changeMenu('VEHICLE SETTINGS')">
             <img src="assets/icon/vehicle_settings_icon.png">
             <span *ngIf="menuMode == 1">Vehicle Settings</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('publicPlatform') > -1 }" [routerLink]="['/main/control/publicPlatform']" (click)="changeMenu('PUBLIC PLATFORM')">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('publicPlatform') > -1 }" [routerLink]="['/main/control/publicPlatform/publicPlatformManagement']" (click)="changeMenu('PUBLIC PLATFORM')">
             <img src="assets/icon/public_platform_icon.png">
             <span *ngIf="menuMode == 1">Public Platform</span>
           </div>

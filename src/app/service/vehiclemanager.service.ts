@@ -44,8 +44,8 @@ export class VehiclemanagerService {
     return this.http.delete<any>(url, { observe: "response" })
   }
 
-  putVehiclemanagerModelModelName(modelName : string, parameter : any){
-    var url = `${this.Url}/model/${modelName}`;
+  putVehiclemanagerModelModelName( parameter : any){
+    var url = `${this.Url}/model/${parameter.modelName}`;
     return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
   }
 

@@ -1,0 +1,9 @@
+.vehicleContainer{
+  width: 100%;
+  height: 100%;
+}
+
+.vehicleLayout{
+  width: 100%;
+  height: calc(100% - 47px);
+}

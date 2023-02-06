@@ -19,17 +19,26 @@ export class ForwardingService {
     var url = `${this.Url}`;
 
     let httpParams = new HttpParams()
-    if(filter.displayName != undefined){
-      httpParams = httpParams.set("displayName", filter.displayName)
+    if(filter.offset != undefined){
+      httpParams = httpParams.set("offset", filter.offset)
     }
+
+    if(filter.limit != undefined){
+      httpParams = httpParams.set("limit", filter.limit)
+    }
+
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
   }
 
   postForwarding(parameter : any){
     var url = `${this.Url}`;
-
     return this.http.post<any>(url, JSON.stringify(parameter), { observe: "response" })
   }
+
+
+
+
+
 
   getForwardingId(id : string){
     var url = `${this.Url}/${id}`;

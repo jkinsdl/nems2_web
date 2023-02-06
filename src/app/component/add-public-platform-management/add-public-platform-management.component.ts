@@ -15,7 +15,25 @@ export class AddPublicPlatformManagementComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data : any,
   ) { }
 
+  forwardingParameter : any = {
+    serverName: "string",
+    domain: "string",
+    port: 0,
+    platformId: "string",
+    platformPw: "string",
+    lastLogin: "2023-02-06T02:05:43.640Z",
+    lastLogout: "2023-02-06T02:05:43.640Z",
+    connectionStatus: "UNKNOWN",
+    command: "NONE",
+    noAckMode: "string",
+    forceLoginVehicle: true,
+    filterLocationInfo: true,
+    encryptionMode: "PLAIN",
+    encryptionKey: "string"
+  }
+
   ngOnInit(): void {
+
   }
 
   close(){

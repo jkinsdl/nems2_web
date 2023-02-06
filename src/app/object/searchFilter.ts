@@ -41,4 +41,9 @@ export class SearchFilter{
   configure : string
 
   request : string[]
+  email : string
+  authority : string
+
+  attributeName : string
+  attributeValue : string
 }

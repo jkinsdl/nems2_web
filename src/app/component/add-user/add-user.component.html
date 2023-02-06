@@ -8,49 +8,53 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">User ID <span>*</span> </div>
+    <div class="label">E-mail <span>*</span> </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="addUserParameter.email">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label"> User Name <span>*</span> </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="addUserParameter.username">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label"> authority ID <span>*</span> </div>
+    <div class="value">
+      <select  [(ngModel)]="addUserParameter.authorityId">
+        <option [value]='""' disabled></option>
+        <option [value]='"root"'>root</option>
+        <option [value]='"service-admin"'>service-admin</option>
+        <option [value]='"poweruser"'>poweruser</option>
+        <option [value]='"user"'>user</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label"> contact </div>
     <div class="value">
       <input type="text">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> Region </div>
+    <div class="label"> attributes </div>
     <div class="value">
-      <select>
-        <option>Test</option>
-        <option>Test1</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="addInfoFilter">
-    <div class="label"> Role <span>*</span> </div>
-    <div class="value">
-      <select>
-        <option>Test</option>
-        <option>Test1</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="addInfoFilter">
-    <div class="label"> Locale <span>*</span> </div>
-    <div class="value">
-      <select>
-        <option>Test</option>
-        <option>Test1</option>
-      </select>
+      <input type="text">
     </div>
   </div>
 
   <div class="btnBox">
 
-    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addUser()">
       Add
     </div>
 
-    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (click)="modifyUser()">
       Modify
     </div>
 

@@ -4,6 +4,8 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AddPublicPlatformManagementComponent } from 'src/app/component/add-public-platform-management/add-public-platform-management.component';
 import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { ForwardingService } from 'src/app/service/forwarding.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -15,6 +17,7 @@ export class PublicPlatformManagementComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
+    private forwardingService : ForwardingService
   ) { }
 
   managementColumnDefs: ColDef[] = [
@@ -110,7 +113,15 @@ export class PublicPlatformManagementComponent implements OnInit {
   public rowSelection = 'multiple';
   managementGridApi!: GridApi;
   mappingGridApi!: GridApi;
+
+  searchFilter : SearchFilter = new SearchFilter()
+
   ngOnInit(): void {
+    this.forwardingService.getForwarding(this.searchFilter).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
   onServerGridReady(params: GridReadyEvent) {
