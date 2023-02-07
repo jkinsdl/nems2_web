@@ -50,7 +50,24 @@ export class AddVehicleComponent implements OnInit {
   modelList : any[] = []
 
   ngOnInit(): void {
+
+    console.log(this.data)
+
     this.getVehiclemanagerModel()
+
+    if(this.data.type == this.constant.MODIFY_TYPE){
+      this.getVehiclemanagerStaticinfoVin(this.data.vehicle.vin)
+    }
+
+  }
+
+  getVehiclemanagerStaticinfoVin(vin : string){
+    this.vehiclemanagersService.getVehiclemanagerStaticinfoVin(vin).subscribe(res=>{
+      console.log(res)
+      this.addVehiclemanagerStaticinfoParameter = res.body
+    },error=>{
+      console.log(error)
+    })
   }
 
   getVehiclemanagerModel(){
@@ -66,25 +83,47 @@ export class AddVehicleComponent implements OnInit {
     console.log(this.addVehiclemanagerStaticinfoParameter)
 
     if(this.addVehiclemanagerStaticinfoParameter.vin == ""){
-
+      this.utilService.alertPopup("Vehicle","Please enter vin",this.constant.ALERT_WARNING)
+      return
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.iccid == ""){
-
+      this.utilService.alertPopup("Vehicle","Please enter iccid",this.constant.ALERT_WARNING)
+      return
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.nemsSn == ""){
-
+      this.utilService.alertPopup("Vehicle","Please enter nems S/N",this.constant.ALERT_WARNING)
+      return
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.modelName == ""){
-
+      this.utilService.alertPopup("Vehicle","Please select Model Name",this.constant.ALERT_WARNING)
+      return
     }
-
+    this.dialogRef.close(this.addVehiclemanagerStaticinfoParameter)
   }
 
   modifyVehicle(){
     console.log(this.addVehiclemanagerStaticinfoParameter)
+
+    if(this.addVehiclemanagerStaticinfoParameter.iccid == ""){
+      this.utilService.alertPopup("Vehicle","Please enter iccid",this.constant.ALERT_WARNING)
+      return
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.nemsSn == ""){
+      this.utilService.alertPopup("Vehicle","Please enter nems S/N",this.constant.ALERT_WARNING)
+      return
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.modelName == ""){
+      this.utilService.alertPopup("Vehicle","Please select Model Name",this.constant.ALERT_WARNING)
+      return
+    }
+
+    this.dialogRef.close(this.addVehiclemanagerStaticinfoParameter)
+
   }
 
   changeModel(event : any){

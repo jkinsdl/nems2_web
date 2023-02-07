@@ -64,9 +64,18 @@ export class VehicleSettingsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-
+        this.postVehiclemanagerStaticinfo(result)
       }
     });
+  }
+
+  postVehiclemanagerStaticinfo(parameter : any){
+    this.vehiclemanagerService.postVehiclemanagerStaticinfo(parameter).subscribe(res=>{
+      console.log(res)
+      this.getVehiclemanagerStaticinfo()
+    },error=>{
+      console.log(error)
+    })
   }
 
   modifyVehicle(){
@@ -74,33 +83,52 @@ export class VehicleSettingsComponent implements OnInit {
       const dialogRef = this.dialog.open( AddVehicleComponent, {
         data:{
           type : this.constant.MODIFY_TYPE,
-          user : this.gridApi.getSelectedRows()[0]
+          vehicle : this.gridApi.getSelectedRows()[0]
         }
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
+          this.putVehiclemanagerStaticinfoVin(result)
         }
       });
     }
   }
+
+  putVehiclemanagerStaticinfoVin(parameter : any){
+    this.vehiclemanagerService.putVehiclemanagerStaticinfoVin(parameter).subscribe(res=>{
+      console.log(res)
+      this.getVehiclemanagerStaticinfo()
+    },error=>{
+      console.log(error)
+    })
+  }
+
 
   deleteVehicle(){
     if(this.gridApi.getSelectedRows().length != 0){
       const dialogRef = this.dialog.open( AlertPopupComponent, {
         data:{
           alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the data ? (ICCID : " + this.gridApi.getSelectedRows()[0].iccid+ ")",
+          alertContents : "Do you want to delete the data ? (VIN : " + this.gridApi.getSelectedRows()[0].vin+ ")",
           alertType : this.constant.ALERT_WARNING,
           popupType : this.constant.POPUP_CHOICE,
         }
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-          this.gridApi.applyTransaction({ remove: this.gridApi.getSelectedRows() })!;
-
+          this.deleteVehiclemanagerStaticinfoVin(this.gridApi.getSelectedRows()[0].vin)
         }
       });
     }
+  }
+
+  deleteVehiclemanagerStaticinfoVin(vin:string){
+    this.vehiclemanagerService.deleteVehiclemanagerStaticinfoVin(vin).subscribe(res=>{
+      console.log(res)
+      this.gridApi.applyTransaction({ remove: this.gridApi.getSelectedRows() })!;
+    },error=>{
+      console.log(error)
+    })
   }
 
   onGridReady(params: GridReadyEvent) {

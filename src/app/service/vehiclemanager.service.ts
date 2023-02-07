@@ -102,8 +102,8 @@ export class VehiclemanagerService {
     return this.http.delete<any>(url, { observe: "response" })
   }
 
-  putVehiclemanagerStaticinfoVin(vin : string, parameter : any){
-    var url = `${this.Url}/staticinfo/${vin}`;
+  putVehiclemanagerStaticinfoVin(parameter : any){
+    var url = `${this.Url}/staticinfo/${parameter.vin}`;
     return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
   }
 

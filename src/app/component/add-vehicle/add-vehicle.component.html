@@ -10,7 +10,7 @@
   <div class="addInfoFilter">
     <div class="label">VIN <span>*</span> </div>
     <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin" [disabled]="data.type == constant.MODIFY_TYPE">
     </div>
   </div>
 
@@ -64,7 +64,7 @@
     <div class="value">
       <select [(ngModel)]="addVehiclemanagerStaticinfoParameter.purpose">
         <option [value]="'PERSONAL'"> PERSONAL </option>
-        <option [value]="'PUBLIC '"> PUBLIC  </option>
+        <option [value]="'PUBLIC'"> PUBLIC  </option>
       </select>
 
     </div>
@@ -108,10 +108,10 @@
   </div>
 
   <div class="btnBox">
-    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (cilck)="addVehicle()" >
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addVehicle()" >
       Add
     </div>
-    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (cilck)="modifyVehicle()" >
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (click)="modifyVehicle()" >
       Modify
     </div>
     <div class="btn cancel" (click)="close()">
