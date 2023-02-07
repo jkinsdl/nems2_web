@@ -1,3 +1,4 @@
+<app-sub-title *ngIf="currentUser.authorityId == 'service-admin'" [title]="'Remote control'"></app-sub-title>
 <div class="gridFilterBox">
   <div class="filter">
     <div class="label">VIN</div>
@@ -28,7 +29,7 @@
 </div>
 
 
-<div style="width: 100%; height: calc(100% - 80px)">
+<div class="remoteControlGridBox" [ngClass]="{'service-admin': currentUser.authorityId == 'service-admin'}">
 
   <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
     class="ag-theme-alpine"

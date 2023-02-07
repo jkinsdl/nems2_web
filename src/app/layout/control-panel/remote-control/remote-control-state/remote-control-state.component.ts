@@ -53,7 +53,10 @@ export class RemoteControlStateComponent implements OnInit {
 
   searchFilter : SearchFilter = new SearchFilter()
 
+  currentUser : any = {}
+
   ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('user'))
     this.getDevicemanagersVehicles()
   }
 

@@ -1,0 +1,8 @@
+.remoteControlGridBox{
+  width: 100%;
+  height: calc(100% - 80px);
+}
+
+.service-admin{
+  height: calc(100% - 60px) !important;
+}

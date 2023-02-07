@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UiService } from '../service/ui.service';
 import { Subscription } from 'rxjs';
+import { UserService } from '../service/user.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -13,6 +14,7 @@ export class MainComponent implements OnInit {
   constructor(
     public router: Router,
     private uiService :UiService,
+    private userService : UserService
   ) { }
 
   language : string = "en"
@@ -27,7 +29,13 @@ export class MainComponent implements OnInit {
 
   messageOn : boolean = false
 
+  currentLoginUser : any = {
+    username : '',
+    authorityId : ''
+  }
+
   ngOnInit(): void {
+    this.getUsersProfile()
     if(this.router.url.indexOf("dashboard") > -1){
       this.subTitle = "DASHBOARD"
     }else if(this.router.url.indexOf("monitoring") > -1){
@@ -57,7 +65,22 @@ export class MainComponent implements OnInit {
     })
   }
 
+
+  getUsersProfile(){
+    this.userService.getUsersProfile().subscribe(res=>{
+      console.log(res)
+      localStorage.setItem('user', JSON.stringify(res.body));
+      this.currentLoginUser = res.body
+    },error=>{
+      console.log(error)
+      this.signOut()
+    })
+  }
+
+
+
   signOut(){
+    localStorage.removeItem('user');
     this.router.navigateByUrl('/login').then(
       nav => {
         console.log(nav);

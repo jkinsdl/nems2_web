@@ -650,13 +650,6 @@ export class DashboardComponent implements OnInit {
     //this.getStatisticsRegistrationSummary()
     this.getStatisticsVehiclesSummary()
     //this.getStatisticsWarningsSummary()
-
-    this.userService.getUsersProfile().subscribe(res=>{
-      console.log(res)
-      localStorage.setItem('user', JSON.stringify(res.body));
-    },error=>{
-      console.log(error)
-    })
   }
 
   getStatisticsCurrent(){

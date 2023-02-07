@@ -2,7 +2,7 @@
 
   <div class="remoteControlLayout whiteBoardBoax">
 
-    <div class="tabListContainer">
+    <div class="tabListContainer" *ngIf="currentUser.authorityId == 'root'">
       <div class="tab" [ngClass]="{select: router.url.indexOf('state') > -1 }" [routerLink]="['/main/control/remoteControl/state']">
         Remote control
       </div>

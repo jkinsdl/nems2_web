@@ -50,65 +50,66 @@ import { StatisticsComponent } from './layout/statistics/statistics.component';
 import { TotalStatisticsComponent } from './layout/statistics/total-statistics/total-statistics.component';
 import { StatusComponent } from './layout/status/status.component';
 import { MainComponent } from './main/main.component';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'main', component: MainComponent, children:[
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'monitoring', component: MonitoringComponent },
-    { path: 'monitoring/detail', component: DetailMonitoringComponent },
-    { path: 'monitoring/detail/zoom', component: MonitoringDetailZoomComponent, children:[
-      { path: 'vehicle', component: MonitoringVehicleComponent },
-      { path: 'location', component: MonitoringLocationComponent },
-      { path: 'engine', component: MonitoringEngineComponent },
-      { path: 'fuel_battery', component: MonitoringFuelBatteryComponent },
-      { path: 'warning', component: MonitoringWarningComponent },
-      { path: 'extreme_value', component: MonitoringExtremeValueComponent },
-      { path: 'motor', component: MonitoringMotorComponent },
-      { path: 'power_battery_temperature', component: MonitoringPowerBatteryTemperatureComponent },
-      { path: 'power_battery_infomation', component: MonitoringPowerBatteryInfomationComponent },
+    { path: 'monitoring', canActivate: [AuthGuard], component: MonitoringComponent },
+    { path: 'monitoring/detail', canActivate: [AuthGuard], component: DetailMonitoringComponent },
+    { path: 'monitoring/detail/zoom', canActivate: [AuthGuard], component: MonitoringDetailZoomComponent, children:[
+      { path: 'vehicle', canActivate: [AuthGuard], component: MonitoringVehicleComponent },
+      { path: 'location', canActivate: [AuthGuard], component: MonitoringLocationComponent },
+      { path: 'engine', canActivate: [AuthGuard], component: MonitoringEngineComponent },
+      { path: 'fuel_battery', canActivate: [AuthGuard], component: MonitoringFuelBatteryComponent },
+      { path: 'warning', canActivate: [AuthGuard], component: MonitoringWarningComponent },
+      { path: 'extreme_value', canActivate: [AuthGuard], component: MonitoringExtremeValueComponent },
+      { path: 'motor', canActivate: [AuthGuard], component: MonitoringMotorComponent },
+      { path: 'power_battery_temperature', canActivate: [AuthGuard], component: MonitoringPowerBatteryTemperatureComponent },
+      { path: 'power_battery_infomation', canActivate: [AuthGuard], component: MonitoringPowerBatteryInfomationComponent },
     ]},
-    { path: 'status', component: StatusComponent },
-    { path: 'statistics', component: StatisticsComponent, children:[
-      { path: 'total', component: TotalStatisticsComponent },
-      { path: 'driving', component: DrivingChargingStatisticsComponent },
-      { path: 'single', component: SingleStatisticsComponent },
-      { path: 'search', component: SearchDataComponent },
+    { path: 'status', canActivate: [AuthGuard], component: StatusComponent },
+    { path: 'statistics', canActivate: [AuthGuard], component: StatisticsComponent, children:[
+      { path: 'total', canActivate: [AuthGuard], component: TotalStatisticsComponent },
+      { path: 'driving', canActivate: [AuthGuard], component: DrivingChargingStatisticsComponent },
+      { path: 'single', canActivate: [AuthGuard], component: SingleStatisticsComponent },
+      { path: 'search', canActivate: [AuthGuard], component: SearchDataComponent },
     ]},
-    { path: 'failure', component: FailureComponent },
-    { path: 'alarm', component:AlarmComponent},
-    { path: 'history', component:AlarmHistoryComponent},
-    { path: 'abnormalLocationVehicle', component:AbnormalLocationVehicleComponent, children:[
-      {path : 'test1', component:Test1Component},
-      {path : 'test2', component:Test2Component}
+    { path: 'failure', canActivate: [AuthGuard], component: FailureComponent },
+    { path: 'alarm', canActivate: [AuthGuard], component:AlarmComponent},
+    { path: 'history', canActivate: [AuthGuard], component:AlarmHistoryComponent},
+    { path: 'abnormalLocationVehicle', canActivate: [AuthGuard], component:AbnormalLocationVehicleComponent, children:[
+      {path : 'test1', canActivate: [AuthGuard], component:Test1Component},
+      {path : 'test2', canActivate: [AuthGuard], component:Test2Component}
     ]},
-    {path:'dataForwarding', component:DataForwardingComponent},
-    { path: 'control', component: ControlPanelComponent, children:[
-      { path: 'userAccount', component: UserAccountComponent },
-      { path: 'vehicle', component: VehicleComponent, children :[
-        { path: 'vehicleSettings', component: VehicleSettingsComponent },
-        { path: 'vehicleModel', component: VehicleModelComponent },
+    {path:'dataForwarding', canActivate: [AuthGuard], component:DataForwardingComponent},
+    { path: 'control', canActivate: [AuthGuard], component: ControlPanelComponent, children:[
+      { path: 'userAccount', canActivate: [AuthGuard], component: UserAccountComponent },
+      { path: 'vehicle', canActivate: [AuthGuard], component: VehicleComponent, children :[
+        { path: 'vehicleSettings', canActivate: [AuthGuard], component: VehicleSettingsComponent },
+        { path: 'vehicleModel', canActivate: [AuthGuard], component: VehicleModelComponent },
       ]},
-      { path: 'publicPlatform', component: PublicPlatformComponent, children:[
-        { path: 'publicPlatformManagement', component: PublicPlatformManagementComponent },
-        { path: 'publicPlatformForSpecificPeriod', component: PublicPlatformForSpecificPeriodComponent },
+      { path: 'publicPlatform', canActivate: [AuthGuard], component: PublicPlatformComponent, children:[
+        { path: 'publicPlatformManagement', canActivate: [AuthGuard], component: PublicPlatformManagementComponent },
+        { path: 'publicPlatformForSpecificPeriod', canActivate: [AuthGuard], component: PublicPlatformForSpecificPeriodComponent },
       ]},
-      { path: 'shanghaiInfo', component: ShanghaiInfoComponent },
-      { path: 'serverLogs', component: ServerLogsComponent },
-      { path: 'otaInformation', component: OTAInformationComponent },
-      { path: 'terminal', component: TerminalComponent },
-      { path: 'remoteControl', component: RemoteControlComponent, children:[
-        {path : 'state', component:RemoteControlStateComponent},
-        {path : 'configure', component:ConfigureComponent}
+      { path: 'shanghaiInfo', canActivate: [AuthGuard], component: ShanghaiInfoComponent },
+      { path: 'serverLogs', canActivate: [AuthGuard], component: ServerLogsComponent },
+      { path: 'otaInformation', canActivate: [AuthGuard], component: OTAInformationComponent },
+      { path: 'terminal', canActivate: [AuthGuard], component: TerminalComponent },
+      { path: 'remoteControl', canActivate: [AuthGuard], component: RemoteControlComponent, children:[
+        {path : 'state', canActivate: [AuthGuard], component:RemoteControlStateComponent},
+        {path : 'configure', canActivate: [AuthGuard], component:ConfigureComponent}
       ]},
-      { path: 'otaManagement', component: OTAManagementComponent },
-      { path: 'pushAlarm', component: PushAlarmComponent },
-      { path: 'detectError', component: DatectErrorComponent, children:[
-        {path : 'abnormalVehicleRealTime', component:AbnormalVehicleRealTimeComponent},
-        {path : 'abnormalVehicleHistory', component:AbnormalVehicleHistoryComponent},
-        {path : 'offlineVehicleRealTime', component:OfflineVehicleRealTimeComponent},
-        {path : 'offlineVehicleHistory', component:OfflineVehicleHistoryComponent}
+      { path: 'otaManagement', canActivate: [AuthGuard], component: OTAManagementComponent },
+      { path: 'pushAlarm', canActivate: [AuthGuard], component: PushAlarmComponent },
+      { path: 'detectError', canActivate: [AuthGuard], component: DatectErrorComponent, children:[
+        {path : 'abnormalVehicleRealTime', canActivate: [AuthGuard], component:AbnormalVehicleRealTimeComponent},
+        {path : 'abnormalVehicleHistory', canActivate: [AuthGuard], component:AbnormalVehicleHistoryComponent},
+        {path : 'offlineVehicleRealTime', canActivate: [AuthGuard], component:OfflineVehicleRealTimeComponent},
+        {path : 'offlineVehicleHistory', canActivate: [AuthGuard], component:OfflineVehicleHistoryComponent}
       ]},
     ]},
   ]},

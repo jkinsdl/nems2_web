@@ -39,8 +39,8 @@
 
 
 
-    <div class="grid">
-      <div class="gridColumn">
+   <div class="grid">
+       <!--<div class="gridColumn">
         <div class="column login">
           Login
         </div>
@@ -158,7 +158,16 @@
           </div>
         </div>
       </div>
+-->
 
+      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+        class="ag-theme-alpine"
+        [rowData]="vehicleInfo"
+        [rowSelection]="rowSelection"
+        [columnDefs]="columnDefs"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+      <!--
       <div class="gridPage">
 
         <div class="page" (click)="changePage(1)">
@@ -181,7 +190,9 @@
         <div class="page" (click)="changePage(3)">
           <img src="assets/icon/last_page_icon.png">
         </div>
+
       </div>
+      -->
     </div>
   </div>
 </div>

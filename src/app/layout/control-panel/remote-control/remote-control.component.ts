@@ -14,7 +14,9 @@ export class RemoteControlComponent implements OnInit {
     public router: Router,
   ) { }
 
-  ngOnInit(): void {
+  currentUser : any = {}
 
+  ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('user'))
   }
 }
