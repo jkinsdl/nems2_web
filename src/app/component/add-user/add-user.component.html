@@ -13,7 +13,6 @@
       <input type="text" [(ngModel)]="addUserParameter.email">
     </div>
   </div>
-
   <div class="addInfoFilter">
     <div class="label"> User Name <span>*</span> </div>
     <div class="value">
@@ -35,16 +34,21 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> contact </div>
+    <div class="label"> Phone Number </div>
     <div class="value">
-      <input type="text">
+      <select [(ngModel)]="phoneCountryCode" style="margin-right: 10px; width: 120px;">
+        <option [value]="'+1'">+1 USA</option>
+        <option [value]="'+82'">+82 Korea</option>
+        <option [value]="'+86'">+86 China</option>
+      </select>
+      <input type="number" [OnlyNumber]="true" [(ngModel)]="phoneNumber">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> attributes </div>
+    <div class="label"> company </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="company">
     </div>
   </div>
 

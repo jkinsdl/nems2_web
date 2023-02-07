@@ -120,17 +120,27 @@ export class UserAccountComponent implements OnInit {
       const dialogRef = this.dialog.open( AlertPopupComponent, {
         data:{
           alertTitle : "User Delete",
-          alertContents : "Do you want to delete a user ? (User ID : " + this.gridApi.getRowNode(this.selectNodeID).data.user+ ")",
+          alertContents : "Do you want to delete a user ? (User Name : " + this.gridApi.getRowNode(this.selectNodeID).data.username+ ")",
           alertType : this.constant.ALERT_WARNING,
           popupType : this.constant.POPUP_CHOICE,
         }
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-          this.selectNodeID = null;
-          this.gridApi.applyTransaction({ remove: this.gridApi.getSelectedRows() })!;
+          this.deleteUsersUserId(this.gridApi.getRowNode(this.selectNodeID).data.userId)
         }
       });
     }
   }
+
+  deleteUsersUserId(userId : string){
+    this.userService.deleteUsersUserId(userId).subscribe(res=>{
+      console.log(res)
+      this.gridApi.applyTransaction({ remove: this.gridApi.getSelectedRows() })!;
+      this.selectNodeID = null;
+    },error=>{
+      console.log(error)
+    })
+  }
+
 }

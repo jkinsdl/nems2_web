@@ -124,6 +124,12 @@ export class UserService {
     return this.http.put<any>(url, JSON.stringify(parameter), {observe: "response" })
   }
 
+  deleteUsersUserId(userId : string){
+    var url = `${this.Url}/${userId}`;
+
+    return this.http.delete<any>(url, {observe: "response" })
+  }
+
   getUsersProfile(){
     var url = `${this.Url}/profile`;
 
