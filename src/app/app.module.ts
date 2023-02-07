@@ -100,7 +100,7 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     dateInput: 'l, LTS'
   },
   display: {
-    dateInput: 'YYYY-MM-DD HH:mm:ss',
+    dateInput: 'YYYY-MM-DD HH:mm',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',

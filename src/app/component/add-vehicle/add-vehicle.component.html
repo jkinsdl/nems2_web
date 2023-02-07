@@ -10,30 +10,30 @@
   <div class="addInfoFilter">
     <div class="label">VIN <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin">
     </div>
   </div>
 
   <div class="addInfoFilter">
     <div class="label">ICCID <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.iccid">
     </div>
   </div>
 
   <div class="addInfoFilter">
     <div class="label">NEMS S/N <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.nemsSn">
     </div>
   </div>
 
   <div class="addInfoFilter">
     <div class="label">Model Name <span>*</span> </div>
     <div class="value">
-      <select (ngModelChange)="changeModel()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vehicleModel">
+      <select (ngModelChange)="changeModel($event)" [(ngModel)]="addVehiclemanagerStaticinfoParameter.modelName">
         <option [value]="null"  disabled></option>
-        <option *ngFor="let model of modelList" [value]="model" > {{model.modelName}} </option>
+        <option *ngFor="let model of modelList" [value]="model.modelName" > {{model.modelName}} </option>
       </select>
     </div>
   </div>
@@ -41,26 +41,81 @@
   <div class="addInfoFilter">
     <div class="label">zipCode </div>
     <div class="value">
-      <input type="text">
+      <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehiclemanagerStaticinfoParameter.zipCode">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">region </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.region">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">registrationPlate </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registrationPlate">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">purpose </div>
+    <div class="value">
+      <select [(ngModel)]="addVehiclemanagerStaticinfoParameter.purpose">
+        <option [value]="'PERSONAL'"> PERSONAL </option>
+        <option [value]="'PUBLIC '"> PUBLIC  </option>
+      </select>
+
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">engineNo </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.engineNo">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">motorNo </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.motorNo">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">batteryCode </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.batteryCode">
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">sOffDate </div>
+    <div class="value">
+      <input class="datePickerText" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate">
+      <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">registDate </div>
+    <div class="value">
+      <input class="datePickerText" [ngxMatDatetimePicker]="registDatePicker" readonly="true" (click)="registDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registDate">
+      <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
     </div>
   </div>
 
   <div class="btnBox">
-
     <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (cilck)="addVehicle()" >
       Add
     </div>
-
     <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (cilck)="modifyVehicle()" >
       Modify
     </div>
-
     <div class="btn cancel" (click)="close()">
       Cancel
     </div>
-
-
-
   </div>
-
 </div>

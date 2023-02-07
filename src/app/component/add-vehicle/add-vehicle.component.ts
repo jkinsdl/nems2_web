@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
@@ -15,7 +16,8 @@ export class AddVehicleComponent implements OnInit {
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AddVehicleComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
-    private vehiclemanagersService : VehiclemanagerService
+    private vehiclemanagersService : VehiclemanagerService,
+    private utilService : UtilService
   ) { }
 
   addVehiclemanagerStaticinfoParameter : any = {
@@ -27,7 +29,7 @@ export class AddVehicleComponent implements OnInit {
     zipCode: "",
     region: "",
     registrationPlate : "",
-    purpose: "",
+    purpose: "PERSONAL",
     engineNo: "",
     motorNo: "",
     batteryCode: "",
@@ -62,14 +64,36 @@ export class AddVehicleComponent implements OnInit {
 
   addVehicle(){
     console.log(this.addVehiclemanagerStaticinfoParameter)
+
+    if(this.addVehiclemanagerStaticinfoParameter.vin == ""){
+
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.iccid == ""){
+
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.nemsSn == ""){
+
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.modelName == ""){
+
+    }
+
   }
 
   modifyVehicle(){
     console.log(this.addVehiclemanagerStaticinfoParameter)
   }
 
-  changeModel(){
-    this.addVehiclemanagerStaticinfoParameter.modelName = this.addVehiclemanagerStaticinfoParameter.vehicleModel.modelName
+  changeModel(event : any){
+    for(let i = 0; i < this.modelList.length; i++){
+      if(event == this.modelList[i].modelName){
+        this.addVehiclemanagerStaticinfoParameter.vehicleModel = this.modelList[i]
+        break;
+      }
+    }
   }
 
   close(){
