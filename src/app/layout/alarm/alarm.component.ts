@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import mapboxgl from 'mapbox-gl';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 @Component({
   selector: 'app-alarm',
   templateUrl: './alarm.component.html',
@@ -9,8 +11,9 @@ import mapboxgl from 'mapbox-gl';
 })
 export class AlarmComponent implements OnInit {
 
-  constructor() {
-   }
+  constructor(
+    private vehiclewarningService : VehiclewarningService
+  ) { }
 
   columnDefs: ColDef[] = [
     {
@@ -21,125 +24,22 @@ export class AlarmComponent implements OnInit {
       checkboxSelection: true,
       width: 10
     },
-    { field: 'header1',width: 150,
-      minWidth: 150
-    },
-    { field: 'header2', minWidth:300},
-    { field: 'header3', minWidth:150},
-    { field: 'header4', minWidth:150},
-    { field: 'header5', minWidth:150}
+    { field: 'warningLevel',headerName: "warningLevel"},
+    { field: 'vin',headerName: "vin"},
+    { field: 'warningCode',headerName: "warningCode"},
+    { field: 'createTime',headerName: "createTime"},
+    { field: 'updateTime',headerName: "updateTime"},
+    { field: 'state',headerName: "state"},
+    { field: 'maxWarning',headerName: "maxWarning"},
+    { field: 'warningFlag',headerName: "warningFlag"},
+    { field: 'region',headerName: "region"},
+    { field: 'comment',headerName: "comment"},
   ];
 
-  rowData = [
-    {
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    }];
+  vehiclewarning : any = {
+    totalCount : 0,
+    warnings : []
+  }
 
   rowSelection = 'multiple';
   gridApi!: GridApi;
@@ -152,6 +52,8 @@ export class AlarmComponent implements OnInit {
   lat = 35.8617;
   lng = 104.1954;
 
+  searchFilter : SearchFilter = new SearchFilter()
+
   ngOnInit(): void {
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
@@ -163,6 +65,16 @@ export class AlarmComponent implements OnInit {
       });
       this.map.addControl(new mapboxgl.NavigationControl());
     },1)
+    this.getVehiclewarning()
+  }
+
+  getVehiclewarning(){
+    this.vehiclewarningService.getVehiclewarning(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.vehiclewarning = res.body
+    },error=>{
+      console.log(error)
+    })
   }
 
   onGridReady(params: GridReadyEvent) {

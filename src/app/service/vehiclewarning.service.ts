@@ -12,16 +12,10 @@ export class VehiclewarningService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api";
-
-  putVehicleWarningVin(vin : string, parameter : any){
-    var url = `${this.Url}/vehicle_warning/${vin}`;
-
-    return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
-  }
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api/vehiclewarning";
 
   getVehiclewarning(filter : SearchFilter){
-    var url = `${this.Url}/vehiclewarning`;
+    var url = `${this.Url}`;
     let httpParams = new HttpParams()
     if(filter.asc != undefined){
       for(let i = 0; i < filter.asc.length; i++){
@@ -43,6 +37,17 @@ export class VehiclewarningService {
       httpParams = httpParams.set("offset ",filter.offset )
     }
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
+  }
+
+  putVehicleWarningVin(vin : string, parameter : any){
+    var url = `${this.Url}/${vin}`;
+
+    return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
+  }
+
+  deleteVehiclewarningVin(vin : string){
+    var url = `${this.Url}/${vin}`;
+    return this.http.delete<any>(url, { observe: "response" })
   }
 
 }
