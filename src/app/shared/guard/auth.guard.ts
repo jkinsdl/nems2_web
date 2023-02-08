@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
     if(localStorage && localStorage.getItem('user') != 'undefined'){
       user = JSON.parse(localStorage.getItem('user'));
     }
-    console.log("user")
 
     if (!user || user === null) {
       this.router.navigate(['/login']);

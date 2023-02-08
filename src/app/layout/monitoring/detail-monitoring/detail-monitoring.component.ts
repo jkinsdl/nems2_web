@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
 import { MapMarkerDetailComponent } from '../../dashboard/map-marker-detail/map-marker-detail.component';
 import * as echarts from 'echarts';
+import { BatteryDetailComponent } from 'src/app/component/battery-detail/battery-detail.component';
 @Component({
   selector: 'app-detail-monitoring',
   templateUrl: './detail-monitoring.component.html',
@@ -523,7 +524,7 @@ export class DetailMonitoringComponent implements OnInit {
   openBattery(e : any){
     console.log('openBattery')
     e.stopPropagation()
-    const dialogRef = this.dialog.open( MapMarkerDetailComponent, {
+    const dialogRef = this.dialog.open( BatteryDetailComponent, {
       data:{},
       panelClass : 'bakcgroundColorGray'
     });

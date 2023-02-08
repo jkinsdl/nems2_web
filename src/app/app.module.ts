@@ -94,6 +94,7 @@ import { VehicleModelComponent } from './layout/control-panel/vehicle/vehicle-mo
 import { VehicleComponent } from './layout/control-panel/vehicle/vehicle.component';
 import { AddVehicleModelComponent } from './component/add-vehicle-model/add-vehicle-model.component'
 import { OnlyNumber } from './shared/directive/onlynumber.directive';
+import { BatteryDetailComponent } from './component/battery-detail/battery-detail.component';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -177,7 +178,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     VehicleModelComponent,
     VehicleComponent,
     AddVehicleModelComponent,
-    OnlyNumber
+    OnlyNumber,
+    BatteryDetailComponent
   ],
   imports: [
     BrowserModule,

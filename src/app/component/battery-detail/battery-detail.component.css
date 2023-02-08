@@ -1,0 +1,43 @@
+.batteryDetailConatiner{
+  width: 800px;
+}
+
+
+.batteryStatusContainer{
+  width: 100%;
+  margin-top: 40px;
+}
+
+.batteryStatusContainer .batteryStatusLayout{
+  width: 33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+}
+
+.batteryStatusContainer .batteryStatusLayout .batteryStatusBox{
+  width: 100%;
+}
+
+.batteryStatusContainer .batteryStatusLayout .batteryStatusBox .batteryStatusValue{
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+.batteryStatusContainer .batteryStatusLayout .batteryStatusBox .batteryStatusTitle{
+  width: 100%;
+  text-align: center;
+  margin-top: 3px;
+  font-size: 14px;
+  color: #919191;
+}
+
+.statusLine{
+  border: 1px solid black;
+  height: 50px;
+  float: left;
+}
