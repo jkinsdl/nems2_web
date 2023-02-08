@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { ForwardingService } from 'src/app/service/forwarding.service';
 
 @Component({
   selector: 'app-data-forwarding',
@@ -17,128 +19,25 @@ export class DataForwardingComponent implements OnInit {
       checkboxSelection: true,
       width: 10
     },
-    { field: 'header1',width: 150,
-      minWidth: 150
-    },
-    { field: 'header2', minWidth:300},
-    { field: 'header3', minWidth:150},
-    { field: 'header4', minWidth:150},
-    { field: 'header5', minWidth:150}
+    { field: 'command', headerName : 'command'},
+    { field: 'connectionStatus', headerName : 'connectionStatus'},
+    { field: 'domain', headerName : 'domain'},
+    { field: 'encryptionKey', headerName : 'encryptionKey'},
+    { field: 'encryptionMode', headerName : 'encryptionMode'},
+    { field: 'filterLocationInfo', headerName : 'filterLocationInfo'},
+    { field: 'forceLoginVehicle', headerName : 'forceLoginVehicle'},
+    { field: 'noAck', headerName : 'noAck'},
+    { field: 'platformId', headerName : 'platformId'},
+    { field: 'platformPw', headerName : 'platformPw'},
+    { field: 'port', headerName : 'port'},
+    { field: 'serverId', headerName : 'serverId'},
+    { field: 'serverName', headerName : 'serverName'}
   ];
 
-
-  rowData = [
-    {
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    { header1: '1',
-    header2: '2',
-    header3: '3',
-    header4 : '4',
-    header5 : '5'
-    },{
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    {
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    },
-    {
-      header1: '1',
-      header2: '2',
-      header3: '3',
-      header4 : '4',
-      header5 : '5'
-    }];
+  forwarding : any = {
+    count : 0,
+    entities : []
+  }
 
     rowSelection = 'multiple';
     gridApi!: GridApi;
@@ -146,10 +45,23 @@ export class DataForwardingComponent implements OnInit {
     startDatePicker : any
     endDatePicker : any
 
-  constructor() { }
+  constructor(
+    private forwardingService : ForwardingService
+  ) { }
+
+  searchFilter : SearchFilter = new SearchFilter()
 
   ngOnInit(): void {
+    this.getForwarding()
+  }
 
+  getForwarding(){
+    this.forwardingService.getForwarding(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.forwarding = res.body
+    },error=>{
+      console.log(error)
+    })
   }
 
   onGridReady(params: GridReadyEvent) {

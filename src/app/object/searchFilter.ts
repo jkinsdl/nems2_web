@@ -46,4 +46,6 @@ export class SearchFilter{
 
   attributeName : string
   attributeValue : string
+
+  serverName : string
 }
