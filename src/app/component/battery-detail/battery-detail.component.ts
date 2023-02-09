@@ -15,9 +15,13 @@ export class BatteryDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data : any,
   ) { }
 
+
+  voltageCategory : string[] = []
+  voltageData : any[] = []
   ngOnInit(): void {
     setTimeout(() => {
       this.setVoltageChart()
+      this.setTemperatureChart()
     }, 100);
   }
 
@@ -25,19 +29,27 @@ export class BatteryDetailComponent implements OnInit {
     this.dialogRef.close()
   }
 
-
-
-
   setVoltageChart(){
+    for(let i = 0; i < 150; i++){
+      this.voltageCategory.push("Cell#" + (i+1))
+      this.voltageData.push((Math.random() + 3).toFixed(2))
+    }
+
     var chartDom = document.getElementById('voltageChart')!;
     var myChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
 
     option = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-//        show :false
+        data: this.voltageCategory,
+        show :false
 
       },
       yAxis: {
@@ -45,12 +57,80 @@ export class BatteryDetailComponent implements OnInit {
       },
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
+          data: this.voltageData,
           type: 'bar'
         }
       ]
     };
 
+    option && myChart.setOption(option);
+  }
+
+  setTemperatureChart(){
+    let xAxisDatas = []
+    for(let i = 0; i < 15; i++){
+      xAxisDatas.push("Cell#" + (i+1))
+    }
+
+    const data = [
+      [0,0,15],[0,1,15],[0,2,14],[0,3,15],[0,4,15],[0,5,14],[0,6,12],[0,7,16],[0,8,15],[0,9,14],[0,10,15],[0,11,15],[0,12,15],[0,13,14],[0,14,16],[0,15,14]]
+        .map(function (item) {
+            return [item[1], item[0], item[2] || '-'];
+        });
+
+    var chartDom = document.getElementById('temperatureChart')!;
+    var myChart = echarts.init(chartDom);
+    var option: echarts.EChartsOption;
+
+    option = {
+      tooltip: {
+        position: 'top'
+      },
+      grid: {
+        height: '50%',
+        top: '10%'
+      },
+      xAxis: {
+        type: 'category',
+        data: xAxisDatas,
+        show: false,
+        splitArea: {
+          show: false
+        }
+      },
+      yAxis: {
+        type: 'category',
+        data: [''],
+        show: false,
+        splitArea: {
+          show: true
+        }
+      },
+      visualMap: {
+        min: 10,
+        max: 20,
+        calculable: true,
+        orient: 'horizontal',
+        left: 'center',
+        bottom: '15%'
+      },
+      series: [
+        {
+          name: 'Temperature',
+          type: 'heatmap',
+          data: data,
+          label: {
+            show: true
+          },
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
     option && myChart.setOption(option);
   }
 

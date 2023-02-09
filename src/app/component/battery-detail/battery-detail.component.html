@@ -48,9 +48,33 @@
     </div>
   </div>
 
-  <div style="width: 100%; height: 500px;">
-    <div id="voltageChart" style="width: 100%; height: 100%;"></div>
+  <div class="batteryDetailContents">
+    <div >
+      Battery Voltage
+    </div>
+
+    <div class="voltageTable">
+      <div class="voltageData"  *ngFor="let data of voltageData; let i = index">
+        <div class="voltageCell">
+          {{i+1}}
+        </div>
+        <div class="voltageValue">
+          {{data}}
+        </div>
+      </div>
+    </div>
+
+    <div id="voltageChart" style="width: 100%; height: 200px;"></div>
+
+    <div >
+      Battery Temperature
+    </div>
+
+    <div id="temperatureChart" style="width: 100%; height: 200px;"></div>
+
+
   </div>
+
 
 
 
