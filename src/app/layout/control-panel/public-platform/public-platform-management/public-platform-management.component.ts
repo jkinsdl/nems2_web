@@ -20,95 +20,39 @@ export class PublicPlatformManagementComponent implements OnInit {
     private forwardingService : ForwardingService
   ) { }
 
-  managementColumnDefs: ColDef[] = [
-    { field: 'name', headerName: 'name' },
-    { field: 'ip', headerName: 'IP'},
+  forwardingColumnDefs: ColDef[] = [
+    { field: 'command', headerName : 'command'},
+    { field: 'connectionStatus', headerName : 'connectionStatus'},
+    { field: 'domain', headerName : 'domain'},
+    { field: 'encryptionKey', headerName : 'encryptionKey'},
+    { field: 'encryptionMode', headerName : 'encryptionMode'},
+    { field: 'filterLocationInfo', headerName : 'filterLocationInfo'},
+    { field: 'forceLoginVehicle', headerName : 'forceLoginVehicle'},
+    { field: 'noAck', headerName : 'noAck'},
+    { field: 'platformId', headerName : 'platformId'},
+    { field: 'platformPw', headerName : 'platformPw'},
     { field: 'port', headerName : 'port'},
-    { field: 'platform_id', headerName : 'platform ID'},
-    { field: 'platform_password', headerName : 'platform password'},
-    { field: 'last_login', headerName : 'last login'},
-    { field: 'last_logout', headerName : 'last logout'},
-    { field: 'stat_stop', headerName : 'stat/stop'},
-    { field: 'no_ack_mode', headerName : 'no_ack_mode'},
-    { field: 'force_login_vehicle', headerName : 'force login vehicle'},
-    { field: 'filter_location_info', headerName : 'filter location info'},
-    { field: 'encryption_mode', headerName : 'encryption mode'},
-    { field: 'encryption_key', headerName : 'encryption key'},
+    { field: 'serverId', headerName : 'serverId'},
+    { field: 'serverName', headerName : 'serverName'}
   ];
 
-  managementRowData = [
-    {
-      name: 'name',
-      ip: 'ip',
-      port: 'port',
-      platform_id : 'platform_id',
-      platform_password : 'platform_password',
-      last_login : 'last_login',
-      last_logout : 'last_logout',
-      stat_stop : 'stat_stop',
-      no_ack_mode : 'no_ack_mode',
-      force_login_vehicle : 'force_login_vehicle',
-      filter_location_info : 'filter_location_info',
-      encryption_mode : 'encryption_mode',
-      encryption_key : 'encryption_key'
-    },
-    {
-      name: 'name',
-      ip: 'ip',
-      port: 'port',
-      platform_id : 'platform_id',
-      platform_password : 'platform_password',
-      last_login : 'last_login',
-      last_logout : 'last_logout',
-      stat_stop : 'stat_stop',
-      no_ack_mode : 'no_ack_mode',
-      force_login_vehicle : 'force_login_vehicle',
-      filter_location_info : 'filter_location_info',
-      encryption_mode : 'encryption_mode',
-      encryption_key : 'encryption_key'
-    },
-    {
-      name: 'name',
-      ip: 'ip',
-      port: 'port',
-      platform_id : 'platform_id',
-      platform_password : 'platform_password',
-      last_login : 'last_login',
-      last_logout : 'last_logout',
-      stat_stop : 'stat_stop',
-      no_ack_mode : 'no_ack_mode',
-      force_login_vehicle : 'force_login_vehicle',
-      filter_location_info : 'filter_location_info',
-      encryption_mode : 'encryption_mode',
-      encryption_key : 'encryption_key'
-    },
-  ];
+  forwarding : any = {
+    count : 0,
+    entities : []
+  }
 
 
-
-  mappingColumnDefs: ColDef[] = [
+  relationsColumnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN' },
     { field: 'vehicle_info_senapshot', headerName: 'Vehicle Info Snapshot'},
     { field: 'last_sync', headerName : 'last sync(server time)'},
   ];
 
-  mappingRowData = [
-    {
-      vin: 'vin',
-      vehicle_info_senapshot: 'vehicle_info_senapshot',
-      last_sync: 'last_sync'
-    },
-    {
-      vin: 'vin',
-      vehicle_info_senapshot: 'vehicle_info_senapshot',
-      last_sync: 'last_sync'
-    },
-    {
-      vin: 'vin',
-      vehicle_info_senapshot: 'vehicle_info_senapshot',
-      last_sync: 'last_sync'
-    }
-  ];
+  relations : any = {
+    count : 0,
+    entities : []
+  }
+
 
   public rowSelection = 'multiple';
   managementGridApi!: GridApi;
@@ -116,9 +60,16 @@ export class PublicPlatformManagementComponent implements OnInit {
 
   searchFilter : SearchFilter = new SearchFilter()
 
+  selectForwardingServerName : string = null
+
   ngOnInit(): void {
+    this.getForwarding()
+  }
+
+  getForwarding(){
     this.forwardingService.getForwarding(this.searchFilter).subscribe(res=>{
       console.log(res)
+      this.forwarding = res.body
     },error=>{
       console.log(error)
     })
@@ -128,9 +79,108 @@ export class PublicPlatformManagementComponent implements OnInit {
     this.managementGridApi = params.api;
   }
 
+  onForwardingRowClick(event : any ){
+    console.log(event)
+    this.selectForwardingServerName = event.data.serverName
+    this.getForwardingServerNameRelations(this.selectForwardingServerName)
+  }
+
+  getForwardingServerNameRelations(serverName : string){
+    this.forwardingService.getForwardingServerNameRelations(serverName, new SearchFilter()).subscribe(res=>{
+      console.log(res)
+      this.relations = res.body
+    },error=>{
+      console.log(error)
+    })
+  }
+
   onMappingGridReady(params: GridReadyEvent) {
     this.mappingGridApi = params.api;
     this.mappingGridApi.sizeColumnsToFit()
+  }
+
+  addManagement(){
+    const dialogRef = this.dialog.open( AddPublicPlatformManagementComponent, {
+      data:{
+        type:this.constant.ADD_TYPE
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.postForwarding(result)
+      }
+    });
+  }
+
+  postForwarding(parameter : any){
+    this.forwardingService.postForwarding(parameter).subscribe(res=>{
+      console.log(res)
+      this.getForwarding()
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  modifyManagement(){
+    if(this.managementGridApi.getSelectedRows().length != 0){
+      const dialogRef = this.dialog.open( AddPublicPlatformManagementComponent, {
+        data:{
+          type:this.constant.MODIFY_TYPE,
+          forwarding : this.managementGridApi.getSelectedRows()[0]
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.putForwardingServerName(result)
+        }
+      });
+    }
+  }
+
+  putForwardingServerName(parameter : any){
+    this.forwardingService.putForwardingServerName(parameter).subscribe(res=>{
+      console.log(res)
+      this.getForwarding()
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  deleteManagement(){
+    if(this.managementGridApi.getSelectedRows().length != 0){
+      const dialogRef = this.dialog.open( AlertPopupComponent, {
+        data:{
+          alertTitle : "Delete Vehicle",
+          alertContents : "Do you want to delete the data ? (Server Name : " + this.managementGridApi.getSelectedRows()[0].serverName+ ")",
+          alertType : this.constant.ALERT_WARNING,
+          popupType : this.constant.POPUP_CHOICE,
+
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.deleteForwardingServerName(this.managementGridApi.getSelectedRows()[0].serverName)
+        }
+      });
+    }
+  }
+
+  deleteForwardingServerName(serverName : string){
+    this.forwardingService.deleteForwardingServerName(serverName).subscribe(res=>{
+      console.log(res)
+
+      if(serverName == this.selectForwardingServerName){
+        this.selectForwardingServerName = null
+        this.relations = {
+          count : 0,
+          entities : []
+        }
+      }
+
+      this.managementGridApi.applyTransaction({ remove: this.managementGridApi.getSelectedRows() })!;
+    },error=>{
+      console.log(error)
+    })
   }
 
   addMapping(){
@@ -172,54 +222,6 @@ export class PublicPlatformManagementComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if(result){
           this.mappingGridApi.applyTransaction({ remove: this.mappingGridApi.getSelectedRows() })!;
-        }
-      });
-    }
-  }
-
-  addManagement(){
-    const dialogRef = this.dialog.open( AddPublicPlatformManagementComponent, {
-      data:{
-        type:this.constant.ADD_TYPE
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-
-      }
-    });
-  }
-
-  modifyManagement(){
-    if(this.managementGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AddPublicPlatformManagementComponent, {
-        data:{
-          type:this.constant.MODIFY_TYPE
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-
-        }
-      });
-    }
-  }
-
-  deleteManagement(){
-    if(this.managementGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the data ? (name : " + this.managementGridApi.getSelectedRows()[0].name+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.managementGridApi.applyTransaction({ remove: this.managementGridApi.getSelectedRows() })!;
-
         }
       });
     }

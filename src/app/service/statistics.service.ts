@@ -45,8 +45,8 @@ export class StatisticsService {
       httpParams = httpParams.set("level",filter.level)
     }
 
-    if(filter.zipCode != undefined){
-      httpParams = httpParams.set("zipCode",filter.zipCode)
+    if(filter.pcode != undefined){
+      httpParams = httpParams.set("pcode",filter.pcode)
     }
 
     return this.http.get<any>(url, { params:httpParams, observe: "response" })

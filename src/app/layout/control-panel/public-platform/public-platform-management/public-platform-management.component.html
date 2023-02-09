@@ -15,16 +15,17 @@
 
     <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"
       class="ag-theme-alpine"
-      [rowData]="managementRowData"
-      [columnDefs]="managementColumnDefs"
+      [rowData]="forwarding.entities"
+      [columnDefs]="forwardingColumnDefs"
       [rowSelection]="rowSelection"
-      (gridReady)="onServerGridReady($event)">
+      (gridReady)="onServerGridReady($event)"
+      (rowClicked)="onForwardingRowClick($event)">
     </ag-grid-angular>
   </div>
 
   <div class="publicPlatformMappingLayout">
     <div class="gridControlBox">
-      <div class="btn add" (click)="addMapping()">
+      <div class="btn add" [ngClass]="{'buttonDisable': selectForwardingServerName == null}" (click)="addMapping()">
         Add
       </div>
       <div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
@@ -37,8 +38,8 @@
 
     <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"
       class="ag-theme-alpine"
-      [rowData]="mappingRowData"
-      [columnDefs]="mappingColumnDefs"
+      [rowData]="relations.entities"
+      [columnDefs]="relationsColumnDefs"
       [rowSelection]="rowSelection"
       (gridReady)="onMappingGridReady($event)">
     </ag-grid-angular>

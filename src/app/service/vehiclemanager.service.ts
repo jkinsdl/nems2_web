@@ -72,8 +72,8 @@ export class VehiclemanagerService {
       httpParams = httpParams.set("region", filter.region)
     }
 
-    if(filter.zipCode != undefined){
-      httpParams = httpParams.set("zipCode", filter.zipCode.toString())
+    if(filter.pcode != undefined){
+      httpParams = httpParams.set("pcode", filter.pcode.toString())
     }
 
     if(filter.limit != undefined){
@@ -131,8 +131,8 @@ export class VehiclemanagerService {
       httpParams = httpParams.set("region", filter.region)
     }
 
-    if(filter.zipCode != undefined){
-      httpParams = httpParams.set("zipCode", filter.zipCode)
+    if(filter.pcode != undefined){
+      httpParams = httpParams.set("pcode", filter.pcode)
     }
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
   }

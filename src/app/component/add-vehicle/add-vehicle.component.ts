@@ -26,7 +26,7 @@ export class AddVehicleComponent implements OnInit {
     nemsSn: "",
     modelName: "",
     vehicleModel: null,
-    zipCode: "",
+    pcode: "",
     region: "",
     registrationPlate : "",
     purpose: "PERSONAL",
@@ -64,7 +64,7 @@ export class AddVehicleComponent implements OnInit {
   getVehiclemanagerStaticinfoVin(vin : string){
     this.vehiclemanagersService.getVehiclemanagerStaticinfoVin(vin).subscribe(res=>{
       console.log(res)
-      this.addVehiclemanagerStaticinfoParameter = res.body
+      this.addVehiclemanagerStaticinfoParameter = res.body.vehicle
     },error=>{
       console.log(error)
     })

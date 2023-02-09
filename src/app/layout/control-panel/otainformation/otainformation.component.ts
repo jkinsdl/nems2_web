@@ -28,7 +28,7 @@ export class OTAInformationComponent implements OnInit {
     { field: 'registrationPlate', headerName : 'registrationPlate'},
     { field: 'sOffDate', headerName : 'sOffDate'},
     { field: 'vin', headerName : 'vin'},
-    { field: 'zipCode', headerName : 'zipCode'}
+    { field: 'pcode', headerName : 'pcode'}
   ];
 
   vehicleList : any[] = []

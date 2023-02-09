@@ -8,75 +8,110 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">name <span>*</span> </div>
+    <div class="label">serverName <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="forwardingParameter.serverName" [disabled]="data.type == constant.MODIFY_TYPE">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">IP <span>*</span> </div>
+    <div class="label">domain <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="forwardingParameter.domain">
     </div>
   </div>
 
   <div class="addInfoFilter">
     <div class="label">port <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="forwardingParameter.port">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">platform ID <span>*</span> </div>
+    <div class="label">platformId <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="forwardingParameter.platformId">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">platform password <span>*</span> </div>
+    <div class="label">platformPw <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <input type="text" [(ngModel)]="forwardingParameter.platformPw">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">name <span>*</span> </div>
+    <div class="label">startTs </div>
     <div class="value">
-      <input type="text">
+      <input class="datePickerText" [ngxMatDatetimePicker]="startTs" readonly="true" (click)="startTs.open()" [(ngModel)]="forwardingParameter.startTs" [max]="forwardingParameter.endTs">
+      <ngx-mat-datetime-picker #startTs [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">encryption mode <span>*</span> </div>
+    <div class="label">endTs </div>
     <div class="value">
-      <input type="text">
+      <input class="datePickerText" [ngxMatDatetimePicker]="endTs" readonly="true" (click)="endTs.open()" [(ngModel)]="forwardingParameter.endTs" [min]="forwardingParameter.startTs">
+      <ngx-mat-datetime-picker #endTs [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">encryption key <span>*</span> </div>
+    <div class="label">noAck </div>
     <div class="value">
-      <input type="text">
+      <select [(ngModel)]="forwardingParameter.noAck">
+        <option [value]="true">true</option>
+        <option [value]="false">false</option>
+      </select>
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">option </div>
+    <div class="label">forceLoginVehicle </div>
     <div class="value">
-      <input type="text">
+      <select [(ngModel)]="forwardingParameter.forceLoginVehicle">
+        <option [value]="true">true</option>
+        <option [value]="false">false</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">filterLocationInfo </div>
+    <div class="value">
+      <select [(ngModel)]="forwardingParameter.filterLocationInfo">
+        <option [value]="true">true</option>
+        <option [value]="false">false</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">encryptionMode </div>
+    <div class="value">
+      <select [(ngModel)]="forwardingParameter.encryptionMode">
+        <option [value]="'PLAIN'">PLAIN</option>
+        <option [value]="'AES128'">AES128 </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">encryptionKey </div>
+    <div class="value">
+      <input type="text" [(ngModel)]="forwardingParameter.encryptionKey">
     </div>
   </div>
 
 
 
   <div class="btnBox">
-    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addForwarding()" >
       Add
     </div>
-    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">
+    <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (click)="modifyForwarding()">
       Modify
     </div>
     <div class="btn cancel" (click)="close()">

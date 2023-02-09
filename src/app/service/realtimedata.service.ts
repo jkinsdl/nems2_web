@@ -54,8 +54,8 @@ export class RealtimedataService {
       httpParams = httpParams.set("region",filter.region)
     }
 
-    if(filter.zipCode != undefined){
-      httpParams = httpParams.set("zipCode",filter.zipCode)
+    if(filter.pcode != undefined){
+      httpParams = httpParams.set("pcode",filter.pcode)
     }
 
     if(filter.limit != undefined){

@@ -31,7 +31,7 @@ export class SearchFilter{
   registrationPlate : string
   region : string
 
-  zipCode : number
+  pcode : number
 
   level : string
   state : string
