@@ -186,7 +186,8 @@ export class PublicPlatformManagementComponent implements OnInit {
   addMapping(){
     const dialogRef = this.dialog.open( AddPublicPlatformMappingComponent, {
       data:{
-        type:this.constant.ADD_TYPE
+        type:this.constant.ADD_TYPE,
+        serverName : this.selectForwardingServerName
       }
     });
     dialogRef.afterClosed().subscribe(result => {

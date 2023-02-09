@@ -110,7 +110,8 @@ input:focus{
 
 .mapboxgl-ctrl-bottom-left,
 .mapboxgl-ctrl-bottom-right,
-.mapboxgl-ctrl-top-right{
+.mapboxgl-ctrl-top-right,
+.mapboxgl-ctrl-top-left{
   display: none !important;
 }
 
@@ -151,7 +152,7 @@ input:focus{
 }
 
 .bakcgroundColorGray .mat-dialog-container{
-  background-color: #f7f7f7  !important;
+  background-color: #464646  !important;
 }
 
 .tabListContainer{

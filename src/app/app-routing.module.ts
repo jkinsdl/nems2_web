@@ -43,12 +43,16 @@ import { MonitoringPowerBatteryTemperatureComponent } from './layout/monitoring/
 import { MonitoringVehicleComponent } from './layout/monitoring/detail-monitoring/monitoring-vehicle/monitoring-vehicle.component';
 import { MonitoringWarningComponent } from './layout/monitoring/detail-monitoring/monitoring-warning/monitoring-warning.component';
 import { MonitoringComponent } from './layout/monitoring/monitoring.component';
+import { MonthlyVehicleStatisticsComponent } from './layout/monthly-vehicle-statistics/monthly-vehicle-statistics.component';
 import { DrivingChargingStatisticsComponent } from './layout/statistics/driving-charging-statistics/driving-charging-statistics.component';
 import { SearchDataComponent } from './layout/statistics/search-data/search-data.component';
 import { SingleStatisticsComponent } from './layout/statistics/single-statistics/single-statistics.component';
 import { StatisticsComponent } from './layout/statistics/statistics.component';
 import { TotalStatisticsComponent } from './layout/statistics/total-statistics/total-statistics.component';
 import { StatusComponent } from './layout/status/status.component';
+import { TravelDistanceStatisticsComponent } from './layout/travel-distance-statistics/travel-distance-statistics.component';
+import { UserChargingPatternAnalysisComponent } from './layout/user-charging-pattern-analysis/user-charging-pattern-analysis.component';
+import { WarningStatisticsComponent } from './layout/warning-statistics/warning-statistics.component';
 import { MainComponent } from './main/main.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 
@@ -85,6 +89,13 @@ const routes: Routes = [
       {path : 'test2', canActivate: [AuthGuard], component:Test2Component}
     ]},
     {path:'dataForwarding', canActivate: [AuthGuard], component:DataForwardingComponent},
+
+    {path:'warningStatistics', canActivate: [AuthGuard], component:WarningStatisticsComponent},
+    {path:'monthlyVehicleStatistics', canActivate: [AuthGuard], component:MonthlyVehicleStatisticsComponent},
+    {path:'userChargingPatternAnalysis', canActivate: [AuthGuard], component:UserChargingPatternAnalysisComponent},
+    {path:'travelDistanceStatistics', canActivate: [AuthGuard], component:TravelDistanceStatisticsComponent},
+
+
     { path: 'control', canActivate: [AuthGuard], component: ControlPanelComponent, children:[
       { path: 'userAccount', canActivate: [AuthGuard], component: UserAccountComponent },
       { path: 'vehicle', canActivate: [AuthGuard], component: VehicleComponent, children :[

@@ -14,6 +14,7 @@
 .markerDetialTitle{
   font-size: 16px;
   font-weight: bold;
+  color: white;
 }
 
 .markerDetialPopupContents{
@@ -48,7 +49,7 @@
 }
 
 .popupRightLayout{
-  width: 80%;
+  width: 100%;
   height: 100%;
   float: left;
 }
@@ -223,3 +224,4 @@
 .lastBorder {
   border: none;
 }
+

@@ -1,0 +1,58 @@
+.warningStatisticsContainer{
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.warningStatisticsContainer .warningStatisticsLayout{
+  width: 100%;
+  height: 200px;
+}
+
+.warningStatisticsContainer .warningStatisticsLayout .statusContents{
+  width: 100%;
+  height: calc(100% - 30px);
+  display: flex;
+  align-items: center;
+}
+
+.warningStatisticsContainer .warningStatisticsLayout .statusContents .status{
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warningStatisticsContainer .warningStatisticsLayout .statusContents .statusLine{
+  width: 1px;
+  height: 80%;
+  background-color: #eeeef5;
+}
+
+.statusLabel{
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.statusValue{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.contentRightLayout{
+  width: calc(50% - 10px);
+  height: calc(100% - 216px);
+  float: left;
+  margin-top: 16px;
+}
+
+.contentLeftLayout{
+  width: calc(50% - 10px);
+  height: calc(100% - 216px);
+  float: left;
+  margin-top: 16px;
+  margin-left: 16px;
+}
+

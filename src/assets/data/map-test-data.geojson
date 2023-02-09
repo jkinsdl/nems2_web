@@ -2,19 +2,19 @@
   "type": "FeatureCollection",
   "features": [
   {
-  "type": "Feature",
-  "geometry": {
-  "type": "Point",
-  "coordinates": [
-  -86.279118,
-  32.361538
-  ]
-  },
-  "properties": {
-  "state": "Alabama",
-  "name": "Montgomery",
-  "population": 199518
-  }
+    "type": "Feature",
+    "geometry": {
+    "type": "Point",
+    "coordinates": [
+    -86.279118,
+    32.361538
+    ]
+    },
+    "properties": {
+    "state": "Alabama",
+    "name": "Montgomery",
+    "population": 199518
+    }
   },
   {
   "type": "Feature",

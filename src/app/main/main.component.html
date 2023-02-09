@@ -50,13 +50,19 @@
         -->
       </div>
 
+
+
+      <div class="logout" (click)="signOut()">
+        <img src="assets/icon/exit.png" style="width: 20px; height: 20px;">
+      </div>
+
     </div>
   </div>
 
   <div class="contentsContainer"  >
     <div class="menuLayout" [ngClass]="{'menuLayoutReduction': menuMode == 2}">
 
-      <div style="width: 100%; height: 94%;">
+      <div style="width: 100%; height: 97%;">
 
         <!--<div class="enableDisableBtn" [ngClass]="{'enableDisableBtnCentor': menuMode == 2}">
           <img src="assets/icon/menu_enable_disable_btn.png" [ngClass]="{'enableDisableBtnRotate': menuMode == 2}" (click)="changeMenuMode()">
@@ -107,6 +113,26 @@
           <div class="menu" [ngClass]="{select: router.url.indexOf('dataForwarding') > -1 }" [routerLink]="['/main/dataForwarding']" (click)="changeMenu('DATA FORWARDING')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
             <img src="assets/icon/data_forwarding_icon.png">
             <span *ngIf="menuMode == 1">Data Forwarding</span>
+          </div>
+
+          <div class="menu" [ngClass]="{select: router.url.indexOf('warningStatistics') > -1 }" [routerLink]="['/main/warningStatistics']" (click)="changeMenu('Warning Statistics')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+            <img src="assets/icon/warning.png">
+            <span *ngIf="menuMode == 1">Warning Statistics</span>
+          </div>
+
+          <div class="menu" [ngClass]="{select: router.url.indexOf('monthlyVehicleStatistics') > -1 }" [routerLink]="['/main/monthlyVehicleStatistics']" (click)="changeMenu('Monthly Vehicle Statistics')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+            <img src="assets/icon/30-days.png">
+            <span *ngIf="menuMode == 1">Monthly Vehicle Statistics</span>
+          </div>
+
+          <div class="menu" [ngClass]="{select: router.url.indexOf('userChargingPatternAnalysis') > -1 }" [routerLink]="['/main/userChargingPatternAnalysis']" (click)="changeMenu('User Charging Pattern Analysis')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+            <img src="assets/icon/data.png">
+            <span *ngIf="menuMode == 1">User Charging Pattern Analysis</span>
+          </div>
+
+          <div class="menu" [ngClass]="{select: router.url.indexOf('travelDistanceStatistics') > -1 }" [routerLink]="['/main/travelDistanceStatistics']" (click)="changeMenu('Travel Distance Statistics')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+            <img src="assets/icon/distance.png">
+            <span *ngIf="menuMode == 1">Travel Distance Statistics</span>
           </div>
         </div>
 
@@ -163,13 +189,6 @@
         </div>
       </div>
 
-      <div class="logout" (click)="signOut()">
-        <div style="font-size: 20px; float: left; width: 80%; font-weight: bold;">
-          Logout
-        </div>
-        <img src="assets/icon/exit.png" style="width: 20px; height: 20px;">
-      </div>
-
       <div class="footer" *ngIf="menuMode == 1">
         <div class="footerText">
           Copyright @ 2022 OOOOOO All right reserved.
@@ -214,6 +233,3 @@
     </div>
   </div>
 </div>
-
-
-

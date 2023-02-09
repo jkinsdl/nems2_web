@@ -37,6 +37,10 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/history') < 0 &&
         state.url.indexOf('/abnormalLocationVehicle') < 0 &&
         state.url.indexOf('/dataForwarding') < 0 &&
+        state.url.indexOf('/warningStatistics') < 0 &&
+        state.url.indexOf('/monthlyVehicleStatistics') < 0 &&
+        state.url.indexOf('/userChargingPatternAnalysis') < 0 &&
+        state.url.indexOf('/travelDistanceStatistics') < 0 &&
         state.url.indexOf('/control/userAccount') < 0 &&
         state.url.indexOf('/control/vehicle/vehicleSettings') < 0 &&
         state.url.indexOf('/control/vehicle/vehicleModel') < 0 &&

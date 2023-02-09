@@ -26,8 +26,13 @@ export class MapMarkerDetailComponent implements OnInit {
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    this.setSpeedChart()
-    this.setBatteryChart()
+    //this.setSpeedChart()
+    //this.setBatteryChart()
+
+    setTimeout(()=>{
+      this.setMap()
+    },10)
+
   }
 
 
@@ -388,9 +393,7 @@ export class MapMarkerDetailComponent implements OnInit {
     }else if(this.menu == 'menu3'){
 
     }else if(this.menu == 'menu4'){
-      setTimeout(()=>{
-        this.setMap()
-      },10)
+
     }
   }
 

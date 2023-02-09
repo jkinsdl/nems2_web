@@ -274,7 +274,7 @@ export class DetailMonitoringComponent implements OnInit {
 
       this.map.on('mouseleave', 'unclustered-point', () => {
         this.map.getCanvas().style.cursor = '';
-        //this.mapPopup.remove()
+        this.mapPopup.remove()
       });
     });
 
@@ -526,22 +526,17 @@ export class DetailMonitoringComponent implements OnInit {
     e.stopPropagation()
     const dialogRef = this.dialog.open( BatteryDetailComponent, {
       data:{},
-      panelClass : 'bakcgroundColorGray'
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
 
       }
     });
-
   }
-
-
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     if(this.listBtn$)this.listBtn$.unsubscribe()
   }
-
 }
