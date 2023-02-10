@@ -56,10 +56,8 @@ export class TravelDistanceStatisticsComponent implements OnInit {
         }
       ]
     };
-
     option && myChart.setOption(option);
   }
-
 
   setDonutChart(){
     var chartDom = document.getElementById('donutChart')!;
@@ -97,8 +95,6 @@ export class TravelDistanceStatisticsComponent implements OnInit {
         }
       ]
     };
-
     option && myChart.setOption(option);
   }
-
 }

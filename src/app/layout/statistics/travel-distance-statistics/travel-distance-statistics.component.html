@@ -1,6 +1,6 @@
 <div class="warningStatisticsContainer">
 
-  <div class="warningStatisticsLayout whiteBoardBoax">
+  <div class="warningStatisticsLayout">
     <div class="statusContents">
       <div class="status">
         <div class="statusBox">
@@ -38,12 +38,14 @@
     </div>
   </div>
 
-  <div class="contentRightLayout whiteBoardBoax">
+  <div class="contentRightLayout">
     <app-sub-title [title]="''"></app-sub-title>
-    <div id="barChart" style="width:100%; height:100%"></div>
+    <div id="barChart" style="width:100%; height:calc(100% - 30px)"></div>
   </div>
 
-  <div class="contentLeftLayout whiteBoardBoax">
+  <div class="contetnsDivisionLine"></div>
+
+  <div class="contentLeftLayout">
     <app-sub-title [title]="''"></app-sub-title>
       <div id="donutChart" style="width:100%; height:100%"></div>
     </div>

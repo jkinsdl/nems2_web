@@ -95,10 +95,10 @@ import { VehicleComponent } from './layout/control-panel/vehicle/vehicle.compone
 import { AddVehicleModelComponent } from './component/add-vehicle-model/add-vehicle-model.component'
 import { OnlyNumber } from './shared/directive/onlynumber.directive';
 import { BatteryDetailComponent } from './component/battery-detail/battery-detail.component';
-import { WarningStatisticsComponent } from './layout/warning-statistics/warning-statistics.component';
-import { MonthlyVehicleStatisticsComponent } from './layout/monthly-vehicle-statistics/monthly-vehicle-statistics.component';
-import { UserChargingPatternAnalysisComponent } from './layout/user-charging-pattern-analysis/user-charging-pattern-analysis.component';
-import { TravelDistanceStatisticsComponent } from './layout/travel-distance-statistics/travel-distance-statistics.component';
+import { WarningStatisticsComponent } from './layout/statistics/warning-statistics/warning-statistics.component';
+import { MonthlyVehicleStatisticsComponent } from './layout/statistics/monthly-vehicle-statistics/monthly-vehicle-statistics.component';
+import { UserChargingPatternAnalysisComponent } from './layout/statistics/user-charging-pattern-analysis/user-charging-pattern-analysis.component';
+import { TravelDistanceStatisticsComponent } from './layout/statistics/travel-distance-statistics/travel-distance-statistics.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {

@@ -38,6 +38,7 @@
     "ag-grid-community": "^27.3.0",
     "chart.js": "^3.8.0",
     "echarts": "^5.3.3",
+    "echarts-for-angular": "^0.4.0",
     "leaflet": "^1.8.0",
     "leaflet.markercluster": "^1.5.3",
     "mapbox-gl": "^2.9.1",

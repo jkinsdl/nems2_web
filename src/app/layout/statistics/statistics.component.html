@@ -1,7 +1,7 @@
 <div class="statisticsContainer ">
   <div class="statisticsLayout whiteBoardBoax">
     <div class="statisticsTab">
-      <div class="tab" [ngClass]="{select: router.url.indexOf('total') > -1 }" [routerLink]="['/main/statistics/total']">
+      <!--<div class="tab" [ngClass]="{select: router.url.indexOf('total') > -1 }" [routerLink]="['/main/statistics/total']">
         Total
       </div>
       <div class="tab" [ngClass]="{select: router.url.indexOf('driving') > -1 }" [routerLink]="['/main/statistics/driving']">
@@ -13,6 +13,21 @@
       <div class="tab" [ngClass]="{select: router.url.indexOf('search') > -1 }" [routerLink]="['/main/statistics/search']">
         Search Data
       </div>
+    -->
+
+      <div class="tab" [ngClass]="{select: router.url.indexOf('warningStatistics') > -1 }" [routerLink]="['/main/statistics/warningStatistics']">
+        Warning
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('monthlyVehicleStatistics') > -1 }" [routerLink]="['/main/statistics/monthlyVehicleStatistics']">
+        Monthly Vehicle
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('userChargingPatternAnalysis') > -1 }" [routerLink]="['/main/statistics/userChargingPatternAnalysis']">
+        User Charging Pattern Analysis
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('travelDistanceStatistics') > -1 }" [routerLink]="['/main/statistics/travelDistanceStatistics']">
+        Travel Distance
+      </div>
+
     </div>
 
     <div class="line"></div>

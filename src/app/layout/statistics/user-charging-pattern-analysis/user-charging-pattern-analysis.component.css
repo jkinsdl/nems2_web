@@ -5,7 +5,8 @@
 
 .warningStatisticsContainer .warningStatisticsLayout{
   width: 100%;
-  height: 200px;
+  height: 300px;
+  border-bottom: 1px solid #eeeef5;
 }
 
 .warningStatisticsContainer .warningStatisticsLayout .statusContents{
@@ -16,7 +17,7 @@
 }
 
 .warningStatisticsContainer .warningStatisticsLayout .statusContents .status{
-  width: 25%;
+  width: 33%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -29,30 +30,29 @@
   background-color: #eeeef5;
 }
 
-.statusLabel{
-  margin-bottom: 20px;
-  font-size: 20px;
-  text-align: center;
+.statusBox{
+  width: 100%;
+  height: 100%;
 }
 
 .statusValue{
-  font-size: 30px;
-  font-weight: bold;
-  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
 }
 
-.contentRightLayout{
-  width: calc(50% - 10px);
-  height: calc(100% - 216px);
-  float: left;
+.statusValue div{
+  width: 100%;
+  height: 100%;
+}
+
+.contentLayout{
+  width: 100%;
+  height: calc(100% - 340px);
   margin-top: 16px;
 }
 
-.contentLeftLayout{
-  width: calc(50% - 10px);
-  height: calc(100% - 216px);
-  float: left;
-  margin-top: 16px;
-  margin-left: 16px;
+.contentLayout div{
+  width: 100%;
+  height: 100%;
 }
-
