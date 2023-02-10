@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
 import * as echarts from 'echarts';
+import usa from '../../../../assets/data/examples.json';
 
 @Component({
   selector: 'app-monthly-vehicle-statistics',
@@ -23,6 +24,7 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setMap()
+    this.setChinaMapChart()
   }
 
   setMap(){
@@ -123,16 +125,15 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
   }
 
   setChinaMapChart(){
-    var chartDom = document.getElementById('main')!;
+    var chartDom = document.getElementById('chinaMapChart')!;
     var myChart = echarts.init(chartDom, 'dark');
     var option: echarts.EChartsOption;
 
     myChart.showLoading();
 
-    $.get('https://echarts.apache.org/examples/data/asset/geo/USA.json', function (usaJson : any) {
       myChart.hideLoading();
 
-      echarts.registerMap('USA', usaJson, {
+      echarts.registerMap('USA', (usa as any), {
         Alaska: {
           left: -131,
           top: 25,
@@ -264,7 +265,6 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
       };
 
       myChart.setOption(option);
-    });
 
     option && myChart.setOption(option);
   }

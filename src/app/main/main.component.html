@@ -105,17 +105,17 @@
             <span *ngIf="menuMode == 1">Alarm History</span>
           </div>
 
-          <div class="menu" [ngClass]="{select: router.url.indexOf('abnormalLocationVehicle') > -1 }" [routerLink]="['/main/abnormalLocationVehicle/test1']" (click)="changeMenu('ABNORMAL LOCATION VEHICLE')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
+          <!--<div class="menu" [ngClass]="{select: router.url.indexOf('abnormalLocationVehicle') > -1 }" [routerLink]="['/main/abnormalLocationVehicle/test1']" (click)="changeMenu('ABNORMAL LOCATION VEHICLE')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
             <img src="assets/icon/abnormal_location_vehicle_icon.png">
             <span *ngIf="menuMode == 1">Abnormal Location Vehicle</span>
           </div>
 
-          <!--<div class="menu" [ngClass]="{select: router.url.indexOf('dataForwarding') > -1 }" [routerLink]="['/main/dataForwarding']" (click)="changeMenu('DATA FORWARDING')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('dataForwarding') > -1 }" [routerLink]="['/main/dataForwarding']" (click)="changeMenu('DATA FORWARDING')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
             <img src="assets/icon/data_forwarding_icon.png">
             <span *ngIf="menuMode == 1">Data Forwarding</span>
           </div>
-         -->
-          <!--<div class="menu" [ngClass]="{select: router.url.indexOf('warningStatistics') > -1 }" [routerLink]="['/main/warningStatistics']" (click)="changeMenu('Warning Statistics')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+
+          <div class="menu" [ngClass]="{select: router.url.indexOf('warningStatistics') > -1 }" [routerLink]="['/main/warningStatistics']" (click)="changeMenu('Warning Statistics')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
             <img src="assets/icon/warning.png">
             <span *ngIf="menuMode == 1">Warning Statistics</span>
           </div>
