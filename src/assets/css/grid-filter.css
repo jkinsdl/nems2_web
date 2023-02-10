@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   padding: 7px 0 5px 4px;
+  position: relative;
 }
 
 .gridFilterBox .filter{
@@ -12,6 +13,11 @@
   justify-content: center;
   align-items: center;
   margin: 0 10px;
+}
+
+.gridFilterBox .filter.searchFilter{
+  position: absolute;
+  right: 20px;
 }
 
 .gridFilterBox .filter .label{
