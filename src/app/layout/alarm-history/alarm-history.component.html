@@ -32,7 +32,6 @@
         </div>
       </div>
 
-
       <div class="filter">
         <div class="btn">
           Search
@@ -48,7 +47,7 @@
 
 
     <div class="alarmHistoryGrid">
-      <ag-grid-angular style="width: 100%; height: 100%"
+      <ag-grid-angular style="width: 100%; height: calc(100% - 10px)"
       class="ag-theme-alpine"
       [rowData]="vehiclewarning.warnings"
       [rowSelection]="rowSelection"

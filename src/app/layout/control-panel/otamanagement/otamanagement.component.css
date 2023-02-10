@@ -6,7 +6,7 @@
 
 .otaManagementContainer .leftLayout{
   width: 20%;
-  height: calc(100% - 20px);
+  height: 100%;
 }
 
 .otaManagementContainer .leftLayout .listBtnBox{
@@ -66,7 +66,7 @@
 
 .otaManagementContainer .rightLayout{
   width:calc(80% - 20px);
-  height: calc(100% - 20px);
+  height: 100%;
   margin-left: 20px;
 }
 

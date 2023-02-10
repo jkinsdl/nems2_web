@@ -30,15 +30,15 @@
 .statusContainer .vehicleFailureRate,
 .statusContainer .failureOccupancyRate,
 .statusContainer .top10VehicleByFailure{
-  width: calc(50% - 17px);
-  height: calc(50% - 132px);
-  margin-top: 30px;
+  width: calc(50% - 10px);
+  height: calc(50% - 100px);
+  margin-top: 15px;
   float: left;
 }
 
 .statusContainer .vehicleFailureRate,
 .statusContainer .top10VehicleByFailure{
-  margin-left: 30px;
+  margin-left: 15px;
 }
 
 .status .statusValue,

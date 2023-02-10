@@ -1,16 +1,55 @@
 <div class="monitoringContainer">
   <div class="gridLayout whiteBoardBoax">
-    <app-sub-title [title]="'VEHICLE SUMMARY'"></app-sub-title>
 
     <div class="gridFilterBox">
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text">
+          <input type="text" [(ngModel)]="filter.vin" (keydown.enter)="getRealtimedataVehiclelist()">
         </div>
       </div>
 
       <div class="filter">
+        <div class="label">reg number</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="filter.registrationPlate" (keydown.enter)="getRealtimedataVehiclelist()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">Login</div>
+        <div class="value">
+          <select [(ngModel)]="filter.isLogin">
+            <option [value]="undefined"></option>
+            <option [value]="true">Online</option>
+            <option [value]="false">Offline</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">purpose</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="filter.purpose" (keydown.enter)="getRealtimedataVehiclelist()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">model</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="filter.model" (keydown.enter)="getRealtimedataVehiclelist()">
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">region</div>
+        <div class="value">
+          <input type="text" [(ngModel)]="filter.region" (keydown.enter)="getRealtimedataVehiclelist()">
+        </div>
+      </div>
+
+
+      <!--<div class="filter">
         <div class="label">Start Date</div>
         <div class="value">
           <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [max]="endDate" [(ngModel)]="startDate">
@@ -29,12 +68,19 @@
           <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
         </div>
       </div>
-
+    -->
       <div class="filter">
-        <div class="btn">
+        <div class="btn" (click)="getRealtimedataVehiclelist()">
           Search
         </div>
       </div>
+
+      <div class="mainControlBox">
+        <div class="btn" (click)="this.moveDetaileMonitoring(1)">
+          <img src="assets/icon/map.png" style="width: 25px;">
+        </div>
+      </div>
+
     </div>
 
 
@@ -160,7 +206,7 @@
       </div>
 -->
 
-      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+      <ag-grid-angular style="width: 100%; height: 100%"
         class="ag-theme-alpine"
         [rowData]="vehicleInfo"
         [rowSelection]="rowSelection"

@@ -5,7 +5,7 @@
 
 .serverLogsConatiner .serverLogsLayout{
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%;
 }
 
 .serverLogsContents{

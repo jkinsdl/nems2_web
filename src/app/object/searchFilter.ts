@@ -48,4 +48,9 @@ export class SearchFilter{
   attributeValue : string
 
   serverName : string
+  isLogin : boolean
+
+  purpose : string
+  model : string
+
 }

@@ -65,7 +65,7 @@ export class TerminalComponent implements OnInit {
     this.child.onKey().subscribe(e => {
       //onData() is used more often.
     });
-    this._cols = 158
+    this._cols = 162
     this._rows = 40
   }
 

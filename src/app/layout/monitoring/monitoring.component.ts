@@ -25,17 +25,17 @@ export class MonitoringComponent implements OnInit {
   mapsBtn$ : Subscription
 
   columnDefs: ColDef[] = [
-    { field: 'Login',  headerName: 'Login'},
-    { field: 'VIN', headerName: 'VIN'},
+    { field: 'isLogin',  headerName: 'Login'},
+    { field: 'vin', headerName: 'VIN'},
     { field: 'regNumber', headerName : 'Reg. number'},
     { field: 'nemsSn', headerName : 'NEMS S/N' },
-    { field: 'lastUpdated', headerName : 'Last Updated' },
+    { field: 'lastUpdate', headerName : 'Last Updated' },
     { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)' },
-    { field: 'packet Count', headerName : 'Packet Count' },
+    { field: 'packetCount', headerName : 'Packet Count' },
     { field: 'model', headerName : 'model' },
     { field: 'region', headerName : 'region' },
     { field: 'purpose', headerName : 'Purpose' },
-    { field: 'Warning', headerName : 'Warning' },
+    { field: 'warningLevel', headerName : 'Warning' },
     { field: 'soc', headerName : 'soc(%)' },
   ];
 
@@ -44,24 +44,20 @@ export class MonitoringComponent implements OnInit {
   rowSelection = 'multiple';
   gridApi!: GridApi;
 
-  ngOnInit(): void {
+  filter : SearchFilter = new SearchFilter()
 
+  ngOnInit(): void {
     this.startDate = new Date(new Date().getTime() -1*1000*60*60*24);
     this.endDate = new Date(new Date().getTime());
 
-    this.getVehicledataVehiclelist()
-
-    this.mapsBtn$ = this.uiSerivce.mapsBtn$.subscribe(result=>{
-      console.log(result)
-      this.moveDetaileMonitoring(1)
-    })
+    this.getRealtimedataVehiclelist()
   }
 
-  getVehicledataVehiclelist(){
-    this.realtimedataService.getVehicledataVehiclelist(new SearchFilter()).subscribe(
+  getRealtimedataVehiclelist(){
+    this.realtimedataService.getRealtimedataVehiclelist(this.filter).subscribe(
       res=>{
         console.log(res)
-        this.vehicleInfo = res.body
+        this.vehicleInfo = res.body.vehicleBrief
       }, error=>{
         console.log(error)
       })
@@ -102,5 +98,4 @@ export class MonitoringComponent implements OnInit {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
   }
-
 }

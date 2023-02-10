@@ -5,12 +5,12 @@
 
 .OTAInformationConatiner .OTAInformationLayout{
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%
 }
 
 .OTAInformationConatiner .OTAInformationLayout .OTAInformationContents{
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 62px);
 }
 
 .filter{

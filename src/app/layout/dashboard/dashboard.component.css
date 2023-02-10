@@ -1,6 +1,6 @@
 .dashboardContainer{
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%;
   position:relative;
 }
 
@@ -143,7 +143,7 @@
 }
 
 .dashBorderLeft .mapBoundariesNavigator{
-  width: 285px;
+  width: 340px;
   display: flex;
   align-items: center;
   background-color: rgb(92 92 92);
@@ -328,7 +328,7 @@
 
 .dashBorderRight .dashBorderAlarmGrid{
   width: 100%;
-  height: calc(50% - 5px);
+  height: calc(50% - 45px);
   background-color: white;
   border-radius: 5px;
   margin: 5px 0px;
@@ -422,4 +422,26 @@
 
 .dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .evenRow{
   background-color: #eeeef5;
+}
+
+.mainControlBox{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-top: 10px;
+}
+
+.btn{
+  width: 30px;
+  height: 30px;
+  border: 1px solid #eeeef5;
+  background-color: white;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.btn img{
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  padding: 5px;
 }

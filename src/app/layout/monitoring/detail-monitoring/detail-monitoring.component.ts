@@ -286,13 +286,6 @@ export class DetailMonitoringComponent implements OnInit {
 
     this.listBtn$ = this.uiService.listBtn$.subscribe(result=>{
       console.log(result)
-      this.router.navigateByUrl('/main/monitoring').then(
-        nav => {
-          console.log(nav);
-        },
-        err => {
-          console.log(err);
-        });
     })
 
     this.setSpeedChart()
@@ -301,6 +294,16 @@ export class DetailMonitoringComponent implements OnInit {
 
   zoomIn(url : string){
     this.router.navigateByUrl('/main/monitoring/detail/zoom/'+url).then(
+      nav => {
+        console.log(nav);
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  moveListPage(){
+    this.router.navigateByUrl('/main/monitoring').then(
       nav => {
         console.log(nav);
       },

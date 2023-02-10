@@ -12,11 +12,11 @@ export class RealtimedataService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api" ;
+  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api/realtimedata" ;
 
 
   getRealtimedata(filter : SearchFilter){
-    var url = `${this.Url}/realtimedata`;
+    var url = `${this.Url}`;
     let httpParams = new HttpParams()
 
     if(filter.vin != undefined){
@@ -30,8 +30,8 @@ export class RealtimedataService {
     return this.http.get<any>(url, { params:httpParams, observe: "response" })
   }
 
-  getVehicledataVehiclelist(filter : SearchFilter){
-    var url = `${this.Url}/vehicledata/vehiclelist`;
+  getRealtimedataVehiclelist(filter : SearchFilter){
+    var url = `${this.Url}/vehiclelist`;
     let httpParams = new HttpParams()
 
     if(filter.vin != undefined){
@@ -66,36 +66,48 @@ export class RealtimedataService {
       httpParams = httpParams.set("offset",filter.offset)
     }
 
+    if(filter.isLogin != undefined){
+      httpParams = httpParams.set("isLogin",filter.isLogin)
+    }
+
+    if(filter.purpose != undefined){
+      httpParams = httpParams.set("purpose",filter.purpose)
+    }
+
+    if(filter.model != undefined){
+      httpParams = httpParams.set("model",filter.model)
+    }
+
     return this.http.get<any>(url, { params:httpParams, observe: "response" })
   }
 
 
-  getVehicledataVehiclesessionVin(vin : string){
-    var url = `${this.Url}/vehicledata/vehiclesession/${vin}`;
+  getRealtimedataVehiclesessionVin(vin : string){
+    var url = `${this.Url}/vehiclesession/${vin}`;
 
     return this.http.get<any>(url, { observe: "response" })
   }
 
 
 
-  getVehicledataVehiclesessionlist(){
-    var url = `${this.Url}/vehicledata/vehiclesessionlist`;
+  getRealtimedataVehiclesessionlist(){
+    var url = `${this.Url}/vehiclesessionlist`;
 
     return this.http.get<any>(url, { observe: "response" })
   }
 
 
 
-  getVehicledataWarningissueVin(vin : string){
-    var url = `${this.Url}/vehicledata/warningissue/${vin}`;
+  getRealtimedataWarningissueVin(vin : string){
+    var url = `${this.Url}/warningissue/${vin}`;
 
     return this.http.get<any>(url, { observe: "response" })
   }
 
 
 
-  getVehicledataWarningissuelist(){
-    var url = `${this.Url}/vehicledata/warningissuelist`;
+  getRealtimedataWarningissuelist(){
+    var url = `${this.Url}/warningissuelist`;
 
     return this.http.get<any>(url, { observe: "response" })
   }

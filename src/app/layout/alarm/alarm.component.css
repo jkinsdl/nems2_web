@@ -1,6 +1,6 @@
 .alarmContainer{
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%;
 }
 
 .alarmLeftLayout{
@@ -38,7 +38,7 @@
 
 .alarmGrid{
   width: 100%;
-  height: calc(100% - 100px);
+  height: calc(100% - 110px);
 }
 
 .alarmDetailStatus{
@@ -196,10 +196,11 @@
 
 .alarmDetailMap{
   width: 100%;
-  height: calc(100% - 480px);
+  height: calc(100% - 474px);
 }
 
 .map{
   width: 100%;
   height: 100%;
+  border-radius: 0 0 10px 10px;
 }
