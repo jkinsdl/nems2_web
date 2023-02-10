@@ -727,8 +727,9 @@ export class DashboardComponent implements OnInit {
         trigger: 'item'
       },
       legend: {
-        top: '5%',
+        bottom: 0,
         left: 'center'
+
       },
       series: [
         {

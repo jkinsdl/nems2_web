@@ -14,11 +14,13 @@
     </div>
 
     <div class="pushAlarmContents">
-      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+      <ag-grid-angular style="width: 100%; height: 100%"
         class="ag-theme-alpine"
         [rowData]="rowData"
         [columnDefs]="columnDefs"
         [rowSelection]="rowSelection"
+        [pagination]="true"
+        [paginationPageSize]="17"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>
     </div>

@@ -6,9 +6,6 @@
       <div class="status">
         <div class="statusValue">{{statisticsVehiclesSummary.totalVehicles}}</div>
         <div class="statusLabel">Total Vehicles</div>
-        <div class="monitoringBarChart" id="monitoringBarChart">
-        </div>
-        <div class="monitoringSubValue"> Online 0     Offline 7</div>
       </div>
 
       <div class="statusLine"></div>
@@ -23,7 +20,6 @@
       <div class="status">
           <div class="statusValue">{{statisticsVehiclesSummary.loginVehicles}}</div>
           <div class="statusLabel">Login Vehicels</div>
-          <div class="monitoringBarChart" id="energyBarChart"></div>
       </div>
 
       <div class="statusLine"></div>
@@ -31,7 +27,6 @@
       <div class="status">
           <div class="statusValue">{{statisticsVehiclesSummary.loginVehicles}}</div>
           <div class="statusLabel">Login Vehicles</div>
-          <div class="monitoringBarChart" id="failuresBarChart"></div>
       </div>
 
       <div class="statusLine"></div>
@@ -39,7 +34,6 @@
       <div class="status">
           <div class="statusValue">{{statisticsVehiclesSummary.totalEnergyUsage}}</div>
           <div class="statusLabel">Total Energy Usage</div>
-          <div class="monitoringBarChart" id="failuresBarChart"></div>
       </div>
 
     </div>
@@ -48,28 +42,28 @@
   <div class="distributionByRegion whiteBoardBoax">
     <app-sub-title [title]="'DISTRIBUTION BY REGION'"></app-sub-title>
     <div class="chartLayout">
-      <canvas id="chart" style="width: 100%; height: 95%;"></canvas>
+      <div id="chart"></div>
     </div>
   </div>
 
   <div class="vehicleFailureRate whiteBoardBoax">
     <app-sub-title [title]="'VEHICLE FAILURE RATE'"></app-sub-title>
     <div class="chartLayout">
-      <canvas id="chart1" style="width: 100%; height: 95%;"></canvas>
+      <div id="chart1" ></div>
     </div>
   </div>
 
   <div class="failureOccupancyRate whiteBoardBoax">
     <app-sub-title [title]="'FAILURE OCCUPANCY RATE'"></app-sub-title>
     <div class="chartLayout">
-      <canvas id="chart2" style="width: 100%; height: 95%;"></canvas>
+      <div id="chart2"></div>
     </div>
   </div>
 
   <div class="top10VehicleByFailure whiteBoardBoax">
     <app-sub-title [title]="'TOP 10 VEHICLE BY FAILURE'"></app-sub-title>
     <div class="chartLayout">
-      <canvas id="chart3" style="width: 100%; height: 95%;"></canvas>
+      <div id="chart3" ></div>
     </div>
   </div>
 

@@ -5,6 +5,7 @@
 @import 'assets/css/add-popup.css';
 @import 'assets/css/grid-filter.css';
 @import 'assets/css/monitoring-detail.css';
+@import 'assets/css/status.css';
 
 @font-face {
   font-family: 'notokr-medium';
@@ -216,4 +217,11 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+#map{
+  margin-left: 15px;
+  width: calc(100% - 30px);
+  height: calc(100% - 55px);
+  box-shadow: 1px 1px 5px #a5a5a5;
 }

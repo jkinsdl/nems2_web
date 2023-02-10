@@ -93,4 +93,6 @@
   opacity: 1;
 }
 
-
+ag-grid-angular{
+  border-top: 1px solid var(--ag-border-color, #babfc7);
+}

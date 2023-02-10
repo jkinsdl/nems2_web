@@ -18,6 +18,8 @@
   [rowData]="devicemanagersParameter.entities"
   [columnDefs]="configurationColumnDefs"
   [rowSelection]="rowSelection"
+  [pagination]="true"
+  [paginationPageSize]="17"
   (gridReady)="onServerGridReady($event)"
   (rowClicked)="onConfigureRowClicked($event)">
 </ag-grid-angular>
@@ -39,5 +41,7 @@
   [rowData]="devicemanagersParameterVehicle.entities"
   [columnDefs]="mappingColumnDefs"
   [rowSelection]="rowSelection"
+  [pagination]="true"
+  [paginationPageSize]="17"
   (gridReady)="onMappingGridReady($event)">
 </ag-grid-angular>

@@ -5,7 +5,7 @@
 
 .statusContainer .statusLayout{
   width: 100%;
-  height: 200px;
+  height: 150px;
 }
 
 .statusContainer .statusLayout .statusContents{
@@ -22,8 +22,9 @@
 
 .statusContainer .statusLayout .statusContents .statusLine{
   width: 1px;
-  height: 80%;
-  background-color: #eeeef5;
+  height: calc(100% - 30px);
+  margin-bottom: 30px;
+  background-color: #9d9d9d;
 }
 
 .statusContainer .distributionByRegion,
@@ -31,7 +32,7 @@
 .statusContainer .failureOccupancyRate,
 .statusContainer .top10VehicleByFailure{
   width: calc(50% - 10px);
-  height: calc(50% - 100px);
+  height: calc(50% - 75px);
   margin-top: 15px;
   float: left;
 }
@@ -52,6 +53,12 @@
   justify-content: center;
 }
 
+.statusLine{
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+
+}
+
 .status .statusLabel{
   color: #8b8b8b;
 }
@@ -59,9 +66,17 @@
 .status .statusValue{
   font-size: 30px;
   font-weight: bold;
+  margin-top: 5%;
+  margin-bottom: 10px;
 }
 
 .chartLayout{
   width: 100%;
   height: calc(100% - 30px);
+
+}
+
+.chartLayout div{
+width: 100%;
+height: 100%;
 }

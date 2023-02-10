@@ -3,7 +3,7 @@
   height: 100%;
   /*min-width: 1920px;
   min-height: 1080px;*/
-  overflow: auto;
+  overflow: hidden;
 }
 
 .mainContainer .titleManuContainer{
@@ -123,7 +123,7 @@
 }
 
 .mainContainer .titleManuContainer .titleLogoBox img{
-  height: 25px;
+  height: 31px;
 }
 
 .mainContainer .titleManuContainer .titleVinSearchBox{
@@ -180,13 +180,15 @@
 }
 
 .mainContainer .titleManuContainer .titleRightLayout .signOut img{
-  padding-right: 5px;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 7px;
 }
 
 .mainContainer .titleManuContainer .titleRightLayout .alarm{
   width: 40px;
   height: 40px;
-  margin: 0 10px;
   position: relative;
   cursor: pointer;
 }
@@ -197,7 +199,7 @@
   border-radius: 10px;
   background-color: red;
   position: absolute;
-  right: 20px;
+  right: 16px;
   top: 8px;
 }
 
@@ -228,7 +230,6 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 50px;
 }
 
 .mainContainer .titleManuContainer .titleRightLayout .myAccount .myAccountImage{
@@ -351,7 +352,7 @@
 }
 
 .logout{
-  padding: 0 40px;
+  padding-right: 30px;
   display: flex;
   align-items: center;
   cursor: pointer;

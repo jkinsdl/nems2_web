@@ -9,25 +9,13 @@
   border-bottom: 1px solid #eeeef5;
 }
 
-.warningStatisticsContainer .warningStatisticsLayout .statusContents{
-  width: 100%;
-  height: calc(100% - 30px);
-  display: flex;
-  align-items: center;
+.status{
+  width: 33% !important;
+
 }
 
-.warningStatisticsContainer .warningStatisticsLayout .statusContents .status{
-  width: 33%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.warningStatisticsContainer .warningStatisticsLayout .statusContents .statusLine{
-  width: 1px;
-  height: 80%;
-  background-color: #eeeef5;
+.statusLine{
+  height: calc(66% - 30px) !important;
 }
 
 .statusBox{
@@ -36,14 +24,14 @@
 }
 
 .statusValue{
-  margin-top: 20px;
   width: 100%;
   height: 100%;
+  margin: 0 !important;
 }
 
 .statusValue div{
   width: 100%;
-  height: 100%;
+  height: calc(100% - 30px);
 }
 
 .contentLayout{

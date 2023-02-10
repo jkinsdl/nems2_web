@@ -132,8 +132,10 @@
 }
 
 .map{
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  box-shadow: 1px 1px 5px #000000 !important;
   position: absolute;
 }
 
@@ -237,31 +239,28 @@
 
 .dashBorderRight .dashBorderStatus{
   width: 100%;
-  height: calc(20% - 10px);
+  height: calc(22% - 10px);
   background-color: white;
   border-radius: 10px;
   opacity: 1;
   margin: 5px 0px;
 }
 
-.dashBorderRight .dashBorderStatus .statusLine.total{
-  height: 24%;
-}
-
 .dashBorderRight .dashBorderStatus .statusLine{
   width: 100%;
-  height: 19%;
+  height: 18%;
   display: flex;
   align-items: center;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusLabel{
   margin-left: 5px;
-  width: calc(40% - 5px);
+  width: calc(50% - 5px);
   height: 100%;
-  font-size: 5px;
+  font-size: 12px;
   display: flex;
   align-items: center;
+  margin-left: 20px;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue{
@@ -274,7 +273,7 @@
 .dashBorderRight .dashBorderStatus .statusLine .statusValue .valueText{
   position: absolute;
   right: 25px;
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine .statusValue .numpad{
@@ -328,7 +327,7 @@
 
 .dashBorderRight .dashBorderAlarmGrid{
   width: 100%;
-  height: calc(50% - 45px);
+  height: calc(48% - 45px);
   background-color: white;
   border-radius: 5px;
   margin: 5px 0px;
@@ -444,4 +443,9 @@
   width: calc(100% - 10px);
   height: calc(100% - 10px);
   padding: 5px;
+}
+
+
+.subTitleContainer{
+  margin: 0 !important;
 }

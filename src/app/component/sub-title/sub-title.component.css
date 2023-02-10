@@ -4,16 +4,17 @@
   display: flex;
   align-items: center;
   justify-content: start;
+  margin-bottom: 10px;
 }
 
 .subTitleBar{
-  width: 5px;
-  height: 60%;
-  background-color: #2fc8b0;
+  width:8px;
+  height: 8px;
+  background-color: red;
   margin-left: 15px;
 }
 
 .subTitleText{
-  font-size: 10px;
+  font-size: 13px;
   margin-left: 5px;
 }

@@ -18,6 +18,8 @@
       [rowData]="forwarding.entities"
       [columnDefs]="forwardingColumnDefs"
       [rowSelection]="rowSelection"
+      [pagination]="true"
+      [paginationPageSize]="17"
       (gridReady)="onServerGridReady($event)"
       (rowClicked)="onForwardingRowClick($event)">
     </ag-grid-angular>
@@ -41,6 +43,8 @@
       [rowData]="relations.entities"
       [columnDefs]="relationsColumnDefs"
       [rowSelection]="rowSelection"
+      [pagination]="true"
+      [paginationPageSize]="17"
       (gridReady)="onMappingGridReady($event)">
     </ag-grid-angular>
   </div>

@@ -181,13 +181,17 @@
     </div>
 
     <div class="dashBorderStatus">
-
+      <app-sub-title [title]="'STATUS'"></app-sub-title>
       <div class="statusLine total">
         <div class="statusLabel">
           Total Vehicles
         </div>
+
         <div class="statusValue">
-          <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[6]}">
+          <div class="valueText purple" >
+            {{arrayTotalVehicles}}
+          </div>
+          <!--<div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[6]}">
             {{arrayTotalVehicles[6] ? arrayTotalVehicles[6] : 0}}
           </div>
           <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[5]}">
@@ -207,7 +211,7 @@
           </div>
           <div class="numpad" [ngClass]="{'colorGray': !arrayTotalVehicles[0]}">
             {{arrayTotalVehicles[0] ? arrayTotalVehicles[0] : 0}}
-          </div>
+          </div>-->
         </div>
       </div>
 
@@ -246,8 +250,8 @@
     </div>
 
     <div class="dashBorderPieChart">
-
-      <div id="pieChart" style="width: 100%; height: 100%;"></div>
+      <app-sub-title [title]="'STATUS'"></app-sub-title>
+      <div id="pieChart" style="width: 100%; height: calc(100% - 40px);"></div>
 
       <!--<canvas style="width: 100%; height: 100%;"
       baseChart
@@ -266,11 +270,7 @@
     </div>
     <div class="dashBorderAlarmGrid">
       <div class="alarmGridHeader">
-        <div class="alarmStatus green"></div>
-        <div class="alarmTitle">Alarm</div>
-        <div class="alarmIcon">
-          <img src="assets/icon/alarm_icon.png">
-        </div>
+        <app-sub-title [title]="'STATUS'"></app-sub-title>
       </div>
 
       <div class="alarmGrid">

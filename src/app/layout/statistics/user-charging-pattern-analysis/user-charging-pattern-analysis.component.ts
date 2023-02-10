@@ -24,10 +24,6 @@ export class UserChargingPatternAnalysisComponent implements OnInit {
     var option: echarts.EChartsOption;
 
     option = {
-      title: {
-        text: 'Title',
-        left: 'center'
-      },
       tooltip: {
         trigger: 'item'
       },
@@ -40,7 +36,7 @@ export class UserChargingPatternAnalysisComponent implements OnInit {
         {
           name: '',
           type: 'pie',
-          radius: '50%',
+          radius: ['40%', '80%'],
           data: [
             { value: 1048, name: 'A' },
             { value: 735, name: 'B' },
@@ -68,10 +64,6 @@ export class UserChargingPatternAnalysisComponent implements OnInit {
     var option: echarts.EChartsOption;
 
     option = {
-      title: {
-        text: 'Title',
-        left: 'center'
-      },
       tooltip: {
         trigger: 'item'
       },
@@ -84,7 +76,7 @@ export class UserChargingPatternAnalysisComponent implements OnInit {
         {
           name: 'Access From',
           type: 'pie',
-          radius: '50%',
+          radius: ['40%', '80%'],
           data: [
             { value: 1048, name: 'A' },
             { value: 735, name: 'B' },
@@ -112,10 +104,6 @@ export class UserChargingPatternAnalysisComponent implements OnInit {
     var option: echarts.EChartsOption;
 
     option = {
-      title: {
-        text: 'Title',
-        left: 'center'
-      },
       tooltip: {
         trigger: 'item'
       },
@@ -128,7 +116,7 @@ export class UserChargingPatternAnalysisComponent implements OnInit {
         {
           name: 'Access From',
           type: 'pie',
-          radius: '50%',
+          radius: ['40%', '80%'],
           data: [
             { value: 1048, name: 'A' },
             { value: 735, name: 'B' },
@@ -156,7 +144,9 @@ export class UserChargingPatternAnalysisComponent implements OnInit {
     var option: echarts.EChartsOption;
 
     option = {
-      xAxis: {},
+      xAxis: {
+
+      },
       yAxis: {},
       series: [
         {

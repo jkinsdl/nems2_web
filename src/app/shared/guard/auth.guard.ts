@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/status') < 0 &&
         state.url.indexOf('/statistics') < 0 &&
         state.url.indexOf('/alarm') < 0 &&
-        state.url.indexOf('/history') < 0 &&
+        //state.url.indexOf('/history') < 0 &&
         //state.url.indexOf('/abnormalLocationVehicle') < 0 &&
         //state.url.indexOf('/dataForwarding') < 0 &&
         //state.url.indexOf('/warningStatistics') < 0 &&
@@ -69,7 +69,7 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/status') < 0 &&
         state.url.indexOf('/statistics') < 0 &&
         state.url.indexOf('/alarm') < 0 &&
-        state.url.indexOf('/history') < 0 &&
+        //state.url.indexOf('/history') < 0 &&
         //state.url.indexOf('/abnormalLocationVehicle') < 0 &&
         //state.url.indexOf('/dataForwarding') < 0 &&
         state.url.indexOf('/control/vehicle/vehicleSettings') < 0 &&
@@ -93,7 +93,7 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/status') < 0 &&
         state.url.indexOf('/statistics') < 0 &&
         state.url.indexOf('/alarm') < 0 &&
-        state.url.indexOf('/history') < 0 &&
+        //state.url.indexOf('/history') < 0 &&
         //state.url.indexOf('/abnormalLocationVehicle') < 0 &&
         state.url.indexOf('/control/pushAlarm') < 0 &&
         state.url.indexOf('/control/detectError/abnormalVehicleRealTime') < 0 &&
@@ -107,8 +107,8 @@ export class AuthGuard implements CanActivate {
       }else if(user.authorityId == "user"){
         if(state.url.indexOf('/dashboard') < 0 &&
         state.url.indexOf('/monitoring') < 0 &&
-        state.url.indexOf('/alarm') < 0 &&
-        state.url.indexOf('/history') < 0 ){
+        state.url.indexOf('/alarm') < 0 /*&&
+        state.url.indexOf('/history') < 0*/ ){
           this.router.navigate(['/dashboard']);
           return true
         }

@@ -18,6 +18,8 @@
       [rowData]="managementRowData"
       [columnDefs]="managementColumnDefs"
       [rowSelection]="rowSelection"
+      [pagination]="true"
+      [paginationPageSize]="17"
       (gridReady)="onServerGridReady($event)">
     </ag-grid-angular>
 
@@ -42,6 +44,8 @@
       [rowData]="mappingRowData"
       [columnDefs]="mappingColumnDefs"
       [rowSelection]="rowSelection"
+      [pagination]="true"
+      [paginationPageSize]="17"
       (gridReady)="onMappingGridReady($event)">
     </ag-grid-angular>
   </div>

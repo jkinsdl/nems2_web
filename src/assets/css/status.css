@@ -1,0 +1,29 @@
+.statusContents{
+  width: 100%;
+  height: calc(100% - 30px);
+  display: flex;
+  align-items: center;
+}
+
+.statusContents .status{
+  width: 20%;
+  height: 100%;
+}
+
+.statusContents .statusLine{
+  width: 1px;
+  margin-top: 30px;
+  height: calc(100% - 30px);
+  background-color: #9d9d9d;
+}
+
+.status .statusValue{
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 5%;
+  margin-bottom: 10px;
+}
+
+.status .statusLabel{
+  color: #8b8b8b;
+}

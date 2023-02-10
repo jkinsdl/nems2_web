@@ -63,8 +63,8 @@
 
 .detailStatusHorizontalLine{
   width: 2px;
-  height: 60%;
-  background-color: #efecec;
+  height: 40%;
+  background-color: #b9b9b9;
 }
 
 .alarmDetailStatus .detailStatusBox .detailLable,
@@ -72,16 +72,18 @@
   width: 100%;
   height: 50%;
   display: flex;
-  align-items: center;
+
   justify-content: center;
 }
 
 .alarmDetailStatus .detailStatusBox .detailLable{
   font-size: 12px;
+  align-items: flex-end;
 }
 
 .alarmDetailStatus .detailStatusBox .datailValue{
   font-size: 16px;
+  align-items: flex-start;
 }
 
 .alarmDetailStatus .detailStatusBox .labelColorGreen{
@@ -155,7 +157,7 @@
   height: 30px;
   display: flex;
   align-items: center;
-  margin-left: 10%;
+  margin-left: 20%;
 }
 
 .alarmDetailFild .alarmfildLable{
@@ -168,7 +170,7 @@
 }
 
 .alarmDetailFild .alarmfildValue{
-  width: 80%;
+  width: 65%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -196,11 +198,9 @@
 
 .alarmDetailMap{
   width: 100%;
-  height: calc(100% - 474px);
+  height: calc(100% - 440px);
 }
 
-.map{
-  width: 100%;
-  height: 100%;
-  border-radius: 0 0 10px 10px;
+#map{
+  height: calc(100% - 15px);
 }

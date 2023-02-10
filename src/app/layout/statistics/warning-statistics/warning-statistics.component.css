@@ -5,29 +5,12 @@
 
 .warningStatisticsContainer .warningStatisticsLayout{
   width: 100%;
-  height: 200px;
+  height: 130px;
   border-bottom: 1px solid #eeeef5;
 }
 
-.warningStatisticsContainer .warningStatisticsLayout .statusContents{
-  width: 100%;
-  height: calc(100% - 30px);
-  display: flex;
-  align-items: center;
-}
-
-.warningStatisticsContainer .warningStatisticsLayout .statusContents .status{
-  width: 33%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.warningStatisticsContainer .warningStatisticsLayout .statusContents .statusLine{
-  width: 1px;
-  height: 80%;
-  background-color: #eeeef5;
+.status{
+  width: 33% !important;
 }
 
 .statusLabel{
@@ -44,7 +27,7 @@
 
 .contentRightLayout{
   width: calc(50% - 10px);
-  height: calc(100% - 240px);
+  height: calc(100% - 170px);
   float: left;
   margin-top: 16px;
 
@@ -52,47 +35,38 @@
 
 .contentLeftLayout{
   width: calc(50% - 10px);
-  height: calc(100% - 240px);
+  height: calc(100% - 170px);
   float: left;
   margin-top: 16px;
   margin-left: 16px;
 }
 
-#map{
-  width: 100%;
-  height: calc(100% - 28px);
-  border-radius: 0 0 0 10px;
-}
-
 .statisticsFilter{
   width: 100%;
-  height: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center
 
 }
 
 .statisticsFilter .statisticsLabel{
-  width: 30%;
-  height: 100%;
-  font-size: 20px;
+  width: 100%;
+  margin-left: 20px;
   display: flex;
   align-items: center;
-  padding-left: 20px;
 }
 
 
 .statisticsFilter .statisticsGauge{
-  width: 70%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
+  margin-left: 20px;
+  margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 .statisticsGauge mat-progress-bar{
   width: 80%;
-  height: 10px;
+  height: 30px;
   border-radius: 5px;
 }
 

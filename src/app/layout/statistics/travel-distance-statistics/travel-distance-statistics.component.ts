@@ -70,13 +70,14 @@ export class TravelDistanceStatisticsComponent implements OnInit {
       },
       legend: {
         top: '5%',
-        left: 'center'
+        right : 10,
+        orient: 'vertical',
       },
       series: [
         {
           name: '',
           type: 'pie',
-          radius: ['40%', '70%'],
+          radius: ['40%', '80%'],
           emphasis: {
             label: {
               show: true,

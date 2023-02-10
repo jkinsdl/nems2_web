@@ -3,17 +3,25 @@
     <div class="listBtnBox">
       <div class="otaBtn add" (click)="leftListAddModal()">
         <img src="assets/icon/more.png">
+        &nbsp;ADD
       </div>
       <div class="otaBtn remove" (click)="leftListRemove()">
         <img src="assets/icon/minus.png">
+        &nbsp;DELETE
       </div>
       <div class="otaBtn upload" (click)="leftListUpload()">
         <img src="assets/icon/upload.png">
+        &nbsp;UPLOAD
       </div>
     </div>
 
     <div class="leftListBox">
       <div class="listItem" *ngFor="let firmware of firmwareList.entities">
+
+        <div class="arrowBox" [ngClass]="{'imageRotate': selectFirmware == firmware}">
+          <img src="assets/icon/right-arrow.png" style="width:20px; height: 20px;">
+        </div>
+
         <div class="rowTitle" (click)="rowOpen(firmware)">{{firmware.firmwareName}}</div>
         <div class="rowContent" [ngClass]="{'openRowContent': selectFirmware == firmware}">
           <div style="padding: 10px;">
@@ -48,17 +56,17 @@
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text" style="width:calc(100vh - 80px)" placeholder="vin" [(ngModel)]="inputVinText">
+          <input type="text" style="width:calc(100vh - 80px)" [(ngModel)]="inputVinText">
         </div>
       </div>
 
-      <div class="filter">
+      <!--<div class="filter">
         <button mat-icon-button (click)="inputVinTextClose()" [disabled]="inputVinText == ''">
           <img src="assets/icon/close.png" [ngClass]="{'imageDisabled': inputVinText == ''}">
         </button>
 
       </div>
-
+    -->
       <div class="filter">
         <button mat-icon-button (click)="postDevicemanagersFirmwareFirmwareNo()" [disabled]="inputVinText == '' || selectFirmware == null">
           <img src="assets/icon/plus.png" [ngClass]="{'imageDisabled': inputVinText == ''  || selectFirmware == null}">

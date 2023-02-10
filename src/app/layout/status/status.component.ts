@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { StatisticsService } from 'src/app/service/statistics.service';
+import * as echarts from 'echarts';
 
 @Component({
   selector: 'app-status',
@@ -51,38 +52,44 @@ export class StatusComponent implements OnInit {
   }
 
   setPieChart(chartID : string){
-    const canvas = <HTMLCanvasElement> document.getElementById(chartID);
-    const ctx = canvas.getContext('2d');
-    this.chart = new Chart(ctx,{
-      type:'pie',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-			responsive: false
-		}
-    })
+    var chartDom = document.getElementById(chartID)!;
+    var myChart = echarts.init(chartDom);
+    var option: echarts.EChartsOption;
+
+    option = {
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        right: 10,
+        top: 20,
+        bottom: 20,
+      },
+      series: [
+        {
+          name: '',
+          type: 'pie',
+          radius: ['40%', '80%'],
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 40,
+              fontWeight: 'bold'
+            }
+          },
+          data: [
+            { value: 1048, name: 'A' },
+            { value: 735, name: 'B' },
+            { value: 580, name: 'C' },
+            { value: 484, name: 'D' },
+            { value: 300, name: 'E' }
+          ],
+
+        }
+      ]
+    };
+    option && myChart.setOption(option);
   }
 
 }

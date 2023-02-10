@@ -50,6 +50,7 @@
       </div>
       <div class="logout" (click)="signOut()">
         <img src="assets/icon/exit.png" style="width: 20px; height: 20px;">
+        &nbsp; Logout
       </div>
     </div>
   </div>
@@ -89,11 +90,11 @@
             <img src="assets/icon/push_alarm_icon.png">
             <span *ngIf="menuMode == 1">Alarm</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('history') > -1 }" [routerLink]="['/main/history']" (click)="changeMenu('ALARM HISTORY')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser' || currentLoginUser.authorityId == 'user'">
+          <!--<div class="menu" [ngClass]="{select: router.url.indexOf('history') > -1 }" [routerLink]="['/main/history']" (click)="changeMenu('ALARM HISTORY')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser' || currentLoginUser.authorityId == 'user'">
             <img src="assets/icon/alarm_history_icon.png">
             <span *ngIf="menuMode == 1">Alarm History</span>
           </div>
-
+        -->
           <!--<div class="menu" [ngClass]="{select: router.url.indexOf('abnormalLocationVehicle') > -1 }" [routerLink]="['/main/abnormalLocationVehicle/test1']" (click)="changeMenu('ABNORMAL LOCATION VEHICLE')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
             <img src="assets/icon/abnormal_location_vehicle_icon.png">
             <span *ngIf="menuMode == 1">Abnormal Location Vehicle</span>

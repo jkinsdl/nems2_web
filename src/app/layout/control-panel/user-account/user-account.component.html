@@ -69,6 +69,8 @@
         [rowData]="users.users"
         [columnDefs]="columnDefs"
         [rowSelection]="rowSelection"
+        [pagination]="true"
+        [paginationPageSize]="17"
         (cellClicked)="userClick($event)"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>
