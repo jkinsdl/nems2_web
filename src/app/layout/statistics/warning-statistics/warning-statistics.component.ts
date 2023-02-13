@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { StatisticsService } from 'src/app/service/statistics.service';
 
 
 @Component({
@@ -9,7 +11,9 @@ import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
 })
 export class WarningStatisticsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private statisticsServce : StatisticsService
+  ) { }
 
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/streets-v10'
@@ -22,8 +26,24 @@ export class WarningStatisticsComponent implements OnInit {
     [135, 55] // Northeast coordinates
   ];
 
+  warningsSummary : any = {
+    warningByModel : [],
+    warningByRegion : [],
+    warningVehicles : 0,
+    warnings : 0
+  }
+
   ngOnInit(): void {
     this.setMap()
+    this.getStatisticsWarningsSummary()
+  }
+
+  getStatisticsWarningsSummary(){
+    this.statisticsServce.getStatisticsWarningsSummary(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
   setMap(){

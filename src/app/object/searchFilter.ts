@@ -53,4 +53,14 @@ export class SearchFilter{
   purpose : string
   model : string
 
+  latitudeBegin: number
+  latitudeEnd : number
+  longitudeBegin : number
+  longitudeEnd : number
+
+  period : number
+
+  province : string
+  city : string
+
 }

@@ -203,12 +203,14 @@
       </div>
 -->
 
-      <ag-grid-angular style="width: 100%; height: 100%"
+      <ag-grid-angular
+        style="width: 100%; height: 100%"
         class="ag-theme-alpine"
         [rowData]="vehicleInfo"
         [rowSelection]="rowSelection"
         [columnDefs]="columnDefs"
-        (gridReady)="onGridReady($event)">
+        (gridReady)="onGridReady($event)"
+        (rowClicked)="getVehicleRow($event)">
       </ag-grid-angular>
       <!--
       <div class="gridPage">

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
 import * as echarts from 'echarts';
 import usa from '../../../../assets/data/examples.json';
+import { StatisticsService } from 'src/app/service/statistics.service';
+import { SearchFilter } from 'src/app/object/searchFilter';
 
 @Component({
   selector: 'app-monthly-vehicle-statistics',
@@ -9,6 +11,10 @@ import usa from '../../../../assets/data/examples.json';
   styleUrls: ['./monthly-vehicle-statistics.component.css']
 })
 export class MonthlyVehicleStatisticsComponent implements OnInit {
+
+  constructor(
+    private statisticsServce : StatisticsService
+  ) { }
 
 
   map: mapboxgl.Map;
@@ -22,9 +28,25 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
     [135, 55] // Northeast coordinates
   ];
 
+  registrationSummary : any = {
+    newVehicles : 0,
+    totalVehicles : 0,
+    useVehicles : 0
+  }
+
   ngOnInit(): void {
     this.setMap()
     this.setChinaMapChart()
+    this.getStatisticsRegistrationSummary()
+  }
+
+  getStatisticsRegistrationSummary(){
+    this.statisticsServce.getStatisticsRegistrationSummary(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+      this.registrationSummary = res.body
+    },error=>{
+      console.log(error)
+    })
   }
 
   setMap(){

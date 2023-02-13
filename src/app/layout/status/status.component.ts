@@ -25,11 +25,15 @@ export class StatusComponent implements OnInit {
     totalEnergyUsage: 0
   }
 
+  vehicleFailure : any[] = [{
+    key : "LJDUAA2J4J0006507",
+    value : "28"
+  },{
+    key : "LJDUAA2J4J0006507",
+    value : "28"
+  }]
+
   ngOnInit(): void {
-    this.setPieChart('chart');
-    this.setPieChart('chart1');
-    this.setPieChart('chart2');
-    this.setPieChart('chart3');
     this.getStatisticsVehiclesSummary()
     this.getStatisticsWarnings()
   }
@@ -46,15 +50,27 @@ export class StatusComponent implements OnInit {
   getStatisticsWarnings(){
     this.statisticsService.getStatisticsWarnings().subscribe(res=>{
       console.log(res)
+      this.setPieChart("distributionChart", res.body.distribution)
+      this.setPieChart("failureRankChart", res.body.failureRank)
+      this.setPieChart("failureOccupancyChart", res.body.failureOccupancy)
     },error=>{
       console.log(error)
     })
   }
 
-  setPieChart(chartID : string){
+  setPieChart(chartID : string, data : any[]){
     var chartDom = document.getElementById(chartID)!;
     var myChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
+
+    let seriesData : any[] = []
+
+    for(let i = 0; i < data.length; i++){
+      seriesData.push({
+        value : data[i].value,
+        name : data[i].key
+      })
+    }
 
     option = {
       tooltip: {
@@ -67,6 +83,8 @@ export class StatusComponent implements OnInit {
         bottom: 20,
       },
       series: [
+
+
         {
           name: '',
           type: 'pie',
@@ -78,13 +96,7 @@ export class StatusComponent implements OnInit {
               fontWeight: 'bold'
             }
           },
-          data: [
-            { value: 1048, name: 'A' },
-            { value: 735, name: 'B' },
-            { value: 580, name: 'C' },
-            { value: 484, name: 'D' },
-            { value: 300, name: 'E' }
-          ],
+          data: seriesData,
 
         }
       ]

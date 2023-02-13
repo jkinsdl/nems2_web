@@ -41,12 +41,20 @@ export class StatisticsService {
     var url = `${this.Url}/registration/count`;
     let httpParams = new HttpParams()
 
-    if(filter.level != undefined){
-      httpParams = httpParams.set("level",filter.level)
+    if(filter.province != undefined){
+      httpParams = httpParams.set("province",filter.province)
     }
 
-    if(filter.pcode != undefined){
-      httpParams = httpParams.set("pcode",filter.pcode)
+    if(filter.city != undefined){
+      httpParams = httpParams.set("city",filter.city)
+    }
+
+    if(filter.begin != undefined){
+      httpParams = httpParams.set("begin",filter.begin)
+    }
+
+    if(filter.end != undefined){
+      httpParams = httpParams.set("end",filter.end)
     }
 
     return this.http.get<any>(url, { params:httpParams, observe: "response" })

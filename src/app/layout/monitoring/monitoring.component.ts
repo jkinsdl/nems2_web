@@ -53,6 +53,26 @@ export class MonitoringComponent implements OnInit {
     this.getRealtimedataVehiclelist()
   }
 
+  getVehicleRow(event : any){
+    console.log(event.data)
+
+    let filter = new SearchFilter()
+    filter.vin = event.data.vin
+    filter.packetTime = new Date().toISOString()
+
+    this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+
+    this.realtimedataService.getRealtimedataPathVin(filter).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
   getRealtimedataVehiclelist(){
     this.realtimedataService.getRealtimedataVehiclelist(this.filter).subscribe(
       res=>{

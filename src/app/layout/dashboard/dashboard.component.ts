@@ -10,6 +10,7 @@ import { UiService } from 'src/app/service/ui.service';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UserService } from 'src/app/service/user.service';
+import { RealtimedataService } from 'src/app/service/realtimedata.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private uiService : UiService,
     private statisticsService : StatisticsService,
-    private userService : UserService
+    private userService : UserService,
+    private realtimedataService : RealtimedataService
   ) { }
   menuMode$ : Subscription
 
@@ -81,7 +83,7 @@ export class DashboardComponent implements OnInit {
     this.map.on('load', () => {
       this.map.addSource('test', {
         type: 'geojson',
-        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson', // 데이터
+        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson', // 데이터
         cluster: true,
         clusterMaxZoom: 14, // 클러스터링이 나타날 최대 줌
         clusterRadius: 50 // 클러스터링 할 범위를 의미
@@ -646,10 +648,26 @@ export class DashboardComponent implements OnInit {
     this.setPieChart()
     this.getStatisticsCurrent()
     //this.getStatisticsMileages()
-    //this.getStatisticsRegistrationCount()
+    this.getStatisticsRegistrationCount()
     //this.getStatisticsRegistrationSummary()
     this.getStatisticsVehiclesSummary()
     //this.getStatisticsWarningsSummary()
+
+    this.getRealtimedataLocation()
+  }
+
+  getRealtimedataLocation(){
+    let filter = new SearchFilter()
+    filter.latitudeBegin = 20
+    filter.latitudeEnd = 50
+    filter.longitudeBegin = 73
+    filter.longitudeEnd = 134
+
+    this.realtimedataService.getRealtimedataLocation(filter).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
   getStatisticsCurrent(){

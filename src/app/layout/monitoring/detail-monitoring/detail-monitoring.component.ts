@@ -7,6 +7,8 @@ import { UiService } from 'src/app/service/ui.service';
 import { MapMarkerDetailComponent } from '../../dashboard/map-marker-detail/map-marker-detail.component';
 import * as echarts from 'echarts';
 import { BatteryDetailComponent } from 'src/app/component/battery-detail/battery-detail.component';
+import { RealtimedataService } from 'src/app/service/realtimedata.service';
+import { SearchFilter } from 'src/app/object/searchFilter';
 @Component({
   selector: 'app-detail-monitoring',
   templateUrl: './detail-monitoring.component.html',
@@ -17,7 +19,8 @@ export class DetailMonitoringComponent implements OnInit {
 
   constructor(private router: Router,
     private dialog: MatDialog,
-    private uiService : UiService) { }
+    private uiService : UiService,
+    private realtimedataService : RealtimedataService) { }
 
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/dark-v10'
@@ -290,6 +293,18 @@ export class DetailMonitoringComponent implements OnInit {
 
     this.setSpeedChart()
     this.setBatteryChart()
+
+
+
+
+  }
+
+  getRealtimedataInfoVin(){
+    this.realtimedataService.getRealtimedataInfoVin(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
   zoomIn(url : string){

@@ -119,4 +119,62 @@ export class RealtimedataService {
   }
 
 
+  getRealtimedataLocation(filter : SearchFilter){
+    var url = `${this.Url}/location`;
+
+    let httpParams = new HttpParams()
+
+    if(filter.latitudeBegin != undefined){
+      httpParams = httpParams.set("latitudeBegin",filter.latitudeBegin)
+    }
+
+    if(filter.latitudeEnd  != undefined){
+      httpParams = httpParams.set("latitudeEnd",filter.latitudeEnd)
+    }
+
+    if(filter.longitudeBegin  != undefined){
+      httpParams = httpParams.set("longitudeBegin",filter.longitudeBegin)
+    }
+
+    if(filter.longitudeEnd  != undefined){
+      httpParams = httpParams.set("longitudeEnd ",filter.longitudeEnd)
+    }
+
+    if(filter.period != undefined){
+      httpParams = httpParams.set("period",filter.period)
+    }
+
+
+    return this.http.get<any>(url, {params:httpParams, observe: "response" })
+  }
+
+  getRealtimedataInfoVin(filter : SearchFilter){
+    var url = `${this.Url}/info/${filter.vin}`;
+
+    let httpParams = new HttpParams()
+
+    if(filter.packetTime  != undefined){
+      httpParams = httpParams.set("packetTime",filter.packetTime)
+    }
+
+    return this.http.get<any>(url, {params:httpParams, observe: "response" })
+  }
+
+  getRealtimedataPathVin(filter : SearchFilter){
+    var url = `${this.Url}/paths/${filter.vin}`;
+
+    let httpParams = new HttpParams()
+
+    if(filter.begin  != undefined){
+      httpParams = httpParams.set("begin",filter.begin)
+    }
+
+    if(filter.end  != undefined){
+      httpParams = httpParams.set("end",filter.end)
+    }
+
+    return this.http.get<any>(url, {params:httpParams, observe: "response" })
+  }
+
+
 }

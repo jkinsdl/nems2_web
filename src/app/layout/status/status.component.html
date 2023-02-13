@@ -42,29 +42,39 @@
   <div class="distributionByRegion whiteBoardBoax">
     <app-sub-title [title]="'DISTRIBUTION BY REGION'"></app-sub-title>
     <div class="chartLayout">
-      <div id="chart"></div>
+      <div id="distributionChart"></div>
     </div>
   </div>
 
   <div class="vehicleFailureRate whiteBoardBoax">
     <app-sub-title [title]="'VEHICLE FAILURE RATE'"></app-sub-title>
     <div class="chartLayout">
-      <div id="chart1" ></div>
+      <div id="failureRankChart" ></div>
     </div>
   </div>
 
   <div class="failureOccupancyRate whiteBoardBoax">
     <app-sub-title [title]="'FAILURE OCCUPANCY RATE'"></app-sub-title>
     <div class="chartLayout">
-      <div id="chart2"></div>
+      <div id="failureOccupancyChart"></div>
     </div>
   </div>
 
   <div class="top10VehicleByFailure whiteBoardBoax">
     <app-sub-title [title]="'TOP 10 VEHICLE BY FAILURE'"></app-sub-title>
-    <div class="chartLayout">
-      <div id="chart3" ></div>
+
+    <div class="vehicleByFalureList">
+      <div class="vehicleByFalure" *ngFor="let vehicle of vehicleFailure; let i = index">
+        <div class="listIndex">
+          {{i + 1}}
+        </div>
+        <div class="listTitle">
+          LJDUAA2J4J0006507
+        </div>
+        <div class="listValue">
+          28
+        </div>
+      </div>
     </div>
   </div>
-
 </div>

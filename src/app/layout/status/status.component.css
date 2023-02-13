@@ -80,3 +80,34 @@
 width: 100%;
 height: 100%;
 }
+
+.vehicleByFalureList{
+  width: 100%;
+  height: calc(100% - 40px);
+}
+
+.vehicleByFalure{
+  width: calc(100% - 80px);
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 20px;
+  margin: 0 20px;
+  border-bottom: 1px solid #d1d1d1;;
+  border-radius: 10px;
+  position: relative;
+}
+
+.vehicleByFalure .listIndex{
+  width: 50px;
+  text-align: center;
+}
+
+.vehicleByFalure .listTitle{
+  font-weight: bold;
+}
+
+.vehicleByFalure .listValue{
+  position: absolute;
+  right: 10px;
+}
