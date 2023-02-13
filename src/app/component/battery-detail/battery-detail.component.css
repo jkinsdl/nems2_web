@@ -6,7 +6,7 @@
 .batteryStatusContainer{
   width: 100%;
   height: 70px;
-  margin-top: 40px;
+  /*margin-top: 20px;*/
 }
 
 .batteryStatusContainer .batteryStatusLayout{
@@ -44,7 +44,7 @@
 }
 
 .batteryDetailContents{
-  margin-top: 40px;
+  /*margin-top: 20px;*/
 }
 
 .voltageTable{
@@ -64,8 +64,10 @@
   text-align: center;
   font-weight: bold;
   border-bottom: 1px solid black;
+  font-size: 11px;
 }
 
 .voltageValue{
   text-align: center;
+  font-size: 11px;
 }

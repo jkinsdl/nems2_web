@@ -112,5 +112,11 @@ export class RealtimedataService {
     return this.http.get<any>(url, { observe: "response" })
   }
 
+  getRealtimedataWarningcount(){
+    var url = `${this.Url}/warningcount`;
+
+    return this.http.get<any>(url, { observe: "response" })
+  }
+
 
 }

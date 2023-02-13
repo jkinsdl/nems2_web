@@ -33,8 +33,19 @@
       -->
       <div class="alarm" [routerLink]="['/main/alarm']">
         <img src="assets/icon/notification.png">
-        <div class="alarmPoint">  </div>
+        <div class="alarmPoint" [ngClass]="{'onPoint': warningcount.minor > 0 || warningcount.major > 0 || warningcount.critical > 0}"></div>
+        <div class="titleTooltip">
+          <div class="alarmCountBox" style="color: orange"> minor : <span>{{warningcount.minor}}</span> </div>
+          <div style="width:100%; height : 1px; background-color: #bfbfbf;" ></div>
+          <div class="alarmCountBox" style="color:rgb(255 118 0);"> major : <span>{{warningcount.major}}</span> </div>
+          <div style="width:100%; height : 1px; background-color: #bfbfbf;" ></div>
+          <div class="alarmCountBox" style="color: red;"> critical : <span>{{warningcount.critical}}</span> </div>
+        </div>
+
       </div>
+
+
+
       <div class="myAccount">
         <div class="myAccountImage">
           <img src="assets/icon/man.png">

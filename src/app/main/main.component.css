@@ -201,6 +201,11 @@
   position: absolute;
   right: 16px;
   top: 8px;
+  visibility: hidden;
+}
+
+.onPoint{
+  visibility: visible !important;
 }
 
 .mainContainer .titleManuContainer .titleRightLayout .alarm img{
@@ -365,4 +370,31 @@
   margin-left: 5px;
   margin-right: 10px;
   margin-top: 3px;
+}
+
+.titleTooltip{
+  position: absolute;
+  z-index: 1;
+  top: 30px;
+  background: white;
+  border: 1px solid #bfbfbf;
+  border-radius: 5px;
+  visibility: hidden;
+}
+
+.alarm:hover > .titleTooltip{
+  visibility: visible;
+}
+
+.alarmCountBox{
+  min-width: 100px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.alarmCountBox span{
+  font-weight: bold;
+  padding-left: 5px;
 }

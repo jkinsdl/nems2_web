@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UiService } from '../service/ui.service';
 import { Subscription } from 'rxjs';
 import { UserService } from '../service/user.service';
+import { RealtimedataService } from '../service/realtimedata.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -14,7 +15,8 @@ export class MainComponent implements OnInit {
   constructor(
     public router: Router,
     private uiService :UiService,
-    private userService : UserService
+    private userService : UserService,
+    private realtimedataService : RealtimedataService
   ) { }
 
   language : string = "en"
@@ -32,6 +34,13 @@ export class MainComponent implements OnInit {
   currentLoginUser : any = {
     username : '',
     authorityId : ''
+  }
+
+
+  warningcount : any = {
+    critical : 0,
+    major : 0,
+    minor : 0
   }
 
   ngOnInit(): void {
@@ -62,6 +71,16 @@ export class MainComponent implements OnInit {
       setTimeout(()=>{
         this.messageOn = false
       },5000)
+    })
+
+    this.getRealtimedataWarningcount()
+  }
+
+  getRealtimedataWarningcount(){
+    this.realtimedataService.getRealtimedataWarningcount().subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
     })
   }
 
