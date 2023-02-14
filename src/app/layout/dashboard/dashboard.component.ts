@@ -34,8 +34,8 @@ export class DashboardComponent implements OnInit {
   map: mapboxgl.Map;
   //style = 'mapbox://styles/mapbox/streets-v11';
   style = 'mapbox://styles/mapbox/dark-v10'
-  lat = 35.8617;
-  lng = 104.1954;
+  lat = 37.8617;
+  lng = 115.1954;
 
   mapPopup : any
 
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
       this.map = new mapboxgl.Map({
         container: 'map',
         style: this.style,
-        zoom: 4,
+        zoom: 3,
         center: [this.lng, this.lat]
     });
 
@@ -635,7 +635,7 @@ export class DashboardComponent implements OnInit {
         this.mapPopup.remove()*/
       });
 
-      this.changeBoundaries('country_territory')
+      this.changeBoundaries('province')
 
     });
 
