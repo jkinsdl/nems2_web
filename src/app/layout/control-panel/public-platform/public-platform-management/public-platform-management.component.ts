@@ -192,9 +192,22 @@ export class PublicPlatformManagementComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-
+        console.log(result)
+        let parameter : any = {
+          vin : [result]
+        }
+        this.postForwardingServerNameRelations(parameter)
       }
     });
+  }
+
+  postForwardingServerNameRelations(parameter : any){
+    this.forwardingService.postForwardingServerNameRelations(this.selectForwardingServerName,parameter).subscribe(res=>{
+      console.log(res)
+      this.getForwardingServerNameRelations(this.selectForwardingServerName)
+    },error=>{
+      console.log(error)
+    })
   }
 
   modifyMapping(){
@@ -222,10 +235,23 @@ export class PublicPlatformManagementComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-          this.mappingGridApi.applyTransaction({ remove: this.mappingGridApi.getSelectedRows() })!;
+          this.deleteForwardingServerNameRelations(this.mappingGridApi.getSelectedRows()[0].vin);
         }
       });
     }
+  }
+
+  deleteForwardingServerNameRelations(vin : string){
+
+    let filter = new SearchFilter()
+    filter.vin = vin
+
+    this.forwardingService.deleteForwardingServerNameRelations(this.selectForwardingServerName,filter).subscribe(res=>{
+      console.log(res)
+      this.mappingGridApi.applyTransaction({ remove: this.mappingGridApi.getSelectedRows() })!;
+    },error=>{
+      console.log(error)
+    })
   }
 
 }

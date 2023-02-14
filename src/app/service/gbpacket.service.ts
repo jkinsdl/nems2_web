@@ -12,7 +12,9 @@ export class GbpacketService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/gbpacket" ;
+
+  private Url = environment.httpText + environment.apiServer + "/api/gbpacket" ;
+  //private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/gbpacket" ;
 
   getGbpacket(filter : SearchFilter){ // Packet 검색
     var url = `${this.Url}`;

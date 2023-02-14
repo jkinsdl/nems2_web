@@ -13,7 +13,8 @@ export class StatisticsService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/statistics" ;
+  private Url = environment.httpText + environment.apiServer + "/api/statistics" ;
+ // private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/statistics" ;
 
   getStatisticsCurrent(){
     var url = `${this.Url}/current`;

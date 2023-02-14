@@ -28,6 +28,8 @@ export class TerminalComponent implements OnInit {
 
   underlying: Terminal;
 
+  writeSubject = new Subject<string>();
+
   @ViewChild('term', {static: false}) child: NgTerminal;
 
   constructor() { }
@@ -72,7 +74,7 @@ export class TerminalComponent implements OnInit {
   invalidate() {
   }
 
-  writeSubject = new Subject<string>();
+
   write() {
     this.writeSubject.next(eval(`'${this.inputControl.value}'`));
   }

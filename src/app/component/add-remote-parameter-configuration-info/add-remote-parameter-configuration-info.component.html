@@ -8,26 +8,14 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> configure name <span>*</span> </div>
-    <div class="value">
-      <mat-select>
-        <mat-option>GMC Server</mat-option>
-      </mat-select>
-    </div>
-  </div>
-
-  <div class="addInfoFilter">
     <div class="label">VIN <span>*</span> </div>
     <div class="value">
-      <mat-select>
-        <mat-option>test</mat-option>
-      </mat-select>
+      <!--<select>
+        <option>test</option>
+      </select>
+    -->
+    <input type="text" [(ngModel)]="vinText">
     </div>
-  </div>
-
-  <div class="addInfoFilter">
-    <div class="label">Vehicle Info Snapshot </div>
-    <div class="value"></div>
   </div>
 
   <div class="btnBox">

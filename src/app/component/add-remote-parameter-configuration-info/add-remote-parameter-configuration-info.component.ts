@@ -18,6 +18,8 @@ export class AddRemoteParameterConfigurationInfoComponent implements OnInit {
     private devicemanagersService : DevicemanagerService
   ) { }
 
+  vinText : string = ""
+
   ngOnInit(): void {
     this.getDevicemanagersVehicles()
   }

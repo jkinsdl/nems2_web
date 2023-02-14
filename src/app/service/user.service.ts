@@ -12,8 +12,8 @@ export class UserService {
     private http: HttpClient,
   ) { }
 
-  //API 가 2개 ?
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort  +"/api/users" ;
+  private Url = environment.httpText + environment.apiServer + "/api/users" ;
+  //private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort  +"/api/users" ;
 
   getUsers(filter : SearchFilter){
     var url = `${this.Url}`;

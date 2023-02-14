@@ -11,7 +11,9 @@ export class OtaService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/ota" ;
+
+  private Url = environment.httpText + environment.apiServer + "/api/ota" ;
+  //private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/ota" ;
 
 
   postOta(){

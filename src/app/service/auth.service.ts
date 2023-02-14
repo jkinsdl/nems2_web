@@ -16,8 +16,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
   ) { }
-
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api";
+  private Url = environment.httpText + environment.apiServer + "/api";
+  //private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api";
   //private Url = environment.httpText + "nems.suredatalab.kr/api";
 
   getPublickKey(){

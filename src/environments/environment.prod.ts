@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  httpText : 'https://',
-  //apiServer : "nems.suredatalab.kr/api",
-  apiServer : window.location.hostname,
-  apiPort : "5001"
+  httpText : 'http://',
+  apiServer : "nems.suredatalab.kr",
+  //apiServer : window.location.hostname,
+  //apiPort : "5001"
 };

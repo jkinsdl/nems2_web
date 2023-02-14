@@ -729,8 +729,6 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-
-
   pageMoveAlarm(){
     this.router.navigateByUrl(`/main/alarm)`);
   }

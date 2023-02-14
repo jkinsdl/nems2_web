@@ -2,9 +2,9 @@
   <div class="btn add" (click)="addConfigure()">
     Add
   </div>
-  <div class="btn copy" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}">
+  <!--<div class="btn copy" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}">
     Copy
-  </div>
+  </div>-->
   <div class="btn modify" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="modifyConfigure()">
     Modify
   </div>
@@ -28,9 +28,9 @@
   <div class="btn add" [ngClass]="{'disable': selectConfigureRow == null}" (click)="addVehicle()">
     Add
   </div>
-  <div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
+  <!--<div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
     Modify
-  </div>
+  </div>-->
   <div class="btn delete" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
     Delete
   </div>

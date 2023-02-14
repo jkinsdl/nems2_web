@@ -10,7 +10,10 @@
   <div class="addInfoFilter">
     <div class="label">VIN <span>*</span> </div>
     <div class="value">
-      <input type="text">
+      <select [(ngModel)]="vinText">
+        <option *ngFor="let irrelevant of irrelevantList" [value]="irrelevant.vin">{{irrelevant.vin}}</option>
+      </select>
+
     </div>
   </div>
 
@@ -30,7 +33,7 @@
   </div>
   -->
   <div class="btnBox">
-    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addForwardingRelations()" >
       Add
     </div>
     <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">

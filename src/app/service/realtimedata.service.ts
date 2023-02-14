@@ -12,7 +12,8 @@ export class RealtimedataService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api/realtimedata" ;
+  private Url = environment.httpText + environment.apiServer +"/api/realtimedata" ;
+//  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api/realtimedata" ;
 
 
   getRealtimedata(filter : SearchFilter){

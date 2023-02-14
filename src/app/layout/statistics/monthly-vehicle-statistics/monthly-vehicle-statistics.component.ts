@@ -38,6 +38,15 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
     this.setMap()
     this.setChinaMapChart()
     this.getStatisticsRegistrationSummary()
+    this.getStatisticsRegistrationCount()
+  }
+
+  getStatisticsRegistrationCount(){
+    this.statisticsServce.getStatisticsRegistrationCount(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
   }
 
   getStatisticsRegistrationSummary(){

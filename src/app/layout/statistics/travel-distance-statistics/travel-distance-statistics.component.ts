@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { StatisticsService } from 'src/app/service/statistics.service';
 
 @Component({
   selector: 'app-travel-distance-statistics',
@@ -8,17 +10,41 @@ import * as echarts from 'echarts';
 })
 export class TravelDistanceStatisticsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private statisticsService : StatisticsService
+  ) { }
 
+  totalMileage : number = 0;
+  periodMileage : number = 0;
   ngOnInit(): void {
-    this.setBarChart()
     this.setDonutChart()
+    this.getStatisticsMileages()
   }
 
-  setBarChart(){
+  getStatisticsMileages(){
+    this.statisticsService.getStatisticsMileages(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+      this.setBarChart(res.body.mileageVehicles)
+      this.totalMileage = res.body.totalMileage
+      this.periodMileage = res.body.periodMileage
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  setBarChart(data : any[]){
     var chartDom = document.getElementById('barChart')!;
     var myChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
+
+    let xAxisData : string[] = []
+    let seriesData : any[] = []
+
+    for(let i = 0; i < data.length; i ++){
+      xAxisData.push(data[i].key)
+      seriesData.push(data[i].value)
+    }
+
 
     option = {
       tooltip: {
@@ -36,7 +62,7 @@ export class TravelDistanceStatisticsComponent implements OnInit {
       xAxis: [
         {
           type: 'category',
-          data: ['0-10 KM', '10-20 KM', '20-50 KM', '50-100 KM', '100-150 KM', '150-200 KM', '200- KM'],
+          data: xAxisData,
           axisTick: {
             alignWithLabel: true
           }
@@ -52,7 +78,7 @@ export class TravelDistanceStatisticsComponent implements OnInit {
           name: 'Direct',
           type: 'bar',
           barWidth: '60%',
-          data: [10, 52, 200, 334, 390, 330, 220]
+          data: seriesData
         }
       ]
     };

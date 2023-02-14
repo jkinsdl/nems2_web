@@ -12,7 +12,8 @@ export class ForwardingService {
     private http: HttpClient,
   ) { }
 
-  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/forwarding" ;
+  private Url = environment.httpText + environment.apiServer + "/api/forwarding" ;
+  //private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/forwarding" ;
 
 
   getForwarding(filter : SearchFilter){
@@ -148,6 +149,22 @@ export class ForwardingService {
 
 
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
+  }
+
+  deleteForwardingServerNameRelations(serverName : string, filter : SearchFilter){
+    var url = `${this.Url}/${serverName}/relations`;
+    let httpParams = new HttpParams()
+    if(filter.vin != undefined){
+      httpParams = httpParams.set("vin", filter.vin)
+    }
+
+    return this.http.delete<any>(url, {params : httpParams,  observe: "response" })
+  }
+
+  postForwardingServerNameRelations(serverName : string, parameter : any){
+    var url = `${this.Url}/${serverName}/relations`;
+
+    return this.http.post<any>(url, JSON.stringify(parameter), {observe: "response" })
   }
 
 }

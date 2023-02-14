@@ -30,9 +30,9 @@
       <div class="btn add" [ngClass]="{'buttonDisable': selectForwardingServerName == null}" (click)="addMapping()">
         Add
       </div>
-      <div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
+      <!--<div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
         Modify
-      </div>
+      </div>-->
       <div class="btn delete" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
         Delete
       </div>
