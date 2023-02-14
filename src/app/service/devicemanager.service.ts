@@ -231,4 +231,9 @@ export class DevicemanagerService {
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
   }
 
+  postDevicemanagersTerminal(parameter : any){
+    var url = `${this.Url}/terminal`;
+    return this.http.post<any>(url, JSON.stringify(parameter), { observe: "response" })
+  }
+
 }

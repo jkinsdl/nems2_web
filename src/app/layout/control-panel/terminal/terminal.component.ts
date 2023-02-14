@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Terminal } from 'xterm';
 import { FunctionsUsingCSI } from 'ng-terminal';
+import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 
 @Component({
   selector: 'app-terminal',
@@ -32,7 +33,11 @@ export class TerminalComponent implements OnInit {
 
   @ViewChild('term', {static: false}) child: NgTerminal;
 
-  constructor() { }
+  constructor(
+    private deviceManagerService : DevicemanagerService
+  ) { }
+
+  command : string = ""
 
   ngOnInit() {
   }
@@ -52,39 +57,49 @@ export class TerminalComponent implements OnInit {
     this.child.write(this.prompt);
     this.child.onData().subscribe((input) => {
       if (input === '\r') { // Carriage Return (When Enter is pressed)
+        console.log("엔터")
+
+        console.log(this.command)
+
         this.child.write(this.prompt);
+        this.postDevicemanagersTerminal(this.command)
+        this.command = ""
       } else if (input === '\u007f') { // Delete (When Backspace is pressed)
         if (this.child.underlying.buffer.active.cursorX > 2) {
           this.child.write('\b \b');
+          this.command = this.command.substring(0,this.command.length-1);
         }
       } else if (input === '\u0003') { // End of Text (When Ctrl and C are pressed)
           this.child.write('^C');
           this.child.write(this.prompt);
-      }else
+      }else{
         this.child.write(input);
+        this.command += input
+        //
+      }
     })
 
     this.child.onKey().subscribe(e => {
+      console.log(e)
       //onData() is used more often.
     });
     this._cols = 162
     this._rows = 40
   }
 
+  postDevicemanagersTerminal(command : string){
+    let parameter = {
+      command : command,
+    }
+    this.deviceManagerService.postDevicemanagersTerminal(parameter).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
   invalidate() {
-  }
 
-
-  write() {
-    this.writeSubject.next(eval(`'${this.inputControl.value}'`));
-  }
-
-  onKeyInput(event: string) {
-
-  }
-
-  get displayOptionForLiveUpdate() {
-    return {rows: 40, cols: 158, draggable: true};
   }
 
   baseTheme = {
