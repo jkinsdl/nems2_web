@@ -381,6 +381,7 @@
 
 .dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridHeader .header{
   text-align: center;
+  font-size: 11px;
 }
 
 .dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridHeader .first,
@@ -417,6 +418,10 @@
 
 .dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .gridRowData .gridCell{
   text-align: center;
+  font-size: 11px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .dashBorderRight .dashBorderAlarmGrid .alarmGrid .gridContents .evenRow{

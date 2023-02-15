@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SearchFilter } from '../object/searchFilter';
 
@@ -13,7 +14,11 @@ export class RealtimedataService {
   ) { }
 
   private Url = environment.httpText + environment.apiServer +"/api/realtimedata" ;
-//  private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api/realtimedata" ;
+  //private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort +"/api/realtimedata" ;
+
+  alarmCount : any
+  alarmCountSubject = new Subject();
+  alarmCount$ = this.alarmCountSubject.asObservable()
 
 
   getRealtimedata(filter : SearchFilter){
@@ -115,7 +120,6 @@ export class RealtimedataService {
 
   getRealtimedataWarningcount(){
     var url = `${this.Url}/warningcount`;
-
     return this.http.get<any>(url, { observe: "response" })
   }
 
@@ -138,7 +142,7 @@ export class RealtimedataService {
     }
 
     if(filter.longitudeEnd  != undefined){
-      httpParams = httpParams.set("longitudeEnd ",filter.longitudeEnd)
+      httpParams = httpParams.set("longitudeEnd",filter.longitudeEnd)
     }
 
     if(filter.period != undefined){

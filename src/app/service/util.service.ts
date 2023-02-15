@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
@@ -9,6 +10,7 @@ export class UtilService {
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
+    private http: HttpClient
   ) { }
 
   setDateFormat(date : Date) : string{
@@ -79,4 +81,13 @@ export class UtilService {
       reader.onerror = error => reject(error);
     });
   }
+
+  getProvinceData(){
+    return this.http.get('assets/data/chn_province_v2.json')
+  }
+
+  getSubPrefectureeData(){
+    return this.http.get('assets/data/chn_sub_prefecture_v2.json')
+  }
+
 }

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Chart, ChartOptions, ChartType } from 'chart.js';
-import mapboxgl from 'mapbox-gl';
-import { MapMarkerDetailComponent } from './map-marker-detail/map-marker-detail.component';
+import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
 import * as echarts from 'echarts';
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
@@ -11,7 +9,8 @@ import { StatisticsService } from 'src/app/service/statistics.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UserService } from 'src/app/service/user.service';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
-
+import { UtilService } from 'src/app/service/util.service';
+import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,15 +20,21 @@ import { RealtimedataService } from 'src/app/service/realtimedata.service';
 
 export class DashboardComponent implements OnInit {
 
+
+
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
     private uiService : UiService,
     private statisticsService : StatisticsService,
     private userService : UserService,
-    private realtimedataService : RealtimedataService
+    private realtimedataService : RealtimedataService,
+    private utilService : UtilService,
+    private vehiclewarningService : VehiclewarningService
   ) { }
   menuMode$ : Subscription
+  alarmCount$ : Subscription
 
   map: mapboxgl.Map;
   //style = 'mapbox://styles/mapbox/streets-v11';
@@ -50,7 +55,6 @@ export class DashboardComponent implements OnInit {
   }
 
   arrayTotalVehicles : string[] = []
-
   statisticsVehiclesSummary : any = {
     totalVehicles: 0,
     newVehicles: 0,
@@ -59,8 +63,21 @@ export class DashboardComponent implements OnInit {
     totalEnergyUsage: 0
   }
 
-  ngOnInit(): void {
+  alarmStatisticsChart : echarts.ECharts
 
+  alarmListFilter : string = 'NORMAL'
+  vehiclewarnings : any[] = []
+
+  lastZoom : number
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.menuMode$)this.menuMode$.unsubscribe()
+    if(this.alarmCount$)this.alarmCount$.unsubscribe()
+  }
+
+  ngOnInit(): void {
     this.menuMode$ = this.uiService.menuMode$.subscribe(mode =>{
       if(mode == 2) {
         setTimeout(()=>{
@@ -81,41 +98,58 @@ export class DashboardComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this.map.on('load', () => {
-      this.map.addSource('test', {
-        type: 'geojson',
-        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson', // 데이터
-        cluster: true,
-        clusterMaxZoom: 14, // 클러스터링이 나타날 최대 줌
-        clusterRadius: 50 // 클러스터링 할 범위를 의미
-      });
 
       this.map.addSource('country_territory', {
         type: 'geojson',
         data: 'assets/data/chn_country_territory.json'
-        //data: 'assets/data/CHN_adm3_1.json'
-        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'
       });
 
       this.map.addSource('province', {
         type: 'geojson',
-        data: 'assets/data/chn_province.json'
-        //data: 'assets/data/CHN_adm3_1.json'
-        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'
+        //data: 'assets/data/chn_province.json'
+        data: 'assets/data/chn_province_v2.json'
       });
 
       this.map.addSource('sub_prefecture', {
         type: 'geojson',
-        data: 'assets/data/chn_sub_prefecture.json'
-        //data: 'assets/data/CHN_adm3_1.json'
-        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'
+        //data: 'assets/data/chn_sub_prefecture.json'
+        data: 'assets/data/chn_sub_prefecture_v2.json'
       });
 
       this.map.addSource('county', {
         type: 'geojson',
         data: 'assets/data/chn_county.json'
-        //data: 'assets/data/CHN_adm3_1.json'
-        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'
       });
+
+      this.map.addSource('statistics_registration_count',{
+        type: 'geojson'
+      })
+
+      this.map.addSource('province_statistics_registration_count',{
+        type: 'geojson'
+      })
+
+      this.map.addLayer({
+        id: 'statistics-registration-count-clusters',
+        type: 'circle',
+        source: 'statistics_registration_count',
+        paint: {
+          "circle-radius": 18,
+          "circle-color": "#3887be"
+        }
+      });
+
+      this.map.addLayer({
+        id: 'statistics-registration-count-text',
+        type: 'symbol',
+        source: 'statistics_registration_count',
+        layout: {
+        'text-field': '{statistics_count}',
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12,
+        }
+      });
+
 
       this.map.addLayer({
         'id': 'country_territory_click_layer',
@@ -135,7 +169,6 @@ export class DashboardComponent implements OnInit {
 
       let clickedStateId : any = null;
       this.map.on('click', 'country_territory_click_layer', (e) => {
-        console.log(e)
         if (e.features.length > 0) {
           if (clickedStateId) {
             this.map.setFeatureState(
@@ -235,7 +268,6 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('click', 'province_click_layer', (e) => {
-        console.log(e)
         if (e.features.length > 0) {
           if (clickedStateId) {
             this.map.setFeatureState(
@@ -281,7 +313,6 @@ export class DashboardComponent implements OnInit {
             { hover: true }
           );
         }
-
         popup.setLngLat(e.lngLat)
           .setHTML('ADM1_EN - ' + e.features[0].properties.ADM1_EN + "<br>"
           +'ADM1_ZH - ' + e.features[0].properties.ADM1_ZH + "<br>"
@@ -308,7 +339,6 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('click', 'province',(e : any) => {
-        console.log(e)
         let a = e.features[0].geometry.coordinates[0][0]
         if (a.length > 2) {
           a = e.features[0].geometry.coordinates[0][0][0]
@@ -337,7 +367,6 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('click', 'sub_prefecture_click_layer', (e) => {
-        console.log(e)
         if (e.features.length > 0) {
           if (clickedStateId) {
             this.map.setFeatureState(
@@ -424,7 +453,6 @@ export class DashboardComponent implements OnInit {
           zoom: 7
         });
       });
-
 
       this.map.addLayer({
         'id': 'county_click_layer',
@@ -532,136 +560,76 @@ export class DashboardComponent implements OnInit {
         });
       });
 
-      this.map.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'test',
-        filter: ['has', 'point_count'],
-        paint: {
-          'circle-color': [ 'step', ['get', 'point_count'], '#51bbd6', 100, '#f1f075', 750, '#f28cb1' ],
-          'circle-radius': ['step',['get', 'point_count'], 20,100,30,750,40]
-        }
-      });
 
-      this.map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'test',
-        filter: ['has', 'point_count'],
-        layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
+      this.map.on('zoomend',e=>{
+        if(this.currentBoundaries == 'province'){
+          if(this.map.getZoom() > 5){
+            this.changeBoundaries('sub_prefecture')
+          }
+        }else if(this.currentBoundaries == 'sub_prefecture'){
+          if(this.map.getZoom() <= 5){
+            this.changeBoundaries('province')
+          }
         }
       })
 
-      this.map.addLayer({
-        id: 'unclustered-point',
-        type: 'circle',
-        source: 'test',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-        'circle-color': '#11b4da',
-        'circle-radius': 4,
-        'circle-stroke-width': 3,
-        'circle-stroke-color': '#fff'
+      this.map.on('moveend', e=>{
+        if(this.map.getZoom() >= 3){
+          this.getRealtimedataLocation()
         }
-      });
-
-      this.map.on('click', 'clusters', (e) => {
-        const features : any = this.map.queryRenderedFeatures(e.point, {
-          layers: ['clusters']
-        });
-        const clusterId = features[0].properties.cluster_id;
-        let source = this.map.getSource('test') as mapboxgl.GeoJSONSource
-        source.getClusterExpansionZoom( clusterId, (err : any, zoom : any) => {
-          if (err) {
-            return;
-          }
-          this.map.easeTo({
-            center: features[0].geometry.coordinates,
-            zoom: zoom
-          });
-        });
-      });
-
-
-      this.map.on('click', 'unclustered-point', (e : any) => {
-        /*const dialogRef = this.dialog.open( MapMarkerDetailComponent, {
-          data:{},
-          panelClass : 'bakcgroundColorGray'
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if(result){
-
-          }
-        });*/
-      });
-
-      this.map.on('mouseenter', 'clusters', (e : any) => {
-        this.map.getCanvas().style.cursor = 'pointer';
-      });
-
-      this.map.on('mouseleave', 'clusters', () => {
-        this.map.getCanvas().style.cursor = '';
-      });
-
-      this.map.on('mouseenter', 'unclustered-point', (e : any) => {
-        /*
-        this.map.getCanvas().style.cursor = 'pointer';
-        console.log(e)
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        const mag = e.features[0].properties.mag;
-        const tsunami = e.features[0].properties.tsunami === 1 ? 'yes' : 'no';
-        const lng = e.lngLat.lng
-        const lagt = e.lngLat.lat
-
-
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        this.mapPopup = new mapboxgl.Popup({closeButton: false})
-        .setLngLat(coordinates)
-        .setHTML(
-        `lng : ${lng}<br>
-         lat : ${lagt}`
-        )
-        .addTo(this.map);*/
-      });
-
-      this.map.on('mouseleave', 'unclustered-point', () => {
-        /*this.map.getCanvas().style.cursor = '';
-        this.mapPopup.remove()*/
-      });
-
+      })
+      this.refresh()
       this.changeBoundaries('province')
-
+      this.getStatisticsRegistrationCount()
+      this.getProvinceStatisticsRegistrationCount()
     });
-
-    /*let popup = new mapboxgl.Popup()
-    .setLngLat(feature.geometry.coordinates)
-    .setHTML("test")
-    .addTo(this.map);*/
-    },1)
+  },1)
 
     this.setPieChart()
+
+    this.alarmCount$ = this.realtimedataService.alarmCount$.subscribe((result:any)=>{
+      let alamr = [
+        { value: result.critical, name: 'critical' },
+        { value: result.major, name: 'major' },
+        { value: result.minor, name: 'minor' },
+      ]
+      this.setAlarmStatisticsChartData(alamr)
+    })
+  }
+
+  refresh(){
     this.getStatisticsCurrent()
     //this.getStatisticsMileages()
-    this.getStatisticsRegistrationCount()
     //this.getStatisticsRegistrationSummary()
     this.getStatisticsVehiclesSummary()
     //this.getStatisticsWarningsSummary()
+    this.getVehiclewarning()
 
-    this.getRealtimedataLocation()
+    this.map.setZoom(3)
+    this.map.setCenter([this.lng, this.lat])
+  }
+
+  getVehiclewarning(){
+    let filter = new SearchFilter()
+    filter.level = this.alarmListFilter
+    filter.state = 'OPEN'
+    this.vehiclewarningService.getVehiclewarning(filter).subscribe(res=>{
+      console.log(res)
+      this.vehiclewarnings = res.body.warnings
+    },error=>{
+      console.log(error)
+    })
   }
 
   getRealtimedataLocation(){
+    let mapDiv = document.getElementById('map');
+    const northwest = new mapboxgl.Point(0, 0); // 북서 쪽
+    const southeast = new mapboxgl.Point(mapDiv.getBoundingClientRect().width, mapDiv.getBoundingClientRect().height); // 남동 쪽
     let filter = new SearchFilter()
-    filter.latitudeBegin = 20
-    filter.latitudeEnd = 50
-    filter.longitudeBegin = 73
-    filter.longitudeEnd = 134
+    filter.latitudeBegin = this.map.unproject(southeast).lat
+    filter.latitudeEnd = this.map.unproject(northwest).lat
+    filter.longitudeBegin = this.map.unproject(northwest).lng
+    filter.longitudeEnd = this.map.unproject(southeast).lng
 
     this.realtimedataService.getRealtimedataLocation(filter).subscribe(res=>{
       console.log(res)
@@ -691,9 +659,90 @@ export class DashboardComponent implements OnInit {
   getStatisticsRegistrationCount(){
     this.statisticsService.getStatisticsRegistrationCount(new SearchFilter()).subscribe(res=>{
       console.log(res)
+      this.utilService.getProvinceData().subscribe((res2:any)=>{
+        console.log(res2)
+        let featuresList : any[] = []
+        for(let i = 0; i < res.body.entities.length; i++){
+          for(let j = 0; j < res2.features.length; j++){
+            if(res2.features[j].properties.ADM1_ZH.indexOf(res.body.entities[i].region.province) > -1){
+              let lnglat = res2.features[j].geometry.center
+              featuresList.push({
+                "type": "Feature",
+                "properties": {
+                  "statistics_count" : res.body.entities[i].count
+                },
+                "geometry": {
+                  "type": "Point",
+                    "coordinates": lnglat
+                  },
+              })
+              break;
+            }
+          }
+        }
+        (this.map.getSource("statistics_registration_count") as GeoJSONSource).setData({
+          "type": "FeatureCollection",
+          "features": featuresList
+        });
+        console.log(res)
+      },error=>{
+        console.log(error)
+      })
     },error=>{
       console.log(error)
     })
+  }
+
+  getProvinceStatisticsRegistrationCount(){
+
+    this.utilService.getProvinceData().subscribe(async(res:any)=>{
+      console.log(res)
+
+      let featuresList : any[] = []
+      for(let i = 0; i < res.features.length; i++){
+        let filter = new SearchFilter()
+        filter.province = res.features[i].properties.ADM1_ZH
+        await this.statisticsService.getStatisticsRegistrationCount(filter).subscribe(res2=>{
+          console.log(res2)
+          this.utilService.getSubPrefectureeData().subscribe((res3 : any)=>{
+            console.log(res3)
+
+            for(let j = 0; j < res2.body.entities.length; j++){
+              for(let k = 0; k < res3.features.length; k++){
+                if(res3.features[k].properties.ADM1_ZH.indexOf(res2.body.entities[j].region.province) > -1){
+
+                  let lnglat = res3.features[k].geometry.center
+                  featuresList.push({
+                    "type": "Feature",
+                    "properties": {
+                      "statistics_count" : res.body.entities[i].count
+                    },
+                    "geometry": {
+                      "type": "Point",
+                        "coordinates": lnglat
+                      },
+                  })
+                  break;
+                }
+              }
+            }
+          })
+        })
+      }
+
+      (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
+        "type": "FeatureCollection",
+        "features": featuresList
+      });
+
+      console.log("!")
+
+
+    },error=>{
+      console.log(error)
+    })
+
+
   }
 
   getStatisticsRegistrationSummary(){
@@ -729,13 +778,22 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  pageMoveAlarm(){
+  pageMoveAlarm(alarm : any){
+    console.log(alarm)
     this.router.navigateByUrl(`/main/alarm)`);
   }
 
   setPieChart(){
     var chartDom = document.getElementById('pieChart')!;
-    var myChart = echarts.init(chartDom);
+    this.alarmStatisticsChart = echarts.init(chartDom);
+    this.setAlarmStatisticsChartData([
+      { value: 0, name: 'critical' },
+      { value: 0, name: 'major' },
+      { value: 0, name: 'minor' },
+    ])
+  }
+
+  setAlarmStatisticsChartData(data : any[]){
     var option: echarts.EChartsOption;
 
     option = {
@@ -771,16 +829,13 @@ export class DashboardComponent implements OnInit {
           labelLine: {
             show: false
           },
-          data: [
-            { value: 1048, name: 'Level 3' },
-            { value: 735, name: 'Level 2' },
-            { value: 580, name: 'Level 1' },
-          ]
+          data: data
         }
       ]
     };
-    option && myChart.setOption(option);
+    option && this.alarmStatisticsChart.setOption(option);
   }
+
 
   changeBoundaries(boundaries : string){
     this.currentBoundaries = boundaries
@@ -815,7 +870,5 @@ export class DashboardComponent implements OnInit {
 
 
     console.log(this.map)
-
   }
-
 }

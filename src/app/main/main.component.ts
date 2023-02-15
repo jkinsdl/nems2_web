@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UiService } from '../service/ui.service';
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { UserService } from '../service/user.service';
 import { RealtimedataService } from '../service/realtimedata.service';
 @Component({
@@ -36,12 +36,13 @@ export class MainComponent implements OnInit {
     authorityId : ''
   }
 
-
   warningcount : any = {
     critical : 0,
     major : 0,
     minor : 0
   }
+
+  alarmInterval : any
 
   ngOnInit(): void {
     this.getUsersProfile()
@@ -73,12 +74,16 @@ export class MainComponent implements OnInit {
       },5000)
     })
 
-    this.getRealtimedataWarningcount()
+    this.alarmInterval = interval(3000).pipe().subscribe(x => this.getRealtimedataWarningcount());
+
   }
 
   getRealtimedataWarningcount(){
+
     this.realtimedataService.getRealtimedataWarningcount().subscribe(res=>{
-      console.log(res)
+      //console.log(res)
+      this.warningcount = res.body
+      this.realtimedataService.alarmCountSubject.next(res.body)
     },error=>{
       console.log(error)
     })
@@ -134,6 +139,12 @@ export class MainComponent implements OnInit {
 
   alertMassageOpen(){
 
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.alarmInterval.unsubscribe()
   }
 
 }
