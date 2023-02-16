@@ -19,10 +19,6 @@ import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 })
 
 export class DashboardComponent implements OnInit {
-
-
-
-
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -128,6 +124,44 @@ export class DashboardComponent implements OnInit {
       this.map.addSource('province_statistics_registration_count',{
         type: 'geojson'
       })
+
+      this.map.addSource('realtimedataLocation',{
+        type: 'geojson'
+      })
+
+      this.map.addLayer({
+        id: 'realtimedata-location-clusters',
+        type: 'circle',
+        source: 'realtimedataLocation',
+        paint: {
+          'circle-color': '#11b4da',
+          'circle-radius': 4,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#fff'
+        }
+      });
+
+
+      this.map.addLayer({
+        id: 'province-statistics-registration-count-clusters',
+        type: 'circle',
+        source: 'province_statistics_registration_count',
+        paint: {
+          "circle-radius": 18,
+          "circle-color": "#e14a7b"
+        }
+      });
+
+      this.map.addLayer({
+        id: 'province-statistics-registration-count-text',
+        type: 'symbol',
+        source: 'province_statistics_registration_count',
+        layout: {
+        'text-field': '{statistics_count}',
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12,
+        }
+      });
 
       this.map.addLayer({
         id: 'statistics-registration-count-clusters',
@@ -339,12 +373,11 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('click', 'province',(e : any) => {
-        let a = e.features[0].geometry.coordinates[0][0]
-        if (a.length > 2) {
-          a = e.features[0].geometry.coordinates[0][0][0]
-        }
+
+        console.log(e)
+
         this.map.flyTo({
-          center: a,
+          center: e.lngLat,
           duration: 1500,
           zoom: 7
         });
@@ -443,12 +476,8 @@ export class DashboardComponent implements OnInit {
 
       this.map.on('click', 'sub_prefecture',(e : any) => {
         console.log(e)
-        let a = e.features[0].geometry.coordinates[0][0]
-        if (a.length > 2) {
-          a = e.features[0].geometry.coordinates[0][0][0]
-        }
         this.map.flyTo({
-          center: a,
+          center: e.lngLat,
           duration: 1500,
           zoom: 7
         });
@@ -562,24 +591,30 @@ export class DashboardComponent implements OnInit {
 
 
       this.map.on('zoomend',e=>{
+        console.log(this.map.getZoom())
         if(this.currentBoundaries == 'province'){
           if(this.map.getZoom() > 5){
             this.changeBoundaries('sub_prefecture')
+            this.showSubPrefectureLayer()
           }
         }else if(this.currentBoundaries == 'sub_prefecture'){
           if(this.map.getZoom() <= 5){
             this.changeBoundaries('province')
+            this.showProvinceLayer()
           }
         }
       })
 
       this.map.on('moveend', e=>{
-        if(this.map.getZoom() >= 3){
+        if(this.map.getZoom() >= 13){
           this.getRealtimedataLocation()
+        }else {
+          this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none');
         }
       })
       this.refresh()
       this.changeBoundaries('province')
+      this.showProvinceLayer()
       this.getStatisticsRegistrationCount()
       this.getProvinceStatisticsRegistrationCount()
     });
@@ -622,6 +657,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getRealtimedataLocation(){
+    this.map.setLayoutProperty('realtimedata-location-clusters', 'visibility', 'visible');
     let mapDiv = document.getElementById('map');
     const northwest = new mapboxgl.Point(0, 0); // 북서 쪽
     const southeast = new mapboxgl.Point(mapDiv.getBoundingClientRect().width, mapDiv.getBoundingClientRect().height); // 남동 쪽
@@ -633,6 +669,34 @@ export class DashboardComponent implements OnInit {
 
     this.realtimedataService.getRealtimedataLocation(filter).subscribe(res=>{
       console.log(res)
+
+      /*res.body.locations = [{
+        vin : 123,
+        latitude : this.lat,
+        longitude : this.lng
+      }]*/
+
+      let featuresList : any[] = []
+      for(let i = 0; i < res.body.locations.length; i++){
+        featuresList.push({
+          "type": "Feature",
+          "properties": {
+            "vin" : res.body.locations[i].vin
+          },
+          "geometry": {
+            "type": "Point",
+              "coordinates": [res.body.locations[i].longitude, res.body.locations[i].latitude]
+            },
+        })
+      }
+
+      (this.map.getSource("realtimedataLocation") as GeoJSONSource).setData({
+        "type": "FeatureCollection",
+        "features": featuresList
+      });
+
+
+
     },error=>{
       console.log(error)
     })
@@ -694,23 +758,24 @@ export class DashboardComponent implements OnInit {
   }
 
   getProvinceStatisticsRegistrationCount(){
-
-    this.utilService.getProvinceData().subscribe(async(res:any)=>{
+    this.utilService.getProvinceData().subscribe(async (res:any)=>{
       console.log(res)
 
       let featuresList : any[] = []
+
       for(let i = 0; i < res.features.length; i++){
         let filter = new SearchFilter()
         filter.province = res.features[i].properties.ADM1_ZH
-        await this.statisticsService.getStatisticsRegistrationCount(filter).subscribe(res2=>{
+        await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
           console.log(res2)
-          this.utilService.getSubPrefectureeData().subscribe((res3 : any)=>{
+          if( res2.body.entities.length > 0){
+            console.log("!")
+          }
+          await this.utilService.getSubPrefectureeData().toPromise().then(async(res3 : any)=>{
             console.log(res3)
-
             for(let j = 0; j < res2.body.entities.length; j++){
               for(let k = 0; k < res3.features.length; k++){
                 if(res3.features[k].properties.ADM1_ZH.indexOf(res2.body.entities[j].region.province) > -1){
-
                   let lnglat = res3.features[k].geometry.center
                   featuresList.push({
                     "type": "Feature",
@@ -728,21 +793,31 @@ export class DashboardComponent implements OnInit {
             }
           })
         })
+
       }
+
+      /*if(true){
+        featuresList.push({
+          "type": "Feature",
+          "properties": {
+            "statistics_count" : 123
+          },
+          "geometry": {
+            "type": "Point",
+              "coordinates": [this.lng,this.lat]
+            },
+        })
+      }*/
+
 
       (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
         "type": "FeatureCollection",
         "features": featuresList
       });
 
-      console.log("!")
-
-
     },error=>{
       console.log(error)
     })
-
-
   }
 
   getStatisticsRegistrationSummary(){
@@ -795,7 +870,6 @@ export class DashboardComponent implements OnInit {
 
   setAlarmStatisticsChartData(data : any[]){
     var option: echarts.EChartsOption;
-
     option = {
       tooltip: {
         trigger: 'item'
@@ -803,7 +877,6 @@ export class DashboardComponent implements OnInit {
       legend: {
         bottom: 0,
         left: 'center'
-
       },
       series: [
         {
@@ -839,12 +912,8 @@ export class DashboardComponent implements OnInit {
 
   changeBoundaries(boundaries : string){
     this.currentBoundaries = boundaries
-
     this.hoveredStateId = null
     console.log(this.map)
-
-
-
     if(boundaries != 'country_territory'){
       this.map.setLayoutProperty('country_territory', 'visibility', 'none');
       this.map.setLayoutProperty('country_territory_click_layer', 'visibility', 'none');
@@ -871,4 +940,23 @@ export class DashboardComponent implements OnInit {
 
     console.log(this.map)
   }
+
+
+  showProvinceLayer(){
+    this.map.setLayoutProperty('province-statistics-registration-count-clusters', 'visibility', 'none');
+    this.map.setLayoutProperty("province-statistics-registration-count-text", 'visibility', 'none');
+
+
+    this.map.setLayoutProperty("statistics-registration-count-clusters", 'visibility', 'visible');
+    this.map.setLayoutProperty("statistics-registration-count-text", 'visibility', 'visible');
+  }
+
+  showSubPrefectureLayer(){
+    this.map.setLayoutProperty("statistics-registration-count-clusters", 'visibility', 'none');
+    this.map.setLayoutProperty("statistics-registration-count-text", 'visibility', 'none');
+
+    this.map.setLayoutProperty('province-statistics-registration-count-clusters', 'visibility', 'visible');
+    this.map.setLayoutProperty("province-statistics-registration-count-text", 'visibility', 'visible');
+  }
+
 }
