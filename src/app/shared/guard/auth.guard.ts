@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
         return true
       }
 
-      if(user.authorityId == "root"){
+      if(user.authorityId == "root" || user.authorityId == "admin"){
 
         if(state.url.indexOf('/dashboard') < 0 &&
         state.url.indexOf('/monitoring') < 0 &&

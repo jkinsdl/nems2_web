@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
       this.map.addSource('province', {
         type: 'geojson',
         //data: 'assets/data/chn_province.json'
-        data: 'assets/data/chn_province_v2.json'
+        data: 'assets/data/chn_province_final.json'
       });
 
       this.map.addSource('sub_prefecture', {

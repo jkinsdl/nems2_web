@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import mapboxgl from 'mapbox-gl';
-import { Subscription } from 'rxjs';
+import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
+import { interval, Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
 import { MapMarkerDetailComponent } from '../../dashboard/map-marker-detail/map-marker-detail.component';
 import * as echarts from 'echarts';
@@ -32,15 +32,42 @@ export class DetailMonitoringComponent implements OnInit {
 
   isBatteryPanelOnOff : boolean = false
   isSpeedPanelOnOff : boolean = false
+  vehicleInfo : any [] = []
+
+  realTimeOnOff : boolean = false;
+
+  startRealTime : Date = null
+  selectVehicle : any = null
+  selectVehicleInfo : any = null
+
+  vinSearchText : string = ""
+  interval : any
+
+  currentTimeInterval : any
+  currentTime : Date = new Date()
+
+  batteryChart : any
+  speedChart : any
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.listBtn$)this.listBtn$.unsubscribe()
+    if(this.interval)this.interval.unsubscribe()
+    if(this.currentTimeInterval)this.currentTimeInterval.unsubscribe()
+  }
 
   ngOnInit(): void {
+
+    this.currentTimeInterval = interval(1000).pipe().subscribe(x => this.currentTime = new Date());
+
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
       this.map = new mapboxgl.Map({
         container: 'map',
         style: this.style,
-        zoom: 4,
+        zoom: 3,
         center: [this.lng, this.lat]
+        //center: [120.223329, 33.30857]
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
@@ -56,40 +83,44 @@ export class DetailMonitoringComponent implements OnInit {
     console.log('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
 
     this.map.on('load', () => {
-      this.map.addSource('test', {
+      this.map.addSource('ve', {
         type: 'geojson',
-        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson', // 데이터
-        data : 'assets/data/test.json'
       });
 
-      this.map.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'test',
-        filter: ['has', 'point_count'],
-        paint: {
-          'circle-color': [ 'step', ['get', 'point_count'], '#51bbd6', 100, '#f1f075', 750, '#f28cb1' ],
-          'circle-radius': ['step',['get', 'point_count'], 20,100,30,750,40]
+      this.map.addSource('vehiclePaths', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: []
+          }
         }
       });
 
+      this.map.addSource('vehiclePathsLast', {
+        type: 'geojson',
+      });
+
       this.map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'test',
-        filter: ['has', 'point_count'],
+        id: 'route',
+        type: 'line',
+        source: 'vehiclePaths',
         layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#00AAFF',
+          'line-width': 4
         }
-      })
+      });
 
       this.map.addLayer({
-        id: 'unclustered-point',
+        id: 'point',
         type: 'circle',
-        source: 'test',
-        filter: ['!', ['has', 'point_count']],
+        source: 'vehiclePathsLast',
         paint: {
         'circle-color': '#11b4da',
         'circle-radius': 4,
@@ -98,24 +129,7 @@ export class DetailMonitoringComponent implements OnInit {
         }
       });
 
-      this.map.on('click', 'clusters', (e) => {
-        const features : any = this.map.queryRenderedFeatures(e.point, {
-          layers: ['clusters']
-        });
-        const clusterId = features[0].properties.cluster_id;
-        let source = this.map.getSource('test') as mapboxgl.GeoJSONSource
-        source.getClusterExpansionZoom( clusterId, (err : any, zoom : any) => {
-          if (err) {
-            return;
-          }
-          this.map.easeTo({
-            center: features[0].geometry.coordinates,
-          zoom: zoom
-          });
-        });
-      });
-
-      this.map.on('click', 'unclustered-point', (e : any) => {
+      this.map.on('click', 'point', (e : any) => {
         const dialogRef = this.dialog.open( MapMarkerDetailComponent, {
           data:{},
           panelClass : 'bakcgroundColorGray'
@@ -126,182 +140,120 @@ export class DetailMonitoringComponent implements OnInit {
           }
         });
       });
-
-      this.map.on('mouseenter', 'clusters', (e : any) => {
-        this.map.getCanvas().style.cursor = 'pointer';
-      });
-
-      this.map.on('mouseleave', 'clusters', () => {
-        this.map.getCanvas().style.cursor = '';
-      });
-
-      this.map.on('mouseenter', 'unclustered-point', (e : any) => {
-        this.map.getCanvas().style.cursor = 'pointer';
-        console.log(e)
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        const lng = e.lngLat.lng
-        const lagt = e.lngLat.lat
-
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        this.mapPopup = new mapboxgl.Popup({closeButton: false})
-        .setLngLat(coordinates)
-        .setHTML(
-        /*lng : ${lng}<br>
-         lat : ${lagt}<br>*/
-         `<div class="informationContents">
-            <div style="display:flex">
-              <img src="assets/icon/car_icon.png" style="width: 25px; height: 25px; margin-right: 5px;">
-              Vehicle Information
-            </div>
-
-
-            <div class="informationFild">
-              <div class="informationLable">
-                EV Ready
-              </div>
-              <div class="informationValue">
-                Starting
-              </div>
-              <div class="informationLable">
-                DC-DC Status
-              </div>
-              <div class="informationValue">
-                Start
-              </div>
-            </div>
-
-            <div class="informationFild">
-              <div class="informationLable">
-                Chargy Status
-              </div>
-              <div class="informationValue">
-                No Charge
-              </div>
-              <div class="informationLable">
-                Accel
-              </div>
-              <div class="informationValue">
-                On
-              </div>
-            </div>
-
-            <div class="informationFild">
-              <div class="informationLable">
-                Run Mode
-              </div>
-              <div class="informationValue">
-                Electric
-              </div>
-              <div class="informationLable">
-                Brake
-              </div>
-              <div class="informationValue">
-                Off
-              </div>
-            </div>
-
-            <div class="informationFild">
-              <div class="informationLable">
-                Vehicle Speed(km/h)
-              </div>
-              <div class="informationValue">
-                102.3
-              </div>
-              <div class="informationLable">
-                Gear Steate
-              </div>
-              <div class="informationValue">
-                D
-              </div>
-            </div>
-
-            <div class="informationFild">
-              <div class="informationLable">
-                Accumulated Mile(km)
-              </div>
-              <div class="informationValue">
-                26,182.4
-              </div>
-              <div class="informationLable">
-                Insulation Resistance(kΩ)
-              </div>
-              <div class="informationValue">
-                5305
-              </div>
-            </div>
-
-            <div class="informationFild">
-              <div class="informationLable">
-                PTB Out Volt(V)
-              </div>
-              <div class="informationValue">
-                326.7
-              </div>
-              <div class="informationLable">
-                Accelerator Pedal Status
-              </div>
-              <div class="informationValue">
-                11
-              </div>
-            </div>
-
-            <div class="informationFild">
-              <div class="informationLable">
-                PTB Out Arm(A)
-              </div>
-              <div class="informationValue">
-                14.6
-              </div>
-              <div class="informationLable">
-                Brake Pedal Status
-              </div>
-              <div class="informationValue">
-                0
-              </div>
-            </div>
-
-            <div class="informationFild">
-              <div class="informationLable">
-                SOC(%)
-              </div>
-              <div class="informationValue" style="width:75%">
-                73
-              </div>
-            </div>
-          </div>`
-        ).setMaxWidth(null).addTo(this.map);
-      });
-
-      this.map.on('mouseleave', 'unclustered-point', () => {
-        this.map.getCanvas().style.cursor = '';
-        this.mapPopup.remove()
-      });
     });
-
-    /*let popup = new mapboxgl.Popup()
-    .setLngLat(feature.geometry.coordinates)
-    .setHTML("test")
-    .addTo(this.map);*/
     },1)
 
     this.listBtn$ = this.uiService.listBtn$.subscribe(result=>{
       console.log(result)
     })
-
     this.setSpeedChart()
     this.setBatteryChart()
+    this.getRealtimedataVehiclelist()
+  }
 
+  setRealTimeSwitch(){
+    this.realTimeOnOff = !this.realTimeOnOff
 
+    if(this.realTimeOnOff){
+      this.startRealTime = new Date()
 
+      this.interval = interval(10000).pipe().subscribe(x =>
+        this.getRealtimedataInfoVin()
 
+        );
+
+    }else {
+      this.interval.unsubscribe()
+      this.startRealTime = null
+    }
+
+    console.log(this.realTimeOnOff)
+  }
+
+  getRealtimedataVehiclelist(){
+
+    let f = new SearchFilter()
+    f.vin = this.vinSearchText
+    this.realtimedataService.getRealtimedataVehiclelist(f).subscribe(
+      res=>{
+        console.log(res)
+        this.vehicleInfo = res.body.vehicleBrief
+      }, error=>{
+        console.log(error)
+      })
+  }
+
+  clickVin(vehicle : any){
+    this.realTimeOnOff = false
+    this.selectVehicle = vehicle
+    this.getRealtimedataInfoVin()
   }
 
   getRealtimedataInfoVin(){
-    this.realtimedataService.getRealtimedataInfoVin(new SearchFilter()).subscribe(res=>{
+
+    let filter = new SearchFilter()
+    filter.vin = this.selectVehicle.vin
+
+    if(this.startRealTime == null){
+      filter.time = new Date().toISOString()
+    }else {
+      filter.time = this.startRealTime.toISOString()
+    }
+
+    this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(res=>{
       console.log(res)
+
+      this.selectVehicleInfo = res.body
+      this.setSpeedChartOption(this.selectVehicleInfo.car.speed)
+      this.setBatteryChartOption(this.selectVehicleInfo.car.soc)
+
+      this.map.flyTo({
+        center: [res.body.location.longitude,res.body.location.latitude],
+        duration: 1500,
+        zoom: 13
+      });
+
+      let source = (this.map.getSource("vehiclePathsLast") as GeoJSONSource).setData({
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Point",
+          "coordinates": [res.body.location.longitude,res.body.location.latitude]
+        }
+      });
+    },error=>{
+      console.log(error)
+    })
+
+    this.getRealtimedataPathVin()
+
+  }
+
+  getRealtimedataPathVin(){
+    let filter = new SearchFilter()
+    filter.vin = this.selectVehicle.vin
+    if(this.startRealTime != null){
+      filter.begin = this.startRealTime.toISOString()
+    }
+    this.realtimedataService.getRealtimedataPathVin(filter).subscribe(res=>{
+      console.log(res)
+      let coordinates : any[] = []
+
+      for(let i = 0; i < res.body.paths.length; i++){
+        coordinates.push([
+          res.body.paths[i].longitude,
+          res.body.paths[i].latitude
+        ])
+      }
+
+      (this.map.getSource("vehiclePaths") as GeoJSONSource).setData({
+        "type": "Feature",
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates: coordinates
+        }
+      });
     },error=>{
       console.log(error)
     })
@@ -338,14 +290,15 @@ export class DetailMonitoringComponent implements OnInit {
   setSpeedChart(){
     console.log("setSpeedChart")
     var dom = document.getElementById('speedChartContiner');
-    var myChart = echarts.init(dom, null, {
+    this.speedChart = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false
     });
+    this.setSpeedChartOption(0)
+  }
 
-    var option;
-
-    option = {
+  setSpeedChartOption(data : number){
+    var option = {
       series: [
         {
           type: 'gauge',
@@ -427,28 +380,29 @@ export class DetailMonitoringComponent implements OnInit {
           },
           data: [
             {
-              value: 100
+              value: data
             }
           ]
         }
       ]
     };
-
     if (option && typeof option === 'object') {
-      myChart.setOption(option);
+      this.speedChart.setOption(option);
     }
-
   }
-
 
   setBatteryChart(){
     var chartDom = document.getElementById('batteryChartContiner')!;
-    var myChart = echarts.init(chartDom);
+    this.batteryChart = echarts.init(chartDom);
+    this.setBatteryChartOption(0)
+  }
+
+  setBatteryChartOption(data :number){
     var option: echarts.EChartsOption;
 
     const gaugeData = [
       {
-        value: 30,
+        value: data,
         name: 'SOC',
         title: {
           offsetCenter: ['0%', '-20%']
@@ -523,11 +477,11 @@ export class DetailMonitoringComponent implements OnInit {
               value: {
                 fontSize: 30,
                 fontWeight: 'bolder',
-                color: '#ffffff',
+                color: '#000000',
               },
               unit: {
                 fontSize: 15,
-                color: '#ffffff',
+                color: '#000000',
                 padding: [0, 0, 0, 5]
               }
             }
@@ -535,15 +489,14 @@ export class DetailMonitoringComponent implements OnInit {
         }
       ]
     };
-
-    option && myChart.setOption(option);
+    option && this.batteryChart.setOption(option);
   }
 
   openBattery(e : any){
-    console.log('openBattery')
+
     e.stopPropagation()
     const dialogRef = this.dialog.open( BatteryDetailComponent, {
-      data:{},
+      data:this.selectVehicleInfo,
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
@@ -552,9 +505,4 @@ export class DetailMonitoringComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    if(this.listBtn$)this.listBtn$.unsubscribe()
-  }
 }

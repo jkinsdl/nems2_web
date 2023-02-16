@@ -9,35 +9,11 @@
   "features": [
     {
       "type": "Feature",
-      "properties": {
-      "id": "hv61900626",
-      "mag": 2.91,
-      "time": 1504833891990,
-      "felt": null,
-      "tsunami": 0
-      },
+      "properties": {},
       "geometry": {
         "type": "Point",
         "coordinates": [
           105.011833,
-          32.399333,
-          2.609
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-      "id": "hv61900626",
-      "mag": 2.91,
-      "time": 1504833891990,
-      "felt": null,
-      "tsunami": 0
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          104.011833,
           32.399333,
           2.609
         ]

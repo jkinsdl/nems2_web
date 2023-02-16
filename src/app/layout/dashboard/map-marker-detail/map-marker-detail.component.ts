@@ -349,6 +349,7 @@ export class MapMarkerDetailComponent implements OnInit {
         }
       }
       });
+
       this.map.addLayer({
         id: 'route',
         type: 'line',

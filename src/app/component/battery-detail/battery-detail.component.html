@@ -2,7 +2,7 @@
 
   <div class="popupTitle">
     <div class="text">
-      Battery - KMTMA8119PU002953
+      Battery - {{data.vin}}
     </div>
     <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
   </div>
@@ -11,7 +11,7 @@
     <div class="batteryStatusLayout">
       <div class="batteryStatusBox">
         <div class="batteryStatusValue">
-          701.50 V
+          {{data.car.totalVolt}} V
         </div>
         <div class="batteryStatusTitle">
           Total Voltage
@@ -24,7 +24,7 @@
     <div class="batteryStatusLayout">
       <div class="batteryStatusBox">
         <div class="batteryStatusValue">
-          0.00 A
+          {{data.car.totalAmpere}} A
         </div>
 
         <div class="batteryStatusTitle">
@@ -38,7 +38,7 @@
     <div class="batteryStatusLayout">
       <div class="batteryStatusBox">
         <div class="batteryStatusValue">
-          41 %
+          {{data.car.soc}} %
         </div>
 
         <div class="batteryStatusTitle">

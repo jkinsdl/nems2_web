@@ -1,5 +1,44 @@
 <div class="detailMonitoringContainer">
 
+  <div class="listAbsoluteBox">
+
+    <mat-slide-toggle
+        class="example-margin"
+        [color]="'primary'"
+        [checked]="realTimeOnOff"
+        [disabled]="selectVehicle == null"
+        (change)="setRealTimeSwitch()">
+      Real Time !
+    </mat-slide-toggle>
+
+    <div class="listSearch">
+      <div class="value">
+        <input class="datePickerText" [ngxMatDatetimePicker]="packetTime" readonly="true" (click)="packetTime.open()" style="width: 130px; padding: 0 10px; margin: 0 10px;" [(ngModel)]="startRealTime" [max]="currentTime" [disabled]="selectVehicle == null">
+        <ngx-mat-datetime-picker #packetTime [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
+      </div>
+      <div style="font-size: 12px;" [ngClass]="{'textDisabled': selectVehicle == null}">Time</div>
+    </div>
+
+    <div class="listSearch">
+      <div class="searchTitle">VIN</div>
+      <input class="" [(ngModel)]="vinSearchText" (keydown.enter)="getRealtimedataVehiclelist()">
+      <div style="width:20px; margin-left: 5px; display: flex; align-items: center; cursor: pointer;" (click)="getRealtimedataVehiclelist()">
+        <img src="assets/icon/find.png" style="width:20px">
+      </div>
+    </div>
+
+    <div class="monitoringMapList">
+      <div class="listRow" *ngFor="let vehicle of vehicleInfo" (click)="clickVin(vehicle)" [ngClass]="{'selectBackground': selectVehicle == vehicle}">
+        <div class="markerImage">
+          <img src="assets/icon/blue_marker.png">
+        </div>
+        <div class="listText">
+          {{vehicle.vin}}
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="infoBox" cdkDrag cdkDragBoundary=".detailMonitoringContainer" >
     <div class="infoBoxTitle" [ngClass]="{'titleGray': isBatteryPanelOnOff}" (click)="batteryPanelOnOff()"  >
       <div class="infoBoxHandle" cdkDragHandle (click)="$event.stopPropagation()">
@@ -14,7 +53,7 @@
       </div>
 
       <div class="infoBoxTitleRight">
-        <button mat-raised-button (click)="openBattery($event)">
+        <button mat-raised-button (click)="openBattery($event)" [disabled]="selectVehicle == null">
           <span>Detail</span>
         </button>
       </div>
@@ -29,7 +68,7 @@
     </div>
   </div>
 
-  <div class="infoBox" style="left: 350px;" cdkDrag cdkDragBoundary=".detailMonitoringContainer">
+  <div class="infoBox" style="right: 400px;" cdkDrag cdkDragBoundary=".detailMonitoringContainer">
     <div class="infoBoxTitle" [ngClass]="{'titleGray': isSpeedPanelOnOff}"  (click)="setSpeedPanelOnOff()"  >
       <div class="infoBoxHandle" cdkDragHandle (click)="$event.stopPropagation()">
         <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
@@ -49,11 +88,309 @@
     </div>
   </div>
 
+  <div class="informationAbsoluteBox">
+
+    <div *ngIf="selectVehicleInfo == null" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: gray; font-size: 20px;">
+      Select Vehicle
+    </div>
+
+    <div class="" *ngIf="selectVehicleInfo != null">
+      <mat-tab-group>
+        <mat-tab label="CAR">
+
+          <div class="tabList">
+            <div class="tabInforRow">
+              <div class="tabLeft">accel</div>
+              <div class="tabRight">{{selectVehicleInfo.car.accel}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">acceleratorVal</div>
+              <div class="tabRight">{{selectVehicleInfo.car.acceleratorVal}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">breakState</div>
+              <div class="tabRight">{{selectVehicleInfo.car.breakState}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">breaking</div>
+              <div class="tabRight">{{selectVehicleInfo.car.breaking}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">chargeState</div>
+              <div class="tabRight">{{selectVehicleInfo.car.chargeState}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">dcdcState</div>
+              <div class="tabRight">{{selectVehicleInfo.car.dcdcState}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">driveMode</div>
+              <div class="tabRight">{{selectVehicleInfo.car.driveMode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">drivenDistance</div>
+              <div class="tabRight">{{selectVehicleInfo.car.drivenDistance}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">resistance</div>
+              <div class="tabRight">{{selectVehicleInfo.car.resistance}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">soc</div>
+              <div class="tabRight">{{selectVehicleInfo.car.soc}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">speed</div>
+              <div class="tabRight">{{selectVehicleInfo.car.speed}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">state</div>
+              <div class="tabRight">{{selectVehicleInfo.car.state}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">time</div>
+              <div class="tabRight">{{selectVehicleInfo.car.time}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">totalAmpere</div>
+              <div class="tabRight">{{selectVehicleInfo.car.totalAmpere}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">totalVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.car.totalVolt}}</div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="EXTREME Value">
+
+          <div class="tabList">
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxTempSensorCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxTempSensorCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxTempSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxTempSubsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxVolt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxVoltCellCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxVoltCellCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxVoltSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxVoltSubsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinTemp</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinTemp}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinTempSensorCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinTempSensorCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinTempSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinTempSubsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinVolt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinVoltCellCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinVoltCellCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinVoltSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinVoltSubsystemNo}}</div>
+            </div>
+          </div>
+
+        </mat-tab>
+        <mat-tab label="LOCATION">
+          <div class="tabList">
+            <div class="tabInforRow">
+              <div class="tabLeft">latitude</div>
+              <div class="tabRight">{{selectVehicleInfo.location.latitude}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">longitude</div>
+              <div class="tabRight">{{selectVehicleInfo.location.longitude}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">state</div>
+              <div class="tabRight">{{selectVehicleInfo.location.state}}</div>
+            </div>
+          </div>
+
+        </mat-tab>
+        <mat-tab label="MOTORS">
+          <div class="tabList">
+            <div class="tabInforRow">
+              <div class="tabLeft">controllerDcBusAmpere</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].controllerDcBusAmpere}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">controllerTemp</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].controllerTemp}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">inputVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].inputVolt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">rpm</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].rpm}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">serialNo</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].serialNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">state</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].state}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">temp</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].temp}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">torq</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].torq}}</div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="POWER BATTERY INFOS">
+          <div class="tabList">
+            <div class="tabInforRow">
+              <div class="tabLeft">ampere</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].ampere}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">cellCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].cellCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">frameSequenceCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].frameSequenceCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">frameSequenceNo</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].frameSequenceNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">volt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].volt}}</div>
+            </div>
+          </div>
+
+        </mat-tab>
+        <mat-tab label="POWER BATTERY TEMPERATURES">
+          <div class="tabList">
+            <div class="tabInforRow">
+              <div class="tabLeft">subsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].subsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">tempProbeCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].tempProbeCnt}}</div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="WARNING">
+          <div class="tabList">
+            <div class="tabInforRow">
+              <div class="tabLeft">engineTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.engineTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">etcTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.etcTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">flag</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.flag}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">maxWarning</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.maxWarning}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">motorTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.motorTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">powerBatteryTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.powerBatteryTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">warningName</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.warningName}}</div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+  </div>
+
   <div style="position: absolute; right: 10px; top: 10px; z-index: 1; ">
     <div (click)="moveListPage()" style="background-color: white; width: 30px; height: 30px; border-radius: 5px; cursor: pointer;">
       <img src="assets/icon/list-interface-symbol.png" style="width: 20px; height: 20px; padding: 5px;">
     </div>
   </div>
+
+
 
 
   <div class="map" id="map"></div>

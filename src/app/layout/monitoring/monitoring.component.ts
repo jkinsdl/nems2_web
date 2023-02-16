@@ -58,7 +58,7 @@ export class MonitoringComponent implements OnInit {
 
     let filter = new SearchFilter()
     filter.vin = event.data.vin
-    filter.packetTime = new Date().toISOString()
+    filter.time = new Date().toISOString()
 
     this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(res=>{
       console.log(res)

@@ -19,9 +19,12 @@ export class BatteryDetailComponent implements OnInit {
   voltageCategory : string[] = []
   voltageData : any[] = []
   ngOnInit(): void {
+
+    console.log(this.data)
+
     setTimeout(() => {
-      this.setVoltageChart()
-      this.setTemperatureChart()
+      this.setVoltageChart(this.data.powerBatteryInfos[0])
+      this.setTemperatureChart(this.data.powerBatteryTemperatures[0])
     }, 100);
   }
 
@@ -29,10 +32,11 @@ export class BatteryDetailComponent implements OnInit {
     this.dialogRef.close()
   }
 
-  setVoltageChart(){
-    for(let i = 0; i < 150; i++){
+  setVoltageChart(voltageData : any){
+    for(let i = 0; i < voltageData.cellAmperes.length; i++){
       this.voltageCategory.push("Cell#" + (i+1))
-      this.voltageData.push((Math.random() + 3).toFixed(2))
+      //this.voltageData.push((Math.random() + 3).toFixed(2))
+      this.voltageData.push(voltageData.cellAmperes[i])
     }
 
     var chartDom = document.getElementById('voltageChart')!;
@@ -66,18 +70,20 @@ export class BatteryDetailComponent implements OnInit {
     option && myChart.setOption(option);
   }
 
-  setTemperatureChart(){
+  setTemperatureChart(temperatureData : any){
     let xAxisDatas = []
-    for(let i = 0; i < 15; i++){
+    let data : any[] = []
+    for(let i = 0; i < temperatureData.sensorTemps.length; i++){
       xAxisDatas.push("Cell#" + (i+1))
+      data.push([i,0,temperatureData.sensorTemps[i]])
     }
 
-    const data = [
+    /*const data = [
       [0,0,15],[0,1,15],[0,2,14],[0,3,15],[0,4,15],[0,5,14],[0,6,12],[0,7,16],[0,8,15],[0,9,14],[0,10,15],[0,11,15],[0,12,15],[0,13,14],[0,14,16],[0,15,14]]
         .map(function (item) {
             return [item[1], item[0], item[2] || '-'];
         });
-
+    */
     var chartDom = document.getElementById('temperatureChart')!;
     var myChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
@@ -108,7 +114,7 @@ export class BatteryDetailComponent implements OnInit {
       },
       visualMap: {
         min: 10,
-        max: 20,
+        max: 50,
         calculable: true,
         orient: 'horizontal',
         left: 'center',

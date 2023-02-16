@@ -87,8 +87,6 @@ export class ServerLogsComponent implements OnInit {
     this.searchFilter.begin = this.beginDate.toISOString()
     this.searchFilter.end = this.endDate.toISOString()
 
-
-
     this.gbpacketService.getGbpacket(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.gbpacket = res.body

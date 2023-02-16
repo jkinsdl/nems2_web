@@ -83,7 +83,7 @@ export class UtilService {
   }
 
   getProvinceData(){
-    return this.http.get('assets/data/chn_province_v2.json')
+    return this.http.get('assets/data/chn_province_final.json')
   }
 
   getSubPrefectureeData(){

@@ -25,7 +25,7 @@ export class SearchFilter{
   event : string
 
   packetTime : string
-
+  time : string
   iccid : string
   nemsSn : string
   registrationPlate : string
