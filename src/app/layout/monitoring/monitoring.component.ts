@@ -56,21 +56,14 @@ export class MonitoringComponent implements OnInit {
   getVehicleRow(event : any){
     console.log(event.data)
 
-    let filter = new SearchFilter()
-    filter.vin = event.data.vin
-    filter.time = new Date().toISOString()
+    this.router.navigateByUrl('/main/monitoring/detail/'+event.data.vin).then(
+      nav => {
+        console.log(nav);
+      },
+      err => {
+        console.log(err);
+      });
 
-    this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(res=>{
-      console.log(res)
-    },error=>{
-      console.log(error)
-    })
-
-    this.realtimedataService.getRealtimedataPathVin(filter).subscribe(res=>{
-      console.log(res)
-    },error=>{
-      console.log(error)
-    })
   }
 
   getRealtimedataVehiclelist(){
@@ -83,8 +76,8 @@ export class MonitoringComponent implements OnInit {
       })
   }
 
-  moveDetaileMonitoring(index : number ){
-    this.router.navigateByUrl('/main/monitoring/detail').then(
+  moveDetaileMonitoring(){
+    this.router.navigateByUrl('/main/monitoring/detail/'+null).then(
       nav => {
         console.log(nav);
       },

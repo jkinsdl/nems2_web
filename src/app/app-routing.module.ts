@@ -62,7 +62,7 @@ const routes: Routes = [
   { path: 'main', component: MainComponent, children:[
     { path: 'dashboard', component: DashboardComponent },
     { path: 'monitoring', canActivate: [AuthGuard], component: MonitoringComponent },
-    { path: 'monitoring/detail', canActivate: [AuthGuard], component: DetailMonitoringComponent },
+    { path: 'monitoring/detail/:vin', canActivate: [AuthGuard], component: DetailMonitoringComponent },
     { path: 'monitoring/detail/zoom', canActivate: [AuthGuard], component: MonitoringDetailZoomComponent, children:[
       { path: 'vehicle', canActivate: [AuthGuard], component: MonitoringVehicleComponent },
       { path: 'location', canActivate: [AuthGuard], component: MonitoringLocationComponent },

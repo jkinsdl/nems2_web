@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
 import { interval, Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
@@ -18,6 +18,7 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 export class DetailMonitoringComponent implements OnInit {
 
   constructor(private router: Router,
+    private activatedRoute : ActivatedRoute,
     private dialog: MatDialog,
     private uiService : UiService,
     private realtimedataService : RealtimedataService) { }
@@ -140,6 +141,17 @@ export class DetailMonitoringComponent implements OnInit {
           }
         });
       });
+
+      if(this.activatedRoute.snapshot.paramMap.get('vin') != null){
+        for(let i = 0; i < this.vehicleInfo.length; i++){
+          if(this.vehicleInfo[i].vin == this.activatedRoute.snapshot.paramMap.get('vin')){
+            this.clickVin(this.vehicleInfo[i])
+            break;
+          }
+        }
+      }
+
+
     });
     },1)
 
