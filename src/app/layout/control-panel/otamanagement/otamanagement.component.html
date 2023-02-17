@@ -98,7 +98,8 @@
         [rowData]="firmwareVehiclesList.entities"
         [columnDefs]="firmwareVehiclesColumn"
         [rowSelection]="rowSelection"
-        (gridReady)="onGridReady($event)">
+        (gridReady)="onGridReady($event)"
+        [tooltipShowDelay]="0">
       </ag-grid-angular>
 
     </div>

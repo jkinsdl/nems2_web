@@ -8,6 +8,7 @@ import { AddRegisterRemoteSettingComponent } from 'src/app/component/add-registe
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 
 @Component({
   selector: 'app-configure',
@@ -24,30 +25,30 @@ export class ConfigureComponent implements OnInit {
   ) { }
 
   configurationColumnDefs: ColDef[] = [
-    { field: 'configureName', headerName: 'configure name' },
-    { field: 'carHeartBeatPeriod', headerName: 'car Heart Beat Period'},
-    { field: 'carLocalSavePeriod', headerName : 'car Local Save Period'},
-    { field: 'carResponseTimeout', headerName : 'car Response Timeout'},
-    { field: 'fwVersion', headerName : 'fw Version'},
-    { field: 'hwVersion', headerName : 'hw Version'},
-    { field: 'managePlatformName', headerName : 'manage Platform Name'},
-    { field: 'managePlatformPort', headerName : 'manage Platform Port'},
-    { field: 'monitoring', headerName : 'monitoring'},
-    { field: 'nextLoginInterval', headerName : 'next LoginInterval'},
-    { field: 'normalSubmitPeriod', headerName : 'normal Submit Period'},
-    { field: 'platformResponseTimeout', headerName : 'platform Response Timeout'},
-    { field: 'publicPlatformName', headerName : 'public Platform Name'},
-    { field: 'publicPlatformPort', headerName : 'public Platform Port'},
-    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'updatedUserId', headerName : 'updated User Id'},
-    { field: 'warningSubmitPeriod', headerName : 'warning Submit Period'},
+    { field: 'configureName', headerName: 'configure name', tooltipField: 'configureName' },
+    { field: 'carHeartBeatPeriod', headerName: 'car Heart Beat Period', tooltipField: 'carHeartBeatPeriod'},
+    { field: 'carLocalSavePeriod', headerName : 'car Local Save Period', tooltipField: 'carLocalSavePeriod'},
+    { field: 'carResponseTimeout', headerName : 'car Response Timeout', tooltipField: 'carResponseTimeout'},
+    { field: 'fwVersion', headerName : 'fw Version', tooltipField: 'fwVersion'},
+    { field: 'hwVersion', headerName : 'hw Version', tooltipField: 'hwVersion'},
+    { field: 'managePlatformName', headerName : 'manage Platform Name', tooltipField: 'managePlatformName'},
+    { field: 'managePlatformPort', headerName : 'manage Platform Port', tooltipField: 'managePlatformPort'},
+    { field: 'monitoring', headerName : 'monitoring', tooltipField: 'monitoring'},
+    { field: 'nextLoginInterval', headerName : 'next LoginInterval', tooltipField: 'nextLoginInterval'},
+    { field: 'normalSubmitPeriod', headerName : 'normal Submit Period', tooltipField: 'normalSubmitPeriod'},
+    { field: 'platformResponseTimeout', headerName : 'platform Response Timeout', tooltipField: 'platformResponseTimeout'},
+    { field: 'publicPlatformName', headerName : 'public Platform Name', tooltipField: 'publicPlatformName'},
+    { field: 'publicPlatformPort', headerName : 'public Platform Port', tooltipField: 'publicPlatformPort'},
+    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }},
+    { field: 'updatedUserId', headerName : 'updated User Id', tooltipField: 'updatedUserId'},
+    { field: 'warningSubmitPeriod', headerName : 'warning Submit Period', tooltipField: 'warningSubmitPeriod'},
   ];
 
   mappingColumnDefs: ColDef[] = [
-    { field: 'configure_name', headerName: 'configure name' },
-    { field: 'vin', headerName: 'VIN'},
-    { field: 'matched', headerName : 'matched'},
-    { field: 'matched_date', headerName : 'matched date', valueFormatter : this.utilService.gridDateFormat},
+    { field: 'configure_name', headerName: 'configure name', tooltipField: 'configure_name' },
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
+    { field: 'matched', headerName : 'matched', tooltipField: 'matched'},
+    { field: 'matched_date', headerName : 'matched date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date' }},
   ];
 
   public rowSelection = 'single';

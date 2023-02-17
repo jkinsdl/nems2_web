@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import mapboxgl from 'mapbox-gl';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
@@ -26,18 +27,18 @@ export class AlarmComponent implements OnInit {
       checkboxSelection: true,
       width: 10
     },
-    { field: 'warningLevel',headerName: "warningLevel"},
-    { field: 'vin',headerName: "vin"},
-    { field: 'warningCode',headerName: "warningCode"},
-    { field: 'code',headerName: "code"},
-    { field: 'createTime',headerName: "createTime", valueFormatter : this.utilService.gridDateFormat},
-    { field: 'lastPacketTime',headerName: "lastPacketTime", valueFormatter : this.utilService.gridDateFormat},
-    { field: 'releasedTime',headerName: "releasedTime", valueFormatter : this.utilService.gridDateFormat},
-    { field: 'state',headerName: "state"},
-    { field: 'maxWarning',headerName: "maxWarning"},
-    { field: 'warningFlag',headerName: "warningFlag"},
-    { field: 'region',headerName: "region"},
-    { field: 'comment',headerName: "comment"},
+    { field: 'warningLevel',headerName: "warningLevel", tooltipField: 'warningLevel'},
+    { field: 'vin',headerName: "vin", tooltipField: 'vin'},
+    { field: 'warningCode',headerName: "warningCode", tooltipField: 'warningCode'},
+    { field: 'code',headerName: "code", tooltipField: 'code'},
+    { field: 'createTime',headerName: "createTime", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createTime' }},
+    { field: 'lastPacketTime',headerName: "lastPacketTime", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastPacketTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastPacketTime' }},
+    { field: 'releasedTime',headerName: "releasedTime", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'releasedTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'releasedTime' }},
+    { field: 'state',headerName: "state", tooltipField: 'state'},
+    { field: 'maxWarning',headerName: "maxWarning", tooltipField: 'maxWarning'},
+    { field: 'warningFlag',headerName: "warningFlag", tooltipField: 'warningFlag'},
+    { field: 'region',headerName: "region", tooltipField: 'region'},
+    { field: 'comment',headerName: "comment", tooltipField: 'comment'},
   ];
 
   vehiclewarning : any = {

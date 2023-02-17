@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CellClickedEvent, ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AddVehicleComponent } from 'src/app/component/add-vehicle/add-vehicle.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
@@ -23,19 +24,19 @@ export class VehicleSettingsComponent implements OnInit {
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'batteryCode', headerName: 'batteryCode' },
-    { field: 'engineNo', headerName: 'engineNo'},
-    { field: 'iccid', headerName : 'iccid'},
-    { field: 'modelName', headerName : 'modelName'},
-    { field: 'motorNo', headerName : 'motorNo'},
-    { field: 'nemsSn', headerName : 'nemsSn'},
-    { field: 'purpose', headerName : 'purpose'},
-    { field: 'region', headerName : 'region'},
-    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'registrationPlate', headerName : 'registrationPlate'},
-    { field: 'sOffDate', headerName : 'sOffDate', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'vin', headerName : 'vin'},
-    { field: 'pcode', headerName : 'pcode'}
+    { field: 'batteryCode', headerName: 'batteryCode', tooltipField: 'batteryCode'},
+    { field: 'engineNo', headerName: 'engineNo', tooltipField: 'engineNo'},
+    { field: 'iccid', headerName : 'iccid', tooltipField: 'iccid'},
+    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName'},
+    { field: 'motorNo', headerName : 'motorNo', tooltipField: 'motorNo'},
+    { field: 'nemsSn', headerName : 'nemsSn', tooltipField: 'nemsSn'},
+    { field: 'purpose', headerName : 'purpose', tooltipField: 'purpose'},
+    { field: 'region', headerName : 'region', tooltipField: 'region'},
+    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate' }},
+    { field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
+    { field: 'sOffDate', headerName : 'sOffDate', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'sOffDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'sOffDate' }},
+    { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
+    { field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
   ];
 
   vehicleList : any[] = []
@@ -135,6 +136,5 @@ export class VehicleSettingsComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit()
   }
 }

@@ -20,7 +20,8 @@
       [rowSelection]="rowSelection"
       [pagination]="true"
       [paginationPageSize]="17"
-      (gridReady)="onServerGridReady($event)">
+      (gridReady)="onServerGridReady($event)"
+      [tooltipShowDelay]="0">
     </ag-grid-angular>
 
   </div>
@@ -46,7 +47,8 @@
       [rowSelection]="rowSelection"
       [pagination]="true"
       [paginationPageSize]="17"
-      (gridReady)="onMappingGridReady($event)">
+      (gridReady)="onMappingGridReady($event)"
+      [tooltipShowDelay]="0">
     </ag-grid-angular>
   </div>
 </div>

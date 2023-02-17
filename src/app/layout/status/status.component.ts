@@ -25,13 +25,7 @@ export class StatusComponent implements OnInit {
     totalEnergyUsage: 0
   }
 
-  vehicleFailure : any[] = [{
-    key : "LJDUAA2J4J0006507",
-    value : "28"
-  },{
-    key : "LJDUAA2J4J0006507",
-    value : "28"
-  }]
+  vehicleFailure : any[] = []
 
   ngOnInit(): void {
     this.getStatisticsVehiclesSummary()
@@ -53,6 +47,7 @@ export class StatusComponent implements OnInit {
       this.setPieChart("distributionChart", res.body.distribution)
       this.setPieChart("failureRankChart", res.body.failureRank)
       this.setPieChart("failureOccupancyChart", res.body.failureOccupancy)
+      this.vehicleFailure = res.body.vehicleFailure
     },error=>{
       console.log(error)
     })

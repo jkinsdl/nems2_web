@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, GridApi, GridReadyEvent, ITooltipParams } from 'ag-grid-community';
 import { OtaService } from 'src/app/service/ota.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddOTAManagementComponent } from 'src/app/component/add-otamanagement/add-otamanagement.component';
@@ -10,6 +10,7 @@ import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 
 @Component({
   selector: 'app-otamanagement',
@@ -36,10 +37,11 @@ export class OTAManagementComponent implements OnInit {
   firmwareVehiclesColumn: ColDef[] = [
     { field: 'vin', headerName: 'VIN',
     headerCheckboxSelection: true,
-    checkboxSelection: true, },
-    { field: 'currentState', headerName: 'currentState'},
-    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat}
+    checkboxSelection: true, tooltipField: 'vin', },
+    { field: 'currentState', headerName: 'currentState', tooltipField: 'currentState'},
+    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }}
   ];
+
 
   rowData : any[]= [];
 

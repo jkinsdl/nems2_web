@@ -209,6 +209,7 @@
         [rowData]="vehicleInfo"
         [rowSelection]="rowSelection"
         [columnDefs]="columnDefs"
+        [tooltipShowDelay]="0"
         (gridReady)="onGridReady($event)"
         (rowClicked)="getVehicleRow($event)">
       </ag-grid-angular>

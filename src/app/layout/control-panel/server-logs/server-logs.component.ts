@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { GbpacketService } from 'src/app/service/gbpacket.service';
 import { UtilService } from 'src/app/service/util.service';
@@ -17,16 +18,16 @@ export class ServerLogsComponent implements OnInit {
     private utilService : UtilService
   ) { }
   columnDefs: ColDef[] = [
-    { field: 'data', headerName: 'data' },
-    { field: 'encryption', headerName: 'encryption'},
-    { field: 'flaged', headerName : 'flaged'},
-    { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'request', headerName : 'request'},
-    { field: 'response', headerName : 'response'},
-    { field: 'responsePacket', headerName : 'responsePacket'},
-    { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'type', headerName : 'type'},
-    { field: 'vin', headerName : 'vin'},
+    { field: 'data', headerName: 'data', tooltipField: 'data', },
+    { field: 'encryption', headerName: 'encryption', tooltipField: 'encryption'},
+    { field: 'flaged', headerName : 'flaged', tooltipField: 'flaged'},
+    { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime' }},
+    { field: 'request', headerName : 'request', tooltipField: 'request'},
+    { field: 'response', headerName : 'response', tooltipField: 'response'},
+    { field: 'responsePacket', headerName : 'responsePacket', tooltipField: 'responsePacket'},
+    { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime' }},
+    { field: 'type', headerName : 'type', tooltipField: 'type'},
+    { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
   ];
 
   gridApi!: GridApi;
@@ -100,7 +101,6 @@ export class ServerLogsComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit()
   }
 
 }

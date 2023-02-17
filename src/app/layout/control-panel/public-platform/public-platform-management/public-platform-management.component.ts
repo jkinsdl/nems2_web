@@ -21,19 +21,19 @@ export class PublicPlatformManagementComponent implements OnInit {
   ) { }
 
   forwardingColumnDefs: ColDef[] = [
-    { field: 'command', headerName : 'command'},
-    { field: 'connectionStatus', headerName : 'connectionStatus'},
-    { field: 'domain', headerName : 'domain'},
-    { field: 'encryptionKey', headerName : 'encryptionKey'},
-    { field: 'encryptionMode', headerName : 'encryptionMode'},
-    { field: 'filterLocationInfo', headerName : 'filterLocationInfo'},
-    { field: 'forceLoginVehicle', headerName : 'forceLoginVehicle'},
-    { field: 'noAck', headerName : 'noAck'},
-    { field: 'platformId', headerName : 'platformId'},
-    { field: 'platformPw', headerName : 'platformPw'},
-    { field: 'port', headerName : 'port'},
-    { field: 'serverId', headerName : 'serverId'},
-    { field: 'serverName', headerName : 'serverName'}
+    { field: 'command', headerName : 'command', tooltipField: 'command'},
+    { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
+    { field: 'domain', headerName : 'domain', tooltipField: 'domain'},
+    { field: 'encryptionKey', headerName : 'encryptionKey', tooltipField: 'encryptionKey'},
+    { field: 'encryptionMode', headerName : 'encryptionMode', tooltipField: 'encryptionMode'},
+    { field: 'filterLocationInfo', headerName : 'filterLocationInfo', tooltipField: 'filterLocationInfo'},
+    { field: 'forceLoginVehicle', headerName : 'forceLoginVehicle', tooltipField: 'forceLoginVehicle'},
+    { field: 'noAck', headerName : 'noAck', tooltipField: 'noAck'},
+    { field: 'platformId', headerName : 'platformId', tooltipField: 'platformId'},
+    { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
+    { field: 'port', headerName : 'port', tooltipField: 'port'},
+    { field: 'serverId', headerName : 'serverId', tooltipField: 'serverId'},
+    { field: 'serverName', headerName : 'serverName', tooltipField: 'serverName'}
   ];
 
   forwarding : any = {
@@ -43,8 +43,8 @@ export class PublicPlatformManagementComponent implements OnInit {
 
 
   relationsColumnDefs: ColDef[] = [
-    { field: 'vin', headerName: 'VIN' },
-    { field: 'serverId', headerName: 'serverId'}
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
+    { field: 'serverId', headerName: 'serverId', tooltipField: 'serverId'}
   ];
 
   relations : any = {

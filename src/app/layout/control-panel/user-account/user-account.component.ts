@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CellClickedEvent, ColDef, GridApi, GridReadyEvent, RowClassParams, RowClassRules } from 'ag-grid-community';
 import { AddUserComponent } from 'src/app/component/add-user/add-user.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UserService } from 'src/app/service/user.service';
 import { UtilService } from 'src/app/service/util.service';
@@ -25,13 +26,13 @@ export class UserAccountComponent implements OnInit {
 
   ) { }
   columnDefs: ColDef[] = [
-    { field: 'selected', hide:true},
-    { field: 'username', headerName: 'username' },
-    { field: 'userId', headerName: 'userId'},
-    { field: 'status', headerName : 'status'},
-    { field: 'email', headerName : 'email' },
-    { field: 'authorityId', headerName : 'authorityId' },
-    { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat }
+    { field: 'selected', hide:true, tooltipField: 'selected'},
+    { field: 'username', headerName: 'username', tooltipField: 'username' },
+    { field: 'userId', headerName: 'userId', tooltipField: 'userId'},
+    { field: 'status', headerName : 'status', tooltipField: 'status'},
+    { field: 'email', headerName : 'email', tooltipField: 'email' },
+    { field: 'authorityId', headerName : 'authorityId', tooltipField: 'authorityId' },
+    { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'latestAccess', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'latestAccess' } }
   ];
 
   users : any = {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ColDef, GridApi, GridReadyEvent, ValueFormatterParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
@@ -27,18 +28,18 @@ export class MonitoringComponent implements OnInit {
   mapsBtn$ : Subscription
 
   columnDefs: ColDef[] = [
-    { field: 'isLogin',  headerName: 'Login'},
-    { field: 'vin', headerName: 'VIN'},
-    { field: 'regNumber', headerName : 'Reg. number'},
-    { field: 'nemsSn', headerName : 'NEMS S/N' },
-    { field: 'lastUpdate', headerName : 'Last Updated', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)' },
-    { field: 'packetCount', headerName : 'Packet Count' },
-    { field: 'model', headerName : 'model' },
-    { field: 'region', headerName : 'region' },
-    { field: 'purpose', headerName : 'Purpose' },
-    { field: 'warningLevel', headerName : 'Warning' },
-    { field: 'soc', headerName : 'soc(%)' },
+    { field: 'isLogin',  headerName: 'Login', tooltipField: 'isLogin'},
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
+    { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber'},
+    { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn'},
+    { field: 'lastUpdate', headerName : 'Last Updated', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastUpdate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastUpdate' }},
+    { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)', tooltipField: 'accumulatedMile' },
+    { field: 'packetCount', headerName : 'Packet Count', tooltipField: 'packetCount' },
+    { field: 'model', headerName : 'model', tooltipField: 'model' },
+    { field: 'region', headerName : 'region', tooltipField: 'region' },
+    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose' },
+    { field: 'warningLevel', headerName : 'Warning', tooltipField: 'warningLevel' },
+    { field: 'soc', headerName : 'soc(%)', tooltipField: 'soc' },
   ];
 
   vehicleInfo : any [] = []

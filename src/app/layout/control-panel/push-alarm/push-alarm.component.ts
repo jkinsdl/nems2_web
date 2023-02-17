@@ -20,11 +20,11 @@ export class PushAlarmComponent implements OnInit {
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'name', headerName: 'name' },
-    { field: 'phone_number', headerName: 'phone number'},
-    { field: 'e_Mail', headerName : 'e-Mail'},
-    { field: 'ali_cloud_texture_id', headerName : 'AliCloud texture ID'},
-    { field: 'ali_cloud_voice_id', headerName : 'AliCloud Voice ID'},
+    { field: 'name', headerName: 'name', tooltipField: 'name' },
+    { field: 'phone_number', headerName: 'phone number', tooltipField: 'phone_number'},
+    { field: 'e_Mail', headerName : 'e-Mail', tooltipField: 'e_Mail'},
+    { field: 'ali_cloud_texture_id', headerName : 'AliCloud texture ID', tooltipField: 'ali_cloud_texture_id'},
+    { field: 'ali_cloud_voice_id', headerName : 'AliCloud Voice ID', tooltipField: 'ali_cloud_voice_id'},
   ];
 
   rowData = [

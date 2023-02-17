@@ -4,6 +4,7 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AddPublicPlatformManagementComponent } from 'src/app/component/add-public-platform-management/add-public-platform-management.component';
 import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
@@ -20,19 +21,19 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   ) { }
 
   managementColumnDefs: ColDef[] = [
-    { field: 'name', headerName: 'name' },
-    { field: 'ip', headerName: 'IP'},
-    { field: 'port', headerName : 'port'},
-    { field: 'platform_id', headerName : 'platform ID'},
-    { field: 'platform_password', headerName : 'platform password'},
-    { field: 'last_login', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'last_logout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'stat_stop', headerName : 'stat/stop'},
-    { field: 'no_ack_mode', headerName : 'no_ack_mode'},
-    { field: 'force_login_vehicle', headerName : 'force login vehicle'},
-    { field: 'filter_location_info', headerName : 'filter location info'},
-    { field: 'encryption_mode', headerName : 'encryption mode'},
-    { field: 'encryption_key', headerName : 'encryption key'},
+    { field: 'name', headerName: 'name', tooltipField: 'name' },
+    { field: 'ip', headerName: 'IP', tooltipField: 'ip'},
+    { field: 'port', headerName : 'port', tooltipField: 'port'},
+    { field: 'platform_id', headerName : 'platform ID', tooltipField: 'platform_id'},
+    { field: 'platform_password', headerName : 'platform password', tooltipField: 'platform_password'},
+    { field: 'last_login', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'last_login', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'last_login' }},
+    { field: 'last_logout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'last_logout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'last_logout' }},
+    { field: 'stat_stop', headerName : 'stat/stop', tooltipField: 'stat_stop'},
+    { field: 'no_ack_mode', headerName : 'no_ack_mode', tooltipField: 'no_ack_mode'},
+    { field: 'force_login_vehicle', headerName : 'force login vehicle', tooltipField: 'force_login_vehicle'},
+    { field: 'filter_location_info', headerName : 'filter location info', tooltipField: 'filter_location_info'},
+    { field: 'encryption_mode', headerName : 'encryption mode', tooltipField: 'encryption_mode'},
+    { field: 'encryption_key', headerName : 'encryption key', tooltipField: 'encryption_key'},
   ];
 
   managementRowData = [
@@ -86,9 +87,9 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
 
 
   mappingColumnDefs: ColDef[] = [
-    { field: 'vin', headerName: 'VIN' },
-    { field: 'vehicle_info_senapshot', headerName: 'Vehicle Info Snapshot'},
-    { field: 'last_sync', headerName : 'last sync(server time)'},
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
+    { field: 'vehicle_info_senapshot', headerName: 'Vehicle Info Snapshot', tooltipField: 'vehicle_info_senapshot'},
+    { field: 'last_sync', headerName : 'last sync(server time)', tooltipField: 'last_sync'},
   ];
 
   mappingRowData = [

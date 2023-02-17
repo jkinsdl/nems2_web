@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
@@ -18,19 +19,19 @@ export class OTAInformationComponent implements OnInit {
     private utilService : UtilService
   ) { }
   columnDefs: ColDef[] = [
-    { field: 'batteryCode', headerName: 'batteryCode' },
-    { field: 'engineNo', headerName: 'engineNo'},
-    { field: 'iccid', headerName : 'iccid'},
-    { field: 'modelName', headerName : 'modelName'},
-    { field: 'motorNo', headerName : 'motorNo'},
-    { field: 'nemsSn', headerName : 'nemsSn'},
-    { field: 'purpose', headerName : 'purpose'},
-    { field: 'region', headerName : 'region'},
-    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'registrationPlate', headerName : 'registrationPlate'},
-    { field: 'sOffDate', headerName : 'sOffDate'},
-    { field: 'vin', headerName : 'vin'},
-    { field: 'pcode', headerName : 'pcode'}
+    { field: 'batteryCode', headerName: 'batteryCode', tooltipField: 'batteryCode'},
+    { field: 'engineNo', headerName: 'engineNo', tooltipField: 'engineNo'},
+    { field: 'iccid', headerName : 'iccid', tooltipField: 'iccid'},
+    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName'},
+    { field: 'motorNo', headerName : 'motorNo', tooltipField: 'motorNo'},
+    { field: 'nemsSn', headerName : 'nemsSn', tooltipField: 'nemsSn'},
+    { field: 'purpose', headerName : 'purpose', tooltipField: 'purpose'},
+    { field: 'region', headerName : 'region', tooltipField: 'region'},
+    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate' }},
+    { field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
+    { field: 'sOffDate', headerName : 'sOffDate', tooltipField: 'sOffDate'},
+    { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
+    { field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
   ];
 
   vehicleList : any[] = []

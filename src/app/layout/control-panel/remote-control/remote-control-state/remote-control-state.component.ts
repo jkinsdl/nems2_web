@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { UtilService } from 'src/app/service/util.service';
@@ -17,29 +18,29 @@ export class RemoteControlStateComponent implements OnInit {
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'vin', headerName: 'VIN' },
-    { field: 'carHeartBeatPeriod', headerName: 'carHeartBeatPeriod'},
-    { field: 'carLocalSavePeriod', headerName : 'carLocalSavePeriod'},
-    { field: 'carResponseTimeout', headerName : 'carResponseTimeout'},
-    { field: 'configureName', headerName : 'configureName'},
-    { field: 'configureFwVersion', headerName : 'configureFwVersion'},
-    { field: 'configureHwVersion', headerName : 'configureHwVersion'},
-    { field: 'managePlatformName', headerName : 'managePlatformName'},
-    { field: 'managePlatformPort', headerName : 'managePlatformPort'},
-    { field: 'monitoring', headerName : 'monitoring'},
-    { field: 'nextLoginInterval', headerName : 'nextLoginInterval'},
-    { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout'},
-    { field: 'publicPlatformName', headerName : 'publicPlatformName'},
-    { field: 'publicPlatformPort', headerName : 'publicPlatformPort'},
-    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat},
-    { field: 'updatedUserId', headerName : 'updatedUserId'},
-    { field: 'dataFilePath', headerName : 'dataFilePath'},
-    { field: 'dataSize', headerName : 'dataSize'},
-    { field: 'firmwareName', headerName : 'firmwareName'},
-    { field: 'firmwareInfoFwVersion', headerName : 'firmwareInfoFwVersion'},
-    { field: 'firmwareInfoHwVersion', headerName : 'firmwareInfoHwVersion'},
-    { field: 'md5Hash', headerName : 'md5Hash'},
-    { field: 'modelName', headerName : 'modelName'}
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
+    { field: 'carHeartBeatPeriod', headerName: 'carHeartBeatPeriod', tooltipField: 'carHeartBeatPeriod'},
+    { field: 'carLocalSavePeriod', headerName : 'carLocalSavePeriod', tooltipField: 'carLocalSavePeriod'},
+    { field: 'carResponseTimeout', headerName : 'carResponseTimeout', tooltipField: 'carResponseTimeout'},
+    { field: 'configureName', headerName : 'configureName', tooltipField: 'configureName'},
+    { field: 'configureFwVersion', headerName : 'configureFwVersion', tooltipField: 'configureFwVersion'},
+    { field: 'configureHwVersion', headerName : 'configureHwVersion', tooltipField: 'configureHwVersion'},
+    { field: 'managePlatformName', headerName : 'managePlatformName', tooltipField: 'managePlatformName'},
+    { field: 'managePlatformPort', headerName : 'managePlatformPort', tooltipField: 'managePlatformPort'},
+    { field: 'monitoring', headerName : 'monitoring', tooltipField: 'monitoring'},
+    { field: 'nextLoginInterval', headerName : 'nextLoginInterval', tooltipField: 'nextLoginInterval'},
+    { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout', tooltipField: 'platformResponseTimeout'},
+    { field: 'publicPlatformName', headerName : 'publicPlatformName', tooltipField: 'publicPlatformName'},
+    { field: 'publicPlatformPort', headerName : 'publicPlatformPort', tooltipField: 'publicPlatformPort'},
+    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }},
+    { field: 'updatedUserId', headerName : 'updatedUserId', tooltipField: 'updatedUserId'},
+    { field: 'dataFilePath', headerName : 'dataFilePath', tooltipField: 'dataFilePath'},
+    { field: 'dataSize', headerName : 'dataSize', tooltipField: 'dataSize'},
+    { field: 'firmwareName', headerName : 'firmwareName', tooltipField: 'firmwareName'},
+    { field: 'firmwareInfoFwVersion', headerName : 'firmwareInfoFwVersion', tooltipField: 'firmwareInfoFwVersion'},
+    { field: 'firmwareInfoHwVersion', headerName : 'firmwareInfoHwVersion', tooltipField: 'firmwareInfoHwVersion'},
+    { field: 'md5Hash', headerName : 'md5Hash', tooltipField: 'md5Hash'},
+    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName'}
   ];
 
   gridApi!: GridApi;
