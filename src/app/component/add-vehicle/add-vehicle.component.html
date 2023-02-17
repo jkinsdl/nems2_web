@@ -39,19 +39,20 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">province </div>
+    <div class="label">province <span>*</span> </div>
     <div class="value">
-      <select (change)="setProvince()" [(ngModel)]="selectProvince">
-        <option *ngFor="let province of provinceList" [value]="province">{{province.province}}</option>
+      <select (ngModelChange)="setProvince($event)" [(ngModel)]="selectProvince">
+        <option *ngFor="let province of provinceList" [value]="province.province">{{province.province}}</option>
       </select>
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">city </div>
+    <div class="label">region <span>*</span> </div>
     <div class="value">
-      <select (change)="setProvince()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.pcode">
-        <option *ngFor="let city of cityList" [value]="city.pcode">{{city.city}}</option>
+      <select (ngModelChange)="setCity($event)" [(ngModel)]="selectCity">
+        <option [value]="undefined"  disabled></option>
+        <option *ngFor="let city of cityList" [value]="city.city">{{city.city}}</option>
       </select>
     </div>
   </div>
@@ -65,13 +66,13 @@
     </div>
   </div>
   -->
-  <div class="addInfoFilter">
+  <!--<div class="addInfoFilter">
     <div class="label">region </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.region">
     </div>
   </div>
-
+-->
   <div class="addInfoFilter">
     <div class="label">registrationPlate </div>
     <div class="value">

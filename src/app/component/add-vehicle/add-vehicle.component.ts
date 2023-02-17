@@ -84,16 +84,36 @@ export class AddVehicleComponent implements OnInit {
     })
   }
 
-  setProvince(){
+  setProvince(event : any){
     this.selectCity = undefined
+    this.addVehiclemanagerStaticinfoParameter.pcode = undefined
+    this.addVehiclemanagerStaticinfoParameter.region = undefined
     let f = new SearchFilter()
-    f.province = this.selectProvince.province
+    for(let i = 0 ; i < this.provinceList.length; i++){
+      if(event == this.provinceList[i].province){
+
+      }
+    }
+
+    f.province = event
+
     this.regionmanagersService.getRegionmanagers(f).subscribe(res=>{
       console.log(res)
       this.cityList = res.body.regions
     },error=>{
       console.log(error)
     })
+  }
+
+  setCity(event : any){
+    for(let i = 0 ; i <this.cityList.length; i++){
+      if(event == this.cityList[i].city){
+        this.addVehiclemanagerStaticinfoParameter.pcode = this.cityList[i].pcode
+        this.addVehiclemanagerStaticinfoParameter.region = this.cityList[i].city
+        break
+      }
+    }
+
   }
 
   getVehiclemanagerStaticinfoVin(vin : string){
@@ -139,6 +159,17 @@ export class AddVehicleComponent implements OnInit {
       this.utilService.alertPopup("Vehicle","Please select Model Name",this.constant.ALERT_WARNING)
       return
     }
+
+    if(this.addVehiclemanagerStaticinfoParameter.province == ""){
+      this.utilService.alertPopup("Vehicle","Please select province",this.constant.ALERT_WARNING)
+      return
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.region == "" || this.addVehiclemanagerStaticinfoParameter.region == undefined){
+      this.utilService.alertPopup("Vehicle","Please select region",this.constant.ALERT_WARNING)
+      return
+    }
+
     this.dialogRef.close(this.addVehiclemanagerStaticinfoParameter)
   }
 
@@ -157,6 +188,16 @@ export class AddVehicleComponent implements OnInit {
 
     if(this.addVehiclemanagerStaticinfoParameter.modelName == ""){
       this.utilService.alertPopup("Vehicle","Please select Model Name",this.constant.ALERT_WARNING)
+      return
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.province == ""){
+      this.utilService.alertPopup("Vehicle","Please select province",this.constant.ALERT_WARNING)
+      return
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.region == "" || this.addVehiclemanagerStaticinfoParameter.region == undefined){
+      this.utilService.alertPopup("Vehicle","Please select region",this.constant.ALERT_WARNING)
       return
     }
 
