@@ -155,7 +155,8 @@ export class DashboardComponent implements OnInit {
       this.map.on('mousemove', 'province-statistics-registration-count-clusters', (e : any) => {
         popup.setLngLat(e.lngLat)
           .setHTML('province - ' + e.features[0].properties.province + "<br>"
-          +'statistics_count - '+ e.features[0].properties.statistics_count + "<br>")
+          +'city - '+ e.features[0].properties.city + "<br>"
+          +'registered car - '+ e.features[0].properties.statistics_count + "<br>")
           .addTo(this.map);
       });
 
@@ -188,7 +189,7 @@ export class DashboardComponent implements OnInit {
         console.log(e)
         popup.setLngLat(e.lngLat)
           .setHTML('province - ' + e.features[0].properties.province + "<br>"
-          +'statistics_count - '+ e.features[0].properties.statistics_count + "<br>")
+          +'registered car - '+ e.features[0].properties.statistics_count + "<br>")
           .addTo(this.map);
       });
 

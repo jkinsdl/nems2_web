@@ -132,7 +132,7 @@
 }
 
 .map{
-  width: 100% !important;
+  width: calc(100% - 350px) !important;
   height: 100% !important;
   margin: 0 !important;
   box-shadow: 1px 1px 5px #000000 !important;
@@ -244,6 +244,7 @@
   border-radius: 10px;
   opacity: 1;
   margin: 5px 0px;
+  border: 1px solid #ebebeb;
 }
 
 .dashBorderRight .dashBorderStatus .statusLine{
@@ -323,6 +324,7 @@
   background-color: white;
   border-radius: 5px;
   margin: 5px 0px;
+  border: 1px solid #ebebeb;
 }
 
 .dashBorderRight .dashBorderAlarmGrid{
@@ -331,6 +333,7 @@
   background-color: white;
   border-radius: 5px;
   margin: 5px 0px;
+  border: 1px solid #ebebeb;
 }
 
 .dashBorderRight .dashBorderAlarmGrid .alarmGridHeader{
