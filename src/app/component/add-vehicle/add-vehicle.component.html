@@ -39,12 +39,32 @@
   </div>
 
   <div class="addInfoFilter">
+    <div class="label">province </div>
+    <div class="value">
+      <select (change)="setProvince()" [(ngModel)]="selectProvince">
+        <option *ngFor="let province of provinceList" [value]="province">{{province.province}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="addInfoFilter">
+    <div class="label">city </div>
+    <div class="value">
+      <select (change)="setProvince()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.pcode">
+        <option *ngFor="let city of cityList" [value]="city.pcode">{{city.city}}</option>
+      </select>
+    </div>
+  </div>
+
+
+
+  <!--<div class="addInfoFilter">
     <div class="label">pcode </div>
     <div class="value">
       <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehiclemanagerStaticinfoParameter.pcode">
     </div>
   </div>
-
+  -->
   <div class="addInfoFilter">
     <div class="label">region </div>
     <div class="value">

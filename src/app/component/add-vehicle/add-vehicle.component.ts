@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { RegionmanagersService } from 'src/app/service/regionmanagers.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
@@ -17,7 +18,8 @@ export class AddVehicleComponent implements OnInit {
     private dialogRef: MatDialogRef<AddVehicleComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private vehiclemanagersService : VehiclemanagerService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private regionmanagersService : RegionmanagersService
   ) { }
 
   addVehiclemanagerStaticinfoParameter : any = {
@@ -49,22 +51,58 @@ export class AddVehicleComponent implements OnInit {
 
   modelList : any[] = []
 
+  provinceList : any[] =[]
+  selectProvince : any
+
+  cityList : any[] = []
+  selectCity : any
   ngOnInit(): void {
-
     console.log(this.data)
-
+    this.getRegionmanagers()
     this.getVehiclemanagerModel()
-
     if(this.data.type == this.constant.MODIFY_TYPE){
       this.getVehiclemanagerStaticinfoVin(this.data.vehicle.vin)
+
     }
 
+  }
+
+  getRegionmanagers(){
+    this.regionmanagersService.getRegionmanagers(new SearchFilter()).subscribe(res=>{
+      console.log(res)
+      this.provinceList = res.body.regions
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getRegionmanagersPcode(pcode : string){
+    this.regionmanagersService.getRegionmanagersPcode(pcode).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  setProvince(){
+    this.selectCity = undefined
+    let f = new SearchFilter()
+    f.province = this.selectProvince.province
+    this.regionmanagersService.getRegionmanagers(f).subscribe(res=>{
+      console.log(res)
+      this.cityList = res.body.regions
+    },error=>{
+      console.log(error)
+    })
   }
 
   getVehiclemanagerStaticinfoVin(vin : string){
     this.vehiclemanagersService.getVehiclemanagerStaticinfoVin(vin).subscribe(res=>{
       console.log(res)
       this.addVehiclemanagerStaticinfoParameter = res.body.vehicle
+
+      this.getRegionmanagersPcode(this.addVehiclemanagerStaticinfoParameter.pcode)
+
     },error=>{
       console.log(error)
     })

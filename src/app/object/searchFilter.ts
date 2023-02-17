@@ -63,4 +63,7 @@ export class SearchFilter{
   province : string
   city : string
 
+  district : string
+  keyword : string
+
 }
