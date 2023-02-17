@@ -152,6 +152,17 @@ export class DashboardComponent implements OnInit {
         }
       });
 
+      this.map.on('mousemove', 'province-statistics-registration-count-clusters', (e : any) => {
+        popup.setLngLat(e.lngLat)
+          .setHTML('province - ' + e.features[0].properties.province + "<br>"
+          +'statistics_count - '+ e.features[0].properties.statistics_count + "<br>")
+          .addTo(this.map);
+      });
+
+      this.map.on('mouseout', 'province-statistics-registration-count-clusters', (e : any) => {
+        popup.remove()
+      });
+
       this.map.addLayer({
         id: 'province-statistics-registration-count-text',
         type: 'symbol',
@@ -172,6 +183,19 @@ export class DashboardComponent implements OnInit {
           "circle-color": "#3887be"
         }
       });
+
+      this.map.on('mousemove', 'statistics-registration-count-clusters', (e : any) => {
+        console.log(e)
+        popup.setLngLat(e.lngLat)
+          .setHTML('province - ' + e.features[0].properties.province + "<br>"
+          +'statistics_count - '+ e.features[0].properties.statistics_count + "<br>")
+          .addTo(this.map);
+      });
+
+      this.map.on('mouseout', 'statistics-registration-count-clusters', (e : any) => {
+        popup.remove()
+      });
+
 
       this.map.addLayer({
         id: 'statistics-registration-count-text',
@@ -334,7 +358,7 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('mousemove', 'province', (e : any) => {
-        if (e.features.length > 0) {
+        /*if (e.features.length > 0) {
           if (this.hoveredStateId !== null) {
             this.map.setFeatureState(
               { source: 'province', id: this.hoveredStateId },
@@ -354,7 +378,7 @@ export class DashboardComponent implements OnInit {
           +'ADM0_EN - ' + e.features[0].properties.ADM0_EN + "<br>"
           +'ADM0_ZH - ' + e.features[0].properties.ADM0_ZH + "<br>"
           +'ADM0_PCODE - ' + e.features[0].properties.ADM0_PCODE + "<br>")
-          .addTo(this.map);
+          .addTo(this.map);*/
       });
 
       this.map.on('mouseout', 'country_territory', (e : any) => {
@@ -432,7 +456,7 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('mousemove', 'sub_prefecture', (e : any) => {
-        if (e.features.length > 0) {
+        /*if (e.features.length > 0) {
           if (this.hoveredStateId !== null) {
             this.map.setFeatureState(
               { source: 'sub_prefecture', id: this.hoveredStateId },
@@ -457,7 +481,7 @@ export class DashboardComponent implements OnInit {
           +'ADM0_EN - ' + e.features[0].properties.ADM0_EN + "<br>"
           +'ADM0_ZH - ' + e.features[0].properties.ADM0_ZH + "<br>"
           +'ADM0_PCODE - ' + e.features[0].properties.ADM0_PCODE + "<br>")
-          .addTo(this.map);
+          .addTo(this.map);*/
       });
 
       this.map.on('mouseout', 'country_territory', (e : any) => {
@@ -733,6 +757,14 @@ export class DashboardComponent implements OnInit {
               featuresList.push({
                 "type": "Feature",
                 "properties": {
+                  "pcode" : res.body.entities[i].region.pcode,
+                  "zipCode" : res.body.entities[i].region.zipCode,
+                  "placeCode" : res.body.entities[i].region.placeCode,
+                  "districtCode" : res.body.entities[i].region.districtCode,
+                  "province" : res.body.entities[i].region.province,
+                  "city" : res.body.entities[i].region.city,
+                  "district" : res.body.entities[i].region.district,
+                  "street" : res.body.entities[i].street,
                   "statistics_count" : res.body.entities[i].count
                 },
                 "geometry": {
@@ -780,7 +812,15 @@ export class DashboardComponent implements OnInit {
                   featuresList.push({
                     "type": "Feature",
                     "properties": {
-                      "statistics_count" : res.body.entities[i].count
+                      "pcode" : res2.body.entities[j].region.pcode,
+                      "zipCode" : res2.body.entities[j].region.zipCode,
+                      "placeCode" : res2.body.entities[j].region.placeCode,
+                      "districtCode" : res2.body.entities[j].region.districtCode,
+                      "province" : res2.body.entities[j].region.province,
+                      "city" : res2.body.entities[j].region.city,
+                      "district" : res2.body.entities[j].region.district,
+                      "street" : res2.body.entities[j].street,
+                      "statistics_count" : res2.body.entities[j].count
                     },
                     "geometry": {
                       "type": "Point",
