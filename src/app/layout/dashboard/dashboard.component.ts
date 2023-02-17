@@ -616,7 +616,7 @@ export class DashboardComponent implements OnInit {
 
       this.map.on('zoomend',e=>{
         console.log(this.map.getZoom())
-        if(this.currentBoundaries == 'province'){
+        /*if(this.currentBoundaries == 'province'){
           if(this.map.getZoom() > 5){
             this.changeBoundaries('sub_prefecture')
             this.showSubPrefectureLayer()
@@ -626,7 +626,21 @@ export class DashboardComponent implements OnInit {
             this.changeBoundaries('province')
             this.showProvinceLayer()
           }
+        }*/
+
+        if(this.map.getZoom() <= 5){
+          this.changeBoundaries('province')
+          this.showProvinceLayer()
+        }else if(this.map.getZoom() > 5 && this.map.getZoom() < 13){
+          this.changeBoundaries('sub_prefecture')
+          this.showSubPrefectureLayer()
+        }else if(this.map.getZoom() >= 13){
+          this.map.setLayoutProperty('province-statistics-registration-count-clusters', 'visibility', 'none');
+          this.map.setLayoutProperty("province-statistics-registration-count-text", 'visibility', 'none');
+          this.map.setLayoutProperty("statistics-registration-count-clusters", 'visibility', 'none');
+          this.map.setLayoutProperty("statistics-registration-count-text", 'visibility', 'none');
         }
+
       })
 
       this.map.on('moveend', e=>{
