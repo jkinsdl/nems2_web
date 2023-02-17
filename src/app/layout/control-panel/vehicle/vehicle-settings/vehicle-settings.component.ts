@@ -4,6 +4,7 @@ import { CellClickedEvent, ColDef, GridApi, GridReadyEvent } from 'ag-grid-commu
 import { AddVehicleComponent } from 'src/app/component/add-vehicle/add-vehicle.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
@@ -17,7 +18,8 @@ export class VehicleSettingsComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private vehiclemanagerService : VehiclemanagerService
+    private vehiclemanagerService : VehiclemanagerService,
+    private utilService : UtilService
   ) { }
 
   columnDefs: ColDef[] = [
@@ -29,9 +31,9 @@ export class VehicleSettingsComponent implements OnInit {
     { field: 'nemsSn', headerName : 'nemsSn'},
     { field: 'purpose', headerName : 'purpose'},
     { field: 'region', headerName : 'region'},
-    { field: 'registDate', headerName : 'registDate'},
+    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat},
     { field: 'registrationPlate', headerName : 'registrationPlate'},
-    { field: 'sOffDate', headerName : 'sOffDate'},
+    { field: 'sOffDate', headerName : 'sOffDate', valueFormatter : this.utilService.gridDateFormat},
     { field: 'vin', headerName : 'vin'},
     { field: 'pcode', headerName : 'pcode'}
   ];

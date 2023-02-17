@@ -38,7 +38,7 @@ export class ConfigureComponent implements OnInit {
     { field: 'platformResponseTimeout', headerName : 'platform Response Timeout'},
     { field: 'publicPlatformName', headerName : 'public Platform Name'},
     { field: 'publicPlatformPort', headerName : 'public Platform Port'},
-    { field: 'updatedAt', headerName : 'updatedAt'},
+    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat},
     { field: 'updatedUserId', headerName : 'updated User Id'},
     { field: 'warningSubmitPeriod', headerName : 'warning Submit Period'},
   ];
@@ -47,7 +47,7 @@ export class ConfigureComponent implements OnInit {
     { field: 'configure_name', headerName: 'configure name' },
     { field: 'vin', headerName: 'VIN'},
     { field: 'matched', headerName : 'matched'},
-    { field: 'matched_date', headerName : 'matched date'},
+    { field: 'matched_date', headerName : 'matched date', valueFormatter : this.utilService.gridDateFormat},
   ];
 
   public rowSelection = 'single';

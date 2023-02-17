@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-remote-control-state',
@@ -11,7 +12,8 @@ import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 export class RemoteControlStateComponent implements OnInit {
 
   constructor(
-    private devicemanagersService : DevicemanagerService
+    private devicemanagersService : DevicemanagerService,
+    private utilService : UtilService
   ) { }
 
   columnDefs: ColDef[] = [
@@ -29,7 +31,7 @@ export class RemoteControlStateComponent implements OnInit {
     { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout'},
     { field: 'publicPlatformName', headerName : 'publicPlatformName'},
     { field: 'publicPlatformPort', headerName : 'publicPlatformPort'},
-    { field: 'updatedAt', headerName : 'updatedAt'},
+    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat},
     { field: 'updatedUserId', headerName : 'updatedUserId'},
     { field: 'dataFilePath', headerName : 'dataFilePath'},
     { field: 'dataSize', headerName : 'dataSize'},

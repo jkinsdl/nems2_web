@@ -100,6 +100,7 @@ import { MonthlyVehicleStatisticsComponent } from './layout/statistics/monthly-v
 import { UserChargingPatternAnalysisComponent } from './layout/statistics/user-charging-pattern-analysis/user-charging-pattern-analysis.component';
 import { TravelDistanceStatisticsComponent } from './layout/statistics/travel-distance-statistics/travel-distance-statistics.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DateformatPipe } from './shared/pipes/dateformat.pipe';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -188,7 +189,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     WarningStatisticsComponent,
     MonthlyVehicleStatisticsComponent,
     UserChargingPatternAnalysisComponent,
-    TravelDistanceStatisticsComponent
+    TravelDistanceStatisticsComponent,
+    DateformatPipe
   ],
   imports: [
     BrowserModule,

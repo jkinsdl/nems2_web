@@ -44,8 +44,7 @@ export class PublicPlatformManagementComponent implements OnInit {
 
   relationsColumnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN' },
-    { field: 'vehicle_info_senapshot', headerName: 'Vehicle Info Snapshot'},
-    { field: 'last_sync', headerName : 'last sync(server time)'},
+    { field: 'serverId', headerName: 'serverId'}
   ];
 
   relations : any = {

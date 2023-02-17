@@ -9,6 +9,7 @@ import { UploadOTAManagementComponent } from 'src/app/component/upload-otamanage
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UiService } from 'src/app/service/ui.service';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-otamanagement',
@@ -21,7 +22,8 @@ export class OTAManagementComponent implements OnInit {
     private otaService : OtaService,
     private devicemanageService : DevicemanagerService,
     private dialog: MatDialog,
-    private uiService : UiService
+    private uiService : UiService,
+    private utilService : UtilService
   ) { }
 
   gridApi!: GridApi;
@@ -36,7 +38,7 @@ export class OTAManagementComponent implements OnInit {
     headerCheckboxSelection: true,
     checkboxSelection: true, },
     { field: 'currentState', headerName: 'currentState'},
-    { field: 'updatedAt', headerName : 'updatedAt'}
+    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat}
   ];
 
   rowData : any[]= [];

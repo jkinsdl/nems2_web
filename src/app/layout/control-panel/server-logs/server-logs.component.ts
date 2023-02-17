@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { GbpacketService } from 'src/app/service/gbpacket.service';
+import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -12,17 +13,18 @@ import { CommonConstant } from 'src/app/util/common-constant';
 export class ServerLogsComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
   constructor(
-    private gbpacketService : GbpacketService
+    private gbpacketService : GbpacketService,
+    private utilService : UtilService
   ) { }
   columnDefs: ColDef[] = [
     { field: 'data', headerName: 'data' },
     { field: 'encryption', headerName: 'encryption'},
     { field: 'flaged', headerName : 'flaged'},
-    { field: 'packetTime', headerName : 'packetTime'},
+    { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat},
     { field: 'request', headerName : 'request'},
     { field: 'response', headerName : 'response'},
     { field: 'responsePacket', headerName : 'responsePacket'},
-    { field: 'serverTime', headerName : 'serverTime'},
+    { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat},
     { field: 'type', headerName : 'type'},
     { field: 'vin', headerName : 'vin'},
   ];

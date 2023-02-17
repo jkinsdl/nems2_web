@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, GridApi, GridReadyEvent, ValueFormatterParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-monitoring',
@@ -15,7 +16,8 @@ export class MonitoringComponent implements OnInit {
 
   constructor(   private router: Router,
     private realtimedataService : RealtimedataService,
-    private uiSerivce : UiService) { }
+    private uiSerivce : UiService,
+    private utilService : UtilService) { }
 
   currentPage : number = 1;
 
@@ -29,7 +31,7 @@ export class MonitoringComponent implements OnInit {
     { field: 'vin', headerName: 'VIN'},
     { field: 'regNumber', headerName : 'Reg. number'},
     { field: 'nemsSn', headerName : 'NEMS S/N' },
-    { field: 'lastUpdate', headerName : 'Last Updated' },
+    { field: 'lastUpdate', headerName : 'Last Updated', valueFormatter : this.utilService.gridDateFormat},
     { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)' },
     { field: 'packetCount', headerName : 'Packet Count' },
     { field: 'model', headerName : 'model' },

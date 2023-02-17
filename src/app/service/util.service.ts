@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ValueFormatterParams } from 'ag-grid-community';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { CommonConstant } from '../util/common-constant';
 @Injectable({
@@ -47,6 +48,45 @@ export class UtilService {
     }
 
     return result;
+  }
+
+  gridDateFormat(params : any){
+    let date = new Date(params.value)
+    let result : string = "";
+
+    if(params.value){
+      result = date.getFullYear() + "-"
+      if(date.getMonth() + 1 > 9){
+        result += (date.getMonth() + 1) + "-"
+      }else{
+        result += "0" + (date.getMonth() + 1) + "-"
+      }
+      if(date.getDate() > 9){
+        result += date.getDate() + " "
+      }else {
+        result += "0" + date.getDate() + " "
+      }
+
+      if(date.getHours() > 9){
+        result += date.getHours() + ":"
+      }else {
+        result += "0" + date.getHours() + ":"
+      }
+
+      if(date.getMinutes() > 9){
+        result += date.getMinutes() + ":"
+      }else {
+        result += "0" + date.getMinutes() + ":"
+      }
+
+      if(date.getSeconds() > 9){
+        result += date.getSeconds()
+      }else {
+        result += "0" + date.getSeconds()
+      }
+    }
+
+    return result
   }
 
   alertPopup(title : string, contents : string, alertType : number ){

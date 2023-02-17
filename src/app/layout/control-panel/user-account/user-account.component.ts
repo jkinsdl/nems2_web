@@ -5,6 +5,7 @@ import { AddUserComponent } from 'src/app/component/add-user/add-user.component'
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UserService } from 'src/app/service/user.service';
+import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -19,7 +20,8 @@ export class UserAccountComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private userService : UserService
+    private userService : UserService,
+    private utilService : UtilService
 
   ) { }
   columnDefs: ColDef[] = [
@@ -29,7 +31,7 @@ export class UserAccountComponent implements OnInit {
     { field: 'status', headerName : 'status'},
     { field: 'email', headerName : 'email' },
     { field: 'authorityId', headerName : 'authorityId' },
-    { field: 'latestAccess', headerName : 'latestAccess' }
+    { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat }
   ];
 
   users : any = {

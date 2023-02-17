@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import mapboxgl from 'mapbox-gl';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 @Component({
   selector: 'app-alarm',
@@ -12,7 +13,8 @@ import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 export class AlarmComponent implements OnInit {
 
   constructor(
-    private vehiclewarningService : VehiclewarningService
+    private vehiclewarningService : VehiclewarningService,
+    private utilService : UtilService
   ) { }
 
   columnDefs: ColDef[] = [
@@ -27,8 +29,10 @@ export class AlarmComponent implements OnInit {
     { field: 'warningLevel',headerName: "warningLevel"},
     { field: 'vin',headerName: "vin"},
     { field: 'warningCode',headerName: "warningCode"},
-    { field: 'createTime',headerName: "createTime"},
-    { field: 'updateTime',headerName: "updateTime"},
+    { field: 'code',headerName: "code"},
+    { field: 'createTime',headerName: "createTime", valueFormatter : this.utilService.gridDateFormat},
+    { field: 'lastPacketTime',headerName: "lastPacketTime", valueFormatter : this.utilService.gridDateFormat},
+    { field: 'releasedTime',headerName: "releasedTime", valueFormatter : this.utilService.gridDateFormat},
     { field: 'state',headerName: "state"},
     { field: 'maxWarning',headerName: "maxWarning"},
     { field: 'warningFlag',headerName: "warningFlag"},
@@ -80,7 +84,6 @@ export class AlarmComponent implements OnInit {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    this.gridApi.sizeColumnsToFit();
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
@@ -13,7 +14,8 @@ export class OTAInformationComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
 
   constructor(
-    private vehiclemanagerService : VehiclemanagerService
+    private vehiclemanagerService : VehiclemanagerService,
+    private utilService : UtilService
   ) { }
   columnDefs: ColDef[] = [
     { field: 'batteryCode', headerName: 'batteryCode' },
@@ -24,7 +26,7 @@ export class OTAInformationComponent implements OnInit {
     { field: 'nemsSn', headerName : 'nemsSn'},
     { field: 'purpose', headerName : 'purpose'},
     { field: 'region', headerName : 'region'},
-    { field: 'registDate', headerName : 'registDate'},
+    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat},
     { field: 'registrationPlate', headerName : 'registrationPlate'},
     { field: 'sOffDate', headerName : 'sOffDate'},
     { field: 'vin', headerName : 'vin'},

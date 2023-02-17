@@ -4,6 +4,7 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AddPublicPlatformManagementComponent } from 'src/app/component/add-public-platform-management/add-public-platform-management.component';
 import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -15,6 +16,7 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
+    private utilService : UtilService
   ) { }
 
   managementColumnDefs: ColDef[] = [
@@ -23,8 +25,8 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
     { field: 'port', headerName : 'port'},
     { field: 'platform_id', headerName : 'platform ID'},
     { field: 'platform_password', headerName : 'platform password'},
-    { field: 'last_login', headerName : 'last login'},
-    { field: 'last_logout', headerName : 'last logout'},
+    { field: 'last_login', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat},
+    { field: 'last_logout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat},
     { field: 'stat_stop', headerName : 'stat/stop'},
     { field: 'no_ack_mode', headerName : 'no_ack_mode'},
     { field: 'force_login_vehicle', headerName : 'force login vehicle'},
