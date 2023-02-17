@@ -9,6 +9,7 @@ import * as echarts from 'echarts';
 import { BatteryDetailComponent } from 'src/app/component/battery-detail/battery-detail.component';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 @Component({
   selector: 'app-detail-monitoring',
   templateUrl: './detail-monitoring.component.html',
@@ -49,6 +50,30 @@ export class DetailMonitoringComponent implements OnInit {
 
   batteryChart : any
   speedChart : any
+
+  mode : string = "map"
+  //mode : string = "history"
+
+  historyEndDate : Date = new Date()
+  historyStartDate : Date = new Date()
+
+  columnDefs: ColDef[] = [
+    { field: 'warningLevel',headerName: "warningLevel"},
+    { field: 'vin',headerName: "vin"},
+    { field: 'warningCode',headerName: "warningCode"},
+    { field: 'createTime',headerName: "createTime"},
+    { field: 'updateTime',headerName: "updateTime"},
+    { field: 'state',headerName: "state"},
+    { field: 'maxWarning',headerName: "maxWarning"},
+    { field: 'warningFlag',headerName: "warningFlag"},
+    { field: 'region',headerName: "region"},
+    { field: 'comment',headerName: "comment"},
+  ];
+
+  gridApi!: GridApi;
+  gridColumnApi : any
+
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
@@ -130,7 +155,7 @@ export class DetailMonitoringComponent implements OnInit {
         }
       });
 
-      this.map.on('click', 'point', (e : any) => {
+      /*this.map.on('click', 'point', (e : any) => {
         const dialogRef = this.dialog.open( MapMarkerDetailComponent, {
           data:{},
           panelClass : 'bakcgroundColorGray'
@@ -140,7 +165,7 @@ export class DetailMonitoringComponent implements OnInit {
 
           }
         });
-      });
+      });*/
 
       if(this.activatedRoute.snapshot.paramMap.get('vin') != null){
         for(let i = 0; i < this.vehicleInfo.length; i++){
@@ -171,7 +196,6 @@ export class DetailMonitoringComponent implements OnInit {
 
       this.interval = interval(10000).pipe().subscribe(x =>
         this.getRealtimedataInfoVin()
-
         );
 
     }else {
@@ -198,6 +222,8 @@ export class DetailMonitoringComponent implements OnInit {
   clickVin(vehicle : any){
     this.realTimeOnOff = false
     this.selectVehicle = vehicle
+    this.isBatteryPanelOnOff = true
+    this.isSpeedPanelOnOff = true
     this.getRealtimedataInfoVin()
   }
 
@@ -505,7 +531,6 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   openBattery(e : any){
-
     e.stopPropagation()
     const dialogRef = this.dialog.open( BatteryDetailComponent, {
       data:this.selectVehicleInfo,
@@ -515,6 +540,34 @@ export class DetailMonitoringComponent implements OnInit {
 
       }
     });
+  }
+
+  chngeMode(e : any){
+    if(this.mode == 'map'){
+      this.mode = 'history'
+
+      this.historyEndDate = new Date()
+      this.historyStartDate = new Date()
+      this.historyStartDate.setDate(this.historyEndDate.getDate() - 1)
+    }else{
+      this.mode = 'map'
+    }
+  }
+
+  setTime(){
+
+    console.log(this.startRealTime)
+
+  }
+
+  historyExport(){
+
+  }
+
+  onGridReady(params: GridReadyEvent) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
   }
 
 }

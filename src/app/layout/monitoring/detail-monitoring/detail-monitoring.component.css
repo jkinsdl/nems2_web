@@ -143,6 +143,7 @@
   border-radius: 10px;
   padding: 20px 10px;
   margin: 10px;
+  border: 1px solid #ebebeb;
 }
 
 .listSearch{
@@ -241,4 +242,41 @@
   width: 100%;
   height: 245px;
   overflow: scroll;
+}
+
+.visibilityHidden{
+  display: none;
+  visibility: hidden;
+  max-height: 0;
+}
+
+.historyContainer{
+  width: 100%;
+  height: 100%;
+}
+
+.historyGridContainer{
+  margin-left: 300px;
+  width: calc(100% - 340px);
+  height: calc(100% - 60px);
+  background-color: white;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  position: absolute;
+  margin-top: 10px;
+  padding: 20px;
+}
+
+.datePickerText{
+  width: 130px;
+  padding: 0 10px;
+  margin: 0 10px;
+  border: 1px solid #9b9b9b;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.grid{
+  width: 100%;
+  height: calc(100% - 50px);
 }
