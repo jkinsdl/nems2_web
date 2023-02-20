@@ -105,7 +105,11 @@ export class VehiclemanagerService {
 
   putVehiclemanagerStaticinfoVin(parameter : any){
     var url = `${this.Url}/staticinfo/${parameter.vin}`;
-    return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
+    let para = {
+      vehicle : parameter,
+      message : ""
+    }
+    return this.http.put<any>(url, JSON.stringify(para), { observe: "response" })
   }
 
   getVehiclemanagerExport(filter : SearchFilter){
