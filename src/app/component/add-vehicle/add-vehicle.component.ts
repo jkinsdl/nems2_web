@@ -35,7 +35,6 @@ export class AddVehicleComponent implements OnInit {
     engineNo: "",
     motorNo: "",
     batteryCode: "",
-    sOffDate: "",
     registDate: "",
     histories: [
       {
@@ -170,6 +169,14 @@ export class AddVehicleComponent implements OnInit {
       return
     }
 
+    if(this.addVehiclemanagerStaticinfoParameter.sOffDate){
+      this.addVehiclemanagerStaticinfoParameter.sOffDate = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.registDate){
+      this.addVehiclemanagerStaticinfoParameter.registDate = new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
+    }
+
     this.dialogRef.close(this.addVehiclemanagerStaticinfoParameter)
   }
 
@@ -201,6 +208,14 @@ export class AddVehicleComponent implements OnInit {
       return
     }
 
+    if(this.addVehiclemanagerStaticinfoParameter.sOffDate){
+      this.addVehiclemanagerStaticinfoParameter.sOffDate = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
+    }
+
+    if(this.addVehiclemanagerStaticinfoParameter.registDate){
+      this.addVehiclemanagerStaticinfoParameter.registDate = new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
+    }
+
     this.dialogRef.close(this.addVehiclemanagerStaticinfoParameter)
 
   }
@@ -216,6 +231,14 @@ export class AddVehicleComponent implements OnInit {
 
   close(){
     this.dialogRef.close()
+  }
+
+  removeSOffDate(){
+    delete this.addVehiclemanagerStaticinfoParameter.sOffDate
+  }
+
+  removeregistDate(){
+    this.addVehiclemanagerStaticinfoParameter.registDate = null
   }
 
 }

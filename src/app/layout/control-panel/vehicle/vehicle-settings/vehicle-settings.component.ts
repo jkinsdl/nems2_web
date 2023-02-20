@@ -66,7 +66,7 @@ export class VehicleSettingsComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if(result && result.sOffDate){
         this.postVehiclemanagerStaticinfo(result)
       }
     });
