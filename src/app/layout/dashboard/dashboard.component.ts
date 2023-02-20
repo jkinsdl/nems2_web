@@ -822,7 +822,7 @@ export class DashboardComponent implements OnInit {
             console.log(res3)
             for(let j = 0; j < res2.body.entities.length; j++){
               for(let k = 0; k < res3.features.length; k++){
-                if(res3.features[k].properties.ADM1_ZH.indexOf(res2.body.entities[j].region.province) > -1){
+                if(res3.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
                   let lnglat = res3.features[k].geometry.center
                   featuresList.push({
                     "type": "Feature",
