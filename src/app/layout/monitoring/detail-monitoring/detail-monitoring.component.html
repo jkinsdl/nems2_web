@@ -1,37 +1,25 @@
-
-
-
 <div class="detailMonitoringContainer">
-
   <div class="listAbsoluteBox">
     <mat-slide-toggle
         class="example-margin"
         [color]="'primary'"
         [checked]="realTimeOnOff"
-        [disabled]="selectVehicle == null || mode == 'history' "
+        [disabled]="selectVehicle == null || mode != 'map'"
         (change)="setRealTimeSwitch()"
         style="float: left; margin-right: 40px; padding-top: 10px;">
       Real Time !
     </mat-slide-toggle>
-
-    <div style="margin-left: 20px;">
-      <button mat-raised-button color="primary" (click)="chngeMode($event)">
-        <span>{{mode == 'map' ? 'History' : 'Map'}}</span>
-      </button>
-    </div>
-
     <div class="listSearch">
       <div class="value">
         <input class="datePickerText" [ngxMatDatetimePicker]="packetTime" readonly="true" (click)="packetTime.open()" style="width: 130px; padding: 0 10px; margin: 0 10px;"
         [(ngModel)]="startRealTime"
         [max]="currentTime"
-        [disabled]="selectVehicle == null || mode == 'history'"
+        [disabled]="selectVehicle == null || mode != 'map'"
         (ngModelChange)="setTime()">
         <ngx-mat-datetime-picker #packetTime [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
       </div>
-      <div style="font-size: 12px;" [ngClass]="{'textDisabled': selectVehicle == null || mode == 'history'}">Time</div>
+      <div style="font-size: 12px;" [ngClass]="{'textDisabled': selectVehicle == null || mode != 'map'}">Time</div>
     </div>
-
     <div class="listSearch">
       <div class="searchTitle">VIN</div>
       <input class="" [(ngModel)]="vinSearchText" (keydown.enter)="getRealtimedataVehiclelist()">
@@ -39,7 +27,6 @@
         <img src="assets/icon/find.png" style="width:20px">
       </div>
     </div>
-
     <div class="monitoringMapList">
       <div class="listRow" *ngFor="let vehicle of vehicleInfo" (click)="clickVin(vehicle)" [ngClass]="{'selectBackground': selectVehicle == vehicle}">
         <div class="markerImage">
@@ -52,8 +39,355 @@
     </div>
   </div>
 
-  <div class="historyContainer" [ngClass]="{'visibilityHidden': mode == 'map'}">
+  <div class="infoContainer" [ngClass]="{'visibilityHidden': mode != 'info'}">
+    <div class="infomationContainer">
+      <div *ngIf="selectVehicleInfo == null" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: gray; font-size: 20px;">
+        Select Vehicle
+      </div>
+      <div style="height: 100%;" *ngIf="selectVehicleInfo != null">
+        <div style="width: 100%; height: 30px;">
+          <button mat-raised-button color="primary" (click)="changeMapMode($event)" style="margin: 0 5px; height: 30px;">
+            <span>map</span>
+          </button>
 
+          <button mat-raised-button color="primary" (click)="changeHistoryMode($event)" style="margin: 0 5px; height: 30px;">
+            <span>history</span>
+          </button>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            CAR
+            <div class="popupIconBox" (click)="openInfoPopup('car')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">accel</div>
+              <div class="tabRight">{{selectVehicleInfo.car.accel}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">acceleratorVal</div>
+              <div class="tabRight">{{selectVehicleInfo.car.acceleratorVal}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">breakState</div>
+              <div class="tabRight">{{selectVehicleInfo.car.breakState}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">breaking</div>
+              <div class="tabRight">{{selectVehicleInfo.car.breaking}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">chargeState</div>
+              <div class="tabRight">{{selectVehicleInfo.car.chargeState}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">dcdcState</div>
+              <div class="tabRight">{{selectVehicleInfo.car.dcdcState}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">driveMode</div>
+              <div class="tabRight">{{selectVehicleInfo.car.driveMode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">drivenDistance</div>
+              <div class="tabRight">{{selectVehicleInfo.car.drivenDistance}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">resistance</div>
+              <div class="tabRight">{{selectVehicleInfo.car.resistance}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">soc</div>
+              <div class="tabRight">{{selectVehicleInfo.car.soc}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">speed</div>
+              <div class="tabRight">{{selectVehicleInfo.car.speed}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">state</div>
+              <div class="tabRight">{{selectVehicleInfo.car.state}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">time</div>
+              <div class="tabRight">{{selectVehicleInfo.car.time | dateformat}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">totalAmpere</div>
+              <div class="tabRight">{{selectVehicleInfo.car.totalAmpere}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">totalVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.car.totalVolt}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            EXTREME VALUE
+            <div class="popupIconBox" (click)="openInfoPopup('extreme_value')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+
+          <div class="listContents">
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxTempSensorCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxTempSensorCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxTempSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxTempSubsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxVolt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxVoltCellCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxVoltCellCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMaxVoltSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMaxVoltSubsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinTemp</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinTemp}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinTempSensorCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinTempSensorCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinTempSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinTempSubsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinVolt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinVoltCellCode</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinVoltCellCode}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">batteryMinVoltSubsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinVoltSubsystemNo}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            LOCATION
+            <div class="popupIconBox" (click)="openInfoPopup('location')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">latitude</div>
+              <div class="tabRight">{{selectVehicleInfo.location.latitude}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">longitude</div>
+              <div class="tabRight">{{selectVehicleInfo.location.longitude}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">state</div>
+              <div class="tabRight">{{selectVehicleInfo.location.state}}</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            MOTORS
+            <div class="popupIconBox" (click)="openInfoPopup('motors')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">controllerDcBusAmpere</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].controllerDcBusAmpere}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">controllerTemp</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].controllerTemp}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">inputVolt</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].inputVolt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">rpm</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].rpm}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">serialNo</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].serialNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">state</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].state}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">temp</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].temp}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">torq</div>
+              <div class="tabRight">{{selectVehicleInfo.motors[0].torq}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            POWER BATTERY INFOS
+            <div class="popupIconBox" (click)="openInfoPopup('power_battery_infos')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">ampere</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].ampere}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">cellCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].cellCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">frameSequenceCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].frameSequenceCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">frameSequenceNo</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].frameSequenceNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">volt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].volt}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            POWER BATTERY TEMPERATURES
+            <div class="popupIconBox" (click)="openInfoPopup('power_battery_temperatures')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">subsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].subsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">tempProbeCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].tempProbeCnt}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            WARNING
+            <div class="popupIconBox" (click)="openInfoPopup('warning')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">engineTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.engineTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">etcTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.etcTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">flag</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.flag}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">maxWarning</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.maxWarning}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">motorTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.motorTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">powerBatteryTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.powerBatteryTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">warningName</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.warningName}}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="historyContainer" [ngClass]="{'visibilityHidden': mode != 'history'}">
     <div class="historyGridContainer">
       <div class="gridFilterBox">
         <select style="border: 1px solid #9b9b9b; border-radius: 5px; height: 30px; width: 150px;">
@@ -68,27 +402,31 @@
           <option>Power Battery temperature</option>
           <option>Check state flag</option>
         </select>
-
         <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="historyStart" readonly="true" (click)="historyStart.open()" style=""
+          <input class="datePickerText" [ngxMatDatetimePicker]="historyStart" readonly="true" (click)="historyStart.open()"
           [(ngModel)]="historyStartDate"
           [max]="historyEndDate">
           <ngx-mat-datetime-picker #historyStart [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
         </div>
           ~
         <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="historyEnd" readonly="true" (click)="historyEnd.open()" style=""
+          <input class="datePickerText" [ngxMatDatetimePicker]="historyEnd" readonly="true" (click)="historyEnd.open()"
           [(ngModel)]="historyEndDate"
           [min]="historyStartDate">
           <ngx-mat-datetime-picker #historyEnd [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
         </div>
-
-        <button mat-raised-button color="primary" (click)="historyExport()">
+        <button mat-raised-button color="primary" (click)="historyExport()" style="height: 30px;">
           Export
+        </button>
+        <button mat-raised-button color="primary" (click)="changeMapMode($event)" style="margin: 0 5px; height: 30px;">
+          <span>map</span>
+        </button>
+
+        <button mat-raised-button color="primary" (click)="changeInfoMode($event)" style="margin: 0 5px; height: 30px;">
+          <span>info</span>
         </button>
 
       </div>
-
       <div class="grid">
         <ag-grid-angular style="width: 100%; height: calc(100% - 10px)"
         class="ag-theme-alpine"
@@ -104,9 +442,9 @@
     </div>
   </div>
 
-  <div class="mapContainer"  [ngClass]="{'visibilityHidden': mode == 'history'}">
+  <div class="mapContainer"  [ngClass]="{'visibilityHidden': mode != 'map'}">
       <div class="infoBox" cdkDrag cdkDragBoundary=".detailMonitoringContainer" >
-        <div class="infoBoxTitle" [ngClass]="{'titleGray': isBatteryPanelOnOff}" (click)="batteryPanelOnOff()"  >
+        <div class="infoBoxTitle" [ngClass]="{'titleGray': isPanelOnOff}" (click)="panelOnOff()"  >
           <!--<div class="infoBoxHandle" cdkDragHandle (click)="$event.stopPropagation()">
             <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
               <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
@@ -115,42 +453,14 @@
           </div>
           -->
           <div class="infoBoxTitleText">
-            Battery
+            Battery & Speed
           </div>
-
-          <div class="infoBoxTitleRight">
-            <button mat-raised-button (click)="openBattery($event)" [disabled]="selectVehicle == null">
-              <span>Detail</span>
-            </button>
-          </div>
-
-          <div class="infoBoxTitleArrow" [ngClass]="{'onContentsImage': isBatteryPanelOnOff}">
+          <div class="infoBoxTitleArrow" [ngClass]="{'onContentsImage': isPanelOnOff}">
             <img src="assets/icon/panelArrow.png">
           </div>
         </div>
-
-        <div class="inforBoxContent" [ngClass]="{'contentsActive': isBatteryPanelOnOff}">
+        <div class="inforBoxContent" [ngClass]="{'contentsActive': isPanelOnOff}">
           <div id="batteryChartContiner"></div>
-        </div>
-      </div>
-
-      <div class="infoBox" style="right: 400px;" cdkDrag cdkDragBoundary=".detailMonitoringContainer">
-        <div class="infoBoxTitle" [ngClass]="{'titleGray': isSpeedPanelOnOff}"  (click)="setSpeedPanelOnOff()"  >
-          <!--<div class="infoBoxHandle" cdkDragHandle (click)="$event.stopPropagation()">
-            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
-            </svg>
-          </div>
-          -->
-          <div class="infoBoxTitleText">
-            Speed
-          </div>
-          <div class="infoBoxTitleArrow" [ngClass]="{'onContentsImage': isSpeedPanelOnOff}">
-            <img src="assets/icon/panelArrow.png">
-          </div>
-        </div>
-        <div class="inforBoxContent" [ngClass]="{'contentsActive': isSpeedPanelOnOff}" >
           <div id="speedChartContiner"></div>
         </div>
       </div>
@@ -161,7 +471,7 @@
           Select Vehicle
         </div>
 
-        <div class="" *ngIf="selectVehicleInfo != null">
+        <div *ngIf="selectVehicleInfo != null">
           <mat-tab-group>
             <mat-tab label="CAR">
 
@@ -228,7 +538,7 @@
 
                 <div class="tabInforRow">
                   <div class="tabLeft">time</div>
-                  <div class="tabRight">{{selectVehicleInfo.car.time}}</div>
+                  <div class="tabRight">{{selectVehicleInfo.car.time | dateformat}}</div>
                 </div>
 
                 <div class="tabInforRow">
@@ -242,7 +552,7 @@
                 </div>
               </div>
             </mat-tab>
-            <mat-tab label="EXTREME Value">
+            <mat-tab label="EXTREME VALUE">
 
               <div class="tabList">
 
@@ -451,8 +761,21 @@
 
       </div>
 
-      <div style="position: absolute; right: 10px; top: 10px; z-index: 1; ">
-        <div (click)="moveListPage()" style="background-color: white; width: 30px; height: 30px; border-radius: 5px; cursor: pointer;">
+      <div style="position: absolute; right: 10px; top: 10px; z-index: 1; display: flex;">
+
+        <button mat-raised-button color="primary" (click)="openBattery($event)" [disabled]="selectVehicle == null" style="margin: 0 5px; height: 30px;">
+          <span>Battery</span>
+        </button>
+
+        <button mat-raised-button color="primary" (click)="changeInfoMode($event)" style="margin: 0 5px; height: 30px;">
+          <span>Info</span>
+        </button>
+
+        <button mat-raised-button color="primary" (click)="changeHistoryMode($event)" style="margin: 0 5px; height: 30px;">
+          <span>history</span>
+        </button>
+
+        <div (click)="moveListPage()" style="background-color: white; width: 30px; height: 30px; border-radius: 5px; cursor: pointer; margin: 0 5px;">
           <img src="assets/icon/list-interface-symbol.png" style="width: 20px; height: 20px; padding: 5px;">
         </div>
       </div>

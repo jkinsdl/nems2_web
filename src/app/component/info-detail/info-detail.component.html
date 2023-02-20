@@ -1,0 +1,19 @@
+<div class="infoDetailConatiner">
+
+  <div class="popupTitle">
+    <div class="text">
+      INFO - {{titleType}} : {{data.info.vin}}
+    </div>
+    <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+
+  <div class="popupContents">
+
+    <div class="row" *ngFor="let keyValue of keyValueList">
+      <div class="rowLeft">{{keyValue.key}}</div>
+      <div class="rowRight">{{keyValue.value}}</div>
+    </div>
+
+  </div>
+</div>

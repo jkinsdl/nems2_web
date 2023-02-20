@@ -225,3 +225,12 @@ input::-webkit-inner-spin-button {
   height: calc(100% - 55px);
   box-shadow: 1px 1px 5px #a5a5a5;
 }
+
+.mat-tab-label-content{
+  font-size: 10px !important;
+}
+
+.mat-tab-label{
+  padding: 0 10px !important;
+  min-width: 0px !important;
+}

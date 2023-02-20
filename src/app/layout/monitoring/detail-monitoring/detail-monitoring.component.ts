@@ -10,6 +10,7 @@ import { BatteryDetailComponent } from 'src/app/component/battery-detail/battery
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { InfoDetailComponent } from 'src/app/component/info-detail/info-detail.component';
 @Component({
   selector: 'app-detail-monitoring',
   templateUrl: './detail-monitoring.component.html',
@@ -32,8 +33,7 @@ export class DetailMonitoringComponent implements OnInit {
 
   listBtn$ : Subscription
 
-  isBatteryPanelOnOff : boolean = false
-  isSpeedPanelOnOff : boolean = false
+  isPanelOnOff : boolean = false
   vehicleInfo : any [] = []
 
   realTimeOnOff : boolean = false;
@@ -52,6 +52,7 @@ export class DetailMonitoringComponent implements OnInit {
   speedChart : any
 
   mode : string = "map"
+  //mode : string = "info"
   //mode : string = "history"
 
   historyEndDate : Date = new Date()
@@ -222,8 +223,7 @@ export class DetailMonitoringComponent implements OnInit {
   clickVin(vehicle : any){
     this.realTimeOnOff = false
     this.selectVehicle = vehicle
-    this.isBatteryPanelOnOff = true
-    this.isSpeedPanelOnOff = true
+    this.isPanelOnOff = true
     this.getRealtimedataInfoVin()
   }
 
@@ -317,12 +317,8 @@ export class DetailMonitoringComponent implements OnInit {
       });
   }
 
-  batteryPanelOnOff(){
-    this.isBatteryPanelOnOff = !this.isBatteryPanelOnOff
-  }
-
-  setSpeedPanelOnOff(){
-    this.isSpeedPanelOnOff = !this.isSpeedPanelOnOff
+  panelOnOff(){
+    this.isPanelOnOff = !this.isPanelOnOff
   }
 
   setSpeedChart(){
@@ -542,17 +538,21 @@ export class DetailMonitoringComponent implements OnInit {
     });
   }
 
-  chngeMode(e : any){
-    if(this.mode == 'map'){
-      this.mode = 'history'
-
-      this.historyEndDate = new Date()
-      this.historyStartDate = new Date()
-      this.historyStartDate.setDate(this.historyEndDate.getDate() - 1)
-    }else{
-      this.mode = 'map'
-    }
+  changeHistoryMode(e : any){
+    this.mode = 'history'
+    this.historyEndDate = new Date()
+    this.historyStartDate = new Date()
+    this.historyStartDate.setDate(this.historyEndDate.getDate() - 1)
   }
+
+  changeMapMode(e : any){
+    this.mode = 'map'
+  }
+
+  changeInfoMode(e : any){
+    this.mode = 'info'
+  }
+
 
   setTime(){
 
@@ -568,6 +568,21 @@ export class DetailMonitoringComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
+  }
+
+  openInfoPopup(type : string){
+    console.log(type)
+    const dialogRef = this.dialog.open( InfoDetailComponent, {
+      data: {
+        type : type,
+        info : this.selectVehicleInfo
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+
+      }
+    });
   }
 
 }
