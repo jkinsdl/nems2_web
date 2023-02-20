@@ -139,6 +139,76 @@
             </div>
           </div>
         </div>
+        <div class="infoList">
+          <div class="listTitle">
+            LOCATION
+            <div class="popupIconBox" (click)="openInfoPopup('location')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">latitude</div>
+              <div class="tabRight">{{selectVehicleInfo.location.latitude}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">longitude</div>
+              <div class="tabRight">{{selectVehicleInfo.location.longitude}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">state</div>
+              <div class="tabRight">{{selectVehicleInfo.location.state}}</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
+            WARNING
+            <div class="popupIconBox" (click)="openInfoPopup('warning')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">engineTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.engineTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">etcTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.etcTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">flag</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.flag}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">maxWarning</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.maxWarning}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">motorTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.motorTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">powerBatteryTroubleCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.powerBatteryTroubleCnt}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">warningName</div>
+              <div class="tabRight">{{selectVehicleInfo.warning.warningName}}</div>
+            </div>
+          </div>
+        </div>
 
         <div class="infoList">
           <div class="listTitle">
@@ -209,32 +279,6 @@
 
         <div class="infoList">
           <div class="listTitle">
-            LOCATION
-            <div class="popupIconBox" (click)="openInfoPopup('location')">
-              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
-            </div>
-          </div>
-          <div class="listContents">
-            <div class="tabInforRow">
-              <div class="tabLeft">latitude</div>
-              <div class="tabRight">{{selectVehicleInfo.location.latitude}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">longitude</div>
-              <div class="tabRight">{{selectVehicleInfo.location.longitude}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">state</div>
-              <div class="tabRight">{{selectVehicleInfo.location.state}}</div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="infoList">
-          <div class="listTitle">
             MOTORS
             <div class="popupIconBox" (click)="openInfoPopup('motors')">
               <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
@@ -285,6 +329,26 @@
 
         <div class="infoList">
           <div class="listTitle">
+            POWER BATTERY TEMPERATURES
+            <div class="popupIconBox" (click)="openInfoPopup('power_battery_temperatures')">
+              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
+            </div>
+          </div>
+          <div class="listContents">
+            <div class="tabInforRow">
+              <div class="tabLeft">subsystemNo</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].subsystemNo}}</div>
+            </div>
+
+            <div class="tabInforRow">
+              <div class="tabLeft">tempProbeCnt</div>
+              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].tempProbeCnt}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="infoList">
+          <div class="listTitle">
             POWER BATTERY INFOS
             <div class="popupIconBox" (click)="openInfoPopup('power_battery_infos')">
               <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
@@ -314,71 +378,6 @@
             <div class="tabInforRow">
               <div class="tabLeft">volt</div>
               <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].volt}}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="infoList">
-          <div class="listTitle">
-            POWER BATTERY TEMPERATURES
-            <div class="popupIconBox" (click)="openInfoPopup('power_battery_temperatures')">
-              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
-            </div>
-          </div>
-          <div class="listContents">
-            <div class="tabInforRow">
-              <div class="tabLeft">subsystemNo</div>
-              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].subsystemNo}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">tempProbeCnt</div>
-              <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].tempProbeCnt}}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="infoList">
-          <div class="listTitle">
-            WARNING
-            <div class="popupIconBox" (click)="openInfoPopup('warning')">
-              <img src="assets/icon/new-window.png" style="width: 20px; height: 20px;">
-            </div>
-          </div>
-          <div class="listContents">
-            <div class="tabInforRow">
-              <div class="tabLeft">engineTroubleCnt</div>
-              <div class="tabRight">{{selectVehicleInfo.warning.engineTroubleCnt}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">etcTroubleCnt</div>
-              <div class="tabRight">{{selectVehicleInfo.warning.etcTroubleCnt}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">flag</div>
-              <div class="tabRight">{{selectVehicleInfo.warning.flag}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">maxWarning</div>
-              <div class="tabRight">{{selectVehicleInfo.warning.maxWarning}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">motorTroubleCnt</div>
-              <div class="tabRight">{{selectVehicleInfo.warning.motorTroubleCnt}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">powerBatteryTroubleCnt</div>
-              <div class="tabRight">{{selectVehicleInfo.warning.powerBatteryTroubleCnt}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">warningName</div>
-              <div class="tabRight">{{selectVehicleInfo.warning.warningName}}</div>
             </div>
           </div>
         </div>
@@ -552,8 +551,64 @@
                 </div>
               </div>
             </mat-tab>
-            <mat-tab label="EXTREME VALUE">
 
+            <mat-tab label="LOCATION">
+              <div class="tabList">
+                <div class="tabInforRow">
+                  <div class="tabLeft">latitude</div>
+                  <div class="tabRight">{{selectVehicleInfo.location.latitude}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">longitude</div>
+                  <div class="tabRight">{{selectVehicleInfo.location.longitude}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">state</div>
+                  <div class="tabRight">{{selectVehicleInfo.location.state}}</div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="WARNING">
+              <div class="tabList">
+                <div class="tabInforRow">
+                  <div class="tabLeft">engineTroubleCnt</div>
+                  <div class="tabRight">{{selectVehicleInfo.warning.engineTroubleCnt}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">etcTroubleCnt</div>
+                  <div class="tabRight">{{selectVehicleInfo.warning.etcTroubleCnt}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">flag</div>
+                  <div class="tabRight">{{selectVehicleInfo.warning.flag}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">maxWarning</div>
+                  <div class="tabRight">{{selectVehicleInfo.warning.maxWarning}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">motorTroubleCnt</div>
+                  <div class="tabRight">{{selectVehicleInfo.warning.motorTroubleCnt}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">powerBatteryTroubleCnt</div>
+                  <div class="tabRight">{{selectVehicleInfo.warning.powerBatteryTroubleCnt}}</div>
+                </div>
+
+                <div class="tabInforRow">
+                  <div class="tabLeft">warningName</div>
+                  <div class="tabRight">{{selectVehicleInfo.warning.warningName}}</div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="EXTREME VALUE">
               <div class="tabList">
 
                 <div class="tabInforRow">
@@ -611,26 +666,6 @@
                   <div class="tabRight">{{selectVehicleInfo.extremeValue.batteryMinVoltSubsystemNo}}</div>
                 </div>
               </div>
-
-            </mat-tab>
-            <mat-tab label="LOCATION">
-              <div class="tabList">
-                <div class="tabInforRow">
-                  <div class="tabLeft">latitude</div>
-                  <div class="tabRight">{{selectVehicleInfo.location.latitude}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">longitude</div>
-                  <div class="tabRight">{{selectVehicleInfo.location.longitude}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">state</div>
-                  <div class="tabRight">{{selectVehicleInfo.location.state}}</div>
-                </div>
-              </div>
-
             </mat-tab>
             <mat-tab label="MOTORS">
               <div class="tabList">
@@ -675,7 +710,19 @@
                 </div>
               </div>
             </mat-tab>
+            <mat-tab label="POWER BATTERY TEMPERATURES">
+              <div class="tabList">
+                <div class="tabInforRow">
+                  <div class="tabLeft">subsystemNo</div>
+                  <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].subsystemNo}}</div>
+                </div>
 
+                <div class="tabInforRow">
+                  <div class="tabLeft">tempProbeCnt</div>
+                  <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].tempProbeCnt}}</div>
+                </div>
+              </div>
+            </mat-tab>
             <mat-tab label="POWER BATTERY INFOS">
               <div class="tabList">
                 <div class="tabInforRow">
@@ -701,58 +748,6 @@
                 <div class="tabInforRow">
                   <div class="tabLeft">volt</div>
                   <div class="tabRight">{{selectVehicleInfo.powerBatteryInfos[0].volt}}</div>
-                </div>
-              </div>
-
-            </mat-tab>
-            <mat-tab label="POWER BATTERY TEMPERATURES">
-              <div class="tabList">
-                <div class="tabInforRow">
-                  <div class="tabLeft">subsystemNo</div>
-                  <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].subsystemNo}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">tempProbeCnt</div>
-                  <div class="tabRight">{{selectVehicleInfo.powerBatteryTemperatures[0].tempProbeCnt}}</div>
-                </div>
-              </div>
-            </mat-tab>
-            <mat-tab label="WARNING">
-              <div class="tabList">
-                <div class="tabInforRow">
-                  <div class="tabLeft">engineTroubleCnt</div>
-                  <div class="tabRight">{{selectVehicleInfo.warning.engineTroubleCnt}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">etcTroubleCnt</div>
-                  <div class="tabRight">{{selectVehicleInfo.warning.etcTroubleCnt}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">flag</div>
-                  <div class="tabRight">{{selectVehicleInfo.warning.flag}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">maxWarning</div>
-                  <div class="tabRight">{{selectVehicleInfo.warning.maxWarning}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">motorTroubleCnt</div>
-                  <div class="tabRight">{{selectVehicleInfo.warning.motorTroubleCnt}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">powerBatteryTroubleCnt</div>
-                  <div class="tabRight">{{selectVehicleInfo.warning.powerBatteryTroubleCnt}}</div>
-                </div>
-
-                <div class="tabInforRow">
-                  <div class="tabLeft">warningName</div>
-                  <div class="tabRight">{{selectVehicleInfo.warning.warningName}}</div>
                 </div>
               </div>
             </mat-tab>
