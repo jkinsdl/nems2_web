@@ -4,8 +4,10 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AddPublicPlatformManagementComponent } from 'src/app/component/add-public-platform-management/add-public-platform-management.component';
 import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { ForwardingService } from 'src/app/service/forwarding.service';
+import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -17,23 +19,31 @@ export class PublicPlatformManagementComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
-    private forwardingService : ForwardingService
+    private forwardingService : ForwardingService,
+    private utilService : UtilService
   ) { }
 
   forwardingColumnDefs: ColDef[] = [
+    { field: 'serverName', headerName : 'name', tooltipField: 'serverName'},
+    { field: 'domain', headerName : 'IP', tooltipField: 'domain'},
+    { field: 'port', headerName : 'port', tooltipField: 'port'},
+    { field: 'platformId', headerName : 'platform ID', tooltipField: 'platformId'},
+    { field: 'lastLogin', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogin', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogin' }},
+    { field: 'lastLogout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogout' }},
+    { field: '', headerName : 'start/stop', tooltipField: ''},
+    { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck'},
+    { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle'},
+    { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo'},
+    { field: '', headerName : 'discards old data', tooltipField: ''},
+    { field: 'encryptionMode', headerName : 'encryption Mode', tooltipField: 'encryptionMode'},
+    { field: 'encryptionKey', headerName : 'encryption Key', tooltipField: 'encryptionKey'},
+    { field: '', headerName : 'enterprise code', tooltipField: ''},
+
     { field: 'command', headerName : 'command', tooltipField: 'command'},
     { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
-    { field: 'domain', headerName : 'domain', tooltipField: 'domain'},
-    { field: 'encryptionKey', headerName : 'encryptionKey', tooltipField: 'encryptionKey'},
-    { field: 'encryptionMode', headerName : 'encryptionMode', tooltipField: 'encryptionMode'},
-    { field: 'filterLocationInfo', headerName : 'filterLocationInfo', tooltipField: 'filterLocationInfo'},
-    { field: 'forceLoginVehicle', headerName : 'forceLoginVehicle', tooltipField: 'forceLoginVehicle'},
-    { field: 'noAck', headerName : 'noAck', tooltipField: 'noAck'},
-    { field: 'platformId', headerName : 'platformId', tooltipField: 'platformId'},
     { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
-    { field: 'port', headerName : 'port', tooltipField: 'port'},
     { field: 'serverId', headerName : 'serverId', tooltipField: 'serverId'},
-    { field: 'serverName', headerName : 'serverName', tooltipField: 'serverName'}
+
   ];
 
   forwarding : any = {
