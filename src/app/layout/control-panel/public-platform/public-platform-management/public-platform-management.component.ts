@@ -42,7 +42,7 @@ export class PublicPlatformManagementComponent implements OnInit {
     { field: 'command', headerName : 'command', tooltipField: 'command'},
     { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
     { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
-    { field: 'serverId', headerName : 'serverId', tooltipField: 'serverId'},
+    //{ field: 'serverId', headerName : 'serverId', tooltipField: 'serverId'},
 
   ];
 
