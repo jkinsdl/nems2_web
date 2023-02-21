@@ -42,7 +42,6 @@ export class VehicleSettingsComponent implements OnInit {
   vehicleList : any[] = []
 
   gridApi!: GridApi;
-  public rowSelection = 'multiple';
 
   searchFilter : SearchFilter = new SearchFilter()
 

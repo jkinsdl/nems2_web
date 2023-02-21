@@ -38,7 +38,6 @@ export class OTAInformationComponent implements OnInit {
 
   private gridApi!: GridApi;
   selectNodeID : string = null;
-  public rowSelection = 'multiple';
 
   searchFilter : SearchFilter = new SearchFilter()
 

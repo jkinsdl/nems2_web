@@ -48,7 +48,6 @@ export class OfflineVehicleHistoryComponent implements OnInit {
 
   gridApi!: GridApi;
   selectNodeID : string = null;
-  rowSelection = 'multiple';
 
   startDate : any
   endDate :any

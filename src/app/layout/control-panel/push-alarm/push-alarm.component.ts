@@ -51,7 +51,6 @@ export class PushAlarmComponent implements OnInit {
   }];
 
   gridApi!: GridApi;
-  public rowSelection = 'multiple';
   ngOnInit(): void {
     this.getNotifications()
     this.getNotificationsRejections()

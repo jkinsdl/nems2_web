@@ -32,7 +32,6 @@ export class ServerLogsComponent implements OnInit {
 
   gridApi!: GridApi;
   selectNodeID : string = null;
-  public rowSelection = 'multiple';
 
   beginDate : Date = null
   endDate : Date = null

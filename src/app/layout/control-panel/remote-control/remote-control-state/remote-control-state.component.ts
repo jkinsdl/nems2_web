@@ -44,7 +44,6 @@ export class RemoteControlStateComponent implements OnInit {
   ];
 
   gridApi!: GridApi;
-  rowSelection = 'multiple';
 
   devicemanagersVehicles : any ={
     count : 0,

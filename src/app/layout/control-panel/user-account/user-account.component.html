@@ -51,6 +51,11 @@
     </div>
 
     <div class="gridControlBox">
+
+      <div class="btn add" (click)="onBtExport()">
+        export
+      </div>
+
       <div class="btn add" (click)="addUser()">
         Add
       </div>
@@ -68,7 +73,6 @@
         class="ag-theme-alpine"
         [rowData]="users.users"
         [columnDefs]="columnDefs"
-        [rowSelection]="rowSelection"
         [pagination]="true"
         [paginationPageSize]="17"
         [tooltipShowDelay]="0"

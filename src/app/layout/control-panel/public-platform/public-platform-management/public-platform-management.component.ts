@@ -62,8 +62,6 @@ export class PublicPlatformManagementComponent implements OnInit {
     entities : []
   }
 
-
-  public rowSelection = 'multiple';
   managementGridApi!: GridApi;
   mappingGridApi!: GridApi;
 

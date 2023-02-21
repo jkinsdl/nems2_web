@@ -110,7 +110,6 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
     }
   ];
 
-  public rowSelection = 'multiple';
   managementGridApi!: GridApi;
   mappingGridApi!: GridApi;
   ngOnInit(): void {

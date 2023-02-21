@@ -46,7 +46,6 @@ export class AlarmComponent implements OnInit {
     warnings : []
   }
 
-  rowSelection = 'multiple';
   gridApi!: GridApi;
   gridColumnApi : any
 

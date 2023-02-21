@@ -50,7 +50,6 @@ export class AbnormalVehicleRealTimeComponent implements OnInit {
 
   gridApi!: GridApi;
   selectNodeID : string = null;
-  rowSelection = 'multiple';
 
   startDate : any
   endDate :any

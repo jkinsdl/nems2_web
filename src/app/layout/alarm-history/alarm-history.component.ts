@@ -35,7 +35,6 @@ export class AlarmHistoryComponent implements OnInit {
     { field: 'comment',headerName: "comment"},
   ];
 
-  rowSelection = 'multiple';
   gridApi!: GridApi;
   gridColumnApi : any
 

@@ -60,7 +60,6 @@ export class FailureComponent implements OnInit {
   docurrend_time : 'docurrend_time',
   view_popup : 'view_popup'
   }];
-  rowSelection = 'multiple';
   gridApi!: GridApi;
 
   ngOnInit(): void {

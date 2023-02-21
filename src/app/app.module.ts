@@ -61,8 +61,6 @@ import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluste
 import { AlarmComponent } from './layout/alarm/alarm.component';
 import { AlarmHistoryComponent } from './layout/alarm-history/alarm-history.component';
 import { AbnormalLocationVehicleComponent } from './layout/abnormal-location-vehicle/abnormal-location-vehicle.component';
-import { Test1Component } from './layout/abnormal-location-vehicle/test1/test1.component';
-import { Test2Component } from './layout/abnormal-location-vehicle/test2/test2.component';
 import { MapMarkerDetailComponent } from './layout/dashboard/map-marker-detail/map-marker-detail.component';
 import { DataForwardingComponent } from './layout/data-forwarding/data-forwarding.component';
 import { MapMarkerDetailVehicleInformationComponent } from './layout/dashboard/map-marker-detail/map-marker-detail-vehicle-information/map-marker-detail-vehicle-information.component';
@@ -166,8 +164,6 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     AlarmComponent,
     AlarmHistoryComponent,
     AbnormalLocationVehicleComponent,
-    Test1Component,
-    Test2Component,
     MapMarkerDetailComponent,
     DataForwardingComponent,
     MapMarkerDetailVehicleInformationComponent,

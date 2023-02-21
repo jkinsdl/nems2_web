@@ -39,7 +39,6 @@ export class DataForwardingComponent implements OnInit {
     entities : []
   }
 
-    rowSelection = 'multiple';
     gridApi!: GridApi;
     gridColumnApi : any
     startDatePicker : any

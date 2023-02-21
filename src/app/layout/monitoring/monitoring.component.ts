@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ColDef, GridApi, GridReadyEvent, ValueFormatterParams } from 'ag-grid-community';
+import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
-import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
@@ -32,7 +31,7 @@ export class MonitoringComponent implements OnInit {
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
     { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber'},
     { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn'},
-    { field: 'lastUpdate', headerName : 'Last Updated', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastUpdate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastUpdate' }},
+    { field: 'lastUpdate', headerName : 'Last Updated', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastUpdate'},
     { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)', tooltipField: 'accumulatedMile' },
     { field: 'packetCount', headerName : 'Packet Count', tooltipField: 'packetCount' },
     { field: 'model', headerName : 'model', tooltipField: 'model' },
@@ -44,7 +43,6 @@ export class MonitoringComponent implements OnInit {
 
   vehicleInfo : any [] = []
 
-  rowSelection = 'multiple';
   gridApi!: GridApi;
 
   filter : SearchFilter = new SearchFilter()

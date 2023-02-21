@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { AbnormalLocationVehicleComponent } from './layout/abnormal-location-vehicle/abnormal-location-vehicle.component';
-import { Test1Component } from './layout/abnormal-location-vehicle/test1/test1.component';
-import { Test2Component } from './layout/abnormal-location-vehicle/test2/test2.component';
 import { AlarmHistoryComponent } from './layout/alarm-history/alarm-history.component';
 import { AlarmComponent } from './layout/alarm/alarm.component';
 import { ControlPanelComponent } from './layout/control-panel/control-panel.component';
@@ -89,8 +87,6 @@ const routes: Routes = [
     { path: 'alarm', canActivate: [AuthGuard], component:AlarmComponent},
     { path: 'history', canActivate: [AuthGuard], component:AlarmHistoryComponent},
     { path: 'abnormalLocationVehicle', canActivate: [AuthGuard], component:AbnormalLocationVehicleComponent, children:[
-      {path : 'test1', canActivate: [AuthGuard], component:Test1Component},
-      {path : 'test2', canActivate: [AuthGuard], component:Test2Component}
     ]},
     {path:'dataForwarding', canActivate: [AuthGuard], component:DataForwardingComponent},
 

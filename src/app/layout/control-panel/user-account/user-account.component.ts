@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CellClickedEvent, ColDef, GridApi, GridReadyEvent, RowClassParams, RowClassRules } from 'ag-grid-community';
+import { CellClickedEvent, ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AddUserComponent } from 'src/app/component/add-user/add-user.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
@@ -8,7 +8,7 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 import { UserService } from 'src/app/service/user.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
-
+import 'ag-grid-enterprise'
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
@@ -43,7 +43,6 @@ export class UserAccountComponent implements OnInit {
 
 
   selectNodeID : string = null;
-  public rowSelection = 'multiple';
   private gridApi!: GridApi;
 
   searchFilter : SearchFilter = new SearchFilter()
@@ -144,6 +143,11 @@ export class UserAccountComponent implements OnInit {
     },error=>{
       console.log(error)
     })
+  }
+
+
+  onBtExport() {
+    this.gridApi.exportDataAsExcel();
   }
 
 }

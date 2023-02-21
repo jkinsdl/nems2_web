@@ -47,7 +47,6 @@ export class VehicleModelComponent implements OnInit {
   modelList : any[] = []
 
   gridApi!: GridApi;
-  public rowSelection = 'multiple';
 
   searchFilter : SearchFilter = new SearchFilter()
 

@@ -51,7 +51,6 @@ export class ConfigureComponent implements OnInit {
     { field: 'matched_date', headerName : 'matched date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date' }},
   ];
 
-  public rowSelection = 'single';
   configureGridApi!: GridApi;
   mappingGridApi!: GridApi;
 
