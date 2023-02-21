@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ValueFormatterParams } from 'ag-grid-community';
+import { GridApi, ValueFormatterParams } from 'ag-grid-community';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { CommonConstant } from '../util/common-constant';
 @Injectable({
@@ -130,4 +130,66 @@ export class UtilService {
     return this.http.get('assets/data/chn_sub_prefecture_v2.json')
   }
 
+  gridDataToExcelData(fileName : string, gridApi : GridApi, data : any[]){
+    let titleLabel : string[] = []
+    let titlaFiedId : string[] = []
+    let dataList : string[][] = []
+    console.log(gridApi.getColumnDefs())
+
+    for(let i = 0; i < gridApi.getColumnDefs().length; i++){
+      if(gridApi.getColumnDefs()[i].headerName != undefined){
+        titleLabel.push(gridApi.getColumnDefs()[i].headerName)
+        titlaFiedId.push((gridApi.getColumnDefs()[i] as any).field)
+      }
+    }
+
+    for(let i = 0; i < data.length; i++){
+      let rowData : string[] = []
+      for(let j = 0; j < titlaFiedId.length; j++){
+        if(data[i][titlaFiedId[j]]){
+          rowData.push(data[i][titlaFiedId[j]])
+        }else{
+          rowData.push('')
+        }
+      }
+      dataList.push(rowData)
+    }
+    console.log(dataList)
+    this.dataFileExportCSV(fileName, titleLabel, dataList)
+  }
+
+  dataFileExportCSV( fileName : string, titleLabel : string[], data : string[][]){
+    console.log(fileName);
+    console.log(titleLabel);
+    console.log(data);
+    let csv : string = '';
+    let raw : string = '';
+
+    for( let i = 0; i < titleLabel.length; i++ ){
+      raw += titleLabel[i] + ',';
+    }
+
+    raw = raw.slice(0, raw.length - 1);
+    csv += raw + '\r\n';
+
+    for ( let i = 0; i < data.length; i++) {
+      raw = "";
+      for( let j = 0; j < data[i].length; j++ ){
+        raw += '"' + data[i][j] + '",';
+      }
+      raw = raw.slice(0, raw.length - 1);
+      csv += raw + '\r\n';
+    }
+
+    let uri = 'data:text/csv;charset=UTF-8,\uFEFF' + encodeURI(csv);
+    let link = document.createElement("a");
+    link.href = uri;
+
+    link.style.visibility = "hidden";
+    link.download = fileName + ".csv";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }

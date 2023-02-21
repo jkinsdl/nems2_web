@@ -11,6 +11,19 @@
       <div class="btn delete" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="deleteManagement()">
         Delete
       </div>
+
+      <div style="display: flex; position: absolute; right: 40px;">
+        <label class="excel_btn" for="uploadExcel1">
+          <img src="assets/icon/excel_upload.png">
+        </label>
+
+        <input id="uploadExcel1" type="file" style="display: none;">
+
+        <div class="excel_btn" (click)="onBtExport('management')">
+          <img src="assets/icon/excel_download.png">
+        </div>
+      </div>
+
     </div>
 
     <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"
@@ -36,6 +49,19 @@
       <div class="btn delete" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
         Delete
       </div>
+
+      <div style="display: flex; position: absolute; right: 40px;">
+        <label class="excel_btn" for="uploadExcel2">
+          <img src="assets/icon/excel_upload.png">
+        </label>
+
+        <input id="uploadExcel2" type="file" style="display: none;">
+
+        <div class="excel_btn" (click)="onBtExport('mapping')">
+          <img src="assets/icon/excel_download.png">
+        </div>
+      </div>
+
     </div>
 
     <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"

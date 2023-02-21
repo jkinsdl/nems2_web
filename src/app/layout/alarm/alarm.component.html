@@ -39,6 +39,19 @@
       <div class="defaultButton"> Button1 </div>
       <div class="defaultButton"> Button2 </div>
       <div class="defaultButton"> Button3 </div>
+
+      <div style="display: flex; position: absolute; right: 60px;">
+        <!--<label class="excel_btn" for="uploadExcel1">
+          <img src="assets/icon/excel_upload.png">
+        </label>
+
+        <input id="uploadExcel1" type="file" style="display: none;">
+        -->
+        <div class="excel_btn" (click)="onBtExport()">
+          <img src="assets/icon/excel_download.png">
+        </div>
+      </div>
+
       <div class="linkDiv">LINK</div>
     </div>
 

@@ -261,4 +261,14 @@ export class PublicPlatformManagementComponent implements OnInit {
     })
   }
 
+  onBtExport(type : string) {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    if(type == "management"){
+      this.utilService.gridDataToExcelData("public platform management forwarding", this.managementGridApi ,this.forwarding.entities)
+    }else{
+      this.utilService.gridDataToExcelData("public platform management relations", this.mappingGridApi,this.relations.entities)
+    }
+  }
+
 }

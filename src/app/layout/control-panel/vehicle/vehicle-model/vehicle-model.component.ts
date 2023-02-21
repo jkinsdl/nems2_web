@@ -6,6 +6,7 @@ import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.c
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { AddVehicleModelComponent } from 'src/app/component/add-vehicle-model/add-vehicle-model.component';
+import { UtilService } from 'src/app/service/util.service';
 @Component({
   selector: 'app-vehicle-model',
   templateUrl: './vehicle-model.component.html',
@@ -16,7 +17,8 @@ export class VehicleModelComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private vehiclemanagersService : VehiclemanagerService
+    private vehiclemanagersService : VehiclemanagerService,
+    private utilService : UtilService
   ) { }
 
   columnDefs: ColDef[] = [
@@ -142,5 +144,12 @@ export class VehicleModelComponent implements OnInit {
     this.gridApi = params.api;
     //this.gridApi.sizeColumnsToFit()
   }
+
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("Vehicle Model",this.gridApi,this.modelList)
+  }
+
 
 }

@@ -11,6 +11,7 @@ import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { InfoDetailComponent } from 'src/app/component/info-detail/info-detail.component';
+import { UtilService } from 'src/app/service/util.service';
 @Component({
   selector: 'app-detail-monitoring',
   templateUrl: './detail-monitoring.component.html',
@@ -23,7 +24,8 @@ export class DetailMonitoringComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private dialog: MatDialog,
     private uiService : UiService,
-    private realtimedataService : RealtimedataService) { }
+    private realtimedataService : RealtimedataService,
+    private utilService : UtilService) { }
 
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/dark-v10'
@@ -583,6 +585,12 @@ export class DetailMonitoringComponent implements OnInit {
 
       }
     });
+  }
+
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("monitoring history", this.gridApi ,[])
   }
 
 }

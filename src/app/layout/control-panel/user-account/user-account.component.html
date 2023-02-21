@@ -43,7 +43,18 @@
         </div>
       </div>
     -->
-      <div class="filter searchFilter">
+
+
+    <div class="filter searchFilter">
+      <label class="excel_btn" for="uploadExcel">
+        <img src="assets/icon/excel_upload.png">
+      </label>
+      <input id="uploadExcel" type="file" style="display: none;">
+
+      <div class="excel_btn" (click)="onBtExport()">
+        <img src="assets/icon/excel_download.png">
+      </div>
+
         <div class="btn" (click)="getUsers()">
           Search
         </div>
@@ -51,11 +62,6 @@
     </div>
 
     <div class="gridControlBox">
-
-      <div class="btn add" (click)="onBtExport()">
-        export
-      </div>
-
       <div class="btn add" (click)="addUser()">
         Add
       </div>
@@ -68,7 +74,6 @@
     </div>
 
     <div claSS="userAccountContents">
-
       <ag-grid-angular style="width: 100%; height: calc(100% - 20px)"
         class="ag-theme-alpine"
         [rowData]="users.users"
@@ -79,8 +84,6 @@
         (cellClicked)="userClick($event)"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>
-
     </div>
-
   </div>
 </div>

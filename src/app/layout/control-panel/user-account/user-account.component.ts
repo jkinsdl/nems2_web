@@ -8,7 +8,7 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 import { UserService } from 'src/app/service/user.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
-import 'ag-grid-enterprise'
+//import 'ag-grid-enterprise'
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
@@ -147,7 +147,9 @@ export class UserAccountComponent implements OnInit {
 
 
   onBtExport() {
-    this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("User Account", this.gridApi,this.users.users)
   }
 
 }

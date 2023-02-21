@@ -105,7 +105,13 @@ export class RemoteControlStateComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-
   }
+
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("Remote Control", this.gridApi,this.rowData)
+  }
+
 
 }

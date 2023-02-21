@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-offline-vehicle-history',
@@ -8,7 +9,9 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 })
 export class OfflineVehicleHistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private utilService : UtilService
+  ) { }
 
 
   columnDefs: ColDef[] = [
@@ -60,6 +63,12 @@ export class OfflineVehicleHistoryComponent implements OnInit {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
     this.gridApi.sizeColumnsToFit()
+  }
+
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("offline vehicle history", this.gridApi ,this.rowData)
   }
 
 }

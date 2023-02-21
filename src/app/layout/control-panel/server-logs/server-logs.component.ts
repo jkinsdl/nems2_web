@@ -102,4 +102,10 @@ export class ServerLogsComponent implements OnInit {
     this.gridApi = params.api;
   }
 
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("Server Log", this.gridApi ,this.gbpacket.entities)
+  }
+
 }

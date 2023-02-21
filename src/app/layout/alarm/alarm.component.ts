@@ -85,5 +85,9 @@ export class AlarmComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
-
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("Alarm", this.gridApi ,this.vehiclewarning.warnings)
+  }
 }

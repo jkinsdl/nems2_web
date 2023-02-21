@@ -136,4 +136,11 @@ export class VehicleSettingsComponent implements OnInit {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
   }
+
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("Vehicle Settings",this.gridApi,this.vehicleList)
+  }
+
 }

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
-import { AbnormalLocationVehicleComponent } from './layout/abnormal-location-vehicle/abnormal-location-vehicle.component';
 import { AlarmHistoryComponent } from './layout/alarm-history/alarm-history.component';
 import { AlarmComponent } from './layout/alarm/alarm.component';
 import { ControlPanelComponent } from './layout/control-panel/control-panel.component';
@@ -86,8 +85,6 @@ const routes: Routes = [
     { path: 'failure', canActivate: [AuthGuard], component: FailureComponent },
     { path: 'alarm', canActivate: [AuthGuard], component:AlarmComponent},
     { path: 'history', canActivate: [AuthGuard], component:AlarmHistoryComponent},
-    { path: 'abnormalLocationVehicle', canActivate: [AuthGuard], component:AbnormalLocationVehicleComponent, children:[
-    ]},
     {path:'dataForwarding', canActivate: [AuthGuard], component:DataForwardingComponent},
 
     /*{path:'warningStatistics', canActivate: [AuthGuard], component:WarningStatisticsComponent},

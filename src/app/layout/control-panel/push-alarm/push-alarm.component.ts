@@ -5,6 +5,7 @@ import { AddPushAlarmComponent } from 'src/app/component/add-push-alarm/add-push
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { NotificationService } from 'src/app/service/notification.service';
+import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -16,7 +17,8 @@ export class PushAlarmComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
-    private notificationService : NotificationService
+    private notificationService : NotificationService,
+    private utilService : UtilService
   ) { }
 
   columnDefs: ColDef[] = [
@@ -141,6 +143,12 @@ export class PushAlarmComponent implements OnInit {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
     this.gridApi.sizeColumnsToFit()
+  }
+
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("Push Alarm", this.gridApi ,this.rowData)
   }
 
 }

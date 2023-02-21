@@ -11,6 +11,21 @@
       <div class="btn delete" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteVehicle()">
         Delete
       </div>
+
+      <div style="display: flex; position: absolute; right: 40px;">
+        <label class="excel_btn" for="uploadExcel">
+          <img src="assets/icon/excel_upload.png">
+        </label>
+
+        <input id="uploadExcel" type="file" style="display: none;">
+
+        <div class="excel_btn" (click)="onBtExport()">
+          <img src="assets/icon/excel_download.png">
+        </div>
+      </div>
+
+
+
     </div>
 
     <div class="vehicleModelContents">

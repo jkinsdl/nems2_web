@@ -60,7 +60,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { AlarmComponent } from './layout/alarm/alarm.component';
 import { AlarmHistoryComponent } from './layout/alarm-history/alarm-history.component';
-import { AbnormalLocationVehicleComponent } from './layout/abnormal-location-vehicle/abnormal-location-vehicle.component';
 import { MapMarkerDetailComponent } from './layout/dashboard/map-marker-detail/map-marker-detail.component';
 import { DataForwardingComponent } from './layout/data-forwarding/data-forwarding.component';
 import { MapMarkerDetailVehicleInformationComponent } from './layout/dashboard/map-marker-detail/map-marker-detail-vehicle-information/map-marker-detail-vehicle-information.component';
@@ -163,7 +162,6 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     MonitoringDetailZoomComponent,
     AlarmComponent,
     AlarmHistoryComponent,
-    AbnormalLocationVehicleComponent,
     MapMarkerDetailComponent,
     DataForwardingComponent,
     MapMarkerDetailVehicleInformationComponent,

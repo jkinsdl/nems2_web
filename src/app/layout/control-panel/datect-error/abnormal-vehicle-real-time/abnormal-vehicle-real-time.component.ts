@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 export class AbnormalVehicleRealTimeComponent implements OnInit {
 
   constructor(
-    private vehiclewarningService : VehiclewarningService,) { }
+    private vehiclewarningService : VehiclewarningService,
+    private utilService : UtilService) { }
 
   columnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN' },
@@ -71,6 +73,12 @@ export class AbnormalVehicleRealTimeComponent implements OnInit {
     },error=>{
       console.log(error)
     })
+  }
+
+  onBtExport() {
+    //this.gridApi.exportDataAsExcel();
+    //this.gridApi.exportDataAsCsv()
+    this.utilService.gridDataToExcelData("abnormal vehicle real time", this.gridApi ,this.rowData)
   }
 
 }
