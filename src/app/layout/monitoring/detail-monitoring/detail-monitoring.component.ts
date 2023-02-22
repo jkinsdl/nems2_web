@@ -508,7 +508,7 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   getRealtimedataVehiclelist(){
-    this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none')
+
     let f = new SearchFilter()
     f.vin = this.vinSearchText
     this.realtimedataService.getRealtimedataVehiclelist(f).subscribe(
@@ -521,6 +521,7 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   clickVin(vehicle : any){
+    this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none')
     this.realTimeOnOff = false
     this.selectVehicle = vehicle
     this.isPanelOnOff = true
