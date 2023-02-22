@@ -463,7 +463,7 @@ export class DetailMonitoringComponent implements OnInit {
             show: true,
             roundCap: true,
             clip: false,
-            width: 5,
+            width: 10,
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 /*{
@@ -478,12 +478,13 @@ export class DetailMonitoringComponent implements OnInit {
                   offset: 0,
                   color: 'rgb(15, 246, 3)'
                 }])
+
             }
           },
           axisLine: {
             lineStyle: {
-              width: 5,
-              color: [[1, '#100c2a']]
+              width: 12,
+
             }
           },
           splitLine: {
