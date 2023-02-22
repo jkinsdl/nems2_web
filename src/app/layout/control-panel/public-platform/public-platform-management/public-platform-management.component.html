@@ -26,12 +26,12 @@
 
     </div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"
+    <ag-grid-angular style="width: 100%; height: calc(100% - 50px)"
       class="ag-theme-alpine"
       [rowData]="forwarding.entities"
       [columnDefs]="forwardingColumnDefs"
       [pagination]="true"
-      [paginationPageSize]="17"
+      [paginationPageSize]="20"
       [tooltipShowDelay]="0"
       (gridReady)="onServerGridReady($event)"
       (rowClicked)="onForwardingRowClick($event)">
@@ -64,12 +64,12 @@
 
     </div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100% - 80px)"
+    <ag-grid-angular style="width: 100%; height: calc(100% - 50px)"
       class="ag-theme-alpine"
       [rowData]="relations.entities"
       [columnDefs]="relationsColumnDefs"
       [pagination]="true"
-      [paginationPageSize]="17"
+      [paginationPageSize]="20"
       [tooltipShowDelay]="0"
       (gridReady)="onMappingGridReady($event)">
     </ag-grid-angular>

@@ -87,13 +87,13 @@
       </div>
     </div>
 
-    <div style="width: 100%; height: calc(100% - 124px)">
+    <div style="width: 100%; height: calc(100% - 104px);">
       <ag-grid-angular style="width: 100%; height: 100%"
         class="ag-theme-alpine"
         [rowData]="vehicleList"
         [columnDefs]="columnDefs"
         [pagination]="true"
-        [paginationPageSize]="17"
+        [paginationPageSize]="50"
         [tooltipShowDelay]="0"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>

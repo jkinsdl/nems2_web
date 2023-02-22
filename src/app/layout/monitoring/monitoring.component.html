@@ -220,6 +220,8 @@
         [rowData]="vehicleInfo"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
+        [pagination]="true"
+        [paginationPageSize]="50"
         (gridReady)="onGridReady($event)"
         (rowClicked)="getVehicleRow($event)">
       </ag-grid-angular>

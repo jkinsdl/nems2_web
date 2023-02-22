@@ -160,7 +160,7 @@ input:focus{
 
 .tabListContainer{
   width: 100%;
-  height: 50px;
+  height: 40px;
   display: flex;
   align-items: center;
 }

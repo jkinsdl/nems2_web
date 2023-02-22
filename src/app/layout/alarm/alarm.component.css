@@ -4,7 +4,7 @@
 }
 
 .alarmLeftLayout{
-  width: calc(60% - 15px);
+  width: calc(60% - 9px);
   height: 100%;
   float: left;
   margin-right: 5px;

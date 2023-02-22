@@ -19,19 +19,19 @@
 
     <input id="uploadExcel1" type="file" style="display: none;">
 
-    <div class="excel_btn" (click)="onBtExport('configure')">
+    <div class="excel_btn" (click)="onBtExport('configure')">ㅗㅇㄹ
       <img src="assets/icon/excel_download.png">
     </div>
   </div>
 
 </div>
 
-<ag-grid-angular style="width: 100%; height: calc(50% - 100px)"
+<ag-grid-angular style="width: 100%; height: calc(50% - 77px)"
   class="ag-theme-alpine"
   [rowData]="devicemanagersParameter.entities"
   [columnDefs]="configurationColumnDefs"
   [pagination]="true"
-  [paginationPageSize]="17"
+  [paginationPageSize]="20"
   [tooltipShowDelay]="0"
   (gridReady)="onServerGridReady($event)"
   (rowClicked)="onConfigureRowClicked($event)">
@@ -62,12 +62,12 @@
 
 </div>
 
-<ag-grid-angular style="width: 100%; height: calc(50% - 100px)"
+<ag-grid-angular style="width: 100%; height: calc(50% - 77px)"
   class="ag-theme-alpine"
   [rowData]="devicemanagersParameterVehicle.entities"
   [columnDefs]="mappingColumnDefs"
   [pagination]="true"
-  [paginationPageSize]="17"
+  [paginationPageSize]="20"
   [tooltipShowDelay]="0"
   (gridReady)="onMappingGridReady($event)">
 </ag-grid-angular>

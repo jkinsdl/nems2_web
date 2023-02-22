@@ -85,12 +85,12 @@
     </div>
 
     <div class="serverLogsContents">
-      <ag-grid-angular style="width: 100%; height: calc(100% - 40px)"
+      <ag-grid-angular style="width: 100%; height: calc(100% - 10px)"
         class="ag-theme-alpine"
         [rowData]="gbpacket.entities"
         [columnDefs]="columnDefs"
         [pagination]="true"
-        [paginationPageSize]="17"
+        [paginationPageSize]="50"
         [tooltipShowDelay]="0"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>

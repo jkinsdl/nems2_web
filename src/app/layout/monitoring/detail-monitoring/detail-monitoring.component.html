@@ -388,7 +388,7 @@
 
   <div class="historyContainer" [ngClass]="{'visibilityHidden': mode != 'history'}">
     <div class="historyGridContainer">
-      <div class="gridFilterBox">
+      <div class="gridFilterBox" style="margin-left:20px">
         <select style="border: 1px solid #9b9b9b; border-radius: 5px; height: 30px; width: 150px;">
           <option>Vehicle</option>
           <option>Location</option>
@@ -436,7 +436,7 @@
         [rowData]="[]"
         [columnDefs]="columnDefs"
         [pagination]="true"
-        [paginationPageSize]="17"
+        [paginationPageSize]="50"
         [tooltipShowDelay]="0"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>

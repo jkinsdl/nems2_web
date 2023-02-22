@@ -84,7 +84,7 @@ export class TerminalComponent implements OnInit {
       //onData() is used more often.
     });
     this._cols = 162
-    this._rows = 40
+    this._rows = 39
   }
 
   postDevicemanagersTerminal(command : string){

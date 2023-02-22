@@ -10,7 +10,7 @@
 
 .monitoringContainer .gridLayout .grid{
   width: 100%;
-  height: calc(100% - 68px);
+  height: calc(100% - 58px);
   padding: 0 10px 10px 0;
 }
 
