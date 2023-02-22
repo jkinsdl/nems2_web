@@ -30,7 +30,7 @@ export class DetailMonitoringComponent implements OnInit {
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/dark-v10'
   lat = 35.8617;
-  lng = 104.1954;
+  lng = 97.1954;
   mapPopup : any
 
   listBtn$ : Subscription
@@ -94,7 +94,7 @@ export class DetailMonitoringComponent implements OnInit {
       this.map = new mapboxgl.Map({
         container: 'map',
         style: this.style,
-        zoom: 3,
+        zoom: 3.7,
         center: [this.lng, this.lat]
         //center: [120.223329, 33.30857]
     });

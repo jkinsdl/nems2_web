@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   //style = 'mapbox://styles/mapbox/streets-v11';
   style = 'mapbox://styles/mapbox/dark-v10'
   lat = 37.8617;
-  lng = 115.1954;
+  lng = 100.1954;
 
   mapPopup : any
 
@@ -87,7 +87,9 @@ export class DashboardComponent implements OnInit {
       this.map = new mapboxgl.Map({
         container: 'map',
         style: this.style,
-        zoom: 3,
+        zoom: 3.5,
+        minZoom : 3.5,
+        maxZoom : 9,
         center: [this.lng, this.lat]
     });
 
@@ -727,7 +729,7 @@ export class DashboardComponent implements OnInit {
     //this.getStatisticsWarningsSummary()
     this.getVehiclewarning()
 
-    this.map.setZoom(3)
+    this.map.setZoom(3.5)
     this.map.setCenter([this.lng, this.lat])
   }
 
