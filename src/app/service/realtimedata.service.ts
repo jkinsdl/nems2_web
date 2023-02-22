@@ -149,7 +149,7 @@ export class RealtimedataService {
       httpParams = httpParams.set("period",filter.period)
     }
 
-
+    //url = `${this.Url}/location?latitude_begin=33.3&latitude_end=34&longitude_begin=120.2&longitude_end=121&period=2100000`
     return this.http.get<any>(url, {params:httpParams, observe: "response" })
   }
 

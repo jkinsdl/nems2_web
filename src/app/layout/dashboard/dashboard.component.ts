@@ -188,7 +188,6 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('mousemove', 'statistics-registration-count-clusters', (e : any) => {
-        console.log(e)
         popup.setLngLat(e.lngLat)
           .setHTML('province - ' + e.features[0].properties.province + "<br>"
           +'registered car - '+ e.features[0].properties.statistics_count + "<br>")
@@ -301,7 +300,6 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('click', 'country_territory',(e : any) => {
-        console.log(e)
         let a = e.features[0].geometry.coordinates[0][0]
         if (a.length > 2) {
           a = e.features[0].geometry.coordinates[0][0][0]
@@ -363,8 +361,6 @@ export class DashboardComponent implements OnInit {
             }
           })
         }
-
-
       });
 
       this.map.addLayer({
@@ -758,13 +754,6 @@ export class DashboardComponent implements OnInit {
 
     this.realtimedataService.getRealtimedataLocation(filter).subscribe(res=>{
       console.log(res)
-
-      /*res.body.locations = [{
-        vin : 123,
-        latitude : this.lat,
-        longitude : this.lng
-      }]*/
-
       let featuresList : any[] = []
       for(let i = 0; i < res.body.locations.length; i++){
         featuresList.push({
@@ -865,9 +854,6 @@ export class DashboardComponent implements OnInit {
         filter.province = res.features[i].properties.ADM1_ZH
         await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
           console.log(res2)
-          if( res2.body.entities.length > 0){
-            console.log("!")
-          }
           await this.utilService.getSubPrefectureeData().toPromise().then(async(res3 : any)=>{
             console.log(res3)
             for(let j = 0; j < res2.body.entities.length; j++){
@@ -898,7 +884,6 @@ export class DashboardComponent implements OnInit {
             }
           })
         })
-
       }
 
       /*if(true){
@@ -959,7 +944,6 @@ export class DashboardComponent implements OnInit {
   }
 
   pageMoveAlarm(alarm : any){
-    console.log(alarm)
     this.router.navigateByUrl(`/main/alarm)`);
   }
 
@@ -1018,7 +1002,6 @@ export class DashboardComponent implements OnInit {
   changeBoundaries(boundaries : string){
     this.currentBoundaries = boundaries
     this.hoveredStateId = null
-    console.log(this.map)
     if(boundaries != 'country_territory'){
       this.map.setLayoutProperty('country_territory', 'visibility', 'none');
       this.map.setLayoutProperty('country_territory_click_layer', 'visibility', 'none');
@@ -1041,9 +1024,6 @@ export class DashboardComponent implements OnInit {
 
     this.map.setLayoutProperty(boundaries, 'visibility', 'visible');
     this.map.setLayoutProperty(boundaries+"_click_layer", 'visibility', 'visible');
-
-
-    console.log(this.map)
   }
 
 

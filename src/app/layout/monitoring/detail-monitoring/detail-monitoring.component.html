@@ -9,6 +9,11 @@
         style="float: left; margin-right: 40px; padding-top: 10px;">
       Real Time !
     </mat-slide-toggle>
+
+    <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;">
+      <span>deselect</span>
+    </button>
+
     <div class="listSearch">
       <div class="value">
         <input class="datePickerText" [ngxMatDatetimePicker]="packetTime" readonly="true" (click)="packetTime.open()" style="width: 130px; padding: 0 10px; margin: 0 10px;"
