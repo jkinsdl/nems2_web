@@ -28,10 +28,9 @@ export class UserAccountComponent implements OnInit {
   columnDefs: ColDef[] = [
     { field: 'selected', hide:true, tooltipField: 'selected'},
     { field: 'username', headerName: 'username', tooltipField: 'username' },
-    { field: 'userId', headerName: 'userId', tooltipField: 'userId'},
-    { field: 'status', headerName : 'status', tooltipField: 'status'},
     { field: 'email', headerName : 'email', tooltipField: 'email' },
-    { field: 'authorityId', headerName : 'authorityId', tooltipField: 'authorityId' },
+    { field: 'authorityId', headerName : 'authority', tooltipField: 'authorityId' },
+    { field: 'status', headerName : 'status', tooltipField: 'status'},
     { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'latestAccess', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'latestAccess' } }
   ];
 
