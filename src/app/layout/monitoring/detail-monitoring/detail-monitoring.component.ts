@@ -1090,6 +1090,11 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   vinDeSelect(){
+
+    if(this.realTimeOnOff){
+      this.setRealTimeSwitch()
+    }
+
     this.selectVehicle = null
     this.selectVehicleInfo = null
     this.setSpeedChartOption(0)
