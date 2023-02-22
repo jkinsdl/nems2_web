@@ -46,10 +46,12 @@ export class VehicleSettingsComponent implements OnInit {
   searchFilter : SearchFilter = new SearchFilter()
 
   ngOnInit(): void {
-    this.getVehiclemanagerStaticinfo()
+
   }
 
   getVehiclemanagerStaticinfo(){
+    //this.test()
+    //this.searchFilter.limit = 50
     this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.vehicleList = res.body.vehicleList
@@ -135,6 +137,13 @@ export class VehicleSettingsComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+    this.getVehiclemanagerStaticinfo()
+  }
+
+  test(){
+    console.log(this.gridApi.paginationGetPageSize())
+    console.log(this.gridApi.paginationIsLastPageFound())
+    console.log(this.gridApi.paginationGetTotalPages())
   }
 
   onBtExport() {
