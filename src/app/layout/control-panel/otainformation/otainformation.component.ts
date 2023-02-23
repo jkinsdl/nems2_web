@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { Subscription } from 'rxjs';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
@@ -12,11 +14,15 @@ import { CommonConstant } from 'src/app/util/common-constant';
   styleUrls: ['./otainformation.component.css']
 })
 export class OTAInformationComponent implements OnInit {
+
+  @ViewChild('otaInformationGrid', { read: ElementRef }) otaInformationGrid : ElementRef;
+
   constant : CommonConstant = new CommonConstant()
 
   constructor(
     private vehiclemanagerService : VehiclemanagerService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private uiService : UiService
   ) { }
   columnDefs: ColDef[] = [
     { field: 'batteryCode', headerName: 'batteryCode', tooltipField: 'batteryCode'},
@@ -34,25 +40,61 @@ export class OTAInformationComponent implements OnInit {
     { field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
   ];
 
-  vehicleList : any[] = []
+  vehicle : any ={
+    count : 0,
+    vehicleList : []
+  }
 
   private gridApi!: GridApi;
   selectNodeID : string = null;
 
+  page$ : Subscription
   searchFilter : SearchFilter = new SearchFilter()
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
 
   ngOnInit(): void {
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getVehiclemanagerStaticinfo()
+    })
+  }
+
+  getPageSize(){
+    this.gridHeight = this.otaInformationGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     this.getVehiclemanagerStaticinfo()
   }
+
+  onResize(event : any){
+    this.getPageSize()
+  }
+
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
   }
 
   getVehiclemanagerStaticinfo(){
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
     this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
       console.log(res)
-      this.vehicleList = res.body.vehicleList
+      this.vehicle = res.body
+
+      let pagination = {
+        count : this.vehicle.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+
     },error=>{
       console.log(error)
     })
@@ -61,7 +103,7 @@ export class OTAInformationComponent implements OnInit {
   onBtExport() {
     //this.gridApi.exportDataAsExcel();
     //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("OTA Information", this.gridApi ,this.vehicleList)
+    this.utilService.gridDataToExcelData("OTA Information", this.gridApi ,this.vehicle.vehicleList)
   }
 
 }

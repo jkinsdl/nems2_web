@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { CommonConstant } from 'src/app/util/common-constant';
@@ -9,6 +9,8 @@ import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
+import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-configure',
@@ -17,11 +19,16 @@ import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-toolti
 })
 export class ConfigureComponent implements OnInit {
 
+  @ViewChild('configure1', { read: ElementRef }) configure1 : ElementRef;
+
+  @ViewChild('configure2', { read: ElementRef }) configure2 : ElementRef;
+
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
     private devicemanagerService : DevicemanagerService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private uiService : UiService
   ) { }
 
   configurationColumnDefs: ColDef[] = [
@@ -68,14 +75,71 @@ export class ConfigureComponent implements OnInit {
     link : {}
   }
 
+  page$ : Subscription
+  page2$ : Subscription
+  grid1Height : number
+  grid2Height : number
+  pageSize : number
+  pageSize2 : number
+  currentPage : number = 1
+  currentPage2 : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+    if(this.page2$)this.page2$.unsubscribe()
+  }
+
   ngOnInit(): void {
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getDevicemanagersParameter()
+    })
+
+    this.page2$ = this.uiService.page2$.subscribe((page : number)=>{
+      this.currentPage2 = page
+      this.getDevicemanagersParametersConfigureNameVehicles()
+    })
+  }
+
+  getPageSize(){
+    this.grid1Height = this.configure1.nativeElement.offsetHeight;
+    this.grid2Height = this.configure2.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
+    this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
     this.getDevicemanagersParameter()
+    if(this.selectConfigureRow != null){
+      this.getDevicemanagersParametersConfigureNameVehicles()
+    }
+  }
+
+  onResize(event : any){
+    this.getPageSize()
   }
 
   getDevicemanagersParameter(){
-    this.devicemanagerService.getDevicemanagersParameter(new SearchFilter()).subscribe(res=>{
+
+    let f = new SearchFilter()
+    f.offset = (this.currentPage-1) * this.pageSize
+    f.limit = this.pageSize
+
+    this.devicemanagerService.getDevicemanagersParameter(f).subscribe(res=>{
       console.log(res)
       this.devicemanagersParameter = res.body
+
+      let pagination = {
+        count : this.devicemanagersParameter.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+
     },error=>{
       console.log(error)
     })
@@ -229,6 +293,14 @@ export class ConfigureComponent implements OnInit {
   getDevicemanagersParametersConfigureNameVehicles(){
     this.devicemanagerService.getDevicemanagersParametersConfigureNameVehicles(this.selectConfigureRow.configureName, new SearchFilter()).subscribe(res=>{
       console.log(res)
+      this.devicemanagersParameterVehicle = res.body
+      let pagination = {
+        count : this.devicemanagersParameterVehicle.count,
+        pageSize : this.pageSize2,
+        page : this.currentPage2
+      }
+
+      this.uiService.setPagination2(pagination)
     },error=>{
       console.log(error)
     })

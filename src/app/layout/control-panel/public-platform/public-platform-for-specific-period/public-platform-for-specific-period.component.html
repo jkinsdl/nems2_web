@@ -23,19 +23,21 @@
           <img src="assets/icon/excel_download.png">
         </div>
       </div>
-
     </div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100% - 50px)"
-      class="ag-theme-alpine"
-      [rowData]="managementRowData"
-      [columnDefs]="managementColumnDefs"
-      [pagination]="true"
-      [paginationPageSize]="20"
-      (gridReady)="onServerGridReady($event)"
-      [tooltipShowDelay]="0">
-    </ag-grid-angular>
 
+    <div style="width: 100%; height: calc(100% - 50px)">
+      <ag-grid-angular #publicPlatformForSpecificPeriod1 style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
+        class="ag-theme-alpine"
+        [rowData]="managementRowData"
+        [columnDefs]="managementColumnDefs"
+        (gridReady)="onServerGridReady($event)"
+        [tooltipShowDelay]="0">
+      </ag-grid-angular>
+      <div style="width: 100%; height: 50px;">
+        <app-grid-page [gridNumber]="1"></app-grid-page>
+      </div>
+    </div>
   </div>
 
   <div class="publicPlatformMappingLayout">
@@ -62,18 +64,20 @@
           <img src="assets/icon/excel_download.png">
         </div>
       </div>
-
     </div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100% - 50px)"
-      class="ag-theme-alpine"
-      [rowData]="mappingRowData"
-      [columnDefs]="mappingColumnDefs"
-      [pagination]="true"
-      [paginationPageSize]="20"
-      (gridReady)="onMappingGridReady($event)"
-      [tooltipShowDelay]="0">
-    </ag-grid-angular>
+    <div style="width: 100%; height: calc(100% - 50px)">
+      <ag-grid-angular #publicPlatformForSpecificPeriod2 style="width: 100%; height: calc(100% - 50px)"
+        class="ag-theme-alpine"
+        [rowData]="mappingRowData"
+        [columnDefs]="mappingColumnDefs"
+        (gridReady)="onMappingGridReady($event)"
+        [tooltipShowDelay]="0">
+      </ag-grid-angular>
+      <div style="width: 100%; height: 50px;">
+        <app-grid-page [gridNumber]="2"></app-grid-page>
+      </div>
+    </div>
   </div>
 </div>
 

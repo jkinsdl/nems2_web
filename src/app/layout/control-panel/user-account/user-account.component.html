@@ -74,16 +74,19 @@
     </div>
 
     <div claSS="userAccountContents">
-      <ag-grid-angular style="width: 100%; height: calc(100% - 4px)"
+      <ag-grid-angular #userGrid style="width: 100%; height: calc(100% - 54px)" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
         [rowData]="users.users"
         [columnDefs]="columnDefs"
-        [pagination]="true"
-        [paginationPageSize]="50"
         [tooltipShowDelay]="0"
         (cellClicked)="userClick($event)"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>
+
+      <div style="width: 100%; height: 50px;">
+        <app-grid-page [gridNumber]="1"></app-grid-page>
+      </div>
+
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { CommonConstant } from 'src/app/util/common-constant';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,18 +7,24 @@ import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { AddVehicleModelComponent } from 'src/app/component/add-vehicle-model/add-vehicle-model.component';
 import { UtilService } from 'src/app/service/util.service';
+import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/service/ui.service';
 @Component({
   selector: 'app-vehicle-model',
   templateUrl: './vehicle-model.component.html',
   styleUrls: ['./vehicle-model.component.css']
 })
 export class VehicleModelComponent implements OnInit {
+
+  @ViewChild('vehicleModelGrid', { read: ElementRef }) vehicleModelGrid : ElementRef;
+
   constant : CommonConstant = new CommonConstant()
 
   constructor(
     private dialog: MatDialog,
     private vehiclemanagersService : VehiclemanagerService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private uiService : UiService
   ) { }
 
   columnDefs: ColDef[] = [
@@ -46,20 +52,61 @@ export class VehicleModelComponent implements OnInit {
     { field: 'warningPreValue', headerName : 'warningPreValue', tooltipField: 'warningPreValue'}
   ];
 
-  modelList : any[] = []
+  model : any = {
+    count : 0,
+    modelList : []
+  }
 
   gridApi!: GridApi;
 
+  page$ : Subscription
   searchFilter : SearchFilter = new SearchFilter()
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+  }
 
   ngOnInit(): void {
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getPageSize()
+    })
+  }
+
+  getPageSize(){
+    this.gridHeight = this.vehicleModelGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     this.getVehiclemanagerModel()
   }
 
+  onResize(event : any){
+    this.getPageSize()
+  }
+
+
   getVehiclemanagerModel(){
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
     this.vehiclemanagersService.getVehiclemanagerModel(this.searchFilter).subscribe(res=>{
       console.log(res)
-      this.modelList = res.body.modelList
+      this.model = res.body
+
+      let pagination = {
+        count : this.model.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
     },error=>{
       console.log(error)
     })
@@ -148,7 +195,7 @@ export class VehicleModelComponent implements OnInit {
   onBtExport() {
     //this.gridApi.exportDataAsExcel();
     //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("Vehicle Model",this.gridApi,this.modelList)
+    this.utilService.gridDataToExcelData("Vehicle Model",this.gridApi,this.model.modelList)
   }
 
 

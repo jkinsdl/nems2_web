@@ -51,10 +51,39 @@ export class DevicemanagerService {
     return this.http.put<any>(url, JSON.stringify(body), { observe: "response" })
   }
 
-  getDevicemanagersFirmwareFirmwareNameVehicles(firmwareName : string){ // 해당 펌웨어를 적용받는 차량 리스트
+  getDevicemanagersFirmwareFirmwareNameVehicles(firmwareName : string, filter : SearchFilter){ // 해당 펌웨어를 적용받는 차량 리스트
     var url = `${this.Url}/firmware/${firmwareName}/vehicles`;
+    let httpParams = new HttpParams()
+    if(filter.asc != undefined){
+      for(let i = 0; i < filter.asc.length; i++){
+        httpParams = httpParams.append('asc', filter.asc[i]);
+      }
+    }
 
-    return this.http.get<any>(url, { observe: "response" })
+    if(filter.desc != undefined){
+      for(let i = 0; i < filter.desc.length; i++){
+        httpParams = httpParams.append('desc', filter.desc[i]);
+      }
+    }
+
+    if(filter.limit != undefined){
+      httpParams = httpParams.set('limit', filter.limit)
+    }
+
+    if(filter.offset != undefined){
+      httpParams = httpParams.set('offset', filter.offset)
+    }
+
+    if(filter.search != undefined){
+      httpParams = httpParams.set('search', filter.search)
+    }
+
+    if(filter.vin != undefined){
+      httpParams = httpParams.set('vin', filter.vin)
+    }
+
+
+    return this.http.get<any>(url, {params : httpParams, observe: "response" })
   }
 
 

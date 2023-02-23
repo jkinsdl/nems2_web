@@ -56,15 +56,19 @@
     </div>
 
     <div class="alarmGrid">
-      <ag-grid-angular style="width: 100%; height: 100%"
+      <ag-grid-angular #alarmGrid style="width: 100%; height: calc(100% - 50px)"  (window:resize)="onResize($event)"
         class="ag-theme-alpine"
         [rowData]="vehiclewarning.warnings"
         [columnDefs]="columnDefs"
-        [pagination]="true"
-        [paginationPageSize]="50"
         [tooltipShowDelay]="0"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>
+
+      <div style="width: 100%; height: 50px;">
+        <app-grid-page [gridNumber]="1"></app-grid-page>
+      </div>
+
+
     </div>
   </div>
 

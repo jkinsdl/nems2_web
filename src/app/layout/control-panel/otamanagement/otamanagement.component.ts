@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent, ITooltipParams } from 'ag-grid-community';
 import { OtaService } from 'src/app/service/ota.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-otamanagement',
@@ -18,6 +19,9 @@ import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-toolti
   styleUrls: ['./otamanagement.component.css']
 })
 export class OTAManagementComponent implements OnInit {
+
+  @ViewChild('otaManagementGrid', { read: ElementRef }) otaManagementGrid : ElementRef;
+
   constant : CommonConstant = new CommonConstant()
   constructor(
     private otaService : OtaService,
@@ -60,11 +64,38 @@ export class OTAManagementComponent implements OnInit {
 
   inputVinText : string = ""
 
+  page$ : Subscription
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+  }
+
   ngOnInit(): void {
     //this.getOtaFirmware()
     this.getDevicemanagersFirmware()
     //this.getDevicemanagersVehicles()
+  }
 
+  getPageSize(){
+    this.gridHeight = this.otaManagementGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    if(this.selectFirmware != null){
+      this.getDevicemanagersFirmwareFirmwareNameVehicles()
+    }
+
+  }
+
+  onResize(event : any){
+    this.getPageSize()
   }
 
   getDevicemanagersVehicles() {
@@ -171,9 +202,23 @@ export class OTAManagementComponent implements OnInit {
   }
 
   getDevicemanagersFirmwareFirmwareNameVehicles(){
-    this.devicemanageService.getDevicemanagersFirmwareFirmwareNameVehicles(this.selectFirmware.firmwareName).subscribe(res=>{
+
+    let f = new SearchFilter()
+    f.offset = (this.currentPage-1) * this.pageSize
+    f.limit = this.pageSize
+
+    this.devicemanageService.getDevicemanagersFirmwareFirmwareNameVehicles(this.selectFirmware.firmwareName,f).subscribe(res=>{
       console.log(res)
       this.firmwareVehiclesList = res.body
+
+      let pagination = {
+        count : this.firmwareVehiclesList.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+
     },error=>{
       console.log(error)
       this.firmwareVehiclesList = []

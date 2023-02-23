@@ -9,6 +9,7 @@
 .mainContainer .titleManuContainer{
   width: 100%;
   height: calc(5% - 5px);
+  min-height: 46px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eeeef5;
@@ -102,7 +103,6 @@
 .mainContainer .contentsContainer .menuLayout .footer{
   /*position: absolute;
   bottom: 0;*/
-  width: 100%;
   position: absolute;
   bottom: 0;
 }

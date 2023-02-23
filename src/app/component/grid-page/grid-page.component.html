@@ -1,0 +1,9 @@
+<div class="pageContainer">
+  <div class="pageBtn previous" (click)="clickPrevious()">PREVIOUS</div>
+
+  <div *ngIf="isPreviousTurn" class="pageBtn" (click)="clicPagePreviousTurn()">...</div>
+  <div class="pageBtn" *ngFor="let page of pageArray;" [ngClass]="{'select': currentPage == page}" (click)="clickPage(page)">{{page}}</div>
+  <div *ngIf="isPageNextTurn" class="pageBtn" (click)="clicPageNextTurn()">...</div>
+
+  <div class="pageBtn next" (click)="clickNext()">NEXT</div>
+</div>

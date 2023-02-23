@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { Subscription } from 'rxjs';
 import { AddPublicPlatformManagementComponent } from 'src/app/component/add-public-platform-management/add-public-platform-management.component';
 import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { ForwardingService } from 'src/app/service/forwarding.service';
+import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
@@ -16,11 +18,17 @@ import { CommonConstant } from 'src/app/util/common-constant';
   styleUrls: ['./public-platform-management.component.css']
 })
 export class PublicPlatformManagementComponent implements OnInit {
+
+  @ViewChild('publicPlatformManagementGrid1', { read: ElementRef }) publicPlatformManagementGrid1 : ElementRef;
+
+  @ViewChild('publicPlatformManagementGrid2', { read: ElementRef }) publicPlatformManagementGrid2 : ElementRef;
+
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
     private forwardingService : ForwardingService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private uiService : UiService
   ) { }
 
   forwardingColumnDefs: ColDef[] = [
@@ -65,18 +73,73 @@ export class PublicPlatformManagementComponent implements OnInit {
   managementGridApi!: GridApi;
   mappingGridApi!: GridApi;
 
-  searchFilter : SearchFilter = new SearchFilter()
-
   selectForwardingServerName : string = null
 
+  page$ : Subscription
+  page2$ : Subscription
+  grid1Height : number
+  grid2Height : number
+  pageSize : number
+  pageSize2 : number
+  currentPage : number = 1
+  currentPage2 : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+    if(this.page2$)this.page2$.unsubscribe()
+  }
+
+
   ngOnInit(): void {
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getForwarding()
+    })
+
+    this.page2$ = this.uiService.page2$.subscribe((page : number)=>{
+      this.currentPage2 = page
+      this.getForwardingServerNameRelations(this.selectForwardingServerName)
+    })
+  }
+
+  getPageSize(){
+    this.grid1Height = this.publicPlatformManagementGrid1.nativeElement.offsetHeight;
+    this.grid2Height = this.publicPlatformManagementGrid2.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
+    this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
     this.getForwarding()
+    if(this.selectForwardingServerName != null){
+      this.getForwardingServerNameRelations(this.selectForwardingServerName)
+    }
+  }
+
+  onResize(event : any){
+    this.getPageSize()
   }
 
   getForwarding(){
-    this.forwardingService.getForwarding(this.searchFilter).subscribe(res=>{
+    let f = new SearchFilter()
+    f.offset = (this.currentPage-1) * this.pageSize
+    f.limit = this.pageSize
+
+    this.forwardingService.getForwarding(f).subscribe(res=>{
       console.log(res)
       this.forwarding = res.body
+
+      let pagination = {
+        count : this.forwarding.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+
     },error=>{
       console.log(error)
     })
@@ -93,9 +156,22 @@ export class PublicPlatformManagementComponent implements OnInit {
   }
 
   getForwardingServerNameRelations(serverName : string){
-    this.forwardingService.getForwardingServerNameRelations(serverName, new SearchFilter()).subscribe(res=>{
+    let f = new SearchFilter()
+    f.offset = (this.currentPage2-1) * this.pageSize2
+    f.limit = this.pageSize2
+
+
+    this.forwardingService.getForwardingServerNameRelations(serverName, f).subscribe(res=>{
       console.log(res)
       this.relations = res.body
+
+      let pagination = {
+        count : this.relations.count,
+        pageSize : this.pageSize2,
+        page : this.currentPage2
+      }
+
+      this.uiService.setPagination2(pagination)
     },error=>{
       console.log(error)
     })

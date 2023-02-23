@@ -435,15 +435,20 @@
 
       </div>
       <div class="grid">
-        <ag-grid-angular style="width: 100%; height: calc(100% - 10px)"
-        class="ag-theme-alpine"
-        [rowData]="[]"
-        [columnDefs]="columnDefs"
-        [pagination]="true"
-        [paginationPageSize]="50"
-        [tooltipShowDelay]="0"
-        (gridReady)="onGridReady($event)">
-      </ag-grid-angular>
+        <ag-grid-angular #vinHistoryGrid style="width: 100%; height: calc(100% - 60px)"  (window:resize)="onResize($event)"
+          class="ag-theme-alpine"
+          [rowData]="[]"
+          [columnDefs]="columnDefs"
+          [pagination]="true"
+          [paginationPageSize]="50"
+          [tooltipShowDelay]="0"
+          (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+
+        <div style="width: 100%; height: 50px;">
+          <app-grid-page [gridNumber]="1"></app-grid-page>
+        </div>
+
       </div>
 
     </div>

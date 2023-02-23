@@ -79,7 +79,7 @@
 
   <div class="contentsContainer"  >
     <div class="menuLayout" [ngClass]="{'menuLayoutReduction': menuMode == 2}">
-      <div style="width: 100%;">
+      <div style="width: 100%;height: calc(100% - 40px); overflow-y: scroll;">
         <!--<div class="enableDisableBtn" [ngClass]="{'enableDisableBtnCentor': menuMode == 2}">
           <img src="assets/icon/menu_enable_disable_btn.png" [ngClass]="{'enableDisableBtnRotate': menuMode == 2}" (click)="changeMenuMode()">
         </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
@@ -20,6 +20,8 @@ import { StatisticsService } from 'src/app/service/statistics.service';
 })
 
 export class DetailMonitoringComponent implements OnInit {
+
+  @ViewChild('vinHistoryGrid', { read: ElementRef }) vinHistoryGrid : ElementRef;
 
   constructor(private router: Router,
     private activatedRoute : ActivatedRoute,
@@ -80,6 +82,15 @@ export class DetailMonitoringComponent implements OnInit {
   gridApi!: GridApi;
   gridColumnApi : any
 
+  page$ : Subscription
+  searchFilter : SearchFilter = new SearchFilter()
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -88,6 +99,7 @@ export class DetailMonitoringComponent implements OnInit {
     if(this.interval)this.interval.unsubscribe()
     if(this.currentTimeInterval)this.currentTimeInterval.unsubscribe()
     if(this.vinCountInterval)this.vinCountInterval.unsubscribe()
+    if(this.page$)this.page$.unsubscribe()
   }
 
   ngOnInit(): void {
@@ -472,6 +484,21 @@ export class DetailMonitoringComponent implements OnInit {
     this.setSpeedChart()
     this.setBatteryChart()
     this.getRealtimedataVehiclelist()
+
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getPageSize()
+    })
+  }
+
+  getPageSize(){
+    this.gridHeight = this.vinHistoryGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+
+  }
+
+  onResize(event : any){
+    this.getPageSize()
   }
 
   clickVinMarker(vin : string){

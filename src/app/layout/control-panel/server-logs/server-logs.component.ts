@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { Subscription } from 'rxjs';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { GbpacketService } from 'src/app/service/gbpacket.service';
+import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
@@ -12,10 +14,15 @@ import { CommonConstant } from 'src/app/util/common-constant';
   styleUrls: ['./server-logs.component.css']
 })
 export class ServerLogsComponent implements OnInit {
+
+  @ViewChild('serverLogGrid', { read: ElementRef }) serverLogGrid : ElementRef;
+
   constant : CommonConstant = new CommonConstant()
   constructor(
     private gbpacketService : GbpacketService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private uiService : UiService
+
   ) { }
   columnDefs: ColDef[] = [
     { field: 'data', headerName: 'data', tooltipField: 'data', },
@@ -36,8 +43,6 @@ export class ServerLogsComponent implements OnInit {
   beginDate : Date = null
   endDate : Date = null
 
-  searchFilter : SearchFilter = new SearchFilter()
-
   gbpacket : any ={
     count : 0,
     entities : [],
@@ -51,12 +56,40 @@ export class ServerLogsComponent implements OnInit {
   etcFilter : boolean = false
   customFilter : boolean = false
 
+  page$ : Subscription
+  searchFilter : SearchFilter = new SearchFilter()
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+  }
+
   ngOnInit(): void {
     this.endDate = new Date()
     this.beginDate = new Date()
     this.beginDate.setDate(this.endDate.getDate() - 30)
-    this.getGbpacket()
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getPageSize()
+    })
+  }
 
+  getPageSize(){
+    this.gridHeight = this.serverLogGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    this.getGbpacket()
+  }
+
+  onResize(event : any){
+    this.getPageSize()
   }
 
   getGbpacket(){
@@ -88,10 +121,19 @@ export class ServerLogsComponent implements OnInit {
 
     this.searchFilter.begin = this.beginDate.toISOString()
     this.searchFilter.end = this.endDate.toISOString()
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
+
 
     this.gbpacketService.getGbpacket(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.gbpacket = res.body
+      let pagination = {
+        count : this.gbpacket.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+      this.uiService.setPagination(pagination)
     },error=>{
       console.log(error)
     })

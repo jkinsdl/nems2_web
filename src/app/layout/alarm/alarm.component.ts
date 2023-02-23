@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import mapboxgl from 'mapbox-gl';
+import { Subscription } from 'rxjs';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 @Component({
@@ -13,9 +15,12 @@ import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 })
 export class AlarmComponent implements OnInit {
 
+  @ViewChild('alarmGrid', { read: ElementRef }) alarmGrid : ElementRef;
+
   constructor(
     private vehiclewarningService : VehiclewarningService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private uiService: UiService
   ) { }
 
   columnDefs: ColDef[] = [
@@ -56,7 +61,21 @@ export class AlarmComponent implements OnInit {
   lat = 35.8617;
   lng = 104.1954;
 
+  page$ : Subscription
   searchFilter : SearchFilter = new SearchFilter()
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+  }
 
   ngOnInit(): void {
     setTimeout(()=>{
@@ -69,13 +88,38 @@ export class AlarmComponent implements OnInit {
       });
       this.map.addControl(new mapboxgl.NavigationControl());
     },1)
+
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getPageSize()
+    })
+
+  }
+
+  getPageSize(){
+    this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     this.getVehiclewarning()
   }
 
+  onResize(event : any){
+    this.getPageSize()
+  }
+
   getVehiclewarning(){
+    this.searchFilter.limit = this.pageSize
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.vehiclewarningService.getVehiclewarning(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.vehiclewarning = res.body
+
+      let pagination = {
+        count : this.vehiclewarning.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
     },error=>{
       console.log(error)
     })

@@ -1,5 +1,4 @@
 <div class="publicPlatformManagementContainer">
-
   <div class="publicPlatformManagementLayout">
     <div class="gridControlBox">
       <div class="btn add" (click)="addManagement()">
@@ -11,31 +10,30 @@
       <div class="btn delete" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="deleteManagement()">
         Delete
       </div>
-
       <div style="display: flex; position: absolute; right: 40px;">
         <label class="excel_btn" for="uploadExcel1">
           <img src="assets/icon/excel_upload.png">
         </label>
-
         <input id="uploadExcel1" type="file" style="display: none;">
-
         <div class="excel_btn" (click)="onBtExport('management')">
           <img src="assets/icon/excel_download.png">
         </div>
       </div>
-
     </div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100% - 50px)"
-      class="ag-theme-alpine"
-      [rowData]="forwarding.entities"
-      [columnDefs]="forwardingColumnDefs"
-      [pagination]="true"
-      [paginationPageSize]="20"
-      [tooltipShowDelay]="0"
-      (gridReady)="onServerGridReady($event)"
-      (rowClicked)="onForwardingRowClick($event)">
-    </ag-grid-angular>
+    <div style="width: 100%; height: calc(100% - 50px)">
+      <ag-grid-angular #publicPlatformManagementGrid1 style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
+        class="ag-theme-alpine"
+        [rowData]="forwarding.entities"
+        [columnDefs]="forwardingColumnDefs"
+        [tooltipShowDelay]="0"
+        (gridReady)="onServerGridReady($event)"
+        (rowClicked)="onForwardingRowClick($event)">
+      </ag-grid-angular>
+      <div style="width: 100%; height: 50px;">
+        <app-grid-page [gridNumber]="1"></app-grid-page>
+      </div>
+    </div>
   </div>
 
   <div class="publicPlatformMappingLayout">
@@ -64,14 +62,17 @@
 
     </div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100% - 50px)"
-      class="ag-theme-alpine"
-      [rowData]="relations.entities"
-      [columnDefs]="relationsColumnDefs"
-      [pagination]="true"
-      [paginationPageSize]="20"
-      [tooltipShowDelay]="0"
-      (gridReady)="onMappingGridReady($event)">
-    </ag-grid-angular>
+    <div style="width: 100%; height: calc(100% - 50px)">
+      <ag-grid-angular #publicPlatformManagementGrid2 style="width: 100%; height: calc(100% - 50px)"
+        class="ag-theme-alpine"
+        [rowData]="relations.entities"
+        [columnDefs]="relationsColumnDefs"
+        [tooltipShowDelay]="0"
+        (gridReady)="onMappingGridReady($event)">
+      </ag-grid-angular>
+      <div style="width: 100%; height: 50px;">
+        <app-grid-page [gridNumber]="2"></app-grid-page>
+      </div>
+    </div>
   </div>
 </div>

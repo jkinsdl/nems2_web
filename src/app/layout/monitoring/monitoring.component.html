@@ -5,21 +5,21 @@
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text" [(ngModel)]="filter.vin" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getRealtimedataVehiclelist()">
         </div>
       </div>
 
       <div class="filter">
         <div class="label">reg number</div>
         <div class="value">
-          <input type="text" [(ngModel)]="filter.registrationPlate" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.registrationPlate" (keydown.enter)="getRealtimedataVehiclelist()">
         </div>
       </div>
 
       <div class="filter">
         <div class="label">Login</div>
         <div class="value">
-          <select [(ngModel)]="filter.isLogin">
+          <select [(ngModel)]="searchFilter.isLogin">
             <option [value]="undefined"></option>
             <option [value]="true">Online</option>
             <option [value]="false">Offline</option>
@@ -30,21 +30,21 @@
       <div class="filter">
         <div class="label">purpose</div>
         <div class="value">
-          <input type="text" [(ngModel)]="filter.purpose" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.purpose" (keydown.enter)="getRealtimedataVehiclelist()">
         </div>
       </div>
 
       <div class="filter">
         <div class="label">model</div>
         <div class="value">
-          <input type="text" [(ngModel)]="filter.model" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.model" (keydown.enter)="getRealtimedataVehiclelist()">
         </div>
       </div>
 
       <div class="filter">
         <div class="label">region</div>
         <div class="value">
-          <input type="text" [(ngModel)]="filter.region" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.region" (keydown.enter)="getRealtimedataVehiclelist()">
         </div>
       </div>
 
@@ -214,43 +214,19 @@
       </div>
 -->
 
-      <ag-grid-angular
-        style="width: 100%; height: 100%"
+      <ag-grid-angular  #realTimeMonitoringGrid
+        style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
-        [rowData]="vehicleInfo"
+        [rowData]="vehicleInfo.vehicleBrief"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
-        [pagination]="true"
-        [paginationPageSize]="50"
         (gridReady)="onGridReady($event)"
         (rowClicked)="getVehicleRow($event)">
       </ag-grid-angular>
-      <!--
-      <div class="gridPage">
 
-        <div class="page" (click)="changePage(1)">
-          <img src="assets/icon/first_page_icon.png" >
-        </div>
-
-        <div class="page" (click)="previousPage()">
-          <img src="assets/icon/previous_icon.png">
-        </div>
-
-        <div class="page" [ngClass]="{'pageSelect': currentPage == 1}" (click)="changePage(1)">1</div>
-        <div class="page" [ngClass]="{'pageSelect': currentPage == 2}" (click)="changePage(2)">2</div>
-        <div class="page" [ngClass]="{'pageSelect': currentPage == 3}" (click)="changePage(3)">3</div>
-
-
-        <div class="page" (click)="nextPage()">
-          <img src="assets/icon/next_icon.png" >
-        </div>
-
-        <div class="page" (click)="changePage(3)">
-          <img src="assets/icon/last_page_icon.png">
-        </div>
-
+      <div style="width: 100%; height: 50px;">
+        <app-grid-page [gridNumber]="1"></app-grid-page>
       </div>
-      -->
     </div>
   </div>
 </div>

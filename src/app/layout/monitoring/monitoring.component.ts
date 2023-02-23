@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
@@ -14,12 +14,12 @@ import { UtilService } from 'src/app/service/util.service';
 })
 export class MonitoringComponent implements OnInit {
 
+  @ViewChild('realTimeMonitoringGrid', { read: ElementRef }) realTimeMonitoringGrid : ElementRef;
+
   constructor(   private router: Router,
     private realtimedataService : RealtimedataService,
-    private uiSerivce : UiService,
+    private uiService : UiService,
     private utilService : UtilService) { }
-
-  currentPage : number = 1;
 
   startDate : any
   endDate :any
@@ -41,17 +41,41 @@ export class MonitoringComponent implements OnInit {
     { field: 'soc', headerName : 'soc(%)', tooltipField: 'soc' },
   ];
 
-  vehicleInfo : any [] = []
+  vehicleInfo : any ={
+    totalCount : 0,
+    vehicleBrief : []
+
+  }
 
   gridApi!: GridApi;
 
-  filter : SearchFilter = new SearchFilter()
+  page$ : Subscription
+  searchFilter : SearchFilter = new SearchFilter()
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
 
   ngOnInit(): void {
     this.startDate = new Date(new Date().getTime() -1*1000*60*60*24);
     this.endDate = new Date(new Date().getTime());
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getPageSize()
+    })
+  }
 
+  getPageSize(){
+    this.gridHeight = this.realTimeMonitoringGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     this.getRealtimedataVehiclelist()
+  }
+
+  onResize(event : any){
+    this.getPageSize()
   }
 
   getVehicleRow(event : any){
@@ -68,10 +92,20 @@ export class MonitoringComponent implements OnInit {
   }
 
   getRealtimedataVehiclelist(){
-    this.realtimedataService.getRealtimedataVehiclelist(this.filter).subscribe(
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
+    this.realtimedataService.getRealtimedataVehiclelist(this.searchFilter).subscribe(
       res=>{
         console.log(res)
-        this.vehicleInfo = res.body.vehicleBrief
+        this.vehicleInfo = res.body
+        let pagination = {
+          count : this.vehicleInfo.totalCount,
+          pageSize : this.pageSize,
+          page : this.currentPage
+        }
+
+        this.uiService.setPagination(pagination)
+
       }, error=>{
         console.log(error)
       })
@@ -87,26 +121,11 @@ export class MonitoringComponent implements OnInit {
       });
   }
 
-  changePage(page : number){
-    this.currentPage = page;
-  }
-
-  previousPage(){
-    if(this.currentPage > 1){
-      this.currentPage--;
-    }
-  }
-
-  nextPage(){
-    if(this.currentPage < 3){
-      this.currentPage++;
-    }
-  }
-
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     if(this.mapsBtn$)this.mapsBtn$.unsubscribe()
+    if(this.page$)this.page$.unsubscribe()
   }
 
   onGridReady(params: GridReadyEvent) {

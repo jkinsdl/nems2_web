@@ -100,6 +100,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DateformatPipe } from './shared/pipes/dateformat.pipe';
 import { GridTooltipComponent } from './component/grid-tooltip/grid-tooltip.component';
 import { InfoDetailComponent } from './component/info-detail/info-detail.component';
+import { GridPageComponent } from './component/grid-page/grid-page.component';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -188,7 +189,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     TravelDistanceStatisticsComponent,
     DateformatPipe,
     GridTooltipComponent,
-    InfoDetailComponent
+    InfoDetailComponent,
+    GridPageComponent
   ],
   imports: [
     BrowserModule,

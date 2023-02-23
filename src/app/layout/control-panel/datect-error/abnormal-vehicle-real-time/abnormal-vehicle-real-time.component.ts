@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { Subscription } from 'rxjs';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 
@@ -11,9 +13,12 @@ import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 })
 export class AbnormalVehicleRealTimeComponent implements OnInit {
 
+  @ViewChild('abnormalVehicleRealTimeGrid', { read: ElementRef }) abnormalVehicleRealTimeGrid : ElementRef;
+
   constructor(
     private vehiclewarningService : VehiclewarningService,
-    private utilService : UtilService) { }
+    private utilService : UtilService,
+    private uiService : UiService) { }
 
   columnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN' },
@@ -55,12 +60,40 @@ export class AbnormalVehicleRealTimeComponent implements OnInit {
 
   startDate : any
   endDate :any
+
+  page$ : Subscription
+  searchFilter : SearchFilter = new SearchFilter()
+  gridHeight : number
+  pageSize : number
+  currentPage : number = 1
+
+  ngAfterViewInit() {
+    this.getPageSize()
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+  }
+
   ngOnInit(): void {
     this.startDate = new Date(new Date().getTime() -1*1000*60*60*24);
     this.endDate = new Date(new Date().getTime());
 
+
+  }
+
+  getPageSize(){
+    this.gridHeight = this.abnormalVehicleRealTimeGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     this.getVehiclewarning()
   }
+
+  onResize(event : any){
+    this.getPageSize()
+  }
+
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;

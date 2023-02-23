@@ -1,0 +1,33 @@
+.pageContainer{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.previous{
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.next{
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.pageBtn{
+  background-color: #fff;
+  color: #6b7280;
+  padding: 5px 14px;
+  border: 1px solid #d2d6dc;
+  cursor: pointer;
+  font-size: 11px;
+
+}
+
+.select{
+  color: #3c4257;
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
