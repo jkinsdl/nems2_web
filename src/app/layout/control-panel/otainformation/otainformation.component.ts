@@ -58,6 +58,12 @@ export class OTAInformationComponent implements OnInit {
     this.getPageSize()
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.page$)this.page$.unsubscribe()
+  }
+
   ngOnInit(): void {
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
