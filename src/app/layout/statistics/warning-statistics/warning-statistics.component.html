@@ -4,8 +4,8 @@
     <div class="statusContents">
       <div class="status">
         <div class="statusBox">
-          <div class="statusValue">12,087</div>
-          <div class="statusLabel">고장 수량</div>
+          <div class="statusValue">{{warningsSummary.warningVehicles}}</div>
+          <div class="statusLabel">Warning Vehicles</div>
         </div>
       </div>
 
@@ -13,17 +13,8 @@
 
       <div class="status">
         <div class="statusBox">
-          <div class="statusValue">279</div>
-          <div class="statusLabel">고장 수량</div>
-        </div>
-      </div>
-
-      <div class="statusLine"></div>
-
-      <div class="status">
-        <div class="statusBox">
-          <div class="statusValue">2.31%</div>
-          <div class="statusLabel">실패율</div>
+          <div class="statusValue">{{warningsSummary.warnings}}</div>
+          <div class="statusLabel">warnings</div>
         </div>
       </div>
     </div>
@@ -32,115 +23,26 @@
 
   <div class="contentRightLayout">
     <app-sub-title [title]="'MAP'"></app-sub-title>
-
-
     <div id="map"></div>
-
   </div>
 
   <div class="contentLeftLayout">
     <app-sub-title [title]="'GAUGE'"></app-sub-title>
 
-    <div class="statisticsFilter">
+    <div class="statisticsFilter" *ngFor="let model of warningsSummary.warningByModel; let i = index">
 
-      <div class="statisticsLabel"> 1 LQE ev1.6 2016 </div>
-      <div class="statisticsGauge">
+      <div class="statisticsLabel"> {{model.key}} </div>
+      <div class="statisticsGauge progress-{{i}}">
         <mat-progress-bar
-          class="example-margin"
-          [color]="'warn'"
           [mode]="'determinate'"
-          [value]="30"
+          [value]="model.value"
           [bufferValue]="75">
         </mat-progress-bar>
 
         <div style="margin-left: 20px; font-size: 14px; ">
-          30%
+          {{model.value}}%
         </div>
       </div>
-
-    </div>
-
-    <div class="statisticsFilter">
-
-      <div class="statisticsLabel"> 2 LQE ev2.0 2017 </div>
-      <div class="statisticsGauge">
-        <mat-progress-bar
-          class="example-margin"
-          [color]="'primary'"
-          [mode]="'determinate'"
-          [value]="30"
-          [bufferValue]="75">
-        </mat-progress-bar>
-
-        <div style="margin-left: 20px; font-size: 14px; ">
-          30%
-        </div>
-      </div>
-
-    </div>
-
-    <div class="statisticsFilter">
-
-      <div class="statisticsLabel"> 3 Hyundai IONIQ 2016 </div>
-      <div class="statisticsGauge">
-
-        <mat-progress-bar
-          class="example-margin"
-          [color]="'accent'"
-          [mode]="'determinate'"
-          [value]="30"
-          [bufferValue]="75">
-        </mat-progress-bar>
-
-        <div style="margin-left: 20px; font-size: 14px; ">
-          30%
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="statisticsFilter">
-
-      <div class="statisticsLabel"> 4 Volvo XEC40 2019 </div>
-      <div class="statisticsGauge">
-
-
-        <mat-progress-bar
-          class="example-margin"
-          [color]="'warn'"
-          [mode]="'determinate'"
-          [value]="30"
-          [bufferValue]="75">
-        </mat-progress-bar>
-
-        <div style="margin-left: 20px; font-size: 14px; ">
-          30%
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="statisticsFilter">
-
-      <div class="statisticsLabel"> 5 Lexus HEV 2018 </div>
-      <div class="statisticsGauge">
-
-        <mat-progress-bar
-        class="example-margin"
-        [color]="'pink'"
-        [mode]="'determinate'"
-        [value]="30"
-        [bufferValue]="75">
-      </mat-progress-bar>
-
-      <div style="margin-left: 20px; font-size: 14px; ">
-        30%
-      </div>
-
-      </div>
-
     </div>
   </div>
 </div>

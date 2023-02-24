@@ -823,8 +823,8 @@ export class DashboardComponent implements OnInit {
                 },
                 "geometry": {
                   "type": "Point",
-                    "coordinates": lnglat
-                  },
+                  "coordinates": lnglat
+                },
               })
               break;
             }

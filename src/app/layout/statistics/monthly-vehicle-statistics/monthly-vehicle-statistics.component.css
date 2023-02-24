@@ -46,3 +46,9 @@
   background-color: #eeeef5;
   float: left;
 }
+
+#chinaMapChart,
+#cityMapChart {
+  width: 100%;
+  height: calc(100% - 30px);
+}

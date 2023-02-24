@@ -17,7 +17,6 @@ export class TravelDistanceStatisticsComponent implements OnInit {
   totalMileage : number = 0;
   periodMileage : number = 0;
   ngOnInit(): void {
-    this.setDonutChart()
     this.getStatisticsMileages()
   }
 
@@ -25,6 +24,7 @@ export class TravelDistanceStatisticsComponent implements OnInit {
     this.statisticsService.getStatisticsMileages(new SearchFilter()).subscribe(res=>{
       console.log(res)
       this.setBarChart(res.body.mileageVehicles)
+      this.setDonutChart(res.body.mileageVehicles)
       this.totalMileage = res.body.totalMileage
       this.periodMileage = res.body.periodMileage
     },error=>{
@@ -85,7 +85,17 @@ export class TravelDistanceStatisticsComponent implements OnInit {
     option && myChart.setOption(option);
   }
 
-  setDonutChart(){
+  setDonutChart(data : any[]){
+
+    let donutData : any[] = []
+
+    for(let i = 0; i < data.length; i++){
+      donutData.push({
+        name: data[i].key,
+        value : data[i].value
+      })
+    }
+
     var chartDom = document.getElementById('donutChart')!;
     var myChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
@@ -111,13 +121,7 @@ export class TravelDistanceStatisticsComponent implements OnInit {
               fontWeight: 'bold'
             }
           },
-          data: [
-            { value: 1048, name: 'A' },
-            { value: 735, name: 'B' },
-            { value: 580, name: 'C' },
-            { value: 484, name: 'D' },
-            { value: 300, name: 'E' }
-          ],
+          data: donutData,
 
         }
       ]

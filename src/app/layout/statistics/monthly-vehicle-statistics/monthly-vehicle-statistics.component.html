@@ -5,7 +5,7 @@
       <div class="status">
         <div class="statusBox">
           <div class="statusValue">{{registrationSummary.totalVehicles}}</div>
-          <div class="statusLabel">소유차량</div>
+          <div class="statusLabel">Total Vehicles</div>
         </div>
       </div>
 
@@ -14,7 +14,7 @@
       <div class="status">
         <div class="statusBox">
           <div class="statusValue">{{registrationSummary.newVehicles}}</div>
-          <div class="statusLabel">이달의 새로운 방문 차량</div>
+          <div class="statusLabel">New Vehicles</div>
         </div>
       </div>
 
@@ -22,8 +22,8 @@
 
       <div class="status">
         <div class="statusBox">
-          <div class="statusValue">3,840,653</div>
-          <div class="statusLabel">매월차량이용</div>
+          <div class="statusValue">{{registrationSummary.useVehicles}}</div>
+          <div class="statusLabel">Use Vehicles</div>
         </div>
       </div>
     </div>
@@ -31,12 +31,15 @@
 
 
   <div class="contentRightLayout">
-    <app-sub-title [title]="'MAP'"></app-sub-title>
-    <div id="map"></div>
+    <app-sub-title [title]="'PROVINCE'"></app-sub-title>
+
+    <div id="chinaMapChart"></div>
+
+    <!--<div id="map"></div>-->
   </div>
 
   <div class="contentLeftLayout">
-    <app-sub-title [title]="''"></app-sub-title>
-    <div id="chinaMapChart"></div>
+    <app-sub-title [title]="'CITY'"></app-sub-title>
+    <div id="cityMapChart"></div>
   </div>
 </div>

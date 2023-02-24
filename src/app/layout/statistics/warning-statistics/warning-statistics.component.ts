@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
+import mapboxgl, { GeoJSONSource, LngLatBoundsLike } from 'mapbox-gl';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { StatisticsService } from 'src/app/service/statistics.service';
+import { UtilService } from 'src/app/service/util.service';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { StatisticsService } from 'src/app/service/statistics.service';
 export class WarningStatisticsComponent implements OnInit {
 
   constructor(
-    private statisticsServce : StatisticsService
+    private statisticsServce : StatisticsService,
+    private utilService : UtilService
   ) { }
 
   map: mapboxgl.Map;
@@ -35,12 +37,48 @@ export class WarningStatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setMap()
-    this.getStatisticsWarningsSummary()
+
   }
 
   getStatisticsWarningsSummary(){
     this.statisticsServce.getStatisticsWarningsSummary(new SearchFilter()).subscribe(res=>{
       console.log(res)
+      this.warningsSummary = res.body
+      console.log(this.warningsSummary)
+      this.utilService.getSubPrefectureeData().subscribe((subPrefecture:any)=>{
+
+        console.log(subPrefecture)
+        let featuresList : any[] = []
+
+        for(let i = 0 ; i < res.body.warningByRegion.length; i++){
+
+          for(let j = 0; j < subPrefecture.features.length; j++){
+            if(res.body.warningByRegion[i].key == subPrefecture.features[j].properties.ADM2_ZH){
+              let lnglat = subPrefecture.features[j].geometry.center
+              featuresList.push({
+                "type": "Feature",
+                      "properties": {
+                      "key" : res.body.warningByRegion[i].key,
+                      "count" : res.body.warningByRegion[i].value,
+                      },
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": lnglat
+                      },
+              })
+              break;
+            }
+          }
+        }
+
+        (this.map.getSource("warningByRegion") as GeoJSONSource).setData({
+          "type": "FeatureCollection",
+          "features": featuresList
+        });
+
+      })
+
+
     },error=>{
       console.log(error)
     })
@@ -60,86 +98,33 @@ export class WarningStatisticsComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this.map.on('load', () => {
-      this.map.addSource('test', {
+      this.map.addSource('warningByRegion', {
         type: 'geojson',
-        //data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson', // 데이터
-        data : 'assets/data/test.json',
-        cluster: true,
-        clusterMaxZoom: 14, // 클러스터링이 나타날 최대 줌
-        clusterRadius: 50 // 클러스터링 할 범위를 의미
       });
 
       this.map.addLayer({
         id: 'clusters',
         type: 'circle',
-        source: 'test',
-        filter: ['has', 'point_count'],
+        source: 'warningByRegion',
         paint: {
-          'circle-color': [ 'step', ['get', 'point_count'], '#51bbd6', 100, '#f1f075', 750, '#f28cb1' ],
-          'circle-radius': ['step',['get', 'point_count'], 20,100,30,750,40]
+          "circle-radius": 18,
+          "circle-color": "#3887be"
         }
       });
 
       this.map.addLayer({
         id: 'cluster-count',
         type: 'symbol',
-        source: 'test',
-        filter: ['has', 'point_count'],
+        source: 'warningByRegion',
         layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
+          'text-field': '{count}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12,
         }
       })
 
-      this.map.addLayer({
-        id: 'unclustered-point',
-        type: 'circle',
-        source: 'test',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-        'circle-color': '#11b4da',
-        'circle-radius': 4,
-        'circle-stroke-width': 3,
-        'circle-stroke-color': '#fff'
-        }
-      });
+      this.getStatisticsWarningsSummary()
 
-      this.map.on('click', 'clusters', (e) => {
-        const features : any = this.map.queryRenderedFeatures(e.point, {
-          layers: ['clusters']
-        });
-        const clusterId = features[0].properties.cluster_id;
-        let source = this.map.getSource('test') as mapboxgl.GeoJSONSource
-        source.getClusterExpansionZoom( clusterId, (err : any, zoom : any) => {
-          if (err) {
-            return;
-          }
-          this.map.easeTo({
-            center: features[0].geometry.coordinates,
-          zoom: zoom
-          });
-        });
-      });
-
-      this.map.on('click', 'unclustered-point', (e : any) => {
-
-      });
-
-      this.map.on('mouseenter', 'clusters', (e : any) => {
-        this.map.getCanvas().style.cursor = 'pointer';
-      });
-
-      this.map.on('mouseleave', 'clusters', () => {
-        this.map.getCanvas().style.cursor = '';
-      });
-
-      this.map.on('mouseenter', 'unclustered-point', (e : any) => {
-      });
-
-      this.map.on('mouseleave', 'unclustered-point', () => {
-        this.map.getCanvas().style.cursor = '';
-      });
     });
     },1)
   }

@@ -33,7 +33,7 @@ export class UiService {
   pagination2$ = this.pagination2Subject.asObservable()
 
   getGridPageSize(gridHeight : number){
-    return Math.floor((gridHeight - 50)/43)
+    return Math.floor((gridHeight - 50)/43) < 1 ? 1 : Math.floor((gridHeight - 50)/43)
   }
 
   setMenuMode(mode : number){
