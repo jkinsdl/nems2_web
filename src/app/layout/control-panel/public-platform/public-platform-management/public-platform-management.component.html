@@ -27,6 +27,7 @@
         [rowData]="forwarding.entities"
         [columnDefs]="forwardingColumnDefs"
         [tooltipShowDelay]="0"
+        [rowSelection]="'single'"
         (gridReady)="onServerGridReady($event)"
         (rowClicked)="onForwardingRowClick($event)">
       </ag-grid-angular>
@@ -68,6 +69,7 @@
         [rowData]="relations.entities"
         [columnDefs]="relationsColumnDefs"
         [tooltipShowDelay]="0"
+        [rowSelection]="'single'"
         (gridReady)="onMappingGridReady($event)">
       </ag-grid-angular>
       <div style="width: 100%; height: 50px;">

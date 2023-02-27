@@ -79,6 +79,7 @@
         [rowData]="users.users"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
+        [rowSelection]="'single'"
         (cellClicked)="userClick($event)"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>

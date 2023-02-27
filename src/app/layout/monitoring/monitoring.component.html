@@ -220,6 +220,7 @@
         [rowData]="vehicleInfo.vehicleBrief"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
+        [rowSelection]="'single'"
         (gridReady)="onGridReady($event)"
         (rowClicked)="getVehicleRow($event)">
       </ag-grid-angular>

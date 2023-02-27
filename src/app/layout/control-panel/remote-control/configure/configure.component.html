@@ -32,6 +32,7 @@
     [rowData]="devicemanagersParameter.entities"
     [columnDefs]="configurationColumnDefs"
     [tooltipShowDelay]="0"
+    [rowSelection]="'single'"
     (gridReady)="onServerGridReady($event)"
     (rowClicked)="onConfigureRowClicked($event)">
   </ag-grid-angular>
@@ -73,6 +74,7 @@
     [rowData]="devicemanagersParameterVehicle.entities"
     [columnDefs]="mappingColumnDefs"
     [tooltipShowDelay]="0"
+    [rowSelection]="'single'"
     (gridReady)="onMappingGridReady($event)">
   </ag-grid-angular>
   <div style="width: 100%; height: 50px;">

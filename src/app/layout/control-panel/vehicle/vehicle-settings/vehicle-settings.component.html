@@ -91,6 +91,7 @@
       <ag-grid-angular #vehicleSettingsGrid style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
         [rowData]="vehicle.vehicleList"
+        [rowSelection]="'single'"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
         (gridReady)="onGridReady($event)">
