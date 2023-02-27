@@ -88,6 +88,8 @@ export class DetailMonitoringComponent implements OnInit {
   pageSize : number
   currentPage : number = 1
 
+  provinceJSONData : any = {}
+  subPrefectureeJSONData : any = {}
   ngAfterViewInit() {
     this.getPageSize()
   }
@@ -104,6 +106,8 @@ export class DetailMonitoringComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getProvinceData()
+    this.getSubPrefectureeData()
     this.currentTimeInterval = interval(1000).pipe().subscribe(x => this.currentTime = new Date());
 
     setTimeout(()=>{
@@ -463,7 +467,7 @@ export class DetailMonitoringComponent implements OnInit {
       this.getStatisticsRegistrationCount()
       this.getProvinceStatisticsRegistrationCount()
 
-      this.vinCountInterval = interval(10000).pipe().subscribe(x=>{
+      this.vinCountInterval = interval(60000).pipe().subscribe(x=>{
 
         if(this.selectVehicle == null){
           this.getStatisticsRegistrationCount()
@@ -578,8 +582,6 @@ export class DetailMonitoringComponent implements OnInit {
         duration: 1500,
         zoom: 13
       });
-
-
 
       let source = (this.map.getSource("vehiclePathsLast") as GeoJSONSource).setData({
         "type": "Feature",
@@ -927,25 +929,77 @@ export class DetailMonitoringComponent implements OnInit {
   getStatisticsRegistrationCount(){
     this.statisticsService.getStatisticsRegistrationCount(new SearchFilter()).subscribe(res=>{
       console.log(res)
-      this.utilService.getProvinceData().subscribe((res2:any)=>{
+      let featuresList : any[] = []
+      for(let i = 0; i < res.body.entities.length; i++){
+        for(let j = 0; j < this.provinceJSONData.features.length; j++){
+          if(this.provinceJSONData.features[j].properties.ADM1_ZH.indexOf(res.body.entities[i].region.province) > -1){
+            let lnglat = this.provinceJSONData.features[j].geometry.center
+            featuresList.push({
+              "type": "Feature",
+              "properties": {
+                "pcode" : res.body.entities[i].region.pcode,
+                "zipCode" : res.body.entities[i].region.zipCode,
+                "placeCode" : res.body.entities[i].region.placeCode,
+                "districtCode" : res.body.entities[i].region.districtCode,
+                "province" : res.body.entities[i].region.province,
+                "city" : res.body.entities[i].region.city,
+                "district" : res.body.entities[i].region.district,
+                "street" : res.body.entities[i].street,
+                "statistics_count" : res.body.entities[i].count
+              },
+              "geometry": {
+                "type": "Point",
+                  "coordinates": lnglat
+                },
+            })
+            break;
+          }
+        }
+      }
+      (this.map.getSource("statistics_registration_count") as GeoJSONSource).setData({
+        "type": "FeatureCollection",
+        "features": featuresList
+      });
+      console.log(res)
+
+
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  getProvinceData(){
+    this.utilService.getProvinceData().subscribe((res2:any)=>{
+      this.provinceJSONData = res2
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  async getProvinceStatisticsRegistrationCount(){
+    let featuresList : any[] = []
+    for(let i = 0; i < this.provinceJSONData.features.length; i++){
+      let filter = new SearchFilter()
+      filter.province = this.provinceJSONData.features[i].properties.ADM1_ZH
+      await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
         console.log(res2)
-        let featuresList : any[] = []
-        for(let i = 0; i < res.body.entities.length; i++){
-          for(let j = 0; j < res2.features.length; j++){
-            if(res2.features[j].properties.ADM1_ZH.indexOf(res.body.entities[i].region.province) > -1){
-              let lnglat = res2.features[j].geometry.center
+
+        for(let j = 0; j < res2.body.entities.length; j++){
+          for(let k = 0; k < this.subPrefectureeJSONData.features.length; k++){
+            if(this.subPrefectureeJSONData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
+              let lnglat = this.subPrefectureeJSONData.features[k].geometry.center
               featuresList.push({
                 "type": "Feature",
                 "properties": {
-                  "pcode" : res.body.entities[i].region.pcode,
-                  "zipCode" : res.body.entities[i].region.zipCode,
-                  "placeCode" : res.body.entities[i].region.placeCode,
-                  "districtCode" : res.body.entities[i].region.districtCode,
-                  "province" : res.body.entities[i].region.province,
-                  "city" : res.body.entities[i].region.city,
-                  "district" : res.body.entities[i].region.district,
-                  "street" : res.body.entities[i].street,
-                  "statistics_count" : res.body.entities[i].count
+                  "pcode" : res2.body.entities[j].region.pcode,
+                  "zipCode" : res2.body.entities[j].region.zipCode,
+                  "placeCode" : res2.body.entities[j].region.placeCode,
+                  "districtCode" : res2.body.entities[j].region.districtCode,
+                  "province" : res2.body.entities[j].region.province,
+                  "city" : res2.body.entities[j].region.city,
+                  "district" : res2.body.entities[j].region.district,
+                  "street" : res2.body.entities[j].street,
+                  "statistics_count" : res2.body.entities[j].count
                 },
                 "geometry": {
                   "type": "Point",
@@ -956,83 +1010,20 @@ export class DetailMonitoringComponent implements OnInit {
             }
           }
         }
-        (this.map.getSource("statistics_registration_count") as GeoJSONSource).setData({
-          "type": "FeatureCollection",
-          "features": featuresList
-        });
-        console.log(res)
-      },error=>{
-        console.log(error)
       })
-    },error=>{
-      console.log(error)
-    })
+    }
+
+    console.log("!")
+
+    let source = (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
+      "type": "FeatureCollection",
+      "features": featuresList
+    });
   }
 
-  getProvinceStatisticsRegistrationCount(){
-    this.utilService.getProvinceData().subscribe(async (res:any)=>{
-      console.log(res)
-
-      let featuresList : any[] = []
-
-      for(let i = 0; i < res.features.length; i++){
-        let filter = new SearchFilter()
-        filter.province = res.features[i].properties.ADM1_ZH
-        await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
-          console.log(res2)
-          await this.utilService.getSubPrefectureeData().toPromise().then(async(res3 : any)=>{
-            console.log(res3)
-            for(let j = 0; j < res2.body.entities.length; j++){
-              for(let k = 0; k < res3.features.length; k++){
-                if(res3.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
-                  let lnglat = res3.features[k].geometry.center
-                  featuresList.push({
-                    "type": "Feature",
-                    "properties": {
-                      "pcode" : res2.body.entities[j].region.pcode,
-                      "zipCode" : res2.body.entities[j].region.zipCode,
-                      "placeCode" : res2.body.entities[j].region.placeCode,
-                      "districtCode" : res2.body.entities[j].region.districtCode,
-                      "province" : res2.body.entities[j].region.province,
-                      "city" : res2.body.entities[j].region.city,
-                      "district" : res2.body.entities[j].region.district,
-                      "street" : res2.body.entities[j].street,
-                      "statistics_count" : res2.body.entities[j].count
-                    },
-                    "geometry": {
-                      "type": "Point",
-                        "coordinates": lnglat
-                      },
-                  })
-                  break;
-                }
-              }
-            }
-          })
-        })
-      }
-
-      /*if(true){
-        featuresList.push({
-          "type": "Feature",
-          "properties": {
-            "statistics_count" : 123
-          },
-          "geometry": {
-            "type": "Point",
-              "coordinates": [this.lng,this.lat]
-            },
-        })
-      }*/
-
-
-      (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
-        "type": "FeatureCollection",
-        "features": featuresList
-      });
-
-    },error=>{
-      console.log(error)
+  getSubPrefectureeData(){
+    this.utilService.getSubPrefectureeData().toPromise().then(async(res : any)=>{
+      this.subPrefectureeJSONData = res
     })
   }
 
