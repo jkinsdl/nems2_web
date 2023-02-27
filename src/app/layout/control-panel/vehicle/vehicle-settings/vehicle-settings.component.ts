@@ -19,9 +19,7 @@ import { CommonConstant } from 'src/app/util/common-constant';
 export class VehicleSettingsComponent implements OnInit {
 
   @ViewChild('vehicleSettingsGrid', { read: ElementRef }) vehicleSettingsGrid : ElementRef;
-
   constant : CommonConstant = new CommonConstant()
-
   constructor(
     private dialog: MatDialog,
     private vehiclemanagerService : VehiclemanagerService,
@@ -93,15 +91,12 @@ export class VehicleSettingsComponent implements OnInit {
     this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.vehicle = res.body
-
       let pagination = {
         count : this.vehicle.count,
         pageSize : this.pageSize,
         page : this.currentPage
       }
-
       this.uiService.setPagination(pagination)
-
     },error=>{
       console.log(error)
     })
@@ -154,7 +149,6 @@ export class VehicleSettingsComponent implements OnInit {
     })
   }
 
-
   deleteVehicle(){
     if(this.gridApi.getSelectedRows().length != 0){
       const dialogRef = this.dialog.open( AlertPopupComponent, {
@@ -195,5 +189,4 @@ export class VehicleSettingsComponent implements OnInit {
       console.log(error)
     })
   }
-
 }

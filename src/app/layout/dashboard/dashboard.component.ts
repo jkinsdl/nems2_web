@@ -120,15 +120,27 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.addSource('statistics_registration_count',{
-        type: 'geojson'
+        type: 'geojson',
+        data: {
+          "type": "FeatureCollection",
+          "features": []
+        }
       })
 
       this.map.addSource('province_statistics_registration_count',{
-        type: 'geojson'
+        type: 'geojson',
+        data: {
+          "type": "FeatureCollection",
+          "features": []
+        }
       })
 
       this.map.addSource('realtimedataLocation',{
-        type: 'geojson'
+        type: 'geojson',
+        data: {
+          "type": "FeatureCollection",
+          "features": []
+        }
       })
 
       this.map.addLayer({
