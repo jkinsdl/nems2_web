@@ -30,19 +30,21 @@ export class VehicleSettingsComponent implements OnInit {
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'batteryCode', headerName: 'batteryCode', tooltipField: 'batteryCode'},
-    { field: 'engineNo', headerName: 'engineNo', tooltipField: 'engineNo'},
     { field: 'iccid', headerName : 'iccid', tooltipField: 'iccid'},
-    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName'},
-    { field: 'motorNo', headerName : 'motorNo', tooltipField: 'motorNo'},
-    { field: 'nemsSn', headerName : 'nemsSn', tooltipField: 'nemsSn'},
-    { field: 'purpose', headerName : 'purpose', tooltipField: 'purpose'},
+    { field: 'vin', headerName : 'VIN', tooltipField: 'vin'},
+    { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn'},
+    { field: 'registDate', headerName : 'Regist Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate' }},
+    { field: 'sOffDate', headerName : 'S Off Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'sOffDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'sOffDate' }},
     { field: 'region', headerName : 'region', tooltipField: 'region'},
-    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate' }},
-    { field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
-    { field: 'sOffDate', headerName : 'sOffDate', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'sOffDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'sOffDate' }},
-    { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
-    { field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
+    { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber'},
+    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose'},
+    { field: 'modelName', headerName : 'model', tooltipField: 'modelName'},
+    { field: 'batteryCode', headerName: 'battery code', tooltipField: 'batteryCode'},
+    { field: 'motorNo', headerName : 'motor no', tooltipField: 'motorNo'},
+    { field: 'engineNo', headerName: 'engine no', tooltipField: 'engineNo'},
+    { field: 'histories', headerName: 'histories', tooltipField: 'histories'},
+    //{ field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
+    //{ field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
   ];
 
   vehicle : any = {
