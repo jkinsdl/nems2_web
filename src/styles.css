@@ -236,3 +236,10 @@ input::-webkit-inner-spin-button {
   padding: 0 10px !important;
   min-width: 0px !important;
 }
+
+.ag-ltr .ag-cell{
+  font-family: auto;
+}
+.ag-theme-alpine .ag-header-row{
+  font-weight: 100;
+}
