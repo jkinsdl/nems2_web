@@ -921,8 +921,6 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     this.utilService.gridDataToExcelData("monitoring history", this.gridApi ,[])
   }
 

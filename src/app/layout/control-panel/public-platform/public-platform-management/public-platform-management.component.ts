@@ -338,12 +338,22 @@ export class PublicPlatformManagementComponent implements OnInit {
   }
 
   onBtExport(type : string) {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     if(type == "management"){
-      this.utilService.gridDataToExcelData("public platform management forwarding", this.managementGridApi ,this.forwarding.entities)
+      this.forwardingService.getForwarding(new SearchFilter()).subscribe(res=>{
+        console.log(res)
+        this.utilService.gridDataToExcelData("public platform management forwarding", this.managementGridApi ,res.body.entities)
+      },error=>{
+        console.log(error)
+      })
     }else{
-      this.utilService.gridDataToExcelData("public platform management relations", this.mappingGridApi,this.relations.entities)
+      this.forwardingService.getForwardingServerNameRelations(this.selectForwardingServerName, new SearchFilter()).subscribe(res=>{
+        console.log(res)
+        this.utilService.gridDataToExcelData("public platform management relations", this.mappingGridApi,res.body.entities)
+      },error=>{
+        console.log(error)
+      })
+
+
     }
   }
 

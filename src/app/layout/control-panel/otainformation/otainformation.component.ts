@@ -107,9 +107,13 @@ export class OTAInformationComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("OTA Information", this.gridApi ,this.vehicle.vehicleList)
+    this.searchFilter.offset = undefined
+    this.searchFilter.limit = undefined
+    this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.utilService.gridDataToExcelData("OTA Information", this.gridApi ,res.body.vehicleList)
+    },error=>{
+      console.log(error)
+    })
   }
-
 }

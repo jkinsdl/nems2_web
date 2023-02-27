@@ -97,8 +97,6 @@ export class OfflineVehicleRealTimeComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     this.utilService.gridDataToExcelData("offline vehicle real time", this.gridApi ,this.rowData)
   }
 

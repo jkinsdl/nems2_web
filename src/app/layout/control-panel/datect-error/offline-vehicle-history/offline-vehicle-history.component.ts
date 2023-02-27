@@ -97,8 +97,6 @@ export class OfflineVehicleHistoryComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     this.utilService.gridDataToExcelData("offline vehicle history", this.gridApi ,this.rowData)
   }
 

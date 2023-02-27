@@ -266,8 +266,6 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   }
 
   onBtExport(type : string) {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     if(type == "management"){
       this.utilService.gridDataToExcelData("public platform for specific period 1", this.managementGridApi ,this.managementRowData)
     }else{

@@ -162,7 +162,7 @@ export class UtilService {
     for(let i = 0; i < data.length; i++){
       let rowData : string[] = []
       for(let j = 0; j < titlaFiedId.length; j++){
-        if(data[i][titlaFiedId[j]]){
+        if(data[i][titlaFiedId[j]] != undefined){
           rowData.push(data[i][titlaFiedId[j]])
         }else{
           rowData.push('')

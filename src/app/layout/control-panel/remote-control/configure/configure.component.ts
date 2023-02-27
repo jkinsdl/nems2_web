@@ -308,12 +308,20 @@ export class ConfigureComponent implements OnInit {
 
 
   onBtExport(type : string) {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     if(type == "configure"){
-      this.utilService.gridDataToExcelData("Configure", this.configureGridApi ,this.devicemanagersParameter.entities)
+      this.devicemanagerService.getDevicemanagersParameter(new SearchFilter()).subscribe(res=>{
+        console.log(res)
+        this.utilService.gridDataToExcelData("Configure", this.configureGridApi ,res.body.entities)
+      },error=>{
+        console.log(error)
+      })
     }else{
-      this.utilService.gridDataToExcelData("Configure Vehicle", this.mappingGridApi,this.devicemanagersParameterVehicle.entities)
+      this.devicemanagerService.getDevicemanagersParametersConfigureNameVehicles(this.selectConfigureRow.configureName, new SearchFilter()).subscribe(res=>{
+        console.log(res)
+        this.utilService.gridDataToExcelData("Configure Vehicle", this.mappingGridApi,res.body.entities)
+      },error=>{
+        console.log(error)
+      })
     }
   }
 

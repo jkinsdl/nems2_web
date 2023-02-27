@@ -177,8 +177,6 @@ export class PushAlarmComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     this.utilService.gridDataToExcelData("Push Alarm", this.gridApi ,this.rowData)
   }
 

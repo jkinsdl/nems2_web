@@ -109,8 +109,6 @@ export class AbnormalVehicleRealTimeComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     this.utilService.gridDataToExcelData("abnormal vehicle real time", this.gridApi ,this.rowData)
   }
 

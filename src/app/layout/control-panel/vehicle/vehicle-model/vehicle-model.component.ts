@@ -193,10 +193,13 @@ export class VehicleModelComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("Vehicle Model",this.gridApi,this.model.modelList)
+    this.searchFilter.offset = undefined
+    this.searchFilter.limit = undefined
+    this.vehiclemanagersService.getVehiclemanagerModel(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.utilService.gridDataToExcelData("Vehicle Model",this.gridApi,res.body.modelList)
+    },error=>{
+      console.log(error)
+    })
   }
-
-
 }

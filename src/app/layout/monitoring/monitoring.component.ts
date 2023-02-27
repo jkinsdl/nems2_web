@@ -133,9 +133,18 @@ export class MonitoringComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("monitoring", this.gridApi ,this.vehicleInfo)
+
+    this.searchFilter.offset = undefined
+    this.searchFilter.limit = undefined
+    this.realtimedataService.getRealtimedataVehiclelist(this.searchFilter).subscribe(
+      res=>{
+        console.log(res)
+        this.utilService.gridDataToExcelData("monitoring", this.gridApi ,res.body.vehicleBrief)
+      }, error=>{
+        console.log(error)
+      })
+
+
   }
 
 }

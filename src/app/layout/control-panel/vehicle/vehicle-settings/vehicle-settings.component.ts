@@ -186,10 +186,14 @@ export class VehicleSettingsComponent implements OnInit {
     this.gridApi = params.api;
   }
 
-  onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("Vehicle Settings",this.gridApi,this.vehicle.vehicleList)
+  onBtExport(){
+    this.searchFilter.offset = undefined
+    this.searchFilter.limit = undefined
+    this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
+      this.utilService.gridDataToExcelData("Vehicle Settings",this.gridApi,res.body.vehicleList)
+    },error=>{
+      console.log(error)
+    })
   }
 
 }

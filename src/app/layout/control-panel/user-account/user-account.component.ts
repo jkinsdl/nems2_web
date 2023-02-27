@@ -188,9 +188,13 @@ export class UserAccountComponent implements OnInit {
 
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("User Account", this.gridApi,this.users.users)
+    this.searchFilter.offset = undefined
+    this.searchFilter.limit = undefined
+    this.userService.getUsers(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.utilService.gridDataToExcelData("User Account", this.gridApi,res.body.users)
+    },error=>{
+      console.log(error)
+    })
   }
-
 }

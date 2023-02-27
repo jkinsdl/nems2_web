@@ -99,8 +99,6 @@ export class AbnormalVehicleHistoryComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
     this.utilService.gridDataToExcelData("abnormal vehicle history", this.gridApi ,this.rowData)
   }
 

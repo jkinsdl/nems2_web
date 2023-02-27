@@ -145,9 +145,13 @@ export class ServerLogsComponent implements OnInit {
   }
 
   onBtExport() {
-    //this.gridApi.exportDataAsExcel();
-    //this.gridApi.exportDataAsCsv()
-    this.utilService.gridDataToExcelData("Server Log", this.gridApi ,this.gbpacket.entities)
+    this.searchFilter.offset = undefined
+    this.searchFilter.limit = undefined
+    this.gbpacketService.getGbpacket(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.utilService.gridDataToExcelData("Server Log", this.gridApi ,res.body.entities)
+    },error=>{
+      console.log(error)
+    })
   }
-
 }
