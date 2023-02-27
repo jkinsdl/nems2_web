@@ -52,10 +52,10 @@ export class ConfigureComponent implements OnInit {
   ];
 
   mappingColumnDefs: ColDef[] = [
-    { field: 'configure_name', headerName: 'configure name', tooltipField: 'configure_name' },
+    { field: 'configure_name', headerName: 'Configure Name', tooltipField: 'configure_name' },
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
-    { field: 'matched', headerName : 'matched', tooltipField: 'matched'},
-    { field: 'matched_date', headerName : 'matched date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date' }},
+    { field: 'matched', headerName : 'Matched', tooltipField: 'matched'},
+    { field: 'matched_date', headerName : 'Matched Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date' }},
   ];
 
   configureGridApi!: GridApi;
