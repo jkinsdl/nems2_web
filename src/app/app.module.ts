@@ -101,7 +101,10 @@ import { DateformatPipe } from './shared/pipes/dateformat.pipe';
 import { GridTooltipComponent } from './component/grid-tooltip/grid-tooltip.component';
 import { InfoDetailComponent } from './component/info-detail/info-detail.component';
 import { GridPageComponent } from './component/grid-page/grid-page.component';
+import { ModifyAlarmComponent } from './component/modify-alarm/modify-alarm.component';
 
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CheckboxFilterComponent } from './component/checkbox-filter/checkbox-filter.component';
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: 'l, LTS'
@@ -190,7 +193,9 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     DateformatPipe,
     GridTooltipComponent,
     InfoDetailComponent,
-    GridPageComponent
+    GridPageComponent,
+    ModifyAlarmComponent,
+    CheckboxFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -220,7 +225,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     MatInputModule,
     MatSlideToggleModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatCheckboxModule
   ],
   providers: [
     {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS},

@@ -49,11 +49,11 @@ export class AlarmHistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getVehiclewarning()
+    this.getVehiclewarnings()
   }
 
-  getVehiclewarning(){
-    this.vehiclewarningService.getVehiclewarning(this.searchFilter).subscribe(res=>{
+  getVehiclewarnings(){
+    this.vehiclewarningService.getVehiclewarnings(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.vehiclewarning = res.body
     },error=>{

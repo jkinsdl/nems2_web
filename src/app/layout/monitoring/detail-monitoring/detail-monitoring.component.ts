@@ -1013,8 +1013,6 @@ export class DetailMonitoringComponent implements OnInit {
       })
     }
 
-    console.log("!")
-
     let source = (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
       "type": "FeatureCollection",
       "features": featuresList

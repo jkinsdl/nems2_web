@@ -1,0 +1,47 @@
+.modifyAlarmConatiner{
+  width: 600px;
+
+}
+
+.comment{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ededed;
+  padding: 5px 0px;
+}
+
+.commentText{
+  width: 90%;
+  word-break: break-all;
+}
+
+.commentRemove{
+  width: 10%;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.commentRemove .btn{
+  width: 10px;
+  height: 10px;
+}
+
+.commentAddBtn{
+  width: 60px;
+  margin-left: 10px;
+  padding: 10px;
+  background-color: #51d559;
+  text-align: center;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.addInfoFilter .label{
+  width: calc(20% - 20px) !important;
+}
+
+.addInfoFilter .value{
+  width: 80% !important;
+}

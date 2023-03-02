@@ -735,17 +735,17 @@ export class DashboardComponent implements OnInit {
     //this.getStatisticsRegistrationSummary()
     this.getStatisticsVehiclesSummary()
     //this.getStatisticsWarningsSummary()
-    this.getVehiclewarning()
+    this.getVehiclewarnings()
 
     this.map.setZoom(3.5)
     this.map.setCenter([this.lng, this.lat])
   }
 
-  getVehiclewarning(){
+  getVehiclewarnings(){
     let filter = new SearchFilter()
     filter.level = this.alarmListFilter
     filter.state = 'OPEN'
-    this.vehiclewarningService.getVehiclewarning(filter).subscribe(res=>{
+    this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
       console.log(res)
       this.vehiclewarnings = res.body.warnings
     },error=>{

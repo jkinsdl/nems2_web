@@ -271,7 +271,7 @@
       <div class="alarmGridHeader">
         <app-sub-title [title]="'Alarm'"></app-sub-title>
 
-        <mat-select [(ngModel)]="alarmListFilter" (ngModelChange)="getVehiclewarning()" style="margin-left: 20px; margin-bottom: 6px;">
+        <mat-select [(ngModel)]="alarmListFilter" (ngModelChange)="getVehiclewarnings()" style="margin-left: 20px; margin-bottom: 6px;">
           <mat-option [value]="'NORMAL'" >NORMAL</mat-option>
           <mat-option [value]="'MINOR'">MINOR</mat-option>
           <mat-option [value]="'MAJOR'">MAJOR</mat-option>

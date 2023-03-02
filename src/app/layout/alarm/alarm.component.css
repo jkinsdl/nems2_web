@@ -124,7 +124,7 @@
 
 .alarmDetailArea{
   width: 100%;
-  height: 170px;
+  height: 200px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #efecec;
@@ -146,6 +146,12 @@
   font-weight: bold;
 }
 
+.alarmArea{
+  width: 100%;
+  height: 100%;
+}
+
+
 .alarmAreaLeft,
 .alarmAreaRight {
   width: 50%;
@@ -153,11 +159,10 @@
 }
 
 .alarmDetailFild{
-  width: 90%;
+  width: 100%;
   height: 30px;
   display: flex;
   align-items: center;
-  margin-left: 20%;
 }
 
 .alarmDetailFild .alarmfildLable{
@@ -165,6 +170,8 @@
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: end;
+  margin-right: 20px;
   color: rgb(155, 148, 148);
   font-size: 14px;
 }
@@ -203,4 +210,38 @@
 
 #map{
   height: calc(100% - 15px);
+}
+
+.checkboxTooltip{
+  visibility: hidden;
+  background-color: white;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
+  transition: opacity 0.3s;
+}
+
+.tooltipTitle{
+  min-width: 150px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tooltipTitle img{
+  right: 0;
+  position: absolute;
+}
+
+.openFilterTooltip{
+  visibility: visible;
+}
+
+.checkboxTooltip section{
+  max-height: 500px;
+  overflow: scroll;
 }

@@ -1,44 +1,128 @@
 <div class="alarmContainer">
 
   <div class="alarmLeftLayout whiteBoardBoax">
+
     <div class="gridFilterBox">
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text">
+          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getVehiclewarnings()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">Select Box 1</div>
+        <div class="label">Begin</div>
         <div class="value">
-          <select>
-            <option selected>All</option>
-          </select>
+          <input class="datePickerText" [ngxMatDatetimePicker]="beginPicker" readonly="true" (click)="beginPicker.open()" [(ngModel)]="beginDate" [max]="endDate">
+          <ngx-mat-datetime-picker #beginPicker [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">Select Box 2</div>
+        <div class="label">End</div>
         <div class="value">
-          <select>
-            <option selected>All</option>
-          </select>
+          <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="beginDate">
+          <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
         </div>
       </div>
-
       <div class="filter searchFilter">
-        <div class="btn">
+        <div class="btn" (click)="getVehiclewarnings()">
           Search
         </div>
       </div>
     </div>
+
+    <!--<div class="gridFilterBox">
+      <div class="filter">
+        <div class="label" (click)="openWarningTypeFilter()" style="cursor: pointer;">Warning Type</div>
+        <div class="value" style="position: relative;">
+          <div class="checkboxTooltip" [ngClass]="{'openFilterTooltip': isOpenWarningTypeFilter}">
+            <div class="tooltipTitle">
+              Warning Type
+              <img style="width:15px; height: 15px; cursor: pointer;" src="assets/icon/close_icon.png" (click)="isOpenWarningTypeFilter = !isOpenWarningTypeFilter">
+            </div>
+            <section [formGroup]="warningTypeToppings">
+              <p><mat-checkbox [color]="'primary'" formControlName="NORMAL">NORMAL</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="TEMP_DIFF">TEMP_DIFF</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="BATTERY_HIGH_TEMP">BATTERY_HIGH_TEMP</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="POWER_BATTERY_OVER_VOLTAGE">POWER_BATTERY_OVER_VOLTAGE</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="POWER_BATTERY_UNDER_VOLTAGE">POWER_BATTERY_UNDER_VOLTAGE</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="SOC_LOW">SOC_LOW</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="SINGLE_BATTERY_OVER_VOLTAGE">SINGLE_BATTERY_OVER_VOLTAGE</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="SINGLE_BATTERY_UNDER_VOLTAGE">SINGLE_BATTERY_UNDER_VOLTAGE</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="SOC_TOO_HIGH">SOC_TOO_HIGH</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="SOC_JUMP">SOC_JUMP</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="POWER_BATTERY_MISS_MATCH">POWER_BATTERY_MISS_MATCH</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="POOR_BATTERY_UNIFORMILY">POOR_BATTERY_UNIFORMILY</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="INSULATION">INSULATION</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="DCDC_TEMP">DCDC_TEMP</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="BREAK_SYSTEM">BREAK_SYSTEM</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="DCDC_STATUS">DCDC_STATUS</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="MOTOR_CONTROLLER_TEMP">MOTOR_CONTROLLER_TEMP</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="HIGH_VOLTAGE_INTERLOCK_STATUS">HIGH_VOLTAGE_INTERLOCK_STATUS</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="MOTOR_TEMP">MOTOR_TEMP</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="STORAGE_OVER_CHARGE">STORAGE_OVER_CHARGE</mat-checkbox></p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label" (click)="openWarningLevelFilter()" style="cursor: pointer;">Warning Level</div>
+        <div class="value" style="position: relative;">
+
+          <div class="checkboxTooltip" [ngClass]="{'openFilterTooltip': isOpenWarningLevelFilter}">
+            <div class="tooltipTitle">
+              Warning Level
+              <img style="width:15px; height: 15px; cursor: pointer;" src="assets/icon/close_icon.png" (click)="isOpenWarningLevelFilter = !isOpenWarningLevelFilter">
+            </div>
+            <section [formGroup]="warningLevelToppings">
+              <p><mat-checkbox [color]="'primary'" formControlName="NORMAL">NORMAL</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="MINOR">MINOR</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="MAJOR">MAJOR</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="CRITICAL">CRITICAL</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="ABNORMAL">ABNORMAL</mat-checkbox></p>
+              <p><mat-checkbox [color]="'primary'" formControlName="INVAILD">INVAILD</mat-checkbox></p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter">
+        <div class="label">State</div>
+        <div class="value">
+          <select [(ngModel)]="searchFilter.state">
+            <option [value]="'UNKNOWN'">UNKNOWN</option>
+            <option [value]="'OPEN'">OPEN</option>
+            <option [value]="'PROGRESSING'">PROGRESSING</option>
+            <option [value]="'RESOLVED'">RESOLVED</option>
+            <option [value]="'CLOSED'">CLOSED</option>
+            <option [value]="'ERROR'">ERROR</option>
+          </select>
+        </div>
+      </div>
+
+
+
+      <div class="filter searchFilter">
+        <div class="btn" (click)="getVehiclewarnings()">
+          Search
+        </div>
+      </div>
+    </div>-->
     <div class="grayLine"></div>
 
-    <div class="alarmBtnBox">
-      <div class="defaultButton"> Button1 </div>
-      <div class="defaultButton"> Button2 </div>
-      <div class="defaultButton"> Button3 </div>
+    <div class="gridFilterBox">
+      <div class="gridControlBox">
+        <div class="btn modify" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="alarmModify()">
+          Modify
+        </div>
+
+        <div class="btn delete" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="alarmDelete()">
+          Delete
+        </div>
+
+      </div>
 
       <div style="display: flex; position: absolute; right: 60px;">
         <!--<label class="excel_btn" for="uploadExcel1">
@@ -51,31 +135,28 @@
           <img src="assets/icon/excel_download.png">
         </div>
       </div>
-
-      <div class="linkDiv">LINK</div>
+      <!--<div class="linkDiv">LINK</div>-->
     </div>
 
     <div class="alarmGrid">
       <ag-grid-angular #alarmGrid style="width: 100%; height: calc(100% - 50px)"  (window:resize)="onResize($event)"
         class="ag-theme-alpine"
-        [rowData]="vehiclewarning.warnings"
+        [rowData]="vehiclewarning.entities"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
         [rowSelection]="'single'"
+        (rowSelected)="selectAlarm()"
         (gridReady)="onGridReady($event)">
       </ag-grid-angular>
-
       <div style="width: 100%; height: 50px;">
         <app-grid-page [gridNumber]="1"></app-grid-page>
       </div>
-
-
     </div>
   </div>
 
 
   <div class="alarmRightLayout whiteBoardBoax">
-    <div class="alarmDetailStatus">
+    <!--<div class="alarmDetailStatus">
 
       <div class="detailStatusBox">
         <div class="detailLable labelColorGreen">
@@ -142,121 +223,87 @@
         </div>
       </div>
     </div>
-
+    -->
     <div class="alarmDetailContents">
+
       <div class="alarmTitle">
-        <app-sub-title [title]="'TITLE'"></app-sub-title>
+        <app-sub-title [title]="'VEHICLE'"></app-sub-title>
       </div>
 
       <div class="alarmDetailArea">
-        <div class="alarmAreaLeft">
+        <div class="alarmArea">
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 1</div>
-            <div class="alarmfildValue"> Value 1</div>
+            <div class="alarmfildLable">VIN</div>
+            <div class="alarmfildValue"> {{selectVehicle.vehicle.vin}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 2</div>
-            <div class="alarmfildValue"> Value 2</div>
+            <div class="alarmfildLable">Model Name</div>
+            <div class="alarmfildValue"> {{selectVehicle.vehicle.modelName}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 3</div>
-            <div class="alarmfildValue"> Value 3</div>
+            <div class="alarmfildLable">Nems S/N</div>
+            <div class="alarmfildValue"> {{selectVehicle.vehicle.nemsSn}}</div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 4</div>
-            <div class="alarmfildValue"> Value 4</div>
+            <div class="alarmfildLable">Purpose</div>
+            <div class="alarmfildValue"> {{selectVehicle.vehicle.purpose}}</div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 5</div>
-            <div class="alarmfildValue"> Value 5 </div>
+            <div class="alarmfildLable">Region</div>
+            <div class="alarmfildValue"> {{selectVehicle.vehicle.region}} </div>
+          </div>
+
+          <div class="alarmDetailFild">
+            <div class="alarmfildLable">Regist Date</div>
+            <div class="alarmfildValue"> {{selectVehicle.vehicle.registDate | dateformat}} </div>
           </div>
         </div>
-        <div class=" alarmAreaRight">
+      </div>
+
+      <div class="alarmTitle">
+        <app-sub-title [title]="'WARNING'"></app-sub-title>
+      </div>
+
+      <div class="alarmDetailArea">
+        <div class="alarmArea">
+
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 1</div>
-            <div class="alarmfildValue"> Value 1</div>
+            <div class="alarmfildLable">Create Time</div>
+            <div class="alarmfildValue"> {{selectionAlarm.createTime | dateformat}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 2</div>
-            <div class="alarmfildValue"> Value 2</div>
+            <div class="alarmfildLable">Last Packet Time</div>
+            <div class="alarmfildValue"> {{selectionAlarm.lastPacketTime | dateformat}}</div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 3</div>
-            <div class="alarmfildValue"> Value 3</div>
+            <div class="alarmfildLable">State</div>
+            <div class="alarmfildValue"> {{selectionAlarm.state}}</div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 4</div>
-            <div class="alarmfildValue"> Value 4</div>
+            <div class="alarmfildLable">Warning Level</div>
+            <div class="alarmfildValue"> {{selectionAlarm.warningLevel}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 5</div>
-            <div class="alarmfildValue"> Value 5 </div>
+            <div class="alarmfildLable">Warning Type</div>
+            <div class="alarmfildValue"> {{selectionAlarm.warningType}} </div>
           </div>
         </div>
       </div>
 
 
       <div class="alarmTitle">
-        <app-sub-title [title]="'TITLE'"></app-sub-title>
+        <app-sub-title [title]="'LOCATION'"></app-sub-title>
       </div>
-
-      <div class="alarmDetailCarInformation">
-        <div class="alarmAreaLeft">
-          <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 1</div>
-            <div class="alarmfildValue"> Value 1</div>
-          </div>
-
-          <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 2</div>
-            <div class="alarmfildValue"> Value 2</div>
-          </div>
-        </div>
-
-        <div class="alarmAreaRight">
-          <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 1</div>
-            <div class="alarmfildValue"> Value 1</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="alarmTitle">
-        <app-sub-title [title]="'TITLE'"></app-sub-title>
-      </div>
-
-      <div class="alarmDetailTest">
-        <div class="alarmAreaLeft">
-          <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 1</div>
-            <div class="alarmfildValue"> Value 1</div>
-          </div>
-        </div>
-
-        <div class="alarmAreaRight">
-          <div class="alarmDetailFild">
-            <div class="alarmfildLable">label 1</div>
-            <div class="alarmfildValue"> Value 1</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="alarmTitle">
-        <app-sub-title [title]="'TITLE'"></app-sub-title>
-      </div>
-
       <div class="alarmDetailMap">
-
         <div class="map" id="map"></div>
-
       </div>
 
     </div>

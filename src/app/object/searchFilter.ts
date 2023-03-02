@@ -66,4 +66,6 @@ export class SearchFilter{
   district : string
   keyword : string
 
+  warningLevel : string[]
+  warningType : string[]
 }
