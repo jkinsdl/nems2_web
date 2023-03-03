@@ -84,6 +84,7 @@ const routes: Routes = [
     ]},
     { path: 'failure', canActivate: [AuthGuard], component: FailureComponent },
     { path: 'alarm', canActivate: [AuthGuard], component:AlarmComponent},
+    { path: 'alarm/:issueId', canActivate: [AuthGuard], component:AlarmComponent},
     { path: 'history', canActivate: [AuthGuard], component:AlarmHistoryComponent},
     {path:'dataForwarding', canActivate: [AuthGuard], component:DataForwardingComponent},
 

@@ -62,9 +62,16 @@ export class DashboardComponent implements OnInit {
   alarmStatisticsChart : echarts.ECharts
 
   alarmListFilter : string = 'NORMAL'
-  vehiclewarnings : any[] = []
+  vehiclewarnings : any = {
+    count : 0,
+    entities : [],
+    link : {}
+  }
 
   lastZoom : number
+
+  provinceData : any = {}
+  subPrefectureData : any = {}
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -74,6 +81,17 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    this.utilService.getProvinceData().subscribe((res:any)=>{
+      this.provinceData = res
+    })
+
+    this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
+      this.subPrefectureData = res
+    })
+
+
     this.menuMode$ = this.uiService.menuMode$.subscribe(mode =>{
       if(mode == 2) {
         setTimeout(()=>{
@@ -96,27 +114,19 @@ export class DashboardComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this.map.on('load', () => {
-
-      this.map.addSource('country_territory', {
-        type: 'geojson',
-        data: 'assets/data/chn_country_territory.json'
-      });
-
       this.map.addSource('province', {
         type: 'geojson',
-        //data: 'assets/data/chn_province.json'
         data: 'assets/data/chn_province_final.json'
       });
 
       this.map.addSource('sub_prefecture', {
         type: 'geojson',
-        //data: 'assets/data/chn_sub_prefecture.json'
         data: 'assets/data/chn_sub_prefecture_v2.json'
       });
 
-      this.map.addSource('county', {
+      this.map.addSource('sub_prefecture2', {
         type: 'geojson',
-        data: 'assets/data/chn_county.json'
+        data: 'assets/data/chn_sub_prefecture_v2.json'
       });
 
       this.map.addSource('statistics_registration_count',{
@@ -135,35 +145,15 @@ export class DashboardComponent implements OnInit {
         }
       })
 
-      this.map.addSource('realtimedataLocation',{
-        type: 'geojson',
-        data: {
-          "type": "FeatureCollection",
-          "features": []
-        }
-      })
-
-      this.map.addLayer({
-        id: 'realtimedata-location-clusters',
-        type: 'circle',
-        source: 'realtimedataLocation',
-        paint: {
-          'circle-color': '#11b4da',
-          'circle-radius': 4,
-          'circle-stroke-width': 3,
-          'circle-stroke-color': '#fff'
-        }
-      });
-
-
       this.map.addLayer({
         id: 'province-statistics-registration-count-clusters',
         type: 'circle',
         source: 'province_statistics_registration_count',
         paint: {
           "circle-radius": 18,
-          "circle-color": "#e14a7b"
-        }
+          "circle-color": "#e14a7b",
+        },
+
       });
 
       this.map.on('mousemove', 'province-statistics-registration-count-clusters', (e : any) => {
@@ -223,105 +213,11 @@ export class DashboardComponent implements OnInit {
       });
 
 
-      this.map.addLayer({
-        'id': 'country_territory_click_layer',
-        'type': 'fill',
-        'source': 'country_territory',
-        'layout': {},
-        'paint': {
-          'fill-color': '#627BC1',
-          'fill-opacity': [
-            'case',
-            ['boolean', ['feature-state', 'click'], false],
-            0.5,
-            0.1
-          ]
-        }
-      });
-
       let clickedStateId : any = null;
       let clickedADM1_ZH : any = null;
-      this.map.on('click', 'country_territory_click_layer', (e) => {
-        if (e.features.length > 0) {
-          if (clickedStateId) {
-            this.map.setFeatureState(
-              { source: 'country_territory', id: clickedStateId },
-              { click: false } /* 중복 선택하지 않음 true -> 중복선택 */
-            );
-          }
-          clickedStateId = e.features[0].id;
-          this.map.setFeatureState(
-            { source: 'country_territory', id: clickedStateId },
-            { click: true }
-          );
-        }
-      });
-
-      this.map.addLayer({
-        id: 'country_territory',
-        type: 'fill',
-        source: 'country_territory',
-        layout: {},
-        paint: {
-          'fill-color': '#627BC1',
-          'fill-opacity': [
-            'case',
-            ['boolean', ['feature-state', 'hover'], false],
-            0.5,
-            0.3
-          ]
-        }
-      });
+      let clickedCityId : any = null
 
       const popup = new mapboxgl.Popup({closeButton: false});
-
-      this.map.on('mousemove', 'country_territory', (e : any) => {
-        if (e.features.length > 0) {
-          if (this.hoveredStateId !== null) {
-            this.map.setFeatureState(
-              { source: 'country_territory', id: this.hoveredStateId },
-              { hover: false }
-            );
-          }
-          this.hoveredStateId = e.features[0].id;
-          this.map.setFeatureState(
-            { source: 'country_territory', id: this.hoveredStateId },
-            { hover: true }
-          );
-        }
-
-        popup.setLngLat(e.lngLat)
-          .setHTML("ADM0_EN - " + e.features[0].properties.ADM0_EN + "<br>"
-          +'ADM0_ZH - ' + e.features[0].properties.ADM0_ZH + "<br>"
-          +'ADM0_PCODE - ' + e.features[0].properties.ADM0_PCODE + "<br>")
-          .addTo(this.map);
-      });
-
-      this.map.on('mouseout', 'country_territory', (e : any) => {
-        popup.remove()
-      });
-
-      this.map.on('mouseleave', 'country_territory', () => {
-        if (this.hoveredStateId != null) {
-          this.map.setFeatureState(
-            { source: 'country_territory', id: this.hoveredStateId },
-            { hover: false }
-          );
-        }
-        this.hoveredStateId = null;
-      });
-
-      this.map.on('click', 'country_territory',(e : any) => {
-        let a = e.features[0].geometry.coordinates[0][0]
-        if (a.length > 2) {
-          a = e.features[0].geometry.coordinates[0][0][0]
-        }
-        this.map.flyTo({
-          center: a,
-          duration: 1500,
-          zoom: 7
-        });
-      });
 
       this.map.addLayer({
         'id': 'province_click_layer',
@@ -340,7 +236,6 @@ export class DashboardComponent implements OnInit {
       });
 
       this.map.on('click', 'province_click_layer', (e) => {
-
         if (e.features.length > 0) {
           if (clickedStateId) {
             this.map.setFeatureState(
@@ -348,6 +243,15 @@ export class DashboardComponent implements OnInit {
               { click: false }
             );
           }
+
+          if (clickedCityId) {
+            this.map.setFeatureState(
+              { source: 'sub_prefecture2', id: clickedCityId },
+              { click: false }
+            );
+          }
+
+          clickedCityId = null
           clickedStateId = e.features[0].id;
           clickedADM1_ZH = e.features[0].properties['ADM1_ZH']
           this.map.setFeatureState(
@@ -357,22 +261,26 @@ export class DashboardComponent implements OnInit {
         }
 
         if(clickedADM1_ZH){
-          this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
-            for(let i = 0; i < res.features.length; i++){
-              if(res.features[i].properties.ADM1_ZH == clickedADM1_ZH){
-                this.map.setFeatureState(
-                  { source: 'sub_prefecture', id: res.features[i].id},
-                  { click: true }
-                );
-              }else {
-                this.map.setFeatureState(
-                  { source: 'sub_prefecture', id:  res.features[i].id },
-                  { click: false }
-                );
-              }
+          for(let i = 0; i < this.subPrefectureData.features.length; i++){
+            if(this.subPrefectureData.features[i].properties.ADM1_ZH == clickedADM1_ZH){
+              this.map.setFeatureState(
+                { source: 'sub_prefecture', id: this.subPrefectureData.features[i].id},
+                { click: true }
+              );
+            }else {
+              this.map.setFeatureState(
+                { source: 'sub_prefecture', id:  this.subPrefectureData.features[i].id },
+                { click: false }
+              );
             }
-          })
+          }
         }
+
+        this.map.moveLayer('statistics-registration-count-clusters')
+        this.map.moveLayer('statistics-registration-count-text')
+        this.map.moveLayer('province-statistics-registration-count-clusters')
+        this.map.moveLayer('province-statistics-registration-count-text')
+
       });
 
       this.map.addLayer({
@@ -391,49 +299,7 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-      this.map.on('mousemove', 'province', (e : any) => {
-        /*if (e.features.length > 0) {
-          if (this.hoveredStateId !== null) {
-            this.map.setFeatureState(
-              { source: 'province', id: this.hoveredStateId },
-              { hover: false }
-            );
-          }
-          this.hoveredStateId = e.features[0].id;
-          this.map.setFeatureState(
-            { source: 'province', id: this.hoveredStateId },
-            { hover: true }
-          );
-        }
-        popup.setLngLat(e.lngLat)
-          .setHTML('ADM1_EN - ' + e.features[0].properties.ADM1_EN + "<br>"
-          +'ADM1_ZH - ' + e.features[0].properties.ADM1_ZH + "<br>"
-          +'ADM1_PCODE - ' + e.features[0].properties.ADM1_PCODE + "<br>"
-          +'ADM0_EN - ' + e.features[0].properties.ADM0_EN + "<br>"
-          +'ADM0_ZH - ' + e.features[0].properties.ADM0_ZH + "<br>"
-          +'ADM0_PCODE - ' + e.features[0].properties.ADM0_PCODE + "<br>")
-          .addTo(this.map);*/
-      });
-
-      this.map.on('mouseout', 'country_territory', (e : any) => {
-        popup.remove()
-      });
-
-
-      this.map.on('mouseleave', 'province', () => {
-        if (this.hoveredStateId != null) {
-          this.map.setFeatureState(
-            { source: 'province', id: this.hoveredStateId },
-            { hover: false }
-          );
-        }
-        this.hoveredStateId = null;
-      });
-
       this.map.on('click', 'province',(e : any) => {
-
-        console.log(e)
-
         this.map.flyTo({
           center: e.lngLat,
           duration: 1500,
@@ -457,39 +323,79 @@ export class DashboardComponent implements OnInit {
         }
       });
 
+      this.map.addLayer({
+        'id': 'sub_prefecture_click_layer2',
+        'type': 'fill',
+        'source': 'sub_prefecture2',
+        'layout': {},
+        'paint': {
+          'fill-color': '#c16285',
+          'fill-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'click'], false],
+            0.5,
+            0
+          ]
+        }
+      });
+//
       this.map.on('click', 'sub_prefecture_click_layer', (e) => {
         clickedADM1_ZH = e.features[0].properties['ADM1_ZH']
-        if(clickedADM1_ZH){
-          this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
-            for(let i = 0; i < res.features.length; i++){
-              if(res.features[i].properties.ADM1_ZH == clickedADM1_ZH){
-                this.map.setFeatureState(
-                  { source: 'sub_prefecture', id: res.features[i].id},
-                  { click: true }
-                );
-              }else {
-                this.map.setFeatureState(
-                  { source: 'sub_prefecture', id:  res.features[i].id },
-                  { click: false }
-                );
-              }
-            }
-          })
-        }
 
-        /*if (e.features.length > 0) {
-          if (clickedStateId) {
+        if (e.features.length > 0) {
+          if (clickedCityId) {
             this.map.setFeatureState(
-              { source: 'sub_prefecture', id: clickedStateId },
+              { source: 'sub_prefecture2', id: clickedCityId },
               { click: false }
             );
           }
-          clickedStateId = e.features[0].id;
+          clickedCityId = e.features[0].id;
           this.map.setFeatureState(
-            { source: 'sub_prefecture', id: clickedStateId },
+            { source: 'sub_prefecture2', id: clickedCityId },
             { click: true }
           );
-        }*/
+        }
+
+        if (clickedStateId) {
+          this.map.setFeatureState(
+            { source: 'province', id: clickedStateId },
+            { click: false }
+          );
+        }
+
+        for(let i = 0; i < this.provinceData.features.length; i++){
+          if(this.provinceData.features[i].properties.ADM1_ZH == clickedADM1_ZH){
+            clickedStateId = this.provinceData.features[i].id;
+            break;
+          }
+        }
+
+        this.map.setFeatureState(
+          { source: 'province', id: clickedStateId },
+          { click: true }
+        );
+
+        if(clickedADM1_ZH){
+          for(let i = 0; i < this.subPrefectureData.features.length; i++){
+            if(this.subPrefectureData.features[i].properties.ADM1_ZH == clickedADM1_ZH){
+              this.map.setFeatureState(
+                { source: 'sub_prefecture', id: this.subPrefectureData.features[i].id},
+                { click: true }
+              );
+            }else {
+              this.map.setFeatureState(
+                { source: 'sub_prefecture', id:  this.subPrefectureData.features[i].id },
+                { click: false }
+              );
+            }
+          }
+        }
+
+        this.map.moveLayer('statistics-registration-count-clusters')
+        this.map.moveLayer('statistics-registration-count-text')
+        this.map.moveLayer('province-statistics-registration-count-clusters')
+        this.map.moveLayer('province-statistics-registration-count-text')
+
       });
 
       this.map.addLayer({
@@ -508,48 +414,6 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-      this.map.on('mousemove', 'sub_prefecture', (e : any) => {
-        /*if (e.features.length > 0) {
-          if (this.hoveredStateId !== null) {
-            this.map.setFeatureState(
-              { source: 'sub_prefecture', id: this.hoveredStateId },
-              { hover: false }
-            );
-          }
-          this.hoveredStateId = e.features[0].id;
-          this.map.setFeatureState(
-            { source: 'sub_prefecture', id: this.hoveredStateId },
-            { hover: true }
-          );
-        }
-        popup.setLngLat(e.lngLat)
-          .setHTML('Admin_type - ' + e.features[0].properties.Admin_type + "<br>"
-          +'Adm2_CAP - ' + e.features[0].properties.Adm2_CAP + "<br>"
-          +'ADM2_EN - ' + e.features[0].properties.ADM2_EN + "<br>"
-          +'ADM2_ZH - ' + e.features[0].properties.ADM2_ZH + "<br>"
-          +'ADM2_PCODE - ' + e.features[0].properties.ADM2_PCODE + "<br>"
-          +'ADM1_EN - ' + e.features[0].properties.ADM1_EN + "<br>"
-          +'ADM1_ZH - ' + e.features[0].properties.ADM1_ZH + "<br>"
-          +'ADM1_PCODE - ' + e.features[0].properties.ADM1_PCODE + "<br>"
-          +'ADM0_EN - ' + e.features[0].properties.ADM0_EN + "<br>"
-          +'ADM0_ZH - ' + e.features[0].properties.ADM0_ZH + "<br>"
-          +'ADM0_PCODE - ' + e.features[0].properties.ADM0_PCODE + "<br>")
-          .addTo(this.map);*/
-      });
-
-      this.map.on('mouseout', 'country_territory', (e : any) => {
-        popup.remove()
-      });
-
-      this.map.on('mouseleave', 'sub_prefecture', () => {
-        if (this.hoveredStateId != null) {
-          this.map.setFeatureState(
-            { source: 'sub_prefecture', id: this.hoveredStateId },
-            { hover: false }
-          );
-        }
-        this.hoveredStateId = null;
-      });
 
       this.map.on('click', 'sub_prefecture',(e : any) => {
         console.log(e)
@@ -560,155 +424,26 @@ export class DashboardComponent implements OnInit {
         });
       });
 
-      this.map.addLayer({
-        'id': 'county_click_layer',
-        'type': 'fill',
-        'source': 'county',
-        'layout': {},
-        'paint': {
-          'fill-color': '#627BC1',
-          'fill-opacity': [
-            'case',
-            ['boolean', ['feature-state', 'click'], false],
-            0.5,
-            0.1
-          ]
-        }
-      });
-
-      this.map.on('click', 'county_click_layer', (e) => {
-        console.log(e)
-        if (e.features.length > 0) {
-          if (clickedStateId) {
-            this.map.setFeatureState(
-              { source: 'county', id: clickedStateId },
-              { click: false }
-            );
-          }
-          clickedStateId = e.features[0].id;
-          this.map.setFeatureState(
-            { source: 'county', id: clickedStateId },
-            { click: true }
-          );
-        }
-      });
-
-      this.map.addLayer({
-        id: 'county',
-        type: 'fill',
-        source: 'county',
-        layout: {},
-        paint: {
-          'fill-color': '#627BC1',
-          'fill-opacity': [
-            'case',
-            ['boolean', ['feature-state', 'hover'], false],
-            0.5,
-            0.3
-          ]
-        }
-      });
-
-      this.map.on('mousemove', 'county', (e : any) => {
-        if (e.features.length > 0) {
-          if (this.hoveredStateId !== null) {
-            this.map.setFeatureState(
-              { source: 'county', id: this.hoveredStateId },
-              { hover: false }
-            );
-          }
-          this.hoveredStateId = e.features[0].id;
-          this.map.setFeatureState(
-            { source: 'county', id: this.hoveredStateId },
-            { hover: true }
-          );
-        }
-        popup.setLngLat(e.lngLat)
-          .setHTML('ISO - ' + e.features[0].properties.ISO + "<br>"
-          +'NAME_0 - ' + e.features[0].properties.NAME_0 + "<br>"
-          +'ID_1 - ' + e.features[0].properties.ID_1 + "<br>"
-          +'NAME_1 - ' + e.features[0].properties.NAME_1 + "<br>"
-          +'ID_2 - ' + e.features[0].properties.ID_2 + "<br>"
-          +'NAME_2 - ' + e.features[0].properties.NAME_2 + "<br>"
-          +'ID_3 - ' + e.features[0].properties.ID_3 + "<br>"
-          +'NAME_3 - ' + e.features[0].properties.NAME_3 + "<br>"
-          +'TYPE_3 - ' + e.features[0].properties.TYPE_3 + "<br>"
-          +'ENGTYPE_3 - ' + e.features[0].properties.ENGTYPE_3 + "<br>"
-          +'NL_NAME_3 - ' + e.features[0].properties.NL_NAME_3 + "<br>"
-          +'VARNAME_3 - ' + e.features[0].properties.VARNAME_3)
-          .addTo(this.map);
-      });
-
-      this.map.on('mouseout', 'country_territory', (e : any) => {
-        popup.remove()
-      });
-
-      this.map.on('mouseleave', 'county', () => {
-        if (this.hoveredStateId != null) {
-          this.map.setFeatureState(
-            { source: 'county', id: this.hoveredStateId },
-            { hover: false }
-          );
-        }
-        this.hoveredStateId = null;
-      });
-
-      this.map.on('click', 'county',(e : any) => {
-        console.log(e)
-        let a = e.features[0].geometry.coordinates[0][0]
-        if (a.length > 2) {
-          a = e.features[0].geometry.coordinates[0][0][0]
-        }
-        this.map.flyTo({
-          center: a,
-          duration: 1500,
-          zoom: 7
-        });
-      });
-
-
       this.map.on('zoomend',e=>{
         console.log(this.map.getZoom())
-        /*if(this.currentBoundaries == 'province'){
-          if(this.map.getZoom() > 5){
-            this.changeBoundaries('sub_prefecture')
-            this.showSubPrefectureLayer()
-          }
-        }else if(this.currentBoundaries == 'sub_prefecture'){
-          if(this.map.getZoom() <= 5){
-            this.changeBoundaries('province')
-            this.showProvinceLayer()
-          }
-        }*/
-
         if(this.map.getZoom() <= 5){
           this.changeBoundaries('province')
           this.showProvinceLayer()
         }else if(this.map.getZoom() > 5 && this.map.getZoom() < 13){
           this.changeBoundaries('sub_prefecture')
           this.showSubPrefectureLayer()
-
-          /*this.map.setFeatureState(
-            { source: 'sub_prefecture', id: clickedStateId },
-            { click: true }
-          );*/
-
         }else if(this.map.getZoom() >= 13){
           this.map.setLayoutProperty('province-statistics-registration-count-clusters', 'visibility', 'none');
           this.map.setLayoutProperty("province-statistics-registration-count-text", 'visibility', 'none');
           this.map.setLayoutProperty("statistics-registration-count-clusters", 'visibility', 'none');
           this.map.setLayoutProperty("statistics-registration-count-text", 'visibility', 'none');
         }
-
       })
 
       this.map.on('moveend', e=>{
-        if(this.map.getZoom() >= 13){
-          this.getRealtimedataLocation()
-        }else {
-          this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none');
-        }
+
       })
+
       this.refresh()
       this.changeBoundaries('province')
       this.showProvinceLayer()
@@ -749,47 +484,9 @@ export class DashboardComponent implements OnInit {
     filter.state.push('OPEN')
 
     this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
-      console.log(res)
-      this.vehiclewarnings = res.body.warnings
-    },error=>{
-      console.log(error)
-    })
-  }
 
-  getRealtimedataLocation(){
-    this.map.setLayoutProperty('realtimedata-location-clusters', 'visibility', 'visible');
-    let mapDiv = document.getElementById('map');
-    const northwest = new mapboxgl.Point(0, 0); // 북서 쪽
-    const southeast = new mapboxgl.Point(mapDiv.getBoundingClientRect().width, mapDiv.getBoundingClientRect().height); // 남동 쪽
-    let filter = new SearchFilter()
-    filter.latitudeBegin = this.map.unproject(southeast).lat
-    filter.latitudeEnd = this.map.unproject(northwest).lat
-    filter.longitudeBegin = this.map.unproject(northwest).lng
-    filter.longitudeEnd = this.map.unproject(southeast).lng
-
-    this.realtimedataService.getRealtimedataLocation(filter).subscribe(res=>{
-      console.log(res)
-      let featuresList : any[] = []
-      for(let i = 0; i < res.body.locations.length; i++){
-        featuresList.push({
-          "type": "Feature",
-          "properties": {
-            "vin" : res.body.locations[i].vin
-          },
-          "geometry": {
-            "type": "Point",
-              "coordinates": [res.body.locations[i].longitude, res.body.locations[i].latitude]
-            },
-        })
-      }
-
-      (this.map.getSource("realtimedataLocation") as GeoJSONSource).setData({
-        "type": "FeatureCollection",
-        "features": featuresList
-      });
-
-
-
+      this.vehiclewarnings = res.body
+      console.log(this.vehiclewarnings)
     },error=>{
       console.log(error)
     })
@@ -816,113 +513,81 @@ export class DashboardComponent implements OnInit {
   getStatisticsRegistrationCount(){
     this.statisticsService.getStatisticsRegistrationCount(new SearchFilter()).subscribe(res=>{
       console.log(res)
-      this.utilService.getProvinceData().subscribe((res2:any)=>{
-        console.log(res2)
-        let featuresList : any[] = []
-        for(let i = 0; i < res.body.entities.length; i++){
-          for(let j = 0; j < res2.features.length; j++){
-            if(res2.features[j].properties.ADM1_ZH.indexOf(res.body.entities[i].region.province) > -1){
-              let lnglat = res2.features[j].geometry.center
-              featuresList.push({
-                "type": "Feature",
-                "properties": {
-                  "pcode" : res.body.entities[i].region.pcode,
-                  "zipCode" : res.body.entities[i].region.zipCode,
-                  "placeCode" : res.body.entities[i].region.placeCode,
-                  "districtCode" : res.body.entities[i].region.districtCode,
-                  "province" : res.body.entities[i].region.province,
-                  "city" : res.body.entities[i].region.city,
-                  "district" : res.body.entities[i].region.district,
-                  "street" : res.body.entities[i].street,
-                  "statistics_count" : res.body.entities[i].count
-                },
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": lnglat
-                },
-              })
-              break;
-            }
+      let featuresList : any[] = []
+      for(let i = 0; i < res.body.entities.length; i++){
+        for(let j = 0; j < this.provinceData.features.length; j++){
+          if(this.provinceData.features[j].properties.ADM1_ZH.indexOf(res.body.entities[i].region.province) > -1){
+            let lnglat = this.provinceData.features[j].geometry.center
+            featuresList.push({
+              "type": "Feature",
+              "properties": {
+                "pcode" : res.body.entities[i].region.pcode,
+                "zipCode" : res.body.entities[i].region.zipCode,
+                "placeCode" : res.body.entities[i].region.placeCode,
+                "districtCode" : res.body.entities[i].region.districtCode,
+                "province" : res.body.entities[i].region.province,
+                "city" : res.body.entities[i].region.city,
+                "district" : res.body.entities[i].region.district,
+                "street" : res.body.entities[i].street,
+                "statistics_count" : res.body.entities[i].count
+              },
+              "geometry": {
+                "type": "Point",
+                "coordinates": lnglat
+              },
+            })
+            break;
           }
         }
-        (this.map.getSource("statistics_registration_count") as GeoJSONSource).setData({
-          "type": "FeatureCollection",
-          "features": featuresList
-        });
-        console.log(res)
-      },error=>{
-        console.log(error)
-      })
+      }
+      (this.map.getSource("statistics_registration_count") as GeoJSONSource).setData({
+        "type": "FeatureCollection",
+        "features": featuresList
+      });
     },error=>{
       console.log(error)
     })
   }
 
-  getProvinceStatisticsRegistrationCount(){
-    this.utilService.getProvinceData().subscribe(async (res:any)=>{
-      console.log(res)
-
-      let featuresList : any[] = []
-
-      for(let i = 0; i < res.features.length; i++){
-        let filter = new SearchFilter()
-        filter.province = res.features[i].properties.ADM1_ZH
-        await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
-          console.log(res2)
-          await this.utilService.getSubPrefectureeData().toPromise().then(async(res3 : any)=>{
-            console.log(res3)
-            for(let j = 0; j < res2.body.entities.length; j++){
-              for(let k = 0; k < res3.features.length; k++){
-                if(res3.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
-                  let lnglat = res3.features[k].geometry.center
-                  featuresList.push({
-                    "type": "Feature",
-                    "properties": {
-                      "pcode" : res2.body.entities[j].region.pcode,
-                      "zipCode" : res2.body.entities[j].region.zipCode,
-                      "placeCode" : res2.body.entities[j].region.placeCode,
-                      "districtCode" : res2.body.entities[j].region.districtCode,
-                      "province" : res2.body.entities[j].region.province,
-                      "city" : res2.body.entities[j].region.city,
-                      "district" : res2.body.entities[j].region.district,
-                      "street" : res2.body.entities[j].street,
-                      "statistics_count" : res2.body.entities[j].count
-                    },
-                    "geometry": {
-                      "type": "Point",
-                        "coordinates": lnglat
-                      },
-                  })
-                  break;
-                }
-              }
+  async getProvinceStatisticsRegistrationCount(){
+    let featuresList : any[] = []
+    for(let i = 0; i < this.provinceData.features.length; i++){
+      let filter = new SearchFilter()
+      filter.province = this.provinceData.features[i].properties.ADM1_ZH
+      await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
+        console.log(res2)
+        for(let j = 0; j < res2.body.entities.length; j++){
+          for(let k = 0; k < this.subPrefectureData.features.length; k++){
+            if(this.subPrefectureData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
+              let lnglat = this.subPrefectureData.features[k].geometry.center
+              featuresList.push({
+                "type": "Feature",
+                "properties": {
+                  "pcode" : res2.body.entities[j].region.pcode,
+                  "zipCode" : res2.body.entities[j].region.zipCode,
+                  "placeCode" : res2.body.entities[j].region.placeCode,
+                  "districtCode" : res2.body.entities[j].region.districtCode,
+                  "province" : res2.body.entities[j].region.province,
+                  "city" : res2.body.entities[j].region.city,
+                  "district" : res2.body.entities[j].region.district,
+                  "street" : res2.body.entities[j].street,
+                  "statistics_count" : res2.body.entities[j].count
+                },
+                "geometry": {
+                  "type": "Point",
+                    "coordinates": lnglat
+                  },
+              })
+              break;
             }
-          })
-        })
-      }
-
-      /*if(true){
-        featuresList.push({
-          "type": "Feature",
-          "properties": {
-            "statistics_count" : 123
-          },
-          "geometry": {
-            "type": "Point",
-              "coordinates": [this.lng,this.lat]
-            },
-        })
-      }*/
-
-
-      (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
-        "type": "FeatureCollection",
-        "features": featuresList
-      });
-
-    },error=>{
-      console.log(error)
-    })
+          }
+        }
+      })
+    }
+    (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
+      "type": "FeatureCollection",
+      "features": featuresList
+    });
   }
 
   getStatisticsRegistrationSummary(){
@@ -959,7 +624,7 @@ export class DashboardComponent implements OnInit {
   }
 
   pageMoveAlarm(alarm : any){
-    this.router.navigateByUrl(`/main/alarm)`);
+    this.router.navigateByUrl(`/main/alarm/${alarm.issueId})`);
   }
 
   setPieChart(){
@@ -1017,10 +682,6 @@ export class DashboardComponent implements OnInit {
   changeBoundaries(boundaries : string){
     this.currentBoundaries = boundaries
     this.hoveredStateId = null
-    if(boundaries != 'country_territory'){
-      this.map.setLayoutProperty('country_territory', 'visibility', 'none');
-      this.map.setLayoutProperty('country_territory_click_layer', 'visibility', 'none');
-    }
 
     if(boundaries != 'province'){
       this.map.setLayoutProperty('province', 'visibility', 'none');
@@ -1030,15 +691,14 @@ export class DashboardComponent implements OnInit {
     if(boundaries != 'sub_prefecture'){
       this.map.setLayoutProperty('sub_prefecture', 'visibility', 'none');
       this.map.setLayoutProperty('sub_prefecture_click_layer', 'visibility', 'none');
-    }
-
-    if(boundaries != 'county'){
-      this.map.setLayoutProperty('county', 'visibility', 'none');
-      this.map.setLayoutProperty('county_click_layer', 'visibility', 'none');
+      this.map.setLayoutProperty('sub_prefecture_click_layer2', 'visibility', 'none');
+    }else{
+      this.map.setLayoutProperty(boundaries+"_click_layer2", 'visibility', 'visible');
     }
 
     this.map.setLayoutProperty(boundaries, 'visibility', 'visible');
     this.map.setLayoutProperty(boundaries+"_click_layer", 'visibility', 'visible');
+
   }
 
 

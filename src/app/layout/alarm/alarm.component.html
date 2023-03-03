@@ -6,7 +6,7 @@
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getVehiclewarnings()">
+          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
         </div>
       </div>
 
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="filter searchFilter">
-        <div class="btn" (click)="getVehiclewarnings()">
+        <div class="btn" (click)="setSearch()">
           Search
         </div>
       </div>

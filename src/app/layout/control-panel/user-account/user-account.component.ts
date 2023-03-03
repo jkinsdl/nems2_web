@@ -197,4 +197,8 @@ export class UserAccountComponent implements OnInit {
       console.log(error)
     })
   }
+
+  setSearch(){
+    this.uiService.setCurrentPage(1);
+  }
 }

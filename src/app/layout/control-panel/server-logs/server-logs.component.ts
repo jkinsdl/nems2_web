@@ -154,4 +154,8 @@ export class ServerLogsComponent implements OnInit {
       console.log(error)
     })
   }
+
+  setSearch(){
+    this.uiService.setCurrentPage(1);
+  }
 }

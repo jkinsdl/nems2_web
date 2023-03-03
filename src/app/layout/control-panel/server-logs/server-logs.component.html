@@ -5,7 +5,7 @@
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getGbpacket()">
+          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
         </div>
       </div>
 
@@ -78,7 +78,7 @@
           <img src="assets/icon/excel_download.png">
         </div>
 
-        <div class="btn" (click)="getGbpacket()">
+        <div class="btn" (click)="setSearch()">
           Search
         </div>
       </div>

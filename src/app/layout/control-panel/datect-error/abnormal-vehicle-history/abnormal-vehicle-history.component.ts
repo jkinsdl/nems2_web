@@ -102,4 +102,8 @@ export class AbnormalVehicleHistoryComponent implements OnInit {
     this.utilService.gridDataToExcelData("abnormal vehicle history", this.gridApi ,this.rowData)
   }
 
+  setSearch(){
+    this.uiService.setCurrentPage(1);
+  }
+
 }

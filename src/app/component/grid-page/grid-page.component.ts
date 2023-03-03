@@ -21,6 +21,7 @@ export class GridPageComponent implements OnInit {
 
   pagination$ : Subscription
   pagination2$ : Subscription
+  currentPage$ : Subscription
 
   pageArray : number[] = []
   currentPage : number = 0;
@@ -33,16 +34,25 @@ export class GridPageComponent implements OnInit {
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-
+    if(this.pagination$)this.pagination$.unsubscribe()
+    if(this.pagination2$)this.pagination2$.unsubscribe()
+    if(this.currentPage$)this.currentPage$.unsubscribe()
   }
 
   ngOnInit(): void {
 
     if(this.gridNumber == 1){
+
       this.pagination$ = this.uiService.pagination$.subscribe((pagination:any)=>{
         this.pagination = pagination
         this.setPageArray()
       })
+
+      this.currentPage$ = this.uiService.currentPage$.subscribe((currentPage:number)=>{
+        this.currentPage = undefined
+        this.clickPage(currentPage)
+      })
+
     }else if(this.gridNumber == 2){
       this.pagination2$ = this.uiService.pagination2$.subscribe((pagination:any)=>{
         this.pagination = pagination

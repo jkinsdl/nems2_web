@@ -289,7 +289,7 @@
           <div class="header third">Create Time </div>
         </div>
         <div class="gridContents">
-          <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of vehiclewarnings">
+          <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of vehiclewarnings.entities">
             <div class="gridCell first">
               {{warning.vin}}
             </div>
@@ -297,7 +297,7 @@
               {{warning.warningLevel}}
             </div>
             <div class="gridCell third">
-              {{warning.createTime}}
+              {{warning.createTime | dateformat}}
             </div>
           </div>
         </div>

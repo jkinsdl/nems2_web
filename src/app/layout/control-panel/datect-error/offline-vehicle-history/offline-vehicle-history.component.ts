@@ -100,4 +100,8 @@ export class OfflineVehicleHistoryComponent implements OnInit {
     this.utilService.gridDataToExcelData("offline vehicle history", this.gridApi ,this.rowData)
   }
 
+  setSearch(){
+    this.uiService.setCurrentPage(1);
+  }
+
 }

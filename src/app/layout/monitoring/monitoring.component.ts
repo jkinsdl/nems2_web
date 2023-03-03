@@ -143,8 +143,10 @@ export class MonitoringComponent implements OnInit {
       }, error=>{
         console.log(error)
       })
+  }
 
-
+  setSearch(){
+    this.uiService.setCurrentPage(1);
   }
 
 }

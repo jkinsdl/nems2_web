@@ -3,21 +3,21 @@
   <div class="filter">
     <div class="label">VIN</div>
     <div class="value">
-      <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getDevicemanagersVehicles()">
+      <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
     </div>
   </div>
 
   <div class="filter">
     <div class="label">firmware</div>
     <div class="value">
-      <input type="text" [(ngModel)]="searchFilter.firmware" (keydown.enter)="getDevicemanagersVehicles()">
+      <input type="text" [(ngModel)]="searchFilter.firmware" (keydown.enter)="setSearch()">
     </div>
   </div>
 
   <div class="filter">
     <div class="label">configure</div>
     <div class="value">
-      <input type="text" [(ngModel)]="searchFilter.configure" (keydown.enter)="getDevicemanagersVehicles()">
+      <input type="text" [(ngModel)]="searchFilter.configure" (keydown.enter)="setSearch()">
     </div>
   </div>
 
@@ -32,7 +32,7 @@
       <img src="assets/icon/excel_download.png">
     </div>
 
-    <div class="btn" (click)="getDevicemanagersVehicles()">
+    <div class="btn" (click)="setSearch()">
       Search
     </div>
   </div>

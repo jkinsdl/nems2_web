@@ -100,4 +100,8 @@ export class OfflineVehicleRealTimeComponent implements OnInit {
     this.utilService.gridDataToExcelData("offline vehicle real time", this.gridApi ,this.rowData)
   }
 
+  setSearch(){
+    this.uiService.setCurrentPage(1);
+  }
+
 }

@@ -191,4 +191,8 @@ export class RemoteControlStateComponent implements OnInit {
       console.log(error)
     })
   }
+
+  setSearch(){
+    this.uiService.setCurrentPage(1);
+  }
 }

@@ -32,6 +32,9 @@ export class UiService {
   pagination2Subject = new Subject()
   pagination2$ = this.pagination2Subject.asObservable()
 
+  currentPageSubject = new Subject()
+  currentPage$ = this.currentPageSubject.asObservable()
+
   getGridPageSize(gridHeight : number){
     return Math.floor((gridHeight - 50)/43) < 1 ? 1 : Math.floor((gridHeight - 50)/43)
   }
@@ -66,6 +69,10 @@ export class UiService {
 
   setPagination2(pagination : any){
     this.pagination2Subject.next(pagination)
+  }
+
+  setCurrentPage(currentPage : number){
+    this.currentPageSubject.next(currentPage)
   }
 
 }

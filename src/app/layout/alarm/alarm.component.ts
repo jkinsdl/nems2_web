@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import mapboxgl from 'mapbox-gl';
 import { Subscription } from 'rxjs';
@@ -30,7 +31,8 @@ export class AlarmComponent implements OnInit {
     private uiService: UiService,
     private dialog: MatDialog,
     private vehiclemanagerService : VehiclemanagerService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private actRoute: ActivatedRoute,
   ) { }
 
 
@@ -146,10 +148,25 @@ export class AlarmComponent implements OnInit {
   beginDate : Date = null
   endDate : Date = null
 
-
+  issueId : number
 
   ngAfterViewInit() {
-    this.getPageSize()
+    if( this.issueId ){
+      this.vehiclewarningService.getVehiclewarnings(new SearchFilter()).subscribe(res=>{
+        this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
+        this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+        for(let i = 0; i < res.body.entities.length; i++){
+          if(this.issueId == res.body.entities[i].issueId){
+            this.uiService.setCurrentPage((Math.floor(i/this.pageSize)) + 1);
+            break;
+          }
+        }
+      },error=>{
+        console.log(error)
+      })
+    }else {
+      this.getPageSize()
+    }
   }
 
   ngOnDestroy(): void {
@@ -159,6 +176,9 @@ export class AlarmComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.issueId = parseInt(this.actRoute.snapshot.paramMap.get('issueId'))
+
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
       this.map = new mapboxgl.Map({
@@ -173,8 +193,6 @@ export class AlarmComponent implements OnInit {
       this.currentPage = page
       this.getPageSize()
     })
-
-
   }
 
   alarmModify(){
@@ -186,9 +204,7 @@ export class AlarmComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-
           console.log(result)
-
           let parameter = {
             state : result.warningIssue.state,
           }
@@ -316,6 +332,26 @@ export class AlarmComponent implements OnInit {
         page : this.currentPage
       }
       this.uiService.setPagination(pagination)
+
+      if( this.issueId ){
+
+        setTimeout(()=>{
+          this.gridApi.forEachNode(node=> node.data.issueId == this.issueId ? node.setSelected(true) : 0)
+          this.issueId = undefined
+        },1)
+
+
+        /*for(let i = 0; i < this.vehiclewarning.entities.length; i++){
+          if(this.vehiclewarning.entities[i].issueId == this.issueId){
+            //this.gridApi.getSelectedRows().push(this.vehiclewarning.entities[i])
+
+            this.selectAlarm()
+            this.issueId = undefined
+            break;
+          }
+        }*/
+      }
+
     },error=>{
       console.log(error)
     })
@@ -361,7 +397,7 @@ export class AlarmComponent implements OnInit {
   }
 
   changeFilter(){
-    this.getVehiclewarnings()
+    this.uiService.setCurrentPage(1);
   }
 
   clearEndDate(){
@@ -370,5 +406,9 @@ export class AlarmComponent implements OnInit {
 
   clearBeginDate(){
     this.beginDate = undefined
+  }
+
+  setSearch(){
+    this.uiService.setCurrentPage(1);
   }
 }

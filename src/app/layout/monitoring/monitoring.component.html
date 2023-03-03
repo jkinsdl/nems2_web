@@ -5,14 +5,14 @@
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
         <div class="label">reg number</div>
         <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.registrationPlate" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.registrationPlate" (keydown.enter)="setSearch()">
         </div>
       </div>
 
@@ -30,21 +30,21 @@
       <div class="filter">
         <div class="label">purpose</div>
         <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.purpose" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.purpose" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
         <div class="label">model</div>
         <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.model" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.model" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
         <div class="label">region</div>
         <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.region" (keydown.enter)="getRealtimedataVehiclelist()">
+          <input type="text" [(ngModel)]="searchFilter.region" (keydown.enter)="setSearch()">
         </div>
       </div>
 
@@ -81,7 +81,7 @@
           <img src="assets/icon/excel_download.png">
         </div>
 
-        <div class="btn" (click)="getRealtimedataVehiclelist()">
+        <div class="btn" (click)="setSearch()">
           Search
         </div>
       </div>

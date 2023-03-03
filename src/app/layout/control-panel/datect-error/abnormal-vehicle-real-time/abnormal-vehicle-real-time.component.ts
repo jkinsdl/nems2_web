@@ -112,4 +112,8 @@ export class AbnormalVehicleRealTimeComponent implements OnInit {
     this.utilService.gridDataToExcelData("abnormal vehicle real time", this.gridApi ,this.rowData)
   }
 
+  setSearch(){
+    this.uiService.setCurrentPage(1);
+  }
+
 }
