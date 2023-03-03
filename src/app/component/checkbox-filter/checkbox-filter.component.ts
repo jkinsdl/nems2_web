@@ -25,7 +25,6 @@ export class CheckboxFilterComponent implements IFilterAngularComp  {
   }
 
   isFilterActive(): boolean {
-    console.log("!!")
       return true
   }
 
@@ -40,7 +39,7 @@ export class CheckboxFilterComponent implements IFilterAngularComp  {
   }
 
   updateFilter() {
-      this.params.filterChangedCallback();
+    this.params.filterChangedCallback();
   }
 
 }

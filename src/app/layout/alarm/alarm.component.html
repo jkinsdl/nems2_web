@@ -12,16 +12,18 @@
 
       <div class="filter">
         <div class="label">Begin</div>
-        <div class="value">
+        <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="beginPicker" readonly="true" (click)="beginPicker.open()" [(ngModel)]="beginDate" [max]="endDate">
+          <mat-icon matDatepickerToggleIcon style="cursor: pointer;"  (click)="clearBeginDate()">clear</mat-icon>
           <ngx-mat-datetime-picker #beginPicker [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
         </div>
       </div>
 
       <div class="filter">
         <div class="label">End</div>
-        <div class="value">
+        <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="beginDate">
+          <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="clearEndDate()">clear</mat-icon>
           <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
         </div>
       </div>
@@ -146,7 +148,8 @@
         [tooltipShowDelay]="0"
         [rowSelection]="'single'"
         (rowSelected)="selectAlarm()"
-        (gridReady)="onGridReady($event)">
+        (gridReady)="onGridReady($event)"
+        (filterChanged)="changeFilter()">
       </ag-grid-angular>
       <div style="width: 100%; height: 50px;">
         <app-grid-page [gridNumber]="1"></app-grid-page>

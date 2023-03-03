@@ -69,19 +69,28 @@ export class AlarmComponent implements OnInit {
   });
 
 
+  stateToppings = this._formBuilder.group({
+    UNKNOWN : false,
+    OPEN : false,
+    PROGRESSING : false,
+    RESOLVED : false,
+    CLOSED : false,
+    ERROR : false,
+  });
+
+
   columnDefs: ColDef[] = [
     { field: 'vin',headerName: "VIN", tooltipField: 'vin'},
     { field: 'createTime',headerName: "Create Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createTime' }},
     { field: 'lastPacketTime',headerName: "Last Packet Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastPacketTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastPacketTime' }},
     //{ field: 'releasedTime',headerName: "Released Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'releasedTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'releasedTime' }},
-    { field: 'state',headerName: "State", tooltipField: 'state'},
-    //{ field: 'state',headerName: "State", tooltipField: 'state', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningTypeToppings}},
+    { field: 'state',headerName: "State", tooltipField: 'state', filter : CheckboxFilterComponent, filterParams :  { toppings: this.stateToppings}},
     //{ field: 'maxWarning',headerName: "Max Warning", tooltipField: 'maxWarning'},
     //{ field: 'warningFlag',headerName: "Warning Flag", tooltipField: 'warningFlag'},
     //{ field: 'region',headerName: "Region", tooltipField: 'region'},
     //{ field: 'comment',headerName: "Comment", tooltipField: 'comment'},
-    { field: 'warningLevel',headerName: "Warning Level", tooltipField: 'warningLevel'},
-    { field: 'warningType',headerName: "Warning Type", tooltipField: 'warningType'},
+    { field: 'warningLevel',headerName: "Warning Level", tooltipField: 'warningLevel', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningLevelToppings}},
+    { field: 'warningType',headerName: "Warning Type", tooltipField: 'warningType', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningTypeToppings}},
     //{ field: 'warningCode',headerName: "Warning Code", tooltipField: 'warningCode'},
     //{ field: 'code',headerName: "Code", tooltipField: 'code'},
   ];
@@ -164,6 +173,8 @@ export class AlarmComponent implements OnInit {
       this.currentPage = page
       this.getPageSize()
     })
+
+
   }
 
   alarmModify(){
@@ -175,6 +186,7 @@ export class AlarmComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
+
           console.log(result)
 
           let parameter = {
@@ -189,6 +201,7 @@ export class AlarmComponent implements OnInit {
           })
 
           //this.getVehiclewarnings()
+
         }
       });
     }
@@ -272,7 +285,27 @@ export class AlarmComponent implements OnInit {
       }
     }
 
+    this.searchFilter.state = []
+    for (const [key, value] of Object.entries(this.stateToppings.value)) {
+      if(value){
+        this.searchFilter.state.push(key)
+      }
+    }
 
+    if(this.beginDate){
+      this.searchFilter.begin = new Date(this.beginDate).toISOString()
+    }else{
+      this.searchFilter.begin = undefined
+    }
+
+    if(this.endDate){
+      this.searchFilter.end = new Date(this.endDate).toISOString()
+    }else{
+      this.searchFilter.end = undefined
+    }
+
+
+    console.log(this.searchFilter)
 
     this.vehiclewarningService.getVehiclewarnings(this.searchFilter).subscribe(res=>{
       console.log(res)
@@ -325,5 +358,17 @@ export class AlarmComponent implements OnInit {
 
   openWarningLevelFilter(){
     this.isOpenWarningLevelFilter = true
+  }
+
+  changeFilter(){
+    this.getVehiclewarnings()
+  }
+
+  clearEndDate(){
+    this.endDate = undefined
+  }
+
+  clearBeginDate(){
+    this.beginDate = undefined
   }
 }

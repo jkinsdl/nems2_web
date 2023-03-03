@@ -743,8 +743,11 @@ export class DashboardComponent implements OnInit {
 
   getVehiclewarnings(){
     let filter = new SearchFilter()
-    filter.level = this.alarmListFilter
-    filter.state = 'OPEN'
+    filter.warningLevel = []
+    filter.state = []
+    filter.warningLevel.push(this.alarmListFilter)
+    filter.state.push('OPEN')
+
     this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
       console.log(res)
       this.vehiclewarnings = res.body.warnings

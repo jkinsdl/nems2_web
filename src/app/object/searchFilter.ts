@@ -34,7 +34,7 @@ export class SearchFilter{
   pcode : number
 
   level : string
-  state : string
+  state : string[]
 
   search : string
   firmware : string
