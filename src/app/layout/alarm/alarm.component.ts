@@ -74,7 +74,7 @@ export class AlarmComponent implements OnInit {
   stateToppings = this._formBuilder.group({
     UNKNOWN : false,
     OPEN : false,
-    PROGRESSING : false,
+    PROGRESS : false,
     RESOLVED : false,
     CLOSED : false,
     ERROR : false,
@@ -82,16 +82,16 @@ export class AlarmComponent implements OnInit {
 
 
   columnDefs: ColDef[] = [
-    { field: 'vin',headerName: "VIN", tooltipField: 'vin'},
-    { field: 'createTime',headerName: "Create Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createTime' }},
-    { field: 'lastPacketTime',headerName: "Last Packet Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastPacketTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastPacketTime' }},
+    { field: 'vin',headerName: "VIN", tooltipField: 'vin', width:170},
+    { field: 'createTime',headerName: "Create Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createTime' }, width:170},
+    { field: 'lastPacketTime',headerName: "Last Packet Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastPacketTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastPacketTime' }, width:170},
     //{ field: 'releasedTime',headerName: "Released Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'releasedTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'releasedTime' }},
-    { field: 'state',headerName: "State", tooltipField: 'state', filter : CheckboxFilterComponent, filterParams :  { toppings: this.stateToppings}},
+    { field: 'state',headerName: "State", tooltipField: 'state', filter : CheckboxFilterComponent, filterParams :  { toppings: this.stateToppings}, width:120},
     //{ field: 'maxWarning',headerName: "Max Warning", tooltipField: 'maxWarning'},
     //{ field: 'warningFlag',headerName: "Warning Flag", tooltipField: 'warningFlag'},
     //{ field: 'region',headerName: "Region", tooltipField: 'region'},
     //{ field: 'comment',headerName: "Comment", tooltipField: 'comment'},
-    { field: 'warningLevel',headerName: "Warning Level", tooltipField: 'warningLevel', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningLevelToppings}},
+    { field: 'warningLevel',headerName: "Warning Level", tooltipField: 'warningLevel', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningLevelToppings}, width:110},
     { field: 'warningType',headerName: "Warning Type", tooltipField: 'warningType', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningTypeToppings}},
     //{ field: 'warningCode',headerName: "Warning Code", tooltipField: 'warningCode'},
     //{ field: 'code',headerName: "Code", tooltipField: 'code'},
@@ -285,6 +285,11 @@ export class AlarmComponent implements OnInit {
     if(this.gridHeight != this.alarmGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.gridApi){
+      this.gridApi.sizeColumnsToFit()
+    }
+
   }
 
   getVehiclewarnings(){
@@ -384,6 +389,7 @@ export class AlarmComponent implements OnInit {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit()
   }
 
   onBtExport() {

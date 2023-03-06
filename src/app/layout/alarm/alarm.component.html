@@ -305,9 +305,9 @@
           </div>
 
 
-          <div class="alarmDetailFild">
+          <div class="alarmDetailFild" >
             <div class="alarmfildLable">Comment</div>
-            <div class="alarmfildValue" *ngFor="let comment of selectionAlarm.comments"> {{comment.comment}} </div>
+            <div class="alarmfildValue" style="display: block;"> {{selectionAlarm.comments != undefined && selectionAlarm.comments.length != 0 ? selectionAlarm.comments[0].comment : ""}} <span > {{selectionAlarm.comments != undefined && selectionAlarm.comments.length > 1 ? (selectionAlarm.comments.length-1) +" others" : ""}} </span></div>
           </div>
 
         </div>
