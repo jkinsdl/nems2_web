@@ -86,18 +86,17 @@ export class OTAManagementComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.otaManagementGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.otaManagementGrid.nativeElement.offsetHeight;
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-      if(this.selectFirmware != null){
-        this.getDevicemanagersFirmwareFirmwareNameVehicles()
-      }
+    this.gridHeight = this.otaManagementGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    if(this.selectFirmware != null){
+      this.getDevicemanagersFirmwareFirmwareNameVehicles()
     }
-
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.otaManagementGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   getDevicemanagersVehicles() {

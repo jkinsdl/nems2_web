@@ -83,15 +83,15 @@ export class ServerLogsComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.serverLogGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.serverLogGrid.nativeElement.offsetHeight
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-      this.getGbpacket()
-    }
+    this.gridHeight = this.serverLogGrid.nativeElement.offsetHeight
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    this.getGbpacket()
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.serverLogGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   getGbpacket(){

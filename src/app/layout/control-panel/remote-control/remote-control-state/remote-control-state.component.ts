@@ -85,14 +85,15 @@ export class RemoteControlStateComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.remoteControlStateGrid.nativeElement.offsetHeight){
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-      this.getDevicemanagersVehicles()
-    }
+    this.gridHeight = this.remoteControlStateGrid.nativeElement.offsetHeight
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    this.getDevicemanagersVehicles()
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.remoteControlStateGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
 

@@ -496,14 +496,14 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.vinHistoryGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.vinHistoryGrid.nativeElement.offsetHeight;
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    }
+    this.gridHeight = this.vinHistoryGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.vinHistoryGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   clickVinMarker(vin : string){

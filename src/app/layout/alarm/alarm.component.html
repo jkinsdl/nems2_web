@@ -264,6 +264,11 @@
             <div class="alarmfildLable">Regist Date</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.registDate | dateformat}} </div>
           </div>
+
+          <div class="alarmDetailFild">
+            <div class="alarmfildLable">s-off-date</div>
+            <div class="alarmfildValue"> {{selectVehicle.vehicle.sOffDate | dateformat}} </div>
+          </div>
         </div>
       </div>
 
@@ -298,6 +303,13 @@
             <div class="alarmfildLable">Warning Type</div>
             <div class="alarmfildValue"> {{selectionAlarm.warningType}} </div>
           </div>
+
+
+          <div class="alarmDetailFild">
+            <div class="alarmfildLable">Comment</div>
+            <div class="alarmfildValue" *ngFor="let comment of selectionAlarm.comments"> {{comment.comment}} </div>
+          </div>
+
         </div>
       </div>
 

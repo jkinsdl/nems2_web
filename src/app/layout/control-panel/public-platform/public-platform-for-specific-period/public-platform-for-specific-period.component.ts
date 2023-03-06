@@ -152,21 +152,18 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   }
 
   getPageSize(){
+    this.grid1Height = this.publicPlatformManagementGrid1.nativeElement.offsetHeight
+    this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
 
-    if(this.grid1Height != this.publicPlatformManagementGrid1.nativeElement.offsetHeight){
-      this.grid1Height = this.publicPlatformManagementGrid1.nativeElement.offsetHeight
-      this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
-    }
-
-    if(this.grid2Height != this.publicPlatformManagementGrid2.nativeElement.offsetHeight){
-      this.grid2Height = this.publicPlatformManagementGrid2.nativeElement.offsetHeight
-      this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
-    }
+    this.grid2Height = this.publicPlatformManagementGrid2.nativeElement.offsetHeight
+    this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
   }
 
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.grid1Height != this.publicPlatformManagementGrid1.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   onServerGridReady(params: GridReadyEvent) {

@@ -85,15 +85,17 @@ export class AbnormalVehicleRealTimeComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.abnormalVehicleRealTimeGrid.nativeElement.offsetHeight){
+
       this.gridHeight = this.abnormalVehicleRealTimeGrid.nativeElement.offsetHeight;
       this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
       this.getVehiclewarnings()
-    }
+
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.abnormalVehicleRealTimeGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
 

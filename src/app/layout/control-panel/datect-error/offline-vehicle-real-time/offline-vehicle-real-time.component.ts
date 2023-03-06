@@ -83,14 +83,14 @@ export class OfflineVehicleRealTimeComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.offlineVehicleRealTimeGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.offlineVehicleRealTimeGrid.nativeElement.offsetHeight;
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    }
+    this.gridHeight = this.offlineVehicleRealTimeGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.offlineVehicleRealTimeGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   onGridReady(params: GridReadyEvent) {

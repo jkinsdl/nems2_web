@@ -76,18 +76,15 @@ export class VehicleSettingsComponent implements OnInit {
   }
 
   getPageSize(){
-
-    if(this.gridHeight != this.vehicleSettingsGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.vehicleSettingsGrid.nativeElement.offsetHeight;
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-      this.getVehiclemanagerStaticinfo()
-    }
-
-
+    this.gridHeight = this.vehicleSettingsGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    this.getVehiclemanagerStaticinfo()
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.vehicleSettingsGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   getVehiclemanagerStaticinfo(){

@@ -83,16 +83,15 @@ export class VehicleModelComponent implements OnInit {
   }
 
   getPageSize(){
-
-    if(this.gridHeight != this.vehicleModelGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.vehicleModelGrid.nativeElement.offsetHeight
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-      this.getVehiclemanagerModel()
-    }
+    this.gridHeight = this.vehicleModelGrid.nativeElement.offsetHeight
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    this.getVehiclemanagerModel()
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.vehicleModelGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
 

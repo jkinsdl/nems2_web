@@ -83,14 +83,14 @@ export class PushAlarmComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.pushAlarmGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.pushAlarmGrid.nativeElement.offsetHeight
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    }
+    this.gridHeight = this.pushAlarmGrid.nativeElement.offsetHeight
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.pushAlarmGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   getNotificationsTemplates(){

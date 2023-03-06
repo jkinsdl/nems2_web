@@ -69,15 +69,15 @@ export class MonitoringComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.realTimeMonitoringGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.realTimeMonitoringGrid.nativeElement.offsetHeight;
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-      this.getRealtimedataVehiclelist()
-    }
+    this.gridHeight = this.realTimeMonitoringGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    this.getRealtimedataVehiclelist()
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.realTimeMonitoringGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   getVehicleRow(event : any){

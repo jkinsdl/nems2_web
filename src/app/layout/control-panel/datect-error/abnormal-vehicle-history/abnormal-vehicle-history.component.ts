@@ -84,14 +84,14 @@ export class AbnormalVehicleHistoryComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.abnormalVehicleHistoryGrid.nativeElement.offsetHeight){
-      this.gridHeight = this.abnormalVehicleHistoryGrid.nativeElement.offsetHeight;
-      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    }
+    this.gridHeight = this.abnormalVehicleHistoryGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.abnormalVehicleHistoryGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
 

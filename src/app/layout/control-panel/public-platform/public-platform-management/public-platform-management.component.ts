@@ -110,23 +110,21 @@ export class PublicPlatformManagementComponent implements OnInit {
 
   getPageSize(){
 
-    if(this.grid1Height != this.publicPlatformManagementGrid1.nativeElement.offsetHeight){
-      this.grid1Height = this.publicPlatformManagementGrid1.nativeElement.offsetHeight
-      this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
-      this.getForwarding()
-    }
+    this.grid1Height = this.publicPlatformManagementGrid1.nativeElement.offsetHeight
+    this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
+    this.getForwarding()
 
-    if(this.grid2Height != this.publicPlatformManagementGrid2.nativeElement.offsetHeight){
-      this.grid2Height = this.publicPlatformManagementGrid2.nativeElement.offsetHeight
-      this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
-      if(this.selectForwardingServerName != null){
-        this.getForwardingServerNameRelations(this.selectForwardingServerName)
-      }
+    this.grid2Height = this.publicPlatformManagementGrid2.nativeElement.offsetHeight
+    this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
+    if(this.selectForwardingServerName != null){
+      this.getForwardingServerNameRelations(this.selectForwardingServerName)
     }
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.grid1Height != this.publicPlatformManagementGrid1.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   getForwarding(){

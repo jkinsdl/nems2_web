@@ -190,6 +190,7 @@ export class AlarmComponent implements OnInit {
       this.map.addControl(new mapboxgl.NavigationControl());
     },1)
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
+
       this.currentPage = page
       this.getPageSize()
     })
@@ -275,16 +276,15 @@ export class AlarmComponent implements OnInit {
   }
 
   getPageSize(){
-    if(this.gridHeight != this.alarmGrid.nativeElement.offsetHeight){
       this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
       this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
       this.getVehiclewarnings()
-    }
-
   }
 
   onResize(event : any){
-    this.getPageSize()
+    if(this.gridHeight != this.alarmGrid.nativeElement.offsetHeight){
+      this.getPageSize()
+    }
   }
 
   getVehiclewarnings(){
@@ -371,8 +371,14 @@ export class AlarmComponent implements OnInit {
       },error=>{
         console.log(error)
       })
-    }
 
+      this.vehiclewarningService.getVehiclewarningsIssueId(this.selectionAlarm.issueId).subscribe(res=>{
+        console.log(res)
+        this.selectionAlarm.comments = res.body.comments
+      },error=>{
+        console.log(error)
+      })
+    }
   }
 
   onGridReady(params: GridReadyEvent) {
