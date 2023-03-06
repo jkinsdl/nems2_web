@@ -83,8 +83,10 @@ export class OfflineVehicleHistoryComponent implements OnInit {
   }
 
   getPageSize(){
-    this.gridHeight = this.offlineVehicleHistoryGrid.nativeElement.offsetHeight;
-    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    if(this.gridHeight != this.offlineVehicleHistoryGrid.nativeElement.offsetHeight){
+      this.gridHeight = this.offlineVehicleHistoryGrid.nativeElement.offsetHeight;
+      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    }
   }
 
   onResize(event : any){

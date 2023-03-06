@@ -72,9 +72,11 @@ export class OTAInformationComponent implements OnInit {
   }
 
   getPageSize(){
-    this.gridHeight = this.otaInformationGrid.nativeElement.offsetHeight;
-    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getVehiclemanagerStaticinfo()
+    if(this.gridHeight != this.otaInformationGrid.nativeElement.offsetHeight){
+      this.gridHeight = this.otaInformationGrid.nativeElement.offsetHeight;
+      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+      this.getVehiclemanagerStaticinfo()
+    }
   }
 
   onResize(event : any){

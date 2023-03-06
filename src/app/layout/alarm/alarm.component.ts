@@ -275,9 +275,12 @@ export class AlarmComponent implements OnInit {
   }
 
   getPageSize(){
-    this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
-    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getVehiclewarnings()
+    if(this.gridHeight != this.alarmGrid.nativeElement.offsetHeight){
+      this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
+      this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+      this.getVehiclewarnings()
+    }
+
   }
 
   onResize(event : any){
