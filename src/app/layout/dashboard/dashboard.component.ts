@@ -484,7 +484,6 @@ export class DashboardComponent implements OnInit {
     filter.state.push('OPEN')
 
     this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
-
       this.vehiclewarnings = res.body
       console.log(this.vehiclewarnings)
     },error=>{
@@ -652,6 +651,7 @@ export class DashboardComponent implements OnInit {
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
+          color:['#ff0000','#FFA500','#FFFF00'],
           itemStyle: {
             borderRadius: 10,
             borderColor: '#fff',
