@@ -5,6 +5,11 @@
         Add
       </div>
       <div class="iconBtnBox">
+
+        <div class="excel_btn" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="sendManagement()">
+          <img src="assets/icon/send.png">
+        </div>
+
         <div class="excel_btn" [ngClass]="{'selectItem': managementGridApi != null && managementGridApi.getSelectedRows().length != 0}" (click)="modifyManagement()">
           <img src="assets/icon/edit.png">
         </div>

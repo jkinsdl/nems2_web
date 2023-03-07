@@ -38,20 +38,15 @@ export class PublicPlatformManagementComponent implements OnInit {
     { field: 'platformId', headerName : 'platform ID', tooltipField: 'platformId'},
     { field: 'lastLogin', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogin', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogin' }},
     { field: 'lastLogout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogout' }},
-    { field: '', headerName : 'start/stop', tooltipField: ''},
+    { field: 'connectionStatus', headerName : 'start/stop', tooltipField: 'connectionStatus'},
     { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck'},
     { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle'},
     { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo'},
-    { field: '', headerName : 'discards old data', tooltipField: ''},
     { field: 'encryptionMode', headerName : 'encryption Mode', tooltipField: 'encryptionMode'},
     { field: 'encryptionKey', headerName : 'encryption Key', tooltipField: 'encryptionKey'},
     { field: '', headerName : 'enterprise code', tooltipField: ''},
-
-    { field: 'command', headerName : 'command', tooltipField: 'command'},
     { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
     { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
-    //{ field: 'serverId', headerName : 'serverId', tooltipField: 'serverId'},
-
   ];
 
   forwarding : any = {
@@ -222,6 +217,34 @@ export class PublicPlatformManagementComponent implements OnInit {
         }
       });
     }
+  }
+
+  sendManagement(){
+    if(this.managementGridApi.getSelectedRows().length != 0){
+      const dialogRef = this.dialog.open( AlertPopupComponent, {
+        data:{
+          alertTitle : "Forwarding Server",
+          alertContents : "Do you want to forwarding the server ? (Server Name : " + this.managementGridApi.getSelectedRows()[0].serverName+ ")",
+          alertType : this.constant.ALERT_WARNING,
+          popupType : this.constant.POPUP_CHOICE,
+
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.putForwardingServerNameCommand(this.managementGridApi.getSelectedRows()[0].serverName)
+        }
+      });
+    }
+  }
+
+  putForwardingServerNameCommand(serverName : string){
+    this.forwardingService.putForwardingServerNameCommand(serverName).subscribe(res=>{
+      console.log(res)
+      this.utilService.alertPopup("Public Platform", "Server forwarding complete.", this.constant.POPUP_CONFIRM)
+    },error=>{
+
+    })
   }
 
   putForwardingServerName(parameter : any){
