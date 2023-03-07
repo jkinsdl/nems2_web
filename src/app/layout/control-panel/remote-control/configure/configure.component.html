@@ -2,24 +2,22 @@
   <div class="btn add" (click)="addConfigure()">
     Add
   </div>
-  <!--<div class="btn copy" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}">
-    Copy
-  </div>-->
-  <div class="btn modify" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="modifyConfigure()">
-    Modify
-  </div>
-  <div class="btn delete" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="deleteConfigure()">
-    Delete
-  </div>
 
-  <div style="display: flex; position: absolute; right: 40px;">
-    <label class="excel_btn" for="uploadExcel1">
+  <div class="iconBtnBox">
+    <div class="excel_btn" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="modifyConfigure()">
+      <img src="assets/icon/edit.png">
+    </div>
+
+    <div class="excel_btn" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="deleteConfigure()">
+      <img src="assets/icon/delete.png">
+    </div>
+
+    <label class="excel_btn selectItem" for="uploadExcel">
       <img src="assets/icon/excel_upload.png">
     </label>
+    <input id="uploadExcel" type="file" style="display: none;">
 
-    <input id="uploadExcel1" type="file" style="display: none;">
-
-    <div class="excel_btn" (click)="onBtExport('configure')">
+    <div class="excel_btn selectItem" (click)="onBtExport('configure')">
       <img src="assets/icon/excel_download.png">
     </div>
   </div>
@@ -48,24 +46,22 @@
   <div class="btn add" [ngClass]="{'disable': selectConfigureRow == null}" (click)="addVehicle()">
     Add
   </div>
-  <!--<div class="btn modify" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="modifyMapping()">
-    Modify
-  </div>-->
-  <div class="btn delete" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
-    Delete
-  </div>
 
-  <div style="display: flex; position: absolute; right: 40px;">
-    <label class="excel_btn" for="uploadExcel1">
+  <div class="iconBtnBox">
+    <div class="excel_btn" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
+      <img src="assets/icon/delete.png">
+    </div>
+
+    <label class="excel_btn selectItem" for="uploadExcel">
       <img src="assets/icon/excel_upload.png">
     </label>
+    <input id="uploadExcel" type="file" style="display: none;">
 
-    <input id="uploadExcel1" type="file" style="display: none;">
-
-    <div class="excel_btn" (click)="onBtExport('vehicle')">
+    <div class="excel_btn selectItem" (click)="onBtExport('vehicle')">
       <img src="assets/icon/excel_download.png">
     </div>
   </div>
+
 
 </div>
 <div style="width: 100%; height: calc(50% - 77px)">

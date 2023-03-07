@@ -115,17 +115,6 @@
     <div class="grayLine"></div>
 
     <div class="gridFilterBox">
-      <div class="gridControlBox">
-        <div class="btn modify" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="alarmModify()">
-          Modify
-        </div>
-
-        <div class="btn delete" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="alarmDelete()">
-          Delete
-        </div>
-
-      </div>
-
       <div style="display: flex; position: absolute; right: 60px;">
         <!--<label class="excel_btn" for="uploadExcel1">
           <img src="assets/icon/excel_upload.png">
@@ -133,7 +122,16 @@
 
         <input id="uploadExcel1" type="file" style="display: none;">
         -->
-        <div class="excel_btn" (click)="onBtExport()">
+
+        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="alarmModify()">
+          <img src="assets/icon/edit.png">
+        </div>
+
+        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="alarmDelete()">
+          <img src="assets/icon/delete.png">
+        </div>
+
+        <div class="excel_btn selectItem" (click)="onBtExport()">
           <img src="assets/icon/excel_download.png">
         </div>
       </div>

@@ -46,7 +46,7 @@ export class UserAccountComponent implements OnInit {
   }
 
   selectNodeID : string = null;
-  private gridApi!: GridApi;
+  gridApi!: GridApi;
 
 
   page$ : Subscription

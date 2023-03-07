@@ -9,7 +9,7 @@
 .mainContainer .titleManuContainer{
   width: 100%;
   height: calc(5% - 5px);
-  min-width: 870px;
+  min-width: 950px;
   min-height: 46px;
   display: flex;
   align-items: center;

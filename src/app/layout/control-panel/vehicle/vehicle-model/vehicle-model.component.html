@@ -5,26 +5,25 @@
       <div class="btn add" (click)="addVehicleModel()">
         Add
       </div>
-      <div class="btn modify" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyVehicleModel()">
-        Modify
-      </div>
-      <div class="btn delete" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteVehicle()">
-        Delete
-      </div>
 
-      <div style="display: flex; position: absolute; right: 40px;">
-        <label class="excel_btn" for="uploadExcel">
+      <div class="iconBtnBox">
+        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyVehicleModel()">
+          <img src="assets/icon/edit.png">
+        </div>
+
+        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteVehicle()">
+          <img src="assets/icon/delete.png">
+        </div>
+
+        <label class="excel_btn selectItem" for="uploadExcel">
           <img src="assets/icon/excel_upload.png">
         </label>
-
         <input id="uploadExcel" type="file" style="display: none;">
 
-        <div class="excel_btn" (click)="onBtExport()">
+        <div class="excel_btn selectItem" (click)="onBtExport()">
           <img src="assets/icon/excel_download.png">
         </div>
       </div>
-
-
 
     </div>
 

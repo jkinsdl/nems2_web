@@ -15,16 +15,27 @@
   margin: 0 10px;
 }
 
+.gridControlBox .iconBtnBox{
+  display: flex;
+  position: absolute;
+  right: 60px;
+}
+
 .excel_btn{
   width: 25px;
   height: 25px;
   margin: 0 5px;
   cursor: pointer;
+  opacity: 0.5;
 }
 
 .excel_btn img{
   width: 100%;
   height: 100%;
+}
+
+.selectItem{
+  opacity: 1 !important;
 }
 
 .gridFilterBox .filter.searchFilter{
