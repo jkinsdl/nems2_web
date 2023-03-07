@@ -25,6 +25,7 @@ export class OTAInformationComponent implements OnInit {
     private uiService : UiService
   ) { }
   columnDefs: ColDef[] = [
+    { field: 'vin', headerName : 'VIN', tooltipField: 'vin'},
     { field: 'batteryCode', headerName: 'batteryCode', tooltipField: 'batteryCode'},
     { field: 'engineNo', headerName: 'engineNo', tooltipField: 'engineNo'},
     { field: 'iccid', headerName : 'iccid', tooltipField: 'iccid'},
@@ -36,7 +37,6 @@ export class OTAInformationComponent implements OnInit {
     { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate' }},
     { field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
     { field: 'sOffDate', headerName : 'sOffDate', tooltipField: 'sOffDate'},
-    { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
     { field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
   ];
 

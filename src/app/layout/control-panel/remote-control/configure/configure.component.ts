@@ -52,7 +52,6 @@ export class ConfigureComponent implements OnInit {
   ];
 
   mappingColumnDefs: ColDef[] = [
-    { field: 'configure_name', headerName: 'Configure Name', tooltipField: 'configure_name' },
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
     { field: 'matched', headerName : 'Matched', tooltipField: 'matched'},
     { field: 'matched_date', headerName : 'Matched Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date' }},
@@ -83,6 +82,9 @@ export class ConfigureComponent implements OnInit {
   pageSize2 : number
   currentPage : number = 1
   currentPage2 : number = 1
+
+  selectConfigureName : string = ""
+
 
   ngAfterViewInit() {
     this.getPageSize()
