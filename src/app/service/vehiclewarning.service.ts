@@ -70,9 +70,6 @@ export class VehiclewarningService {
       }
     }
 
-
-
-
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
   }
 

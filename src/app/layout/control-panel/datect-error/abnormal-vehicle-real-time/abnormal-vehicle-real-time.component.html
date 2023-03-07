@@ -1,71 +1,53 @@
-    <div class="gridFilterBox">
-      <div class="filter">
-        <div class="label">VIN</div>
-        <div class="value">
-          <input type="text">
-        </div>
-      </div>
+<div class="gridFilterBox">
+  <div class="filter">
+    <div class="label">VIN</div>
+    <div class="value">
+      <input type="text" [(ngModel)]="searchFilter.vin">
+    </div>
+  </div>
 
-      <div class="filter">
-        <div class="label">Error State</div>
-        <div class="value">
-          <select>
-            <option>All</option>
-          </select>
-        </div>
-      </div>
+  <div class="filter">
+    <div class="label">Start Date</div>
+    <div class="value" style="display: flex; align-items: center;">
+      <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [max]="endDate" [(ngModel)]="beginDate">
+      <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="clearBeginDate()">clear</mat-icon>
+      <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+    </div>
+  </div>
 
-      <div class="filter">
-        <div class="label">Start Date</div>
-        <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="startPicker" readonly="true" (click)="startPicker.open()" [max]="endDate" [(ngModel)]="startDate">
-          <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
-        </div>
-      </div>
+  <div class="filter">
+    <div class="label">End Date</div>
+    <div class="value" style="display: flex; align-items: center;">
+      <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="beginDate">
+      <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="clearEndDate()">clear</mat-icon>
+      <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
+    </div>
+  </div>
 
-      <div class="filter">
-
-          ~
-
-      </div>
-
-      <div class="filter">
-        <div class="label">End Date</div>
-        <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="startDate">
-          <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
-        </div>
-      </div>
-
-      <div class="filter searchFilter">
-        <!--
-        <label class="excel_btn" for="uploadExcel">
-          <img src="assets/icon/excel_upload.png">
-        </label>
-        <input id="uploadExcel" type="file" style="display: none;">
-        -->
-        <div class="excel_btn selectItem" (click)="onBtExport()">
-          <img src="assets/icon/excel_download.png">
-        </div>
-
-        <div class="btn">
-          Search
-        </div>
-      </div>
+  <div class="filter searchFilter">
+    <div class="excel_btn selectItem" (click)="onBtExport()">
+      <img src="assets/icon/excel_download.png">
     </div>
 
-
-    <div class="datectErrorContents">
-      <ag-grid-angular #abnormalVehicleRealTimeGrid style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
-        class="ag-theme-alpine"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
-        [tooltipShowDelay]="0"
-        [rowSelection]="'single'"
-        (gridReady)="onGridReady($event)">
-      </ag-grid-angular>
-
-      <div style="width: 100%; height: 50px;">
-        <app-grid-page [gridNumber]="1"></app-grid-page>
-      </div>
+    <div class="btn" (click)="setSearch()">
+      Search
     </div>
+  </div>
+</div>
+
+
+<div class="datectErrorContents">
+  <ag-grid-angular #abnormalVehicleRealTimeGrid style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
+    class="ag-theme-alpine"
+    [rowData]="errorPacketList.entities"
+    [columnDefs]="columnDefs"
+    [tooltipShowDelay]="0"
+    (gridReady)="onGridReady($event)"
+    (filterChanged)="changeFilter()">
+  </ag-grid-angular>
+
+  <div style="width: 100%; height: 50px;">
+    <app-grid-page [gridNumber]="1"></app-grid-page>
+  </div>
+
+</div>
