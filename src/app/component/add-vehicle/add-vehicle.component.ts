@@ -19,7 +19,8 @@ export class AddVehicleComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data : any,
     private vehiclemanagersService : VehiclemanagerService,
     private utilService : UtilService,
-    private regionmanagersService : RegionmanagersService
+    private regionmanagersService : RegionmanagersService,
+    private vehiclemanagerService : VehiclemanagerService
   ) { }
 
   addVehiclemanagerStaticinfoParameter : any = {
@@ -177,7 +178,15 @@ export class AddVehicleComponent implements OnInit {
       this.addVehiclemanagerStaticinfoParameter.registDate = new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
     }
 
-    this.dialogRef.close(this.addVehiclemanagerStaticinfoParameter)
+    this.vehiclemanagerService.postVehiclemanagerStaticinfo(this.addVehiclemanagerStaticinfoParameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Vehicle Settings", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
+
+
   }
 
   modifyVehicle(){
@@ -216,8 +225,13 @@ export class AddVehicleComponent implements OnInit {
       this.addVehiclemanagerStaticinfoParameter.registDate = new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
     }
 
-    this.dialogRef.close(this.addVehiclemanagerStaticinfoParameter)
-
+    this.vehiclemanagerService.putVehiclemanagerStaticinfoVin(this.addVehiclemanagerStaticinfoParameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Vehicle Settings", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
   }
 
   changeModel(event : any){

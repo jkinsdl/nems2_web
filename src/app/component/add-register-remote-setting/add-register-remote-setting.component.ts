@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
@@ -14,7 +15,8 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AddRegisterRemoteSettingComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private devicemanagerService : DevicemanagerService
   ) { }
 
   configureName : string = ""
@@ -63,12 +65,16 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
       return
     }
 
-    let result = {
-      configureName : this.configureName,
-      body : this.configureData
-    }
+    let configureName = this.configureName
+    let body = this.configureData.body
 
-    this.dialogRef.close(result)
+    this.devicemanagerService.putDevicemanagersParameterVehicle(configureName,body).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Vehicle Model", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
 
   }
 
@@ -78,12 +84,17 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
       return
     }
 
-    let result = {
-      configureName : this.configureName,
-      body : this.configureData
-    }
+    let configureName = this.configureName
+    let body = this.configureData
+    body.updatedUserId = JSON.parse(localStorage.getItem('user')).userId
 
-    this.dialogRef.close(result)
+    this.devicemanagerService.putDevicemanagersParameterVehicle(configureName,body).subscribe(res=>{
+      console.log(res)
+
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+    })
   }
 
   close(){

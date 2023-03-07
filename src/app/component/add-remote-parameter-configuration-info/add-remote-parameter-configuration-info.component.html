@@ -19,7 +19,7 @@
   </div>
 
   <div class="btnBox">
-    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" >
+    <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addConfigurationInfo()" >
       Add
     </div>
     <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE">

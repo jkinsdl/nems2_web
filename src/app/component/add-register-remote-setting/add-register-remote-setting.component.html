@@ -10,7 +10,7 @@
   <div class="addInfoFilter">
     <div class="label">Configure Name <span>*</span> </div>
     <div class="value">
-      <input type="text" [(ngModel)]="configureName">
+      <input type="text" [(ngModel)]="configureName" [readOnly]="data.type == constant.MODIFY_TYPE">
     </div>
   </div>
 

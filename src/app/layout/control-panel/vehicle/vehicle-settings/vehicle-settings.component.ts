@@ -112,18 +112,9 @@ export class VehicleSettingsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result && result.sOffDate){
-        this.postVehiclemanagerStaticinfo(result)
+        this.getVehiclemanagerStaticinfo()
       }
     });
-  }
-
-  postVehiclemanagerStaticinfo(parameter : any){
-    this.vehiclemanagerService.postVehiclemanagerStaticinfo(parameter).subscribe(res=>{
-      console.log(res)
-      this.getVehiclemanagerStaticinfo()
-    },error=>{
-      console.log(error)
-    })
   }
 
   modifyVehicle(){
@@ -136,20 +127,12 @@ export class VehicleSettingsComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-          this.putVehiclemanagerStaticinfoVin(result)
+          this.getVehiclemanagerStaticinfo()
         }
       });
     }
   }
 
-  putVehiclemanagerStaticinfoVin(parameter : any){
-    this.vehiclemanagerService.putVehiclemanagerStaticinfoVin(parameter).subscribe(res=>{
-      console.log(res)
-      this.getVehiclemanagerStaticinfo()
-    },error=>{
-      console.log(error)
-    })
-  }
 
   deleteVehicle(){
     if(this.gridApi.getSelectedRows().length != 0){

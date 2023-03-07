@@ -20,18 +20,7 @@ export class AddPublicPlatformManagementComponent implements OnInit {
   ) { }
 
   forwardingParameter : any = {
-    serverName: "",
-    domain: "",
-    port: "",
-    platformId: "",
-    platformPw: "",
-    startTs: undefined,
-    endTs: undefined,
-    noAck: "",
-    forceLoginVehicle: "",
-    filterLocationInfo : "",
-    encryptionMode : "",
-    encryptionKey : ""
+
   }
 
   ngOnInit(): void {
@@ -88,7 +77,21 @@ export class AddPublicPlatformManagementComponent implements OnInit {
     }
 
 
-    this.dialogRef.close(this.forwardingParameter)
+    for (const [key, value] of Object.entries(this.forwardingParameter)) {
+      if(value == null || value == undefined || value === ""){
+        delete this.forwardingParameter[key]
+      }
+    }
+
+    this.forwardingService.postForwarding(this.forwardingParameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Public Platform", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
+
+
   }
 
   modifyForwarding(){
@@ -127,11 +130,17 @@ export class AddPublicPlatformManagementComponent implements OnInit {
       this.forwardingParameter.endTs = new Date(this.forwardingParameter.endTs).toISOString()
     }
 
-    this.dialogRef.close(this.forwardingParameter)
+    this.forwardingService.putForwardingServerName(this.forwardingParameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Public Platform", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
+
   }
 
   close(){
     this.dialogRef.close()
   }
-
 }

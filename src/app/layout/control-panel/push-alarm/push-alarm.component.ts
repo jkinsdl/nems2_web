@@ -126,16 +126,7 @@ export class PushAlarmComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        let parameter = {
-          templateId : "template",
-          targetId : "target",
-          variable : {}
-        }
-        this.notificationService.postNotifications(parameter).subscribe(res=>{
-          console.log(res)
-        },error=>{
-          console.log(error)
-        })
+
       }
     });
   }

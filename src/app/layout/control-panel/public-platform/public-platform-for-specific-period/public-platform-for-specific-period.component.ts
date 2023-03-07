@@ -157,7 +157,7 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-
+        this.getForwarding()
       }
     });
   }
@@ -215,7 +215,7 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-
+          this.getForwarding()
         }
       });
     }

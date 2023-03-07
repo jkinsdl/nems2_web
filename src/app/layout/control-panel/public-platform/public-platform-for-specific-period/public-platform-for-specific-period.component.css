@@ -8,3 +8,7 @@
   width: 100%;
   height: 50%
 }
+
+.buttonDisable{
+  opacity: 0.5;
+}

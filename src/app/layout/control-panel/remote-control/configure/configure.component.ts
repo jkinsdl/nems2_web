@@ -162,25 +162,15 @@ export class ConfigureComponent implements OnInit {
   addVehicle(){
     const dialogRef = this.dialog.open( AddRemoteParameterConfigurationInfoComponent, {
       data:{
-        type:this.constant.ADD_TYPE
+        type:this.constant.ADD_TYPE,
+        configureName : this.selectConfigureRow.configureName
       }
     });
     dialogRef.afterClosed().subscribe((result:any) => {
       if(result){
-        this.putDevicemanagersParametersConfigureNameVehicles(result)
+        this.getDevicemanagersParametersConfigureNameVehicles()
       }
     });
-  }
-
-  putDevicemanagersParametersConfigureNameVehicles(vin :string){
-    let body = {
-      vin : vin
-    }
-    this.devicemanagerService.putDevicemanagersParametersConfigureNameVehicles(this.selectConfigureRow.configureName,body).subscribe(res=>{
-      console.log(res)
-    },error=>{
-      console.log(error)
-    })
   }
 
   modifyMapping(){
@@ -198,15 +188,7 @@ export class ConfigureComponent implements OnInit {
     }
   }
 
-  putDevicemanagersParameterVehicle(configureName : string, body : any){
-    this.devicemanagerService.putDevicemanagersParameterVehicle(configureName,body).subscribe(res=>{
-      console.log(res)
-      this.utilService.alertPopup("Configure","configure has been added & modified.",this.constant.ADD_TYPE)
-      this.getDevicemanagersParameter()
-    },error=>{
-      console.log(error)
-    })
-  }
+
 
   deleteMapping(){
     if(this.mappingGridApi.getSelectedRows().length != 0){
@@ -234,9 +216,7 @@ export class ConfigureComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result:any) => {
       if(result){
-        let configureName = result.configureName
-        let body = result.body
-        this.putDevicemanagersParameterVehicle(configureName,body)
+        this.getDevicemanagersParameter()
       }
     });
   }
@@ -251,10 +231,7 @@ export class ConfigureComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((result:any) => {
         if(result){
-          let configureName = result.configureName
-          let body = result.body
-          body.updatedUserId = JSON.parse(localStorage.getItem('user')).userId
-          this.putDevicemanagersParameterVehicle(configureName,body)
+          this.getDevicemanagersParameter()
         }
       });
     }

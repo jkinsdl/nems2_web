@@ -190,19 +190,12 @@ export class PublicPlatformManagementComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.postForwarding(result)
+        this.getForwarding()
       }
     });
   }
 
-  postForwarding(parameter : any){
-    this.forwardingService.postForwarding(parameter).subscribe(res=>{
-      console.log(res)
-      this.getForwarding()
-    },error=>{
-      console.log(error)
-    })
-  }
+
 
   modifyManagement(){
     if(this.managementGridApi.getSelectedRows().length != 0){
@@ -214,7 +207,7 @@ export class PublicPlatformManagementComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-          this.putForwardingServerName(result)
+          this.getForwarding()
         }
       });
     }
@@ -248,14 +241,7 @@ export class PublicPlatformManagementComponent implements OnInit {
     })
   }
 
-  putForwardingServerName(parameter : any){
-    this.forwardingService.putForwardingServerName(parameter).subscribe(res=>{
-      console.log(res)
-      this.getForwarding()
-    },error=>{
-      console.log(error)
-    })
-  }
+
 
   deleteManagement(){
     if(this.managementGridApi.getSelectedRows().length != 0){
@@ -303,23 +289,11 @@ export class PublicPlatformManagementComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        console.log(result)
-        let parameter : any = {
-          vin : [result]
-        }
-        this.postForwardingServerNameRelations(parameter)
+        this.getForwardingServerNameRelations(this.selectForwardingServerName)
       }
     });
   }
 
-  postForwardingServerNameRelations(parameter : any){
-    this.forwardingService.postForwardingServerNameRelations(this.selectForwardingServerName,parameter).subscribe(res=>{
-      console.log(res)
-      this.getForwardingServerNameRelations(this.selectForwardingServerName)
-    },error=>{
-      console.log(error)
-    })
-  }
 
   modifyMapping(){
     if(this.mappingGridApi.getSelectedRows().length != 0){

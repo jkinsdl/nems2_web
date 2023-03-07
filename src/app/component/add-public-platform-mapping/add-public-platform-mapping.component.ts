@@ -49,7 +49,19 @@ export class AddPublicPlatformMappingComponent implements OnInit {
       return
     }
 
-    this.dialogRef.close(this.vinText)
+    let parameter = {
+      vin : this.vinText
+    }
+
+    this.forwardingService.postForwardingServerNameRelations(this.data.serverName,parameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Vehicle Model", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
+
+
   }
 
   close(){

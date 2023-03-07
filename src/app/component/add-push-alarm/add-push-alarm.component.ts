@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NotificationService } from 'src/app/service/notification.service';
+import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
 @Component({
@@ -14,6 +16,8 @@ export class AddPushAlarmComponent implements OnInit {
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AddPushAlarmComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
+    private notificationService : NotificationService,
+    private utilService : UtilService
   ) { }
 
   ngOnInit(): void {
@@ -21,7 +25,23 @@ export class AddPushAlarmComponent implements OnInit {
   }
 
   addAlarm(){
-    this.dialogRef.close(true)
+
+    let parameter = {
+      templateId : "template",
+      targetId : "target",
+      variable : {}
+    }
+    this.notificationService.postNotifications(parameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+
+      this.utilService.alertPopup("Vehicle Model", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+
+    })
+
+
   }
 
   modifyAlarm(){

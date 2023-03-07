@@ -46,7 +46,7 @@
   <div class="publicPlatformMappingLayout">
 
     <div class="gridControlBox">
-      <div class="btn add" (click)="addMapping()">
+      <div class="btn add" (click)="addMapping()" [ngClass]="{'buttonDisable': selectForwardingServerName == null}">
         Add
       </div>
 

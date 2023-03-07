@@ -171,22 +171,7 @@ export class OTAManagementComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         console.log(result)
-        let body : any[] =[]
-        body=[
-          {
-              meta: result.meta
-          },
-          {
-              contents: result.contents
-          }
-        ]
-        this.devicemanageService.postDevicemanagersFirmware(body).subscribe(res=>{
-          console.log(res)
-          this.getDevicemanagersFirmware()
-        },error=>{
-          console.log(error)
-        })
-
+        this.getDevicemanagersFirmware()
       }
     });
   }
