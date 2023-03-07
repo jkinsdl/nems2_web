@@ -45,6 +45,10 @@ export class ForwardingService {
       httpParams = httpParams.set("serverName", filter.serverName)
     }
 
+    if(filter.isPeriod != undefined){
+      httpParams = httpParams.set("isPeriod", filter.isPeriod)
+    }
+
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
   }
 

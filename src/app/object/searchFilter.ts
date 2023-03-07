@@ -68,4 +68,6 @@ export class SearchFilter{
 
   warningLevel : string[]
   warningType : string[]
+
+  isPeriod : boolean
 }

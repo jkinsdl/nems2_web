@@ -126,6 +126,7 @@ export class PublicPlatformManagementComponent implements OnInit {
     let f = new SearchFilter()
     f.offset = (this.currentPage-1) * this.pageSize
     f.limit = this.pageSize
+    f.isPeriod = false
 
     this.forwardingService.getForwarding(f).subscribe(res=>{
       console.log(res)
@@ -366,7 +367,9 @@ export class PublicPlatformManagementComponent implements OnInit {
 
   onBtExport(type : string) {
     if(type == "management"){
-      this.forwardingService.getForwarding(new SearchFilter()).subscribe(res=>{
+      let f = new SearchFilter()
+      f.isPeriod = false
+      this.forwardingService.getForwarding(f).subscribe(res=>{
         console.log(res)
         this.utilService.gridDataToExcelData("public platform management forwarding", this.managementGridApi ,res.body.entities)
       },error=>{
@@ -379,9 +382,6 @@ export class PublicPlatformManagementComponent implements OnInit {
       },error=>{
         console.log(error)
       })
-
-
     }
   }
-
 }

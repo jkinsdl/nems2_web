@@ -6,6 +6,8 @@ import { AddPublicPlatformManagementComponent } from 'src/app/component/add-publ
 import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
+import { SearchFilter } from 'src/app/object/searchFilter';
+import { ForwardingService } from 'src/app/service/forwarding.service';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
@@ -16,107 +18,49 @@ import { CommonConstant } from 'src/app/util/common-constant';
   styleUrls: ['./public-platform-for-specific-period.component.css']
 })
 export class PublicPlatformForSpecificPeriodComponent implements OnInit {
-  @ViewChild('publicPlatformManagementGrid1', { read: ElementRef }) publicPlatformManagementGrid1 : ElementRef;
+  @ViewChild('publicPlatformForSpecificPeriod1', { read: ElementRef }) publicPlatformForSpecificPeriod1 : ElementRef;
 
-  @ViewChild('publicPlatformManagementGrid2', { read: ElementRef }) publicPlatformManagementGrid2 : ElementRef;
+  @ViewChild('publicPlatformForSpecificPeriod2', { read: ElementRef }) publicPlatformForSpecificPeriod2 : ElementRef;
 
 
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
     private utilService : UtilService,
-    private uiService : UiService
+    private uiService : UiService,
+    private forwardingService : ForwardingService
   ) { }
 
-  managementColumnDefs: ColDef[] = [
-    { field: 'name', headerName: 'name', tooltipField: 'name' },
-    { field: 'ip', headerName: 'IP', tooltipField: 'ip'},
+  forwardingColumnDefs: ColDef[] = [
+    { field: 'serverName', headerName : 'name', tooltipField: 'serverName'},
+    { field: 'domain', headerName : 'IP', tooltipField: 'domain'},
     { field: 'port', headerName : 'port', tooltipField: 'port'},
-    { field: 'platform_id', headerName : 'platform ID', tooltipField: 'platform_id'},
-    { field: 'platform_password', headerName : 'platform password', tooltipField: 'platform_password'},
-    { field: 'last_login', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'last_login', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'last_login' }},
-    { field: 'last_logout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'last_logout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'last_logout' }},
-    { field: 'stat_stop', headerName : 'stat/stop', tooltipField: 'stat_stop'},
-    { field: 'no_ack_mode', headerName : 'no_ack_mode', tooltipField: 'no_ack_mode'},
-    { field: 'force_login_vehicle', headerName : 'force login vehicle', tooltipField: 'force_login_vehicle'},
-    { field: 'filter_location_info', headerName : 'filter location info', tooltipField: 'filter_location_info'},
-    { field: 'encryption_mode', headerName : 'encryption mode', tooltipField: 'encryption_mode'},
-    { field: 'encryption_key', headerName : 'encryption key', tooltipField: 'encryption_key'},
-  ];
-
-  managementRowData = [
-    {
-      name: 'name',
-      ip: 'ip',
-      port: 'port',
-      platform_id : 'platform_id',
-      platform_password : 'platform_password',
-      last_login : 'last_login',
-      last_logout : 'last_logout',
-      stat_stop : 'stat_stop',
-      no_ack_mode : 'no_ack_mode',
-      force_login_vehicle : 'force_login_vehicle',
-      filter_location_info : 'filter_location_info',
-      encryption_mode : 'encryption_mode',
-      encryption_key : 'encryption_key'
-    },
-    {
-      name: 'name',
-      ip: 'ip',
-      port: 'port',
-      platform_id : 'platform_id',
-      platform_password : 'platform_password',
-      last_login : 'last_login',
-      last_logout : 'last_logout',
-      stat_stop : 'stat_stop',
-      no_ack_mode : 'no_ack_mode',
-      force_login_vehicle : 'force_login_vehicle',
-      filter_location_info : 'filter_location_info',
-      encryption_mode : 'encryption_mode',
-      encryption_key : 'encryption_key'
-    },
-    {
-      name: 'name',
-      ip: 'ip',
-      port: 'port',
-      platform_id : 'platform_id',
-      platform_password : 'platform_password',
-      last_login : 'last_login',
-      last_logout : 'last_logout',
-      stat_stop : 'stat_stop',
-      no_ack_mode : 'no_ack_mode',
-      force_login_vehicle : 'force_login_vehicle',
-      filter_location_info : 'filter_location_info',
-      encryption_mode : 'encryption_mode',
-      encryption_key : 'encryption_key'
-    },
+    { field: 'platformId', headerName : 'platform ID', tooltipField: 'platformId'},
+    { field: 'lastLogin', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogin', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogin' }},
+    { field: 'lastLogout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogout' }},
+    { field: 'connectionStatus', headerName : 'start/stop', tooltipField: 'connectionStatus'},
+    { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck'},
+    { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle'},
+    { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo'},
+    { field: 'encryptionMode', headerName : 'encryption Mode', tooltipField: 'encryptionMode'},
+    { field: 'encryptionKey', headerName : 'encryption Key', tooltipField: 'encryptionKey'},
+    { field: '', headerName : 'enterprise code', tooltipField: ''},
+    { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
+    { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
   ];
 
 
 
-  mappingColumnDefs: ColDef[] = [
+
+  relationsColumnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
-    { field: 'vehicle_info_senapshot', headerName: 'Vehicle Info Snapshot', tooltipField: 'vehicle_info_senapshot'},
-    { field: 'last_sync', headerName : 'last sync(server time)', tooltipField: 'last_sync'},
+    { field: 'synctime', headerName: 'Last sync(packet time)', tooltipField: 'synctime'}
   ];
 
-  mappingRowData = [
-    {
-      vin: 'vin',
-      vehicle_info_senapshot: 'vehicle_info_senapshot',
-      last_sync: 'last_sync'
-    },
-    {
-      vin: 'vin',
-      vehicle_info_senapshot: 'vehicle_info_senapshot',
-      last_sync: 'last_sync'
-    },
-    {
-      vin: 'vin',
-      vehicle_info_senapshot: 'vehicle_info_senapshot',
-      last_sync: 'last_sync'
-    }
-  ];
+  relations : any = {
+    count : 0,
+    entities : []
+  }
 
   managementGridApi!: GridApi;
   mappingGridApi!: GridApi;
@@ -130,13 +74,18 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   currentPage : number = 1
   currentPage2 : number = 1
 
+  forwarding : any = {
+    count : 0,
+    entities : []
+  }
+
+  selectForwardingServerName : string = null
+
   ngAfterViewInit() {
     this.getPageSize()
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     if(this.page$)this.page$.unsubscribe()
     if(this.page2$)this.page2$.unsubscribe()
   }
@@ -152,16 +101,41 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   }
 
   getPageSize(){
-    this.grid1Height = this.publicPlatformManagementGrid1.nativeElement.offsetHeight
+    this.grid1Height = this.publicPlatformForSpecificPeriod1.nativeElement.offsetHeight
     this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
+    this.getForwarding()
 
-    this.grid2Height = this.publicPlatformManagementGrid2.nativeElement.offsetHeight
+    this.grid2Height = this.publicPlatformForSpecificPeriod2.nativeElement.offsetHeight
     this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
+
+  }
+
+  getForwarding(){
+    let f = new SearchFilter()
+    f.offset = (this.currentPage-1) * this.pageSize
+    f.limit = this.pageSize
+    f.isPeriod = true
+
+    this.forwardingService.getForwarding(f).subscribe(res=>{
+      console.log(res)
+      this.forwarding = res.body
+
+      let pagination = {
+        count : this.forwarding.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+
+    },error=>{
+      console.log(error)
+    })
   }
 
 
   onResize(event : any){
-    if(this.grid1Height != this.publicPlatformManagementGrid1.nativeElement.offsetHeight){
+    if(this.grid1Height != this.publicPlatformForSpecificPeriod1.nativeElement.offsetHeight){
       this.getPageSize()
     }
   }
@@ -255,24 +229,62 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
           alertContents : "Do you want to delete the data ? (name : " + this.managementGridApi.getSelectedRows()[0].name+ ")",
           alertType : this.constant.ALERT_WARNING,
           popupType : this.constant.POPUP_CHOICE,
-
         }
       });
+
       dialogRef.afterClosed().subscribe(result => {
         if(result){
           this.managementGridApi.applyTransaction({ remove: this.managementGridApi.getSelectedRows() })!;
-
         }
       });
     }
+  }
+
+  onForwardingRowClick(event : any ){
+    console.log(event)
+    this.selectForwardingServerName = event.data.serverName
+    this.getForwardingServerNameRelations(this.selectForwardingServerName)
+  }
+
+  getForwardingServerNameRelations(serverName : string){
+    let f = new SearchFilter()
+    f.offset = (this.currentPage2-1) * this.pageSize2
+    f.limit = this.pageSize2
+
+
+    this.forwardingService.getForwardingServerNameRelations(serverName, f).subscribe(res=>{
+      console.log(res)
+      this.relations = res.body
+
+      let pagination = {
+        count : this.relations.count,
+        pageSize : this.pageSize2,
+        page : this.currentPage2
+      }
+
+      this.uiService.setPagination2(pagination)
+    },error=>{
+      console.log(error)
+    })
   }
 
   onBtExport(type : string) {
     if(type == "management"){
-      this.utilService.gridDataToExcelData("public platform for specific period 1", this.managementGridApi ,this.managementRowData)
+      let f = new SearchFilter()
+      f.isPeriod = true
+      this.forwardingService.getForwarding(f).subscribe(res=>{
+        console.log(res)
+        this.utilService.gridDataToExcelData("public platform for specific period 1", this.managementGridApi ,res.body.entities)
+      },error=>{
+        console.log(error)
+      })
     }else{
-      this.utilService.gridDataToExcelData("public platform for specific period 2", this.mappingGridApi,this.mappingRowData)
+      this.forwardingService.getForwardingServerNameRelations(this.selectForwardingServerName, new SearchFilter()).subscribe(res=>{
+        console.log(res)
+        this.utilService.gridDataToExcelData("public platform for specific period 2", this.mappingGridApi,res.body.entities)
+      },error=>{
+        console.log(error)
+      })
     }
   }
-
 }
