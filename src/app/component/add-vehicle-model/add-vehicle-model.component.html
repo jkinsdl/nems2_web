@@ -2,160 +2,160 @@
 
   <div class="popupTitle">
     <div class="text">
-      Vehicle Model Add
+      Vehicle Model
     </div>
     <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">modelName <span>*</span> </div>
+    <div class="label">Model Name <span>*</span> </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.modelName" [disabled]="data.type == constant.MODIFY_TYPE">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> driveMotorKind </div>
+    <div class="label"> drive motor kind </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.driveMotorKind">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> maxSpeed </div>
+    <div class="label"> max speed (km/h) </div>
     <div class="value">
       <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehicleModelParameter.maxSpeed">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> pureElectricDistance </div>
+    <div class="label"> pure electric distance (km)</div>
     <div class="value">
       <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehicleModelParameter.pureElectricDistance">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> gearRatio </div>
+    <div class="label"> gear ratio </div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.gearRatio">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> warningPreValue </div>
+    <div class="label"> warning pre value </div>
     <div class="value">
       <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehicleModelParameter.warningPreValue">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> fuelType </div>
+    <div class="label"> fuel type </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.fuelType">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> fuelLabel </div>
+    <div class="label"> fuel label </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.fuelLabel">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> maxPower </div>
+    <div class="label"> max power </div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.maxPower">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> maxTorque </div>
+    <div class="label"> max torque (0.1N*m)</div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.maxTorque">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> batteryType </div>
+    <div class="label"> battery type </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.batteryType">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> batteryTotalEnergy </div>
+    <div class="label"> battery total energy (kwh)</div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.batteryTotalEnergy">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> batteryCoolingSystem </div>
+    <div class="label"> battery cooling system </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.batteryCoolingSystem">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> motorCoolingSystem </div>
+    <div class="label"> motor cooling system </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.motorCoolingSystem">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> ratedVoltage </div>
+    <div class="label"> rated voltage (0.1V)</div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.ratedVoltage">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> motorMaxCurrent </div>
+    <div class="label"> motor max current (0.1A)</div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.motorMaxCurrent">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> motorType </div>
+    <div class="label"> motor type </div>
     <div class="value">
       <input type="text" [(ngModel)]="addVehicleModelParameter.motorType">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> motorPeakPower </div>
+    <div class="label"> motor peak power </div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.motorPeakPower">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> motorMaxSpeed </div>
+    <div class="label"> motor max speed (rpm)</div>
     <div class="value">
       <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehicleModelParameter.motorMaxSpeed">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> motorPeakTorque </div>
+    <div class="label"> motor peak torque (0.1N*m)</div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.motorPeakTorque">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> motorMaxTorque </div>
+    <div class="label"> motor max torque (0.1N*m) </div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.motorMaxTorque">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> powerRatio </div>
+    <div class="label"> Power Ratio </div>
     <div class="value">
       <input type="number" [(ngModel)]="addVehicleModelParameter.powerRatio">
     </div>

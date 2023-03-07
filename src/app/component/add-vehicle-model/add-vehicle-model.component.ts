@@ -17,33 +17,11 @@ export class AddVehicleModelComponent implements OnInit {
     private dialogRef: MatDialogRef<AddVehicleModelComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private utilService : UtilService,
-    private vehiclemanagerService : VehiclemanagerService
+    private vehiclemanagerService : VehiclemanagerService,
+
   ) { }
 
-  addVehicleModelParameter : any = {
-    modelName: "",
-    driveMotorKind: "",
-    maxSpeed: "",
-    pureElectricDistance: "",
-    gearRatio: "",
-    warningPreValue: "",
-    fuelType: "",
-    fuelLabel: "",
-    maxPower: "",
-    maxTorque: "",
-    batteryType: "",
-    batteryTotalEnergy: "",
-    batteryCoolingSystem: "",
-    motorCoolingSystem: "",
-    ratedVoltage: "",
-    motorMaxCurrent: "",
-    motorType: "",
-    motorPeakPower: "",
-    motorMaxSpeed: "",
-    motorPeakTorque: "",
-    motorMaxTorque: "",
-    powerRatio: "",
-  }
+  addVehicleModelParameter : any = { }
 
   ngOnInit(): void {
     console.log(this.data)
@@ -68,7 +46,20 @@ export class AddVehicleModelComponent implements OnInit {
       this.utilService.alertPopup("Vehicle Model", "Please enter the model name.", this.constant.ALERT_WARNING)
       return
     }
-    this.dialogRef.close(this.addVehicleModelParameter)
+
+    for (const [key, value] of Object.entries(this.addVehicleModelParameter)) {
+      if(value == null || value == undefined || value === ""){
+        delete this.addVehicleModelParameter[key]
+      }
+    }
+
+    this.vehiclemanagerService.postVehiclemanagerModel(this.addVehicleModelParameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Vehicle Model", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
   }
 
   modifyVehicleModel(){
@@ -77,7 +68,20 @@ export class AddVehicleModelComponent implements OnInit {
       this.utilService.alertPopup("Vehicle Model", "Please enter the model name.", this.constant.ALERT_WARNING)
       return
     }
-    this.dialogRef.close(this.addVehicleModelParameter)
+
+    for (const [key, value] of Object.entries(this.addVehicleModelParameter)) {
+      if(value == null || value == undefined || value === ""){
+        delete this.addVehicleModelParameter[key]
+      }
+    }
+
+    this.vehiclemanagerService.putVehiclemanagerModelModelName(this.addVehicleModelParameter).subscribe(res=>{
+      console.log(res)
+      this.dialogRef.close(true)
+    },error=>{
+      console.log(error)
+      this.utilService.alertPopup("Vehicle Model", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
   }
 
   close(){

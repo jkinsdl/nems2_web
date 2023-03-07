@@ -122,19 +122,11 @@ export class VehicleModelComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.postVehiclemanagerModel(result)
+        this.getVehiclemanagerModel()
       }
     });
   }
 
-  postVehiclemanagerModel(parameter : any){
-    this.vehiclemanagersService.postVehiclemanagerModel(parameter).subscribe(res=>{
-      console.log(res)
-      this.getVehiclemanagerModel()
-    },error=>{
-      console.log(error)
-    })
-  }
 
   modifyVehicleModel(){
     if(this.gridApi.getSelectedRows().length != 0){
@@ -146,21 +138,11 @@ export class VehicleModelComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-          this.putVehiclemanagerModelModelName(result)
+          this.getVehiclemanagerModel()
         }
       });
     }
   }
-
-  putVehiclemanagerModelModelName(parameter : any){
-    this.vehiclemanagersService.putVehiclemanagerModelModelName(parameter).subscribe(res=>{
-      console.log(res)
-      this.getVehiclemanagerModel()
-    },error=>{
-      console.log(error)
-    })
-  }
-
 
   deleteVehicle(){
     if(this.gridApi.getSelectedRows().length != 0){
