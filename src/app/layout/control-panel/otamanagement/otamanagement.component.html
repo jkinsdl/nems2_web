@@ -16,38 +16,56 @@
     </div>
 
     <div class="leftListBox">
-      <div class="listItem" *ngFor="let firmware of firmwareList.entities">
+      <div class="listItem" *ngFor="let model of modelList.modelList">
 
-        <div class="arrowBox" [ngClass]="{'imageRotate': selectFirmware == firmware}">
-          <img src="assets/icon/right-arrow.png" style="width:20px; height: 20px;">
+        <div class="arrowBox" [ngClass]="{'imageRotate': selectModel == model}">
+          <img *ngIf="model.firmwareList && model.firmwareList.length != 0" src="assets/icon/right-arrow.png" style="width:10px; height: 10px;">
         </div>
 
-        <div class="rowTitle" (click)="rowOpen(firmware)">{{firmware.firmwareName}}</div>
-        <div class="rowContent" [ngClass]="{'openRowContent': selectFirmware == firmware}">
-          <div style="padding: 10px;">
-            <div class="rowFild">
-              <div class="contentLabel">
-                H/W ver :
-              </div>
-              <div class="contentValue">
-                {{firmware.hwVersion}}
-              </div>
+        <div class="rowTitle" (click)="modelRowOpen(model)">{{model.modelName}}</div>
+
+        <div class="firmwareListBox" [ngClass]="{'openFirmwareList': selectModel == model}">
+          <div class="listItem" *ngFor="let firmware of model.firmwareList">
+            <div class="arrowBox" [ngClass]="{'imageRotate': selectFirmware == firmware}">
+              <img src="assets/icon/right-arrow.png" style="width:10px; height: 10px;">
             </div>
 
-            <div class="rowFild">
-              <div class="contentLabel">
-                F/W ver :
-              </div>
-              <div class="contentValue">
-                {{firmware.fwVersion}}
-              </div>
+            <div class="imageBox">
+              <img src="assets/icon/firmware.png" style="width:25px; height: 25px;">
             </div>
-            <div class="rowFild">
-              {{firmware.createdAt | dateformat}}
+
+            <div class="rowTitle" (click)="rowOpen(firmware)">{{firmware.firmwareName}}</div>
+            <div class="rowContent" [ngClass]="{'openRowContent': selectFirmware == firmware}">
+              <div style="padding: 10px;">
+                <div class="rowFild">
+                  <div class="contentLabel">
+                    H/W ver :
+                  </div>
+                  <div class="contentValue">
+                    {{firmware.hwVersion}}
+                  </div>
+                </div>
+
+                <div class="rowFild">
+                  <div class="contentLabel">
+                    F/W ver :
+                  </div>
+                  <div class="contentValue">
+                    {{firmware.fwVersion}}
+                  </div>
+                </div>
+                <div class="rowFild">
+                  {{firmware.createdAt | dateformat}}
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
+
+
+
     </div>
   </div>
 

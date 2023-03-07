@@ -37,7 +37,9 @@
 
 .leftListBox{
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 70px);
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .leftListBox .listItem{
@@ -48,10 +50,18 @@
 }
 
 .arrowBox{
+  width: 10px;
+  height: 10px;
   margin-right: 5px;
   padding-top: 5px;
   animation: rotate_image 0.2s linear infinite;
   float: left;
+  display: flex;
+}
+
+.imageBox{
+  float: left;
+  margin-right: 5px;
 }
 
 .imageRotate{
@@ -108,4 +118,14 @@
 
 .imageDisabled{
   opacity: 0.5;
+}
+
+.firmwareListBox{
+  height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.openFirmwareList{
+  height: auto !important;
 }

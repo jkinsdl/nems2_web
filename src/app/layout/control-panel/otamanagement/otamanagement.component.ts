@@ -12,6 +12,7 @@ import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { Subscription } from 'rxjs';
+import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 
 @Component({
   selector: 'app-otamanagement',
@@ -28,7 +29,8 @@ export class OTAManagementComponent implements OnInit {
     private devicemanageService : DevicemanagerService,
     private dialog: MatDialog,
     private uiService : UiService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private vehiclemanagersService : VehiclemanagerService
   ) { }
 
   gridApi!: GridApi;
@@ -47,6 +49,11 @@ export class OTAManagementComponent implements OnInit {
 
 
   rowData : any[]= [];
+
+  modelList : any = {
+    modelList : [],
+    count : 0
+  }
 
   firmwareList : any = {
     count : 0,
@@ -69,6 +76,8 @@ export class OTAManagementComponent implements OnInit {
   pageSize : number
   currentPage : number = 1
 
+  selectModel : any
+
   ngAfterViewInit() {
     this.getPageSize()
   }
@@ -80,9 +89,10 @@ export class OTAManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.getOtaFirmware()
-    this.getDevicemanagersFirmware()
-    //this.getDevicemanagersVehicles()
+
+    this.getVehiclemanagerModel()
+
+
   }
 
   getPageSize(){
@@ -99,9 +109,11 @@ export class OTAManagementComponent implements OnInit {
     }
   }
 
-  getDevicemanagersVehicles() {
-    this.devicemanageService.getDevicemanagersVehicles(new SearchFilter).subscribe(res=>{
+  getVehiclemanagerModel(){
+    this.vehiclemanagersService.getVehiclemanagerModel(new SearchFilter).subscribe(res=>{
       console.log(res)
+      this.modelList = res.body
+      this.getDevicemanagersFirmware()
     },error=>{
       console.log(error)
     })
@@ -110,6 +122,18 @@ export class OTAManagementComponent implements OnInit {
   getDevicemanagersFirmware(){
     this.devicemanageService.getDevicemanagersFirmware(new SearchFilter).subscribe(res=>{
       console.log(res)
+
+      for(let i = 0; i < this.modelList.modelList.length; i++){
+        this.modelList.modelList[i].firmwareList = []
+        for(let j = 0 ; j < res.body.entities.length; j++){
+          if(this.modelList.modelList[i].modelName == res.body.entities[j].modelName){
+            this.modelList.modelList[i].firmwareList.push(res.body.entities[j])
+          }
+        }
+      }
+
+      console.log(this.modelList)
+
       this.firmwareList = res.body
     },error=>{
       console.log(error)
@@ -119,6 +143,9 @@ export class OTAManagementComponent implements OnInit {
   getOtaFirmware(){
     this.otaService.getOtaFirmware().subscribe(res=>{
       console.log(res)
+
+
+
     },error=>{
       console.log(error)
     })
@@ -198,8 +225,22 @@ export class OTAManagementComponent implements OnInit {
   }
 
   rowOpen(item : any){
-    this.selectFirmware = item
-    this.getDevicemanagersFirmwareFirmwareNameVehicles()
+
+    if(this.selectFirmware == item){
+      this.selectFirmware = null
+      this.firmwareVehiclesList = {}
+      let pagination = {
+        count : 0,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+    }else{
+      this.selectFirmware = item
+      this.getDevicemanagersFirmwareFirmwareNameVehicles()
+    }
+
   }
 
   getDevicemanagersFirmwareFirmwareNameVehicles(){
@@ -282,5 +323,14 @@ export class OTAManagementComponent implements OnInit {
         }
       }
     });
+  }
+
+  modelRowOpen(model : any){
+    if(this.selectModel == model){
+      this.selectModel = null
+      this.selectFirmware = null
+    }else {
+      this.selectModel = model
+    }
   }
 }
