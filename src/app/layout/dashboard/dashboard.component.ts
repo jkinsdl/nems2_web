@@ -567,6 +567,7 @@ export class DashboardComponent implements OnInit {
         let filter = new SearchFilter()
         filter.province = this.provinceData.features[i].properties.ADM1_ZH
         await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
+          console.log(res2)
           for(let j = 0; j < res2.body.entities.length; j++){
             for(let k = 0; k < this.subPrefectureData.features.length; k++){
               if(this.subPrefectureData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
