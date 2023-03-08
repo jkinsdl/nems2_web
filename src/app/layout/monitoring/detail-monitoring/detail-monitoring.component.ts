@@ -118,18 +118,9 @@ export class DetailMonitoringComponent implements OnInit {
         zoom: 3.5,
         minZoom : 3.5,
         center: [this.lng, this.lat]
-        //center: [120.223329, 33.30857]
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
-
-    /*for(let i = 0; i< 100; i++){
-      let location : mapboxgl.LngLatLike = [(Math.floor(Math.random() * 30000)/1000) + 90, (Math.floor(Math.random() * 15000)/1000) + 25 ]
-      let marker = new mapboxgl.Marker().setLngLat(location).addTo(this.map)
-      marker.on('click',e=>{
-        console.log(e)
-      })
-    }*/
 
     console.log('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
@@ -73,6 +73,8 @@ export class DashboardComponent implements OnInit {
   provinceData : any = {}
   subPrefectureData : any = {}
 
+  province_statistics_registration_count_data : any[] = []
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
@@ -82,7 +84,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     this.utilService.getProvinceData().subscribe((res:any)=>{
       this.provinceData = res
     })
@@ -90,7 +91,6 @@ export class DashboardComponent implements OnInit {
     this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
       this.subPrefectureData = res
     })
-
 
     this.menuMode$ = this.uiService.menuMode$.subscribe(mode =>{
       if(mode == 2) {
@@ -441,14 +441,18 @@ export class DashboardComponent implements OnInit {
       })
 
       this.map.on('moveend', e=>{
+        if(this.map.getZoom() > 5){
 
+          this.getProvinceStatisticsRegistrationCount()
+
+        }
       })
 
       this.refresh()
       this.changeBoundaries('province')
       this.showProvinceLayer()
       this.getStatisticsRegistrationCount()
-      this.getProvinceStatisticsRegistrationCount()
+      //this.getProvinceStatisticsRegistrationCount()
     });
   },1)
 
@@ -474,6 +478,8 @@ export class DashboardComponent implements OnInit {
 
     this.map.setZoom(3.5)
     this.map.setCenter([this.lng, this.lat])
+
+    this.province_statistics_registration_count_data = []
   }
 
   getVehiclewarnings(){
@@ -549,43 +555,52 @@ export class DashboardComponent implements OnInit {
   }
 
   async getProvinceStatisticsRegistrationCount(){
-    let featuresList : any[] = []
+    let mapDiv = document.getElementById('map');
+    const northwest = new mapboxgl.Point(0, 0); // 북서 쪽
+    const southeast = new mapboxgl.Point(mapDiv.getBoundingClientRect().width, mapDiv.getBoundingClientRect().height); // 남동 쪽
     for(let i = 0; i < this.provinceData.features.length; i++){
-      let filter = new SearchFilter()
-      filter.province = this.provinceData.features[i].properties.ADM1_ZH
-      await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
-        console.log(res2)
-        for(let j = 0; j < res2.body.entities.length; j++){
-          for(let k = 0; k < this.subPrefectureData.features.length; k++){
-            if(this.subPrefectureData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
-              let lnglat = this.subPrefectureData.features[k].geometry.center
-              featuresList.push({
-                "type": "Feature",
-                "properties": {
-                  "pcode" : res2.body.entities[j].region.pcode,
-                  "zipCode" : res2.body.entities[j].region.zipCode,
-                  "placeCode" : res2.body.entities[j].region.placeCode,
-                  "districtCode" : res2.body.entities[j].region.districtCode,
-                  "province" : res2.body.entities[j].region.province,
-                  "city" : res2.body.entities[j].region.city,
-                  "district" : res2.body.entities[j].region.district,
-                  "street" : res2.body.entities[j].street,
-                  "statistics_count" : res2.body.entities[j].count
-                },
-                "geometry": {
-                  "type": "Point",
-                    "coordinates": lnglat
+      if(this.province_statistics_registration_count_data.map(e=>e.properties.ADM1_ZH).indexOf(this.provinceData.features[i].properties.ADM1_ZH) < 0 &&
+        this.map.unproject(northwest).lng <= this.provinceData.features[i].geometry.center[0] &&
+        this.map.unproject(southeast).lng >= this.provinceData.features[i].geometry.center[0] &&
+        this.map.unproject(northwest).lat >= this.provinceData.features[i].geometry.center[1] &&
+        this.map.unproject(southeast).lat <= this.provinceData.features[i].geometry.center[1] ){
+        let filter = new SearchFilter()
+        filter.province = this.provinceData.features[i].properties.ADM1_ZH
+        await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
+          for(let j = 0; j < res2.body.entities.length; j++){
+            for(let k = 0; k < this.subPrefectureData.features.length; k++){
+              if(this.subPrefectureData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
+                let lnglat = this.subPrefectureData.features[k].geometry.center
+                this.province_statistics_registration_count_data.push({
+                  "type": "Feature",
+                  "properties": {
+                    'ADM1_ZH' : this.provinceData.features[i].properties.ADM1_ZH,
+                    "pcode" : res2.body.entities[j].region.pcode,
+                    "zipCode" : res2.body.entities[j].region.zipCode,
+                    "placeCode" : res2.body.entities[j].region.placeCode,
+                    "districtCode" : res2.body.entities[j].region.districtCode,
+                    "province" : res2.body.entities[j].region.province,
+                    "city" : res2.body.entities[j].region.city,
+                    "district" : res2.body.entities[j].region.district,
+                    "street" : res2.body.entities[j].street,
+                    "statistics_count" : res2.body.entities[j].count
                   },
-              })
-              break;
+                  "geometry": {
+                    "type": "Point",
+                      "coordinates": lnglat
+                    },
+                })
+                break;
+              }
             }
           }
-        }
-      })
+        })
+      }
     }
+
     (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
       "type": "FeatureCollection",
-      "features": featuresList
+      "features": this.province_statistics_registration_count_data
     });
   }
 
