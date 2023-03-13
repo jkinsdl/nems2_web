@@ -27,8 +27,12 @@
       <div class="tab" [ngClass]="{select: router.url.indexOf('travelDistanceStatistics') > -1 }" [routerLink]="['/main/statistics/travelDistanceStatistics']">
         Travel Distance
       </div>
-
+      <div class="statisticsDatePicker">
+        <input class="datePickerText" [ngxMatDatetimePicker]="datePicker" readonly="true" (click)="datePicker.open()" [(ngModel)]="date" [max]="currentDate">
+        <ngx-mat-datetime-picker #datePicker startView="multi-year" (monthSelected)="setMonthAndYear($event, datePicker)" [showSpinners]="true" [hideTime]="true"></ngx-mat-datetime-picker>
+      </div>
     </div>
+
 
     <div class="line"></div>
 

@@ -5,6 +5,7 @@ import usa from '../../../../assets/data/examples.json';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-monthly-vehicle-statistics',
@@ -36,10 +37,28 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
     useVehicles : 0
   }
 
+  statisticsDate$ : Subscription
+
+  date : any
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.statisticsDate$)this.statisticsDate$.unsubscribe()
+  }
+
   ngOnInit(): void {
+    this.date = this.statisticsServce.statisticsDate
     this.setChinaMapChart()
     this.getStatisticsRegistrationSummary()
     this.getStatisticsRegistrationCount(null)
+
+    this.statisticsDate$ = this.statisticsServce.statisticsDate$.subscribe(date=>{
+      console.log(date)
+      this.date = date
+      this.getStatisticsRegistrationSummary()
+    })
+
   }
 
   getStatisticsRegistrationCount(province : string){
@@ -47,7 +66,16 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
   }
 
   getStatisticsRegistrationSummary(){
-    this.statisticsServce.getStatisticsRegistrationSummary(new SearchFilter()).subscribe(res=>{
+    let f = new SearchFilter()
+    if(this.date){
+      let selectDate = new Date(this.date._i.year+'')
+      selectDate.setMonth(this.date._i.month)
+      selectDate.setDate(this.date._i.date)
+      f.begin = new Date(selectDate.getTime()-selectDate.getTimezoneOffset()).toISOString()
+      selectDate.setMonth(selectDate.getMonth()+1)
+      f.end = new Date(selectDate.getTime()-selectDate.getTimezoneOffset()).toISOString()
+    }
+    this.statisticsServce.getStatisticsRegistrationSummary(f).subscribe(res=>{
       console.log(res)
       this.registrationSummary = res.body
     },error=>{

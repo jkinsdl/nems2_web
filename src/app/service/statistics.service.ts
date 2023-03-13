@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SearchFilter } from '../object/searchFilter';
 
@@ -15,11 +16,18 @@ export class StatisticsService {
 
   private Url = environment.httpText + environment.apiServer + "/api/statistics" ;
  // private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api/statistics" ;
+  statisticsDate : any
+  statisticsDateSubject = new Subject()
+  statisticsDate$ = this.statisticsDateSubject.asObservable()
+
+  setStatisticsDate(date : any){
+    this.statisticsDate = date
+    this.statisticsDateSubject.next(this.statisticsDate)
+  }
+
 
   getStatisticsCurrent(){
     var url = `${this.Url}/current`;
-
-
     return this.http.get<any>(url, { observe: "response" })
   }
 

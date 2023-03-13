@@ -18,6 +18,7 @@
   height: 50px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .statisticsTab .tab{
@@ -36,4 +37,18 @@
   color: #2fc8b0 !important;
   height: calc(100% - 1px);
   border-bottom: 1px solid #2fc8b0;
+}
+
+.statisticsDatePicker{
+  position: absolute;
+  right: 10px;
+}
+
+.datePickerText{
+  border: 0;
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
 }

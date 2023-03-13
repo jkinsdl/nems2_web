@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import mapboxgl, { GeoJSONSource, LngLatBoundsLike } from 'mapbox-gl';
+import { Subscription } from 'rxjs';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import { UtilService } from 'src/app/service/util.service';
@@ -35,13 +36,38 @@ export class WarningStatisticsComponent implements OnInit {
     warnings : 0
   }
 
+  statisticsDate$ : Subscription
+
+  date : any
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.statisticsDate$)this.statisticsDate$.unsubscribe()
+  }
+
   ngOnInit(): void {
+    this.date = this.statisticsServce.statisticsDate
     this.setMap()
 
+    this.statisticsDate$ = this.statisticsServce.statisticsDate$.subscribe(date=>{
+      console.log(date)
+      this.date = date
+      this.getStatisticsWarningsSummary()
+    })
   }
 
   getStatisticsWarningsSummary(){
-    this.statisticsServce.getStatisticsWarningsSummary(new SearchFilter()).subscribe(res=>{
+    let f = new SearchFilter()
+    if(this.date){
+      let selectDate = new Date(this.date._i.year+'')
+      selectDate.setMonth(this.date._i.month)
+      selectDate.setDate(this.date._i.date)
+      f.begin = new Date(selectDate.getTime()-selectDate.getTimezoneOffset()).toISOString()
+      selectDate.setMonth(selectDate.getMonth()+1)
+      f.end = new Date(selectDate.getTime()-selectDate.getTimezoneOffset()).toISOString()
+    }
+    this.statisticsServce.getStatisticsWarningsSummary(f).subscribe(res=>{
       console.log(res)
       this.warningsSummary = res.body
       console.log(this.warningsSummary)

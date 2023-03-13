@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
+import { Subscription } from 'rxjs';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { StatisticsService } from 'src/app/service/statistics.service';
 
@@ -16,12 +17,40 @@ export class TravelDistanceStatisticsComponent implements OnInit {
 
   totalMileage : number = 0;
   periodMileage : number = 0;
+
+  statisticsDate$ : Subscription
+
+  date : any
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.statisticsDate$)this.statisticsDate$.unsubscribe()
+  }
+
   ngOnInit(): void {
+    this.date = this.statisticsService.statisticsDate
     this.getStatisticsMileages()
+
+    this.statisticsDate$ = this.statisticsService.statisticsDate$.subscribe(date=>{
+      console.log(date)
+      this.date = date
+      this.getStatisticsMileages()
+    })
+
   }
 
   getStatisticsMileages(){
-    this.statisticsService.getStatisticsMileages(new SearchFilter()).subscribe(res=>{
+    let f = new SearchFilter()
+    if(this.date){
+      let selectDate = new Date(this.date._i.year+'')
+      selectDate.setMonth(this.date._i.month)
+      selectDate.setDate(this.date._i.date)
+      f.begin = new Date(selectDate.getTime()-selectDate.getTimezoneOffset()).toISOString()
+      selectDate.setMonth(selectDate.getMonth()+1)
+      f.end = new Date(selectDate.getTime()-selectDate.getTimezoneOffset()).toISOString()
+    }
+    this.statisticsService.getStatisticsMileages(f).subscribe(res=>{
       console.log(res)
       this.setBarChart(res.body.mileageVehicles)
       this.setDonutChart(res.body.mileageVehicles)
