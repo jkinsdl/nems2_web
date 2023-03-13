@@ -433,11 +433,12 @@ export class DetailMonitoringComponent implements OnInit {
           this.map.setLayoutProperty('sub_prefecture', 'visibility', 'none');
           this.map.setLayoutProperty('sub_prefecture_click_layer', 'visibility', 'none');
         }
-
       })
 
       this.map.on('moveend', e=>{
-        if(this.map.getZoom() >= 9 && this.selectVehicle == null){
+        if(this.map.getZoom() > 5 && this.map.getZoom() < 9){
+          this.getProvinceStatisticsRegistrationCount()
+        }else if(this.map.getZoom() >= 9 && this.selectVehicle == null){
           this.getRealtimedataLocation()
         }else {
           this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none');
@@ -456,15 +457,14 @@ export class DetailMonitoringComponent implements OnInit {
       this.changeBoundaries('province')
       this.showProvinceLayer()
       this.getStatisticsRegistrationCount()
-      this.getProvinceStatisticsRegistrationCount()
 
       this.vinCountInterval = interval(60000).pipe().subscribe(x=>{
 
         if(this.selectVehicle == null){
           this.getStatisticsRegistrationCount()
-          this.getProvinceStatisticsRegistrationCount()
-
-          if(this.map.getZoom() >= 9){
+          if(this.map.getZoom() > 5 && this.map.getZoom() < 9){
+            this.getProvinceStatisticsRegistrationCount()
+          }else if(this.map.getZoom() >= 9){
             this.getRealtimedataLocation()
           }
         }
@@ -970,39 +970,49 @@ export class DetailMonitoringComponent implements OnInit {
 
   async getProvinceStatisticsRegistrationCount(){
     let featuresList : any[] = []
-    for(let i = 0; i < this.provinceJSONData.features.length; i++){
-      let filter = new SearchFilter()
-      filter.province = this.provinceJSONData.features[i].properties.ADM1_ZH
-      await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
-        console.log(res2)
 
-        for(let j = 0; j < res2.body.entities.length; j++){
-          for(let k = 0; k < this.subPrefectureeJSONData.features.length; k++){
-            if(this.subPrefectureeJSONData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
-              let lnglat = this.subPrefectureeJSONData.features[k].geometry.center
-              featuresList.push({
-                "type": "Feature",
-                "properties": {
-                  "pcode" : res2.body.entities[j].region.pcode,
-                  "zipCode" : res2.body.entities[j].region.zipCode,
-                  "placeCode" : res2.body.entities[j].region.placeCode,
-                  "districtCode" : res2.body.entities[j].region.districtCode,
-                  "province" : res2.body.entities[j].region.province,
-                  "city" : res2.body.entities[j].region.city,
-                  "district" : res2.body.entities[j].region.district,
-                  "street" : res2.body.entities[j].street,
-                  "statistics_count" : res2.body.entities[j].count
-                },
-                "geometry": {
-                  "type": "Point",
-                    "coordinates": lnglat
-                  },
-              })
-              break;
+    let mapDiv = document.getElementById('map');
+    const northwest = new mapboxgl.Point(0, 0); // 북서 쪽
+    const southeast = new mapboxgl.Point(mapDiv.getBoundingClientRect().width, mapDiv.getBoundingClientRect().height); // 남동 쪽
+
+    for(let i = 0; i < this.provinceJSONData.features.length; i++){
+      if(this.map.unproject(northwest).lng <= this.provinceJSONData.features[i].geometry.center[0] &&
+        this.map.unproject(southeast).lng >= this.provinceJSONData.features[i].geometry.center[0] &&
+        this.map.unproject(northwest).lat >= this.provinceJSONData.features[i].geometry.center[1] &&
+        this.map.unproject(southeast).lat <= this.provinceJSONData.features[i].geometry.center[1] ){
+          let filter = new SearchFilter()
+          filter.province = this.provinceJSONData.features[i].properties.ADM1_ZH
+          await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
+            console.log(res2)
+
+            for(let j = 0; j < res2.body.entities.length; j++){
+              for(let k = 0; k < this.subPrefectureeJSONData.features.length; k++){
+                if(this.subPrefectureeJSONData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
+                  let lnglat = this.subPrefectureeJSONData.features[k].geometry.center
+                  featuresList.push({
+                    "type": "Feature",
+                    "properties": {
+                      "pcode" : res2.body.entities[j].region.pcode,
+                      "zipCode" : res2.body.entities[j].region.zipCode,
+                      "placeCode" : res2.body.entities[j].region.placeCode,
+                      "districtCode" : res2.body.entities[j].region.districtCode,
+                      "province" : res2.body.entities[j].region.province,
+                      "city" : res2.body.entities[j].region.city,
+                      "district" : res2.body.entities[j].region.district,
+                      "street" : res2.body.entities[j].street,
+                      "statistics_count" : res2.body.entities[j].count
+                    },
+                    "geometry": {
+                      "type": "Point",
+                        "coordinates": lnglat
+                      },
+                  })
+                  break;
+                }
+              }
             }
-          }
+          })
         }
-      })
     }
 
     let source = (this.map.getSource("province_statistics_registration_count") as GeoJSONSource).setData({
