@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
     todayRegistVehicles: 0
   }
 
-  arrayTotalVehicles : string[] = []
+  //arrayTotalVehicles : string[] = []
   statisticsVehiclesSummary : any = {
     totalVehicles: 0,
     newVehicles: 0,
@@ -414,7 +414,6 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-
       this.map.on('click', 'sub_prefecture',(e : any) => {
         console.log(e)
         this.map.flyTo({
@@ -442,9 +441,7 @@ export class DashboardComponent implements OnInit {
 
       this.map.on('moveend', e=>{
         if(this.map.getZoom() > 5){
-
           this.getProvinceStatisticsRegistrationCount()
-
         }
       })
 
@@ -501,7 +498,7 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getStatisticsCurrent().subscribe(res=>{
       console.log(res)
       this.statisticsCurrent = res.body
-      this.arrayTotalVehicles = Array.from(String(this.statisticsCurrent.totalVehicles)).reverse()
+      //this.arrayTotalVehicles = Array.from(String(this.statisticsCurrent.totalVehicles)).reverse()
     },error=>{
       console.log(error)
     })
