@@ -4,6 +4,7 @@ import { CellClickedEvent, ColDef, GridApi, GridReadyEvent } from 'ag-grid-commu
 import { Subscription } from 'rxjs';
 import { AddUserComponent } from 'src/app/component/add-user/add-user.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UiService } from 'src/app/service/ui.service';
@@ -36,7 +37,16 @@ export class UserAccountComponent implements OnInit {
     { field: 'email', headerName : 'email', tooltipField: 'email' },
     { field: 'authorityId', headerName : 'authority', tooltipField: 'authorityId' },
     { field: 'status', headerName : 'status', tooltipField: 'status'},
-    { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'latestAccess', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'latestAccess' } }
+    { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'latestAccess', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'latestAccess' } },
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      modify: (field: any) => {
+        this.modifyUser(field)
+      },
+      delete : (field: any) => {
+        this.deleteUser(field)
+      },
+    }, width:120},
   ];
 
   users : any = {
@@ -134,20 +144,19 @@ export class UserAccountComponent implements OnInit {
     })
   }
 
-  modifyUser(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AddUserComponent, {
-        data:{
-          type : this.constant.MODIFY_TYPE,
-          user : this.gridApi.getRowNode(this.selectNodeID).data
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.putUsersUserId(result)
-        }
-      });
-    }
+  modifyUser(field :any){
+    const dialogRef = this.dialog.open( AddUserComponent, {
+      data:{
+        type : this.constant.MODIFY_TYPE,
+        user : field
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.putUsersUserId(result)
+      }
+    });
+
   }
 
   putUsersUserId(parameter : any){
@@ -160,22 +169,20 @@ export class UserAccountComponent implements OnInit {
   }
 
 
-  deleteUser(){
-    if(this.gridApi.getSelectedRows().length != 0){
+  deleteUser(field : any){
       const dialogRef = this.dialog.open( AlertPopupComponent, {
         data:{
           alertTitle : "User Delete",
-          alertContents : "Do you want to delete a user ? (User Name : " + this.gridApi.getRowNode(this.selectNodeID).data.username+ ")",
+          alertContents : "Do you want to delete a user ? (User Name : " + field.username+ ")",
           alertType : this.constant.ALERT_WARNING,
           popupType : this.constant.POPUP_CHOICE,
         }
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result){
-          this.deleteUsersUserId(this.gridApi.getRowNode(this.selectNodeID).data.userId)
+          this.deleteUsersUserId(field.userId)
         }
       });
-    }
   }
 
   deleteUsersUserId(userId : string){

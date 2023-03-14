@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AddPublicPlatformManagementComponent } from 'src/app/component/add-public-platform-management/add-public-platform-management.component';
 import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { ForwardingService } from 'src/app/service/forwarding.service';
@@ -47,6 +48,16 @@ export class PublicPlatformManagementComponent implements OnInit {
     { field: '', headerName : 'enterprise code', tooltipField: ''},
     { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
     { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+
+    cellRendererParams: {
+      modify: (field: any) => {
+        this.modifyManagement(field)
+      },
+      delete : (field: any) => {
+        this.deleteManagement(field)
+      },
+    }, width:120},
   ];
 
   forwarding : any = {
@@ -57,7 +68,14 @@ export class PublicPlatformManagementComponent implements OnInit {
 
   relationsColumnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
-    { field: 'synctime', headerName: 'Last sync(packet time)', tooltipField: 'synctime'}
+    { field: 'synctime', headerName: 'Last sync(packet time)', tooltipField: 'synctime'},
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      onlyRemove : true,
+      delete : (field: any) => {
+        this.deleteMapping(field)
+      },
+    }, width:120},
   ];
 
   relations : any = {
@@ -197,20 +215,18 @@ export class PublicPlatformManagementComponent implements OnInit {
 
 
 
-  modifyManagement(){
-    if(this.managementGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AddPublicPlatformManagementComponent, {
-        data:{
-          type:this.constant.MODIFY_TYPE,
-          forwarding : this.managementGridApi.getSelectedRows()[0]
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.getForwarding()
-        }
-      });
-    }
+  modifyManagement(field: any){
+    const dialogRef = this.dialog.open( AddPublicPlatformManagementComponent, {
+      data:{
+        type:this.constant.MODIFY_TYPE,
+        forwarding : field
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.getForwarding()
+      }
+    });
   }
 
   sendManagement(){
@@ -243,23 +259,21 @@ export class PublicPlatformManagementComponent implements OnInit {
 
 
 
-  deleteManagement(){
-    if(this.managementGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the data ? (Server Name : " + this.managementGridApi.getSelectedRows()[0].serverName+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
+  deleteManagement(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Vehicle",
+        alertContents : "Do you want to delete the data ? (Server Name : " + field.serverName+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
 
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.deleteForwardingServerName(this.managementGridApi.getSelectedRows()[0].serverName)
-        }
-      });
-    }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.deleteForwardingServerName(field.serverName)
+      }
+    });
   }
 
   deleteForwardingServerName(serverName : string){
@@ -308,22 +322,20 @@ export class PublicPlatformManagementComponent implements OnInit {
     }
   }
 
-  deleteMapping(){
-    if(this.mappingGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the mapping ? (VIN : " + this.mappingGridApi.getSelectedRows()[0].vin+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.deleteForwardingServerNameRelations(this.mappingGridApi.getSelectedRows()[0].vin);
-        }
-      });
-    }
+  deleteMapping(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Vehicle",
+        alertContents : "Do you want to delete the mapping ? (VIN : " + field.vin+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.deleteForwardingServerNameRelations(field.vin);
+      }
+    });
   }
 
   deleteForwardingServerNameRelations(vin : string){

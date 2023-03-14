@@ -9,6 +9,7 @@ import { AddVehicleModelComponent } from 'src/app/component/add-vehicle-model/ad
 import { UtilService } from 'src/app/service/util.service';
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
+import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 @Component({
   selector: 'app-vehicle-model',
   templateUrl: './vehicle-model.component.html',
@@ -50,6 +51,15 @@ export class VehicleModelComponent implements OnInit {
     { field: 'motorPeakTorque', headerName : 'motor peak torque', tooltipField: 'motorPeakTorque'},
     { field: 'motorMaxTorque', headerName : 'motor max torque', tooltipField: 'motorMaxTorque'},
     { field: 'powerRatio', headerName : 'Power Ratio', tooltipField: 'powerRatio'},
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      modify: (field: any) => {
+        this.modifyVehicleModel(field)
+      },
+      delete : (field: any) => {
+        this.deleteVehicle(field)
+      },
+    }, width:120},
   ];
 
   model : any = {
@@ -128,38 +138,34 @@ export class VehicleModelComponent implements OnInit {
   }
 
 
-  modifyVehicleModel(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AddVehicleModelComponent, {
-        data:{
-          type : this.constant.MODIFY_TYPE,
-          vehicleModel : this.gridApi.getSelectedRows()[0]
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.getVehiclemanagerModel()
-        }
-      });
-    }
+  modifyVehicleModel(field: any){
+    const dialogRef = this.dialog.open( AddVehicleModelComponent, {
+      data:{
+        type : this.constant.MODIFY_TYPE,
+        vehicleModel : field
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.getVehiclemanagerModel()
+      }
+    });
   }
 
-  deleteVehicle(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the data ? (Model Name: " + this.gridApi.getSelectedRows()[0].modelName+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.deleteVehiclemanagerModelModelName(this.gridApi.getSelectedRows()[0].modelName)
-        }
-      });
-    }
+  deleteVehicle(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Vehicle",
+        alertContents : "Do you want to delete the data ? (Model Name: " + field.modelName+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.deleteVehiclemanagerModelModelName(field.modelName)
+      }
+    });
   }
 
   deleteVehiclemanagerModelModelName(modelName : string){

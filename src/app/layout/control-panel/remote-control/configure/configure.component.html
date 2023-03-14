@@ -4,14 +4,14 @@
   </div>
 
   <div class="iconBtnBox">
-    <div class="excel_btn" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="modifyConfigure()">
+    <!--<div class="excel_btn" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="modifyConfigure()">
       <img src="assets/icon/edit.png">
     </div>
 
     <div class="excel_btn" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="deleteConfigure()">
       <img src="assets/icon/delete.png">
     </div>
-
+    -->
     <label class="excel_btn selectItem" for="uploadExcel">
       <img src="assets/icon/excel_upload.png">
     </label>
@@ -48,9 +48,10 @@
     Configure Name : <span style="font-size: 16px; color: black; font-weight: bold;">{{selectConfigureRow != null ? selectConfigureRow.configureName : ""}}</span>
   </div>
   <div class="iconBtnBox">
-    <div class="excel_btn" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
+    <!--<div class="excel_btn" [ngClass]="{'selectItem': mappingGridApi != null && mappingGridApi.getSelectedRows().length != 0}" (click)="deleteMapping()">
       <img src="assets/icon/delete.png">
     </div>
+    -->
     <label class="excel_btn selectItem" for="uploadExcel">
       <img src="assets/icon/excel_upload.png">
     </label>

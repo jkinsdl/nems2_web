@@ -1,0 +1,22 @@
+.actionBtnBox{
+  width: 120px;
+
+}
+
+.iconBtnBox{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.btn{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.btn img{
+  width: 100%;
+  height: 100%;
+}

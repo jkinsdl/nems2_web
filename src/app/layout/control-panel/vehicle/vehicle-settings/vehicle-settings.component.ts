@@ -4,6 +4,7 @@ import { CellClickedEvent, ColDef, GridApi, GridReadyEvent } from 'ag-grid-commu
 import { Subscription } from 'rxjs';
 import { AddVehicleComponent } from 'src/app/component/add-vehicle/add-vehicle.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UiService } from 'src/app/service/ui.service';
@@ -43,6 +44,15 @@ export class VehicleSettingsComponent implements OnInit {
     { field: 'histories', headerName: 'histories', tooltipField: 'histories'},
     //{ field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
     //{ field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      modify: (field: any) => {
+        this.modifyVehicle(field)
+      },
+      delete : (field: any) => {
+        this.deleteVehicle(field)
+      },
+    }, width:120},
   ];
 
   vehicle : any = {
@@ -120,39 +130,35 @@ export class VehicleSettingsComponent implements OnInit {
     });
   }
 
-  modifyVehicle(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AddVehicleComponent, {
-        data:{
-          type : this.constant.MODIFY_TYPE,
-          vehicle : this.gridApi.getSelectedRows()[0]
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.getVehiclemanagerStaticinfo()
-        }
-      });
-    }
+  modifyVehicle(field: any){
+    const dialogRef = this.dialog.open( AddVehicleComponent, {
+      data:{
+        type : this.constant.MODIFY_TYPE,
+        vehicle : field
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.getVehiclemanagerStaticinfo()
+      }
+    });
   }
 
 
-  deleteVehicle(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the data ? (VIN : " + this.gridApi.getSelectedRows()[0].vin+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.deleteVehiclemanagerStaticinfoVin(this.gridApi.getSelectedRows()[0].vin)
-        }
-      });
-    }
+  deleteVehicle(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Vehicle",
+        alertContents : "Do you want to delete the data ? (VIN : " + field.vin+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.deleteVehiclemanagerStaticinfoVin(field.vin)
+      }
+    });
   }
 
   deleteVehiclemanagerStaticinfoVin(vin:string){

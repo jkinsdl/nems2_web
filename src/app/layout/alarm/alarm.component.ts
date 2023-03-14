@@ -7,6 +7,7 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import mapboxgl from 'mapbox-gl';
 import { Subscription } from 'rxjs';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 import { CheckboxFilterComponent } from 'src/app/component/checkbox-filter/checkbox-filter.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { ModifyAlarmComponent } from 'src/app/component/modify-alarm/modify-alarm.component';
@@ -96,6 +97,13 @@ export class AlarmComponent implements OnInit {
     { field: 'warningType',headerName: "Warning Type", tooltipField: 'warningType', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningTypeToppings}},
     //{ field: 'warningCode',headerName: "Warning Code", tooltipField: 'warningCode'},
     //{ field: 'code',headerName: "Code", tooltipField: 'code'},
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      onlyRemove : true,
+      delete : (field: any) => {
+        this.alarmDelete(field)
+      },
+    }, width:80},
   ];
 
   vehiclewarning : any = {
@@ -227,55 +235,53 @@ export class AlarmComponent implements OnInit {
     }
   }
 
-  alarmDelete(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Alarm",
-          alertContents : "Do you want to delete the data ? (VIN : " + this.gridApi.getSelectedRows()[0].vin+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.vehiclewarningService.deleteVehiclewarningsIssueId(this.gridApi.getSelectedRows()[0].issueId).subscribe(res=>{
-            console.log(res)
-            this.gridApi.applyTransaction({ remove: this.gridApi.getSelectedRows() })!;
+  alarmDelete(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Alarm",
+        alertContents : "Do you want to delete the data ? (VIN : " + field.vin+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.vehiclewarningService.deleteVehiclewarningsIssueId(field.issueId).subscribe(res=>{
+          console.log(res)
+          this.gridApi.applyTransaction({ remove: this.gridApi.getSelectedRows() })!;
 
-            this.selectionAlarm = {
-              maxWarning : '',
-              region : '',
-              vin : '',
-              warningFlag : '',
-              createTime : ''
+          this.selectionAlarm = {
+            maxWarning : '',
+            region : '',
+            vin : '',
+            warningFlag : '',
+            createTime : ''
+          }
+
+          this.selectVehicle = {
+            modifyHistory : [],
+            vehicle : {
+              batteryCode : "",
+              engineNo : "",
+              iccid : "",
+              modelName : "",
+              motorNo : "",
+              nemsSn : "",
+              pcode : 0,
+              purpose : "",
+              region : "",
+              registDate : "",
+              registrationPlate : "",
+              sOffDate : "",
+              vin : ""
             }
+          }
 
-            this.selectVehicle = {
-              modifyHistory : [],
-              vehicle : {
-                batteryCode : "",
-                engineNo : "",
-                iccid : "",
-                modelName : "",
-                motorNo : "",
-                nemsSn : "",
-                pcode : 0,
-                purpose : "",
-                region : "",
-                registDate : "",
-                registrationPlate : "",
-                sOffDate : "",
-                vin : ""
-              }
-            }
-
-          },error=>{
-            console.log(error)
-          })
-        }
-      });
-    }
+        },error=>{
+          console.log(error)
+        })
+      }
+    });
   }
 
   getPageSize(){

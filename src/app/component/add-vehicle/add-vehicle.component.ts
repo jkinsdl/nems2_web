@@ -218,11 +218,11 @@ export class AddVehicleComponent implements OnInit {
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.sOffDate){
-      this.addVehiclemanagerStaticinfoParameter.sOffDate = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
+      this.addVehiclemanagerStaticinfoParameter.sOffDate = this.addVehiclemanagerStaticinfoParameter.sOffDate._d == undefined ? new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate).toISOString() : new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.registDate){
-      this.addVehiclemanagerStaticinfoParameter.registDate = new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
+      this.addVehiclemanagerStaticinfoParameter.registDate = this.addVehiclemanagerStaticinfoParameter.registDate._d == undefined ? new Date(this.addVehiclemanagerStaticinfoParameter.registDate).toISOString() : new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
     }
 
     this.vehiclemanagerService.putVehiclemanagerStaticinfoVin(this.addVehiclemanagerStaticinfoParameter).subscribe(res=>{

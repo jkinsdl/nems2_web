@@ -11,6 +11,7 @@ import { UtilService } from 'src/app/service/util.service';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
+import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 
 @Component({
   selector: 'app-configure',
@@ -49,12 +50,28 @@ export class ConfigureComponent implements OnInit {
     { field: 'monitoring', headerName : 'Monitoring', tooltipField: 'monitoring'},
     //{ field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }},
     //{ field: 'updatedUserId', headerName : 'updated User Id', tooltipField: 'updatedUserId'},
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      modify: (field: any) => {
+        this.modifyConfigure(field)
+      },
+      delete : (field: any) => {
+        this.deleteConfigure(field)
+      },
+    }, width:120},
   ];
 
   mappingColumnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
     { field: 'matched', headerName : 'Matched', tooltipField: 'matched'},
     { field: 'matched_date', headerName : 'Matched Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date' }},
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      onlyRemove : true,
+      delete : (field: any) => {
+        this.deleteMapping(field)
+      },
+    }, width:120},
   ];
 
   configureGridApi!: GridApi;
@@ -190,22 +207,21 @@ export class ConfigureComponent implements OnInit {
 
 
 
-  deleteMapping(){
-    if(this.mappingGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the mapping ? (VIN : " + this.mappingGridApi.getSelectedRows()[0].vin+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-        }
-      });
-      dialogRef.afterClosed().subscribe((result:any) => {
-        if(result){
-          this.mappingGridApi.applyTransaction({ remove: this.mappingGridApi.getSelectedRows() })!;
-        }
-      });
-    }
+  deleteMapping(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Vehicle",
+        alertContents : "Do you want to delete the mapping ? (VIN : " + field.vin+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if(result){
+        this.mappingGridApi.applyTransaction({ remove: this.mappingGridApi.getSelectedRows() })!;
+      }
+    });
+
   }
 
   addConfigure(){
@@ -221,38 +237,34 @@ export class ConfigureComponent implements OnInit {
     });
   }
 
-  modifyConfigure(){
-    if(this.configureGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AddRegisterRemoteSettingComponent, {
-        data:{
-          type:this.constant.MODIFY_TYPE,
-          configure : this.configureGridApi.getSelectedRows()[0]
-        }
-      });
-      dialogRef.afterClosed().subscribe((result:any) => {
-        if(result){
-          this.getDevicemanagersParameter()
-        }
-      });
-    }
+  modifyConfigure(field: any){
+    const dialogRef = this.dialog.open( AddRegisterRemoteSettingComponent, {
+      data:{
+        type:this.constant.MODIFY_TYPE,
+        configure : field
+      }
+    });
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if(result){
+        this.getDevicemanagersParameter()
+      }
+    });
   }
 
-  deleteConfigure(){
-    if(this.configureGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Vehicle",
-          alertContents : "Do you want to delete the data ? (name : " + this.configureGridApi.getSelectedRows()[0].configureName+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-        }
-      });
-      dialogRef.afterClosed().subscribe((result:any) => {
-        if(result){
-          this.deleteDevicemanagersParametersConfigureName(this.configureGridApi.getSelectedRows()[0].configureName)
-        }
-      });
-    }
+  deleteConfigure(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Vehicle",
+        alertContents : "Do you want to delete the data ? (name : " + field.configureName+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if(result){
+        this.deleteDevicemanagersParametersConfigureName(field.configureName)
+      }
+    });
   }
 
   deleteDevicemanagersParametersConfigureName(configureName : string){
