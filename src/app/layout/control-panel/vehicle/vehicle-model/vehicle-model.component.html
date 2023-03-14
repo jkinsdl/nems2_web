@@ -2,10 +2,10 @@
   <div class="vehicleModelLayout">
 
     <div class="gridControlBox">
-      <div class="btn add" (click)="addVehicleModel()">
+      <!--<div class="btn add" (click)="addVehicleModel()">
         Add
       </div>
-
+      -->
       <div class="iconBtnBox">
         <!--<div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyVehicleModel()">
           <img src="assets/icon/edit.png">
@@ -15,6 +15,11 @@
           <img src="assets/icon/delete.png">
         </div>
         -->
+
+        <div class="excel_btn selectItem" (click)="addVehicleModel()">
+          <img src="assets/icon/add-button.png">
+        </div>
+
         <label class="excel_btn selectItem" for="uploadExcel">
           <img src="assets/icon/excel_upload.png">
         </label>

@@ -1,8 +1,8 @@
 <div class="gridControlBox">
-  <div class="btn add" (click)="addConfigure()">
+  <!--<div class="btn add" (click)="addConfigure()">
     Add
   </div>
-
+  -->
   <div class="iconBtnBox">
     <!--<div class="excel_btn" [ngClass]="{'selectItem': configureGridApi != null && configureGridApi.getSelectedRows().length != 0}" (click)="modifyConfigure()">
       <img src="assets/icon/edit.png">
@@ -12,6 +12,11 @@
       <img src="assets/icon/delete.png">
     </div>
     -->
+
+    <div class="excel_btn selectItem" (click)="addConfigure()">
+      <img src="assets/icon/add-button.png">
+    </div>
+
     <label class="excel_btn selectItem" for="uploadExcel">
       <img src="assets/icon/excel_upload.png">
     </label>
@@ -41,9 +46,10 @@
 </div>
 
 <div class="gridControlBox">
-  <div class="btn add" [ngClass]="{'disable': selectConfigureRow == null}" (click)="addVehicle()">
+  <!--<div class="btn add" [ngClass]="{'disable': selectConfigureRow == null}" (click)="addVehicle()">
     Add
   </div>
+  -->
   <div style="font-family: auto;">
     Configure Name : <span style="font-size: 16px; color: black; font-weight: bold;">{{selectConfigureRow != null ? selectConfigureRow.configureName : ""}}</span>
   </div>
@@ -52,6 +58,11 @@
       <img src="assets/icon/delete.png">
     </div>
     -->
+
+    <div class="excel_btn selectItem" (click)="addVehicle()">
+      <img src="assets/icon/add-button.png">
+    </div>
+
     <label class="excel_btn selectItem" for="uploadExcel">
       <img src="assets/icon/excel_upload.png">
     </label>
