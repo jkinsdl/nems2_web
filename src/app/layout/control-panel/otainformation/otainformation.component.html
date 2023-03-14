@@ -2,7 +2,31 @@
 
   <div class="OTAInformationLayout whiteBoardBoax"  >
     <div class="gridFilterBox">
+
       <div class="filter">
+        <div class="label">Filter</div>
+        <div class="value">
+          <select [(ngModel)]="filter">
+            <option [value]="'VIN'">VIN</option>
+            <option [value]="'iccid'">iccid</option>
+            <option [value]="'NEMS S/N'">NEMS S/N</option>
+            <option [value]="'Reg. number'">Reg. number</option>
+            <option [value]="'region'">region</option>
+            <option [value]="'pcode'">pcode</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter"  style="width: calc(100% - 400px);">
+        <div class="label"></div>
+        <div class="value" style="width: 100%;">
+          <input type="text" [(ngModel)]="searchText" (keydown.enter)="setSearch()" style="width: 100%;">
+        </div>
+      </div>
+
+
+
+      <!--<div class="filter">
         <div class="label">VIN</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
@@ -44,7 +68,7 @@
         </div>
       </div>
 
-
+    -->
       <div class="filter searchFilter">
 
         <!--<label class="excel_btn" for="uploadExcel">

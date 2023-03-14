@@ -54,6 +54,9 @@ export class OTAInformationComponent implements OnInit {
   pageSize : number
   currentPage : number = 1
 
+  filter : string = "VIN"
+  searchText : string = ""
+
   ngAfterViewInit() {
     this.getPageSize()
   }
@@ -120,6 +123,62 @@ export class OTAInformationComponent implements OnInit {
   }
 
   setSearch(){
+
+
+    if(this.searchText != ""){
+      if(this.filter == 'VIN'){
+        this.searchFilter.vin = this.searchText
+        this.searchFilter.iccid = undefined
+        this.searchFilter.nemsSn = undefined
+        this.searchFilter.registrationPlate = undefined
+        this.searchFilter.region = undefined
+        this.searchFilter.pcode = undefined
+      }else if(this.filter == 'iccid'){
+        this.searchFilter.iccid = this.searchText
+        this.searchFilter.vin = undefined
+        this.searchFilter.nemsSn = undefined
+        this.searchFilter.registrationPlate = undefined
+        this.searchFilter.region = undefined
+        this.searchFilter.pcode = undefined
+      }else if(this.filter == 'NEMS S/N'){
+        this.searchFilter.nemsSn = this.searchText
+        this.searchFilter.vin = undefined
+        this.searchFilter.iccid = undefined
+        this.searchFilter.registrationPlate = undefined
+        this.searchFilter.region = undefined
+        this.searchFilter.pcode = undefined
+      }else if(this.filter == 'Reg. number'){
+        this.searchFilter.registrationPlate = this.searchText
+        this.searchFilter.vin = undefined
+        this.searchFilter.iccid = undefined
+        this.searchFilter.nemsSn = undefined
+        this.searchFilter.region = undefined
+        this.searchFilter.pcode = undefined
+      }else if(this.filter == 'region'){
+        this.searchFilter.region = this.searchText
+        this.searchFilter.vin = undefined
+        this.searchFilter.iccid = undefined
+        this.searchFilter.nemsSn = undefined
+        this.searchFilter.registrationPlate = undefined
+        this.searchFilter.pcode = undefined
+      }else if(this.filter == 'pcode'){
+        this.searchFilter.pcode = this.searchText
+        this.searchFilter.vin = undefined
+        this.searchFilter.iccid = undefined
+        this.searchFilter.nemsSn = undefined
+        this.searchFilter.registrationPlate = undefined
+        this.searchFilter.region = undefined
+      }
+    }else{
+      this.searchFilter.vin = undefined
+      this.searchFilter.iccid = undefined
+      this.searchFilter.nemsSn = undefined
+      this.searchFilter.registrationPlate = undefined
+      this.searchFilter.region = undefined
+      this.searchFilter.pcode = undefined
+    }
+
+
     this.uiService.setCurrentPage(1);
   }
 }

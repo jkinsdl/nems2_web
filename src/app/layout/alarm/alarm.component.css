@@ -38,7 +38,7 @@
 
 .alarmGrid{
   width: 100%;
-  height: calc(100% - 110px);
+  height: calc(100% - 60px);
 }
 
 .alarmDetailStatus{
@@ -157,7 +157,8 @@
   height: 100%;
 }
 
-.alarmDetailFild{
+.alarmDetailFild,
+.alarmComment{
   width: 100%;
   min-height: 30px;
   display: flex;
@@ -202,7 +203,8 @@
   border-bottom: 1px solid #efecec;
 }
 
-.alarmDetailMap{
+.alarmDetailMap,
+.alarmDetailIssue{
   width: 100%;
   height: calc(100% - 440px);
 }
@@ -243,4 +245,36 @@
 .checkboxTooltip section{
   max-height: 500px;
   overflow: scroll;
+}
+
+.gridBtn{
+  display: flex;
+  position: absolute;
+  right: 130px;
+}
+
+.commentUser{
+  padding: 0 10px;
+  width: 50px;
+  text-align: end;
+}
+
+.comment{
+  width: calc(100% - 250px);
+  padding: 0 10px;
+}
+
+.commentCreateTime{
+  width: 120px;
+  font-size: 12px;
+}
+
+.commentNew{
+  padding: 0 5px;
+}
+
+.commentList{
+  width: 100%;
+  height: 280px;
+  overflow-y: scroll;
 }

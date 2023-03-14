@@ -31,7 +31,7 @@ export class SearchFilter{
   registrationPlate : string
   region : string
 
-  pcode : number
+  pcode : string
 
   level : string
   state : string[]

@@ -12,6 +12,7 @@ import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-toolti
 import { ModifyAlarmComponent } from 'src/app/component/modify-alarm/modify-alarm.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UiService } from 'src/app/service/ui.service';
+import { UserService } from 'src/app/service/user.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
@@ -30,9 +31,9 @@ export class AlarmComponent implements OnInit {
     private utilService : UtilService,
     private uiService: UiService,
     private dialog: MatDialog,
-    private vehiclemanagerService : VehiclemanagerService,
     private _formBuilder: FormBuilder,
     private actRoute: ActivatedRoute,
+    private userService : UserService
   ) { }
 
 
@@ -150,6 +151,8 @@ export class AlarmComponent implements OnInit {
 
   issueId : number
 
+  commentsText : string = ""
+
   ngAfterViewInit() {
     if( this.issueId ){
       this.vehiclewarningService.getVehiclewarnings(new SearchFilter()).subscribe(res=>{
@@ -179,7 +182,7 @@ export class AlarmComponent implements OnInit {
 
     this.issueId = parseInt(this.actRoute.snapshot.paramMap.get('issueId'))
 
-    setTimeout(()=>{
+    /*setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
       this.map = new mapboxgl.Map({
         container: 'map',
@@ -188,7 +191,7 @@ export class AlarmComponent implements OnInit {
         center: [this.lng, this.lat]
       });
       this.map.addControl(new mapboxgl.NavigationControl());
-    },1)
+    },1)*/
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
 
       this.currentPage = page
@@ -366,20 +369,37 @@ export class AlarmComponent implements OnInit {
   }
 
   selectAlarm(){
+
+    this.commentsText = ""
+
     if(this.gridApi.getSelectedRows().length > 0){
       this.selectionAlarm = this.gridApi.getSelectedRows()[0]
       console.log(this.selectionAlarm)
 
-      this.vehiclemanagerService.getVehiclemanagerStaticinfoVin(this.selectionAlarm.vin).subscribe(res=>{
+      /*this.vehiclemanagerService.getVehiclemanagerStaticinfoVin(this.selectionAlarm.vin).subscribe(res=>{
         console.log(res)
         this.selectVehicle = res.body
       },error=>{
         console.log(error)
-      })
+      })*/
 
       this.vehiclewarningService.getVehiclewarningsIssueId(this.selectionAlarm.issueId).subscribe(res=>{
         console.log(res)
-        this.selectionAlarm.comments = res.body.comments
+        this.selectVehicle = res.body.warningIssue
+
+        let aDayAgo = new Date()
+        aDayAgo.setDate(new Date().getDate()-1)
+
+        /*this.userService.getUsersUserId(res.body.comments[0].userId).subscribe(res2=>{
+          console.log(res2)
+        })*/
+
+        this.selectionAlarm.comments = res.body.comments.map((x:any) => ({
+          ...x,
+          isNewIcon:  new Date(x.createAt).getTime() > aDayAgo.getTime()
+         }));
+
+         console.log(this.selectionAlarm.comments)
       },error=>{
         console.log(error)
       })
@@ -425,5 +445,33 @@ export class AlarmComponent implements OnInit {
 
   setSearch(){
     this.uiService.setCurrentPage(1);
+  }
+
+  applyComment(){
+
+    let parameter = {
+      comment : this.commentsText
+    }
+
+    this.vehiclewarningService.postVehiclewarningsIssueIdComment(this.selectionAlarm.issueId,parameter).subscribe(res=>{
+      console.log(res)
+      this.selectAlarm()
+    },error=>{
+      console.log(error)
+    })
+  }
+
+  correctionState(){
+    let parameter = {
+      state : this.selectionAlarm.state
+    }
+
+    this.vehiclewarningService.putVehiclewarningsIssueId(this.selectionAlarm.issueId, parameter).subscribe(res=>{
+      console.log(res)
+      this.selectAlarm()
+      //this.getVehiclewarnings()
+    },error=>{
+      console.log(error)
+    })
   }
 }
