@@ -7,6 +7,7 @@ import { AddPublicPlatformMappingComponent } from 'src/app/component/add-public-
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
+import { ToggleCellRendererComponent } from 'src/app/component/toggle-cell-renderer/toggle-cell-renderer.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { ForwardingService } from 'src/app/service/forwarding.service';
 import { UiService } from 'src/app/service/ui.service';
@@ -31,7 +32,6 @@ export class PublicPlatformManagementComponent implements OnInit {
     private utilService : UtilService,
     private uiService : UiService
   ) { }
-
   forwardingColumnDefs: ColDef[] = [
     { field: 'serverName', headerName : 'name', tooltipField: 'serverName'},
     { field: 'domain', headerName : 'IP', tooltipField: 'domain'},
@@ -40,6 +40,13 @@ export class PublicPlatformManagementComponent implements OnInit {
     { field: 'lastLogin', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogin', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogin' }},
     { field: 'lastLogout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogout' }},
     { field: 'connectionStatus', headerName : 'start/stop', tooltipField: 'connectionStatus'},
+    { headerName: 'state', cellRenderer: ToggleCellRendererComponent,
+    cellRendererParams: {
+      toggle:(field:any, toggle : boolean)=>{
+
+        this.sendManagement(field,toggle)
+      }
+    }, width:120},
     { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck'},
     { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle'},
     { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo'},
@@ -49,7 +56,6 @@ export class PublicPlatformManagementComponent implements OnInit {
     { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
     { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
-
     cellRendererParams: {
       modify: (field: any) => {
         this.modifyManagement(field)
@@ -229,27 +235,25 @@ export class PublicPlatformManagementComponent implements OnInit {
     });
   }
 
-  sendManagement(){
-    if(this.managementGridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Forwarding Server",
-          alertContents : "Do you want to forwarding the server ? (Server Name : " + this.managementGridApi.getSelectedRows()[0].serverName+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
+  sendManagement(field:any, toggle : boolean){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Forwarding Server",
+        alertContents : "Do you want to forwarding the server ? (Server Name : " + field.serverName+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
 
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.putForwardingServerNameCommand(this.managementGridApi.getSelectedRows()[0].serverName)
-        }
-      });
-    }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.putForwardingServerNameCommand(field.serverName, toggle)
+      }
+    });
   }
 
-  putForwardingServerNameCommand(serverName : string){
-    this.forwardingService.putForwardingServerNameCommand(serverName).subscribe(res=>{
+  putForwardingServerNameCommand(serverName : string, command : boolean){
+    this.forwardingService.putForwardingServerNameCommand(serverName, command).subscribe(res=>{
       console.log(res)
       this.utilService.alertPopup("Public Platform", "Server forwarding complete.", this.constant.POPUP_CONFIRM)
     },error=>{

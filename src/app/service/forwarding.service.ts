@@ -171,11 +171,11 @@ export class ForwardingService {
     return this.http.post<any>(url, JSON.stringify(parameter), {observe: "response" })
   }
 
-  putForwardingServerNameCommand(serverName : string){
+  putForwardingServerNameCommand(serverName : string, command : boolean){
     var url = `${this.Url}/${serverName}/command`;
 
     let  parameter : any = {
-      command : true
+      command : command
     }
 
     return this.http.put<any>(url, JSON.stringify(parameter), { observe: "response" })
