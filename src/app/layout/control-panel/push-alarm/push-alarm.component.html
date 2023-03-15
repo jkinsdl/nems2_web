@@ -1,18 +1,54 @@
 <div class="pushAlarmContainer">
 
   <div class="pushAlarmLayout whiteBoardBoax">
-    <div class="gridControlBox">
-      <div class="btn add" (click)="addAlarm()">
-        Add
+
+
+    <div class="gridFilterBox">
+
+      <div class="filter">
+        <div class="label">Filter</div>
+        <div class="value">
+          <select [(ngModel)]="filter">
+            <option [value]="'userName'">User Name</option>
+            <option [value]="'phoneNumber'">Phone Number</option>
+            <option [value]="'eMail'">E-Mail</option>
+            <option [value]="'aliTextureId'">Alicloud texture ID</option>
+            <option [value]="'aliVoiceId'">Alicloud Voice ID</option>
+          </select>
+        </div>
       </div>
 
+      <div class="filter"  style="width: calc(100% - 350px);">
+        <div class="label"></div>
+        <div class="value" style="width: 100%;">
+          <input type="text" [(ngModel)]="searchText" (keydown.enter)="setSearch()" style="width: 100%;">
+        </div>
+      </div>
+
+      <div class="filter searchFilter">
+        <div class="btn" (click)="setSearch()">
+          Search
+        </div>
+      </div>
+    </div>
+
+    <div class="gridControlBox">
+      <!--<div class="btn add" (click)="addAlarm()">
+        Add
+      </div>
+      -->
       <div class="iconBtnBox">
-        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyAlarm()">
+        <!--<div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyAlarm()">
           <img src="assets/icon/edit.png">
         </div>
 
         <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteAlarm()">
           <img src="assets/icon/delete.png">
+        </div>
+        -->
+
+        <div class="excel_btn selectItem" (click)="addAlarm()">
+          <img src="assets/icon/add-button.png">
         </div>
 
         <label class="excel_btn selectItem" for="uploadExcel">
@@ -28,9 +64,9 @@
     </div>
 
     <div class="pushAlarmContents">
-      <ag-grid-angular #pushAlarmGrid style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
+      <ag-grid-angular #pushAlarmGrid style="width: 100%; height: calc(100% - 110px)" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
-        [rowData]="rowData"
+        [rowData]="pushinfos.entities"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
         [rowSelection]="'single'"

@@ -4,8 +4,11 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 import { AddPushAlarmComponent } from 'src/app/component/add-push-alarm/add-push-alarm.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
+import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { NotificationService } from 'src/app/service/notification.service';
+import { PushinfosService } from 'src/app/service/pushinfos.service';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
@@ -24,39 +27,35 @@ export class PushAlarmComponent implements OnInit {
     private dialog: MatDialog,
     private notificationService : NotificationService,
     private utilService : UtilService,
-    private uiService: UiService
+    private uiService: UiService,
+    private pushinfosService : PushinfosService
+
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'name', headerName: 'name', tooltipField: 'name' },
-    { field: 'phone_number', headerName: 'phone number', tooltipField: 'phone_number'},
-    { field: 'e_Mail', headerName : 'e-Mail', tooltipField: 'e_Mail'},
-    { field: 'ali_cloud_texture_id', headerName : 'AliCloud texture ID', tooltipField: 'ali_cloud_texture_id'},
-    { field: 'ali_cloud_voice_id', headerName : 'AliCloud Voice ID', tooltipField: 'ali_cloud_voice_id'},
+    { field: 'pushinfoId', headerName: 'pushinfoId', tooltipField: 'pushinfoId', hide:true },
+    { field: 'aliTextureId', headerName: 'aliTextureId', tooltipField: 'aliTextureId'},
+    { field: 'aliVoiceId', headerName : 'aliVoiceId', tooltipField: 'aliVoiceId'},
+    { field: 'userName', headerName : 'userName', tooltipField: 'userName'},
+    { field: 'eMail', headerName : 'eMail', tooltipField: 'eMail'},
+    { field: 'phoneNumber', headerName : 'phoneNumber', tooltipField: 'phoneNumber'},
+    { field: 'createdAt', headerName : 'createdAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createdAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createdAt' }},
+    { field: 'createdUserId', headerName : 'createdUserId', tooltipField: 'createdUserId', hide:true},
+    { field: 'action', cellRenderer: BtnCellRendererComponent,
+    cellRendererParams: {
+      modify: (field: any) => {
+        this.modifyAlarm(field)
+      },
+      delete : (field: any) => {
+        this.deleteAlarm(field)
+      },
+    }, width:120},
   ];
 
-  rowData = [
-      {
-        name: 'name',
-        phone_number: 'phone_number',
-        e_Mail: 'e_Mail',
-        ali_cloud_texture_id: 'ali_cloud_texture_id',
-        ali_cloud_voice_id: 'ali_cloud_voice_id'
-    },
-    {
-      name: 'name',
-      phone_number: 'phone_number',
-      e_Mail: 'e_Mail',
-      ali_cloud_texture_id: 'ali_cloud_texture_id',
-      ali_cloud_voice_id: 'ali_cloud_voice_id'
-  },
-  {
-    name: 'name',
-    phone_number: 'phone_number',
-    e_Mail: 'e_Mail',
-    ali_cloud_texture_id: 'ali_cloud_texture_id',
-    ali_cloud_voice_id: 'ali_cloud_voice_id'
-  }];
+  pushinfos : any = {
+    count : 0,
+    entities : []
+  }
 
   gridApi!: GridApi;
 
@@ -65,6 +64,9 @@ export class PushAlarmComponent implements OnInit {
   gridHeight : number
   pageSize : number
   currentPage : number = 1
+
+  filter : string = "userName"
+  searchText : string = ""
 
   ngAfterViewInit() {
     this.getPageSize()
@@ -77,14 +79,40 @@ export class PushAlarmComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getNotifications()
-    this.getNotificationsRejections()
-    this.getNotificationsTemplates()
+    //this.getNotifications()
+    //this.getNotificationsRejections()
+    //this.getNotificationsTemplates()
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getPageSize()
+    })
+  }
+
+  getPushinfos(){
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
+    this.pushinfosService.getPushinfos(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.pushinfos = res.body
+
+      let pagination = {
+        count : this.pushinfos.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+
+
+    },error=>{
+      console.log(error)
+    })
   }
 
   getPageSize(){
     this.gridHeight = this.pushAlarmGrid.nativeElement.offsetHeight
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    this.getPushinfos()
   }
 
   onResize(event : any){
@@ -126,42 +154,44 @@ export class PushAlarmComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-
+        this.getPushinfos()
       }
     });
   }
 
-  modifyAlarm(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AddPushAlarmComponent, {
-        data:{
-          type:this.constant.MODIFY_TYPE
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-
-        }
-      });
-    }
+  modifyAlarm(field: any){
+    const dialogRef = this.dialog.open( AddPushAlarmComponent, {
+      data:{
+        type:this.constant.MODIFY_TYPE,
+        pushinfo : field
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.getPushinfos()
+      }
+    });
   }
 
-  deleteAlarm(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( AlertPopupComponent, {
-        data:{
-          alertTitle : "Delete Push Alarm",
-          alertContents : "Do you want to delete the alarm ? (name : " + this.gridApi.getSelectedRows()[0].name+ ")",
-          alertType : this.constant.ALERT_WARNING,
-          popupType : this.constant.POPUP_CHOICE,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
+  deleteAlarm(field: any){
+    const dialogRef = this.dialog.open( AlertPopupComponent, {
+      data:{
+        alertTitle : "Delete Push Alarm",
+        alertContents : "Do you want to delete the alarm ? (name : " + field.name+ ")",
+        alertType : this.constant.ALERT_WARNING,
+        popupType : this.constant.POPUP_CHOICE,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+
+        this.pushinfosService.deletePushinfosPushinfoId(field.pushinfoId).subscribe(res=>{
           this.gridApi.applyTransaction({ remove: this.gridApi.getSelectedRows() })!;
-        }
-      });
-    }
+
+        })
+
+      }
+    });
   }
 
   onGridReady(params: GridReadyEvent) {
@@ -170,7 +200,52 @@ export class PushAlarmComponent implements OnInit {
   }
 
   onBtExport() {
-    this.utilService.gridDataToExcelData("Push Alarm", this.gridApi ,this.rowData)
+    this.utilService.gridDataToExcelData("Push Alarm", this.gridApi ,this.pushinfos.entities)
+  }
+
+  setSearch(){
+
+    if(this.searchText != ""){
+      if(this.filter == 'userName'){
+        this.searchFilter.userName = this.searchText
+        this.searchFilter.phoneNumber = undefined
+        this.searchFilter.eMail = undefined
+        this.searchFilter.aliTextureId = undefined
+        this.searchFilter.aliVoiceId = undefined
+      }else if(this.filter == 'phoneNumber'){
+        this.searchFilter.userName = undefined
+        this.searchFilter.phoneNumber = this.searchText
+        this.searchFilter.eMail = undefined
+        this.searchFilter.aliTextureId = undefined
+        this.searchFilter.aliVoiceId = undefined
+      }else if(this.filter == 'eMail'){
+        this.searchFilter.userName = undefined
+        this.searchFilter.phoneNumber = undefined
+        this.searchFilter.eMail = this.searchText
+        this.searchFilter.aliTextureId = undefined
+        this.searchFilter.aliVoiceId = undefined
+      }else if(this.filter == 'aliTextureId'){
+        this.searchFilter.userName = undefined
+        this.searchFilter.phoneNumber = undefined
+        this.searchFilter.eMail = undefined
+        this.searchFilter.aliTextureId = this.searchText
+        this.searchFilter.aliVoiceId = undefined
+      }else if(this.filter == 'aliVoiceId'){
+        this.searchFilter.userName = undefined
+        this.searchFilter.phoneNumber = undefined
+        this.searchFilter.eMail = undefined
+        this.searchFilter.aliTextureId = undefined
+        this.searchFilter.aliVoiceId = this.searchText
+      }
+    }else{
+      this.searchFilter.userName = undefined
+      this.searchFilter.phoneNumber = undefined
+      this.searchFilter.eMail = undefined
+      this.searchFilter.aliTextureId = undefined
+      this.searchFilter.aliVoiceId = undefined
+    }
+
+    this.uiService.setCurrentPage(1);
   }
 
 }

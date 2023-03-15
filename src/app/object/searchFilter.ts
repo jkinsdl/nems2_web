@@ -75,4 +75,11 @@ export class SearchFilter{
   modelName : string
   fwVersion : string
   hwVersion : string
+
+
+  userName : string
+  phoneNumber : string
+  eMail : string
+  aliTextureId : string
+  aliVoiceId : string
 }
