@@ -100,4 +100,9 @@ export class VehiclewarningService {
     return this.http.delete<any>(url, { observe: "response" })
   }
 
+  getVehiclewarningsStatisticsCount(){
+    var url = `${this.Url}/statistics/count`;
+    return this.http.get<any>(url, { observe: "response" })
+  }
+
 }

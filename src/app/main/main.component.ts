@@ -4,6 +4,7 @@ import { UiService } from '../service/ui.service';
 import { interval, Subscription } from 'rxjs';
 import { UserService } from '../service/user.service';
 import { RealtimedataService } from '../service/realtimedata.service';
+import { VehiclewarningService } from '../service/vehiclewarning.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -16,7 +17,8 @@ export class MainComponent implements OnInit {
     public router: Router,
     private uiService :UiService,
     private userService : UserService,
-    private realtimedataService : RealtimedataService
+    private realtimedataService : RealtimedataService,
+    private vehiclewarningsService : VehiclewarningService
   ) { }
 
   language : string = "en"
@@ -74,8 +76,18 @@ export class MainComponent implements OnInit {
       },5000)
     })
 
-    this.alarmInterval = interval(3000).pipe().subscribe(x => this.getRealtimedataWarningcount());
+    //this.alarmInterval = interval(3000).pipe().subscribe(x => this.getRealtimedataWarningcount());
+    this.alarmInterval = interval(3000).pipe().subscribe(x => this.getVehiclewarningsStatisticsCount());
 
+  }
+
+  getVehiclewarningsStatisticsCount(){
+    this.vehiclewarningsService.getVehiclewarningsStatisticsCount().subscribe(res=>{
+      this.warningcount = res.body
+      this.realtimedataService.alarmCountSubject.next(res.body)
+    },error=>{
+      console.log(error)
+    })
   }
 
   getRealtimedataWarningcount(){
