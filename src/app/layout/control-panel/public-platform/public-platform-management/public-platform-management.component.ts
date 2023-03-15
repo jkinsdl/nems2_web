@@ -236,6 +236,10 @@ export class PublicPlatformManagementComponent implements OnInit {
   }
 
   sendManagement(field:any, toggle : boolean){
+
+    this.putForwardingServerNameCommand(field.serverName, toggle)
+
+    /*
     const dialogRef = this.dialog.open( AlertPopupComponent, {
       data:{
         alertTitle : "Forwarding Server",
@@ -247,17 +251,17 @@ export class PublicPlatformManagementComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.putForwardingServerNameCommand(field.serverName, toggle)
+
       }
-    });
+    });*/
   }
 
   putForwardingServerNameCommand(serverName : string, command : boolean){
     this.forwardingService.putForwardingServerNameCommand(serverName, command).subscribe(res=>{
       console.log(res)
-      this.utilService.alertPopup("Public Platform", "Server forwarding complete.", this.constant.POPUP_CONFIRM)
+      //this.utilService.alertPopup("Public Platform", "Server forwarding complete.", this.constant.POPUP_CONFIRM)
     },error=>{
-
+      console.log(error)
     })
   }
 

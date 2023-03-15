@@ -11,6 +11,7 @@ export class ToggleCellRendererComponent implements ILoadingCellRendererAngularC
   isChecked : boolean = false
   agInit(params: any): void {
     this.params = params;
+    this.isChecked = this.params.data.command
   }
 
   toggleField(){
