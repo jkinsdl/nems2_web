@@ -347,7 +347,7 @@
 
           <div class="commentList">
             <div class="alarmComment" *ngFor="let comment of selectionAlarm.comments">
-              <div class="commentUser">{{comment.userId}}</div>
+              <div class="commentUser">{{comment.user.username}}</div>
               <div class="comment">{{comment.comment}}</div>
               <div class="commentCreateTime">{{comment.createAt | dateformat}}</div>
               <div class="commentNew">
