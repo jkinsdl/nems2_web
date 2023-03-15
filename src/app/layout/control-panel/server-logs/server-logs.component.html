@@ -10,59 +10,19 @@
       </div>
 
       <div class="filter">
-        <label class="label" for="login">login</label>
-        <div class="value">
-          <input type="checkbox" id="login" [(ngModel)]="loginFilter">
-        </div>
-      </div>
-
-      <div class="filter">
-        <label class="label" for="logout">logout</label>
-        <div class="value">
-          <input type="checkbox" id="logout" [(ngModel)]="logoutFilter">
-        </div>
-      </div>
-
-      <div class="filter">
-        <label class="label" for="RealTime">RealTime</label>
-        <div class="value">
-          <input type="checkbox" id="RealTime" [(ngModel)]="realTimeFilter">
-        </div>
-      </div>
-
-      <div class="filter">
-        <label class="label" for="Addtiona">Addtiona</label>
-        <div class="value">
-          <input type="checkbox" id="Addtiona" [(ngModel)]="addtionaFilter">
-        </div>
-      </div>
-
-      <div class="filter">
-        <label class="label" for="etc">etc</label>
-        <div class="value">
-          <input type="checkbox" id="etc" [(ngModel)]="etcFilter">
-        </div>
-      </div>
-
-      <div class="filter">
-        <label class="label" for="custom">custom</label>
-        <div class="value">
-          <input type="checkbox" id="custom" [(ngModel)]="customFilter">
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="label">begin</div>
-        <div class="value">
+        <div class="label">Begin</div>
+        <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="beginPicker" readonly="true" (click)="beginPicker.open()" [(ngModel)]="beginDate" [max]="endDate">
+          <mat-icon matDatepickerToggleIcon style="cursor: pointer;"  (click)="clearBeginDate()">clear</mat-icon>
           <ngx-mat-datetime-picker #beginPicker [showSpinners]="true" [hideTime]="false" ></ngx-mat-datetime-picker>
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">end</div>
-        <div class="value">
+        <div class="label">End</div>
+        <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="beginDate">
+          <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="clearEndDate()">clear</mat-icon>
           <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
         </div>
       </div>
@@ -91,7 +51,8 @@
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
         [rowSelection]="'single'"
-        (gridReady)="onGridReady($event)">
+        (gridReady)="onGridReady($event)"
+        (filterChanged)="setSearch()">
       </ag-grid-angular>
 
       <div style="width: 100%; height: 50px;">

@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { CheckboxFilterComponent } from 'src/app/component/checkbox-filter/checkbox-filter.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { GbpacketService } from 'src/app/service/gbpacket.service';
@@ -21,20 +23,41 @@ export class ServerLogsComponent implements OnInit {
   constructor(
     private gbpacketService : GbpacketService,
     private utilService : UtilService,
-    private uiService : UiService
-
+    private uiService : UiService,
+    private _formBuilder: FormBuilder,
   ) { }
+
+  requestToppings = this._formBuilder.group({
+    VEHICLE_LOGIN : false,
+    INFORMATION : false,
+    ADDITIONAL : false,
+    VEHICLE_LOGOUT : false,
+    PLATFORM_LOGIN : false,
+    PLATFORM_LOGOUT : false,
+    VEHICLE_HEARTBEAT : false,
+    VEHICLE_SYNC : false,
+    VEHICLE_QUERY : false,
+    VEHICLE_SETTING : false,
+    VEHICLE_CONTROL : false,
+    PLATFORM_CUSTOM_DATA_REQUEST : false,
+    PLATFORM_CUSTOM_DATA_STATIC_INFO : false,
+    PLATFORM_CUSTOM_TEST_TERMINAL : false,
+    PLATFORM_CUSTOM_TEST_TERMIANL_RESET : false,
+    PLATFORM_CUSTOM_OTA_REPORT : false,
+  });
+
+
   columnDefs: ColDef[] = [
+    { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
+    { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime' }},
+    { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime' }},
+    { field: 'request', headerName : 'request', tooltipField: 'request', filter : CheckboxFilterComponent, filterParams :  { toppings: this.requestToppings}},
+    { field: 'response', headerName : 'response', tooltipField: 'response'},
     { field: 'data', headerName: 'data', tooltipField: 'data', },
+    { field: 'responsePacket', headerName : 'responsePacket', tooltipField: 'responsePacket'},
     { field: 'encryption', headerName: 'encryption', tooltipField: 'encryption'},
     { field: 'flaged', headerName : 'flaged', tooltipField: 'flaged'},
-    { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime' }},
-    { field: 'request', headerName : 'request', tooltipField: 'request'},
-    { field: 'response', headerName : 'response', tooltipField: 'response'},
-    { field: 'responsePacket', headerName : 'responsePacket', tooltipField: 'responsePacket'},
-    { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime' }},
     { field: 'type', headerName : 'type', tooltipField: 'type'},
-    { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
   ];
 
   gridApi!: GridApi;
@@ -47,14 +70,9 @@ export class ServerLogsComponent implements OnInit {
     count : 0,
     entities : [],
     link : {}
-  }
+    }
 
-  loginFilter : boolean = false
-  logoutFilter : boolean = false
-  realTimeFilter : boolean = false
-  addtionaFilter : boolean = false
-  etcFilter : boolean = false
-  customFilter : boolean = false
+
 
   page$ : Subscription
   searchFilter : SearchFilter = new SearchFilter()
@@ -73,9 +91,6 @@ export class ServerLogsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.endDate = new Date()
-    this.beginDate = new Date()
-    this.beginDate.setDate(this.endDate.getDate() - 30)
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getPageSize()
@@ -97,35 +112,30 @@ export class ServerLogsComponent implements OnInit {
   getGbpacket(){
     this.searchFilter.request = []
 
-    if(this.loginFilter){
-      this.searchFilter.request.push("LOGIN")
+    for (const [key, value] of Object.entries(this.requestToppings.value)) {
+      if(value){
+        this.searchFilter.request.push(key)
+      }
     }
 
-    if(this.logoutFilter){
-      this.searchFilter.request.push("LOGOUT")
+    if(this.beginDate){
+      this.searchFilter.begin = this.beginDate.toISOString()
+    }else{
+      this.searchFilter.begin = undefined
     }
 
-    if(this.realTimeFilter){
-      this.searchFilter.request.push("REALTIME")
+    if(this.endDate){
+      this.searchFilter.end = this.endDate.toISOString()
+    }else{
+      this.searchFilter.end = undefined
     }
 
-    if(this.addtionaFilter){
-      this.searchFilter.request.push("ADDITIONAL")
-    }
-
-    if(this.etcFilter){
-      this.searchFilter.request.push("ETC")
-    }
-
-    if(this.customFilter){
-      this.searchFilter.request.push("CUSTOM")
-    }
-
-    this.searchFilter.begin = this.beginDate.toISOString()
-    this.searchFilter.end = this.endDate.toISOString()
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.limit = this.pageSize
-
+    /*this.searchFilter.asc = []
+    this.searchFilter.asc.push('SERVER_TIME')*/
+    this.searchFilter.desc = []
+    this.searchFilter.desc.push('SERVER_TIME')
 
     this.gbpacketService.getGbpacket(this.searchFilter).subscribe(res=>{
       console.log(res)
@@ -160,4 +170,14 @@ export class ServerLogsComponent implements OnInit {
   setSearch(){
     this.uiService.setCurrentPage(1);
   }
+
+  clearEndDate(){
+    this.endDate = undefined
+  }
+
+  clearBeginDate(){
+    this.beginDate = undefined
+  }
+
+
 }
