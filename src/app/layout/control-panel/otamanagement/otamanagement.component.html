@@ -1,22 +1,8 @@
 <div class="otaManagementContainer">
   <div class="leftLayout whiteBoardBoax">
-    <div class="listBtnBox">
-      <div class="otaBtn add" (click)="leftListAddModal()">
-        <img src="assets/icon/more.png">
-        &nbsp;ADD
-      </div>
-      <div class="otaBtn remove" (click)="leftListRemove()">
-        <img src="assets/icon/minus.png">
-        &nbsp;DELETE
-      </div>
-      <div class="otaBtn upload" (click)="leftListUpload()">
-        <img src="assets/icon/upload.png">
-        &nbsp;UPLOAD
-      </div>
-    </div>
 
     <div class="leftListBox">
-      <div class="listItem" *ngFor="let model of modelList.modelList">
+      <!--<div class="listItem" *ngFor="let model of modelList.modelList">
 
         <div class="arrowBox" [ngClass]="{'imageRotate': selectModel == model}">
           <img *ngIf="model.firmwareList && model.firmwareList.length != 0" src="assets/icon/right-arrow.png" style="width:10px; height: 10px;">
@@ -61,20 +47,141 @@
             </div>
           </div>
         </div>
+      </div>-->
 
+
+      <div class="listItem" *ngFor="let model of modelList.modelList" [ngClass]="{'selectListItem': selectModel == model}">
+        <div class="rowTitle" (click)="modelRowOpen(model)">{{model.modelName}}</div>
       </div>
-
-
 
     </div>
   </div>
 
+  <div class="centerLayout" *ngIf="selectModel != null">
+    <div class="centerTopLayout whiteBoardBoax" >
+      <div class="listTitleBox">
+        <div class="titleText">
+          {{selectModel.modelName}}
+        </div>
+        <div class="listBtnBox">
+          <div class="otaBtn add" (click)="leftListAddModal()">
+            <img src="assets/icon/more.png">
+            &nbsp;ADD
+          </div>
+          <div class="otaBtn remove" (click)="leftListRemove()">
+            <img src="assets/icon/minus.png">
+            &nbsp;DELETE
+          </div>
+          <div class="otaBtn upload" (click)="leftListUpload()">
+            <img src="assets/icon/upload.png">
+            &nbsp;UPLOAD
+          </div>
+        </div>
+      </div>
+
+      <div class="leftListBox">
+        <div class="listItem" *ngFor="let firmware of firmwareList.entities" [ngClass]="{'selectListItem': selectFirmware == firmware}">
+          <div class="rowTitle" (click)="rowOpen(firmware)">{{firmware.firmwareName}}</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="centerBottomLayout whiteBoardBoax" *ngIf="selectFirmware != null">
+      <div class="rowContent">
+        <div style="padding: 10px;">
+          <div class="rowFild">
+            <div class="contentLabel">
+              Model Name :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.modelName}}
+            </div>
+          </div>
+
+          <div class="rowFild">
+            <div class="contentLabel">
+              Firmware Name :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.firmwareName}}
+            </div>
+          </div>
+
+          <div class="rowFild">
+            <div class="contentLabel">
+              H/W ver :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.hwVersion}}
+            </div>
+          </div>
+
+          <div class="rowFild">
+            <div class="contentLabel">
+              F/W ver :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.fwVersion}}
+            </div>
+          </div>
+
+          <div class="rowFild">
+            <div class="contentLabel">
+              Data Size :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.dataSize}}
+            </div>
+          </div>
+
+          <div class="rowFild">
+            <div class="contentLabel">
+              Data File Path :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.dataFilePath}}
+            </div>
+          </div>
+
+          <div class="rowFild">
+            <div class="contentLabel">
+              Created User  :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.createdBy.username}}
+            </div>
+          </div>
+
+          <div class="rowFild">
+            <div class="contentLabel">
+              Created Time :
+            </div>
+            <div class="contentValue">
+              {{selectFirmware.createdAt | dateformat}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="centerBottomLayout whiteBoardBoax selectAlert" *ngIf="selectFirmware == null">
+      Select Firmware
+    </div>
+  </div>
+
+  <div class="centerLayout whiteBoardBoax selectAlert" *ngIf="selectModel == null">
+    Select Model
+  </div>
+
   <div class="rightLayout whiteBoardBoax">
     <div class="gridFilterBox">
+      <div *ngIf="selectFirmware != null" style="position: absolute; left: 20px; font-size: 20px; font-weight: bold;">
+        {{selectFirmware.firmwareName}}
+      </div>
+
       <div class="filter">
         <div class="label">VIN</div>
         <div class="value">
-          <input type="text" style="width:calc(100vh - 80px)" [(ngModel)]="inputVinText">
+          <input type="text" [(ngModel)]="inputVinText">
         </div>
       </div>
 

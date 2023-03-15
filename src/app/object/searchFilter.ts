@@ -70,4 +70,9 @@ export class SearchFilter{
   warningType : string[]
 
   isPeriod : boolean
+
+  firmwareName : string
+  modelName : string
+  fwVersion : string
+  hwVersion : string
 }

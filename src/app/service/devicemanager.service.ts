@@ -18,12 +18,45 @@ export class DevicemanagerService {
   getDevicemanagersFirmware(filter : SearchFilter){ // 펌웨어 리스트 조회
     var url = `${this.Url}/firmware`;
     let httpParams = new HttpParams()
+
+    if(filter.asc != undefined){
+      for(let i = 0; i < filter.asc.length; i++){
+        httpParams = httpParams.append('asc', filter.asc[i]);
+      }
+    }
+
+    if(filter.desc != undefined){
+      for(let i = 0; i < filter.desc.length; i++){
+        httpParams = httpParams.append('desc', filter.desc[i]);
+      }
+    }
+
     if(filter.offset != undefined){
       httpParams = httpParams.set('offset', filter.offset)
     }
 
     if(filter.limit != undefined){
       httpParams = httpParams.set('limit', filter.limit)
+    }
+
+    if(filter.search != undefined){
+      httpParams = httpParams.set('search', filter.search)
+    }
+
+    if(filter.firmwareName != undefined){
+      httpParams = httpParams.set('firmwareName', filter.firmwareName)
+    }
+
+    if(filter.modelName != undefined){
+      httpParams = httpParams.set('modelName', filter.modelName)
+    }
+
+    if(filter.fwVersion != undefined){
+      httpParams = httpParams.set('fwVersion', filter.fwVersion)
+    }
+
+    if(filter.hwVersion != undefined){
+      httpParams = httpParams.set('hwVersion', filter.hwVersion)
     }
 
     return this.http.get<any>(url, { params : httpParams, observe: "response" })

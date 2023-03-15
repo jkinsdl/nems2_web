@@ -43,8 +43,8 @@ export class OTAManagementComponent implements OnInit {
     { field: 'vin', headerName: 'VIN',
     headerCheckboxSelection: true,
     checkboxSelection: true, tooltipField: 'vin', },
-    { field: 'currentState', headerName: 'currentState', tooltipField: 'currentState'},
-    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }}
+    { field: 'currentState', headerName: 'State', tooltipField: 'currentState'},
+    { field: 'updatedAt', headerName : 'Update Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }}
   ];
 
 
@@ -89,10 +89,7 @@ export class OTAManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.getVehiclemanagerModel()
-
-
   }
 
   getPageSize(){
@@ -113,27 +110,26 @@ export class OTAManagementComponent implements OnInit {
     this.vehiclemanagersService.getVehiclemanagerModel(new SearchFilter).subscribe(res=>{
       console.log(res)
       this.modelList = res.body
-      this.getDevicemanagersFirmware()
     },error=>{
       console.log(error)
     })
   }
 
   getDevicemanagersFirmware(){
-    this.devicemanageService.getDevicemanagersFirmware(new SearchFilter).subscribe(res=>{
+    let f = new SearchFilter
+    f.modelName = this.selectModel.modelName
+
+    this.devicemanageService.getDevicemanagersFirmware(f).subscribe(res=>{
       console.log(res)
 
-      for(let i = 0; i < this.modelList.modelList.length; i++){
+      /*for(let i = 0; i < this.modelList.modelList.length; i++){
         this.modelList.modelList[i].firmwareList = []
         for(let j = 0 ; j < res.body.entities.length; j++){
           if(this.modelList.modelList[i].modelName == res.body.entities[j].modelName){
             this.modelList.modelList[i].firmwareList.push(res.body.entities[j])
           }
         }
-      }
-
-      console.log(this.modelList)
-
+      }*/
       this.firmwareList = res.body
     },error=>{
       console.log(error)
@@ -166,7 +162,9 @@ export class OTAManagementComponent implements OnInit {
 
   leftListAddModal(){
     const dialogRef = this.dialog.open( AddOTAManagementComponent, {
-
+      data : {
+        model : this.selectModel
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
@@ -210,7 +208,7 @@ export class OTAManagementComponent implements OnInit {
   }
 
   rowOpen(item : any){
-
+    console.log(item)
     if(this.selectFirmware == item){
       this.selectFirmware = null
       this.firmwareVehiclesList = {}
@@ -311,11 +309,14 @@ export class OTAManagementComponent implements OnInit {
   }
 
   modelRowOpen(model : any){
+    this.selectFirmware = null
     if(this.selectModel == model){
       this.selectModel = null
-      this.selectFirmware = null
     }else {
       this.selectModel = model
     }
+
+    this.getDevicemanagersFirmware()
+
   }
 }

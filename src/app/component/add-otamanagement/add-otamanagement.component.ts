@@ -37,6 +37,13 @@ export class AddOTAManagementComponent implements OnInit {
   modelList : any[] = []
 
   ngOnInit(): void {
+
+    console.log(this.data)
+
+    if(this.data.model){
+      this.firmware.meta.modelName = this.data.model.modelName
+    }
+
     this.getVehiclemanagerModel()
   }
 
