@@ -27,6 +27,16 @@ export class StatusComponent implements OnInit {
 
   vehicleFailure : any[] = []
 
+  distributionChart : any
+  failureRankChart : any
+  failureOccupancyChart : any
+
+  onResize(event : any){
+    this.distributionChart.resize();
+    this.failureRankChart.resize();
+    this.failureOccupancyChart.resize();
+  }
+
   ngOnInit(): void {
     this.getStatisticsVehiclesSummary()
     this.getStatisticsWarnings()
@@ -55,7 +65,15 @@ export class StatusComponent implements OnInit {
 
   setPieChart(chartID : string, data : any[]){
     var chartDom = document.getElementById(chartID)!;
-    var myChart = echarts.init(chartDom);
+    if(chartID == 'distributionChart'){
+      this.distributionChart = echarts.init(chartDom);
+    }else if(chartID == 'failureRankChart'){
+      this.failureRankChart = echarts.init(chartDom);
+    }else if(chartID == 'failureOccupancyChart'){
+      this.failureOccupancyChart = echarts.init(chartDom);
+    }
+
+
     var option: echarts.EChartsOption;
 
     let seriesData : any[] = []
@@ -72,6 +90,7 @@ export class StatusComponent implements OnInit {
         trigger: 'item'
       },
       legend: {
+        type:'scroll',
         orient: 'vertical',
         right: 10,
         top: 20,
@@ -96,7 +115,15 @@ export class StatusComponent implements OnInit {
         }
       ]
     };
-    option && myChart.setOption(option);
+    if(chartID == 'distributionChart'){
+      option && this.distributionChart.setOption(option);
+    }else if(chartID == 'failureRankChart'){
+      option && this.failureRankChart.setOption(option);
+    }else if(chartID == 'failureOccupancyChart'){
+      option && this.failureOccupancyChart.setOption(option);
+    }
+
+
   }
 
 }

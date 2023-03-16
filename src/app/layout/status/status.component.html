@@ -1,4 +1,4 @@
-<div class="statusContainer">
+<div class="statusContainer" (window:resize)="onResize($event)">
 
   <div class="statusLayout whiteBoardBoax">
     <app-sub-title [title]="'STATUS'"></app-sub-title>
@@ -67,10 +67,10 @@
           {{i + 1}}
         </div>
         <div class="listTitle">
-          LJDUAA2J4J0006507
+          {{vehicle.key}}
         </div>
         <div class="listValue">
-          28
+          {{vehicle.value}}
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 .statusContainer{
   width: 100%;
   height: calc(100% - 30px);
+  min-width: 1300px
 }
 
 .statusContainer .statusLayout{
@@ -72,7 +73,7 @@
 
 .chartLayout{
   width: 100%;
-  height: calc(100% - 30px);
+  height: calc(100% - 40px);
 
 }
 
