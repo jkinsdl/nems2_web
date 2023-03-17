@@ -15,10 +15,10 @@
   margin: 0 10px;
 }
 
-.gridControlBox .iconBtnBox{
+.gridFilterBox .iconBtnBox{
   display: flex;
   position: absolute;
-  right: 60px;
+  right: 25px;
 }
 
 .excel_btn{
@@ -83,7 +83,7 @@
   cursor: pointer;
 }
 
-.gridControlBox .btn{
+.gridFilterBox .btn{
   width: 60px;
   padding: 5px 10px;
   margin: 0 10px;
@@ -93,26 +93,26 @@
   cursor: pointer;
 }
 
-.gridControlBox .add{
+.gridFilterBox .add{
   background-color: rgb(0, 163, 0);
 }
 
-.gridControlBox .modify{
+.gridFilterBox .modify{
   background-color: rgb(60, 60, 255);
   opacity: 0.5;
 }
 
-.gridControlBox .delete{
+.gridFilterBox .delete{
   background-color: rgb(255, 65, 65);
   opacity: 0.5;
 }
 
-.gridControlBox .copy {
+.gridFilterBox .copy {
   background-color: rgb(0, 163, 0);
   opacity: 0.5;
 }
 
-.gridControlBox .selectItem{
+.gridFilterBox .selectItem{
   opacity: 1;
 }
 

@@ -44,28 +44,11 @@
       </div>
     -->
 
-
     <div class="filter searchFilter">
         <div class="btn" (click)="setSearch()">
           Search
         </div>
-      </div>
-    </div>
 
-    <div class="gridControlBox">
-      <!--<div class="btn add" (click)="addUser()">
-        Add
-      </div>
-      -->
-      <div class="iconBtnBox">
-        <!--<div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyUser()">
-          <img src="assets/icon/edit.png">
-        </div>
-
-        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteUser()">
-          <img src="assets/icon/delete.png">
-        </div>
-        -->
         <div class="excel_btn selectItem" (click)="addUser()">
           <img src="assets/icon/add-button.png">
         </div>
@@ -77,11 +60,12 @@
         <div class="excel_btn selectItem" (click)="onBtExport()">
           <img src="assets/icon/excel_download.png">
         </div>
+
       </div>
     </div>
 
     <div claSS="userAccountContents">
-      <ag-grid-angular #userGrid style="width: 100%; height: calc(100% - 54px)" (window:resize)="onResize($event)"
+      <ag-grid-angular #userGrid style="width: 100%; height: calc(100% - 4px)" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
         [rowData]="users.users"
         [columnDefs]="columnDefs"

@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <div class="filter"  style="width: calc(100% - 350px);">
+      <div class="filter"  style="width: calc(100% - 500px);">
         <div class="label"></div>
         <div class="value" style="width: 100%;">
           <input type="text" [(ngModel)]="searchText" (keydown.enter)="setSearch()" style="width: 100%;">
@@ -29,23 +29,6 @@
         <div class="btn" (click)="setSearch()">
           Search
         </div>
-      </div>
-    </div>
-
-    <div class="gridControlBox">
-      <!--<div class="btn add" (click)="addAlarm()">
-        Add
-      </div>
-      -->
-      <div class="iconBtnBox">
-        <!--<div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyAlarm()">
-          <img src="assets/icon/edit.png">
-        </div>
-
-        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteAlarm()">
-          <img src="assets/icon/delete.png">
-        </div>
-        -->
 
         <div class="excel_btn selectItem" (click)="addAlarm()">
           <img src="assets/icon/add-button.png">
@@ -59,12 +42,13 @@
         <div class="excel_btn selectItem" (click)="onBtExport()">
           <img src="assets/icon/excel_download.png">
         </div>
-      </div>
 
+      </div>
     </div>
 
+
     <div class="pushAlarmContents">
-      <ag-grid-angular #pushAlarmGrid style="width: 100%; height: calc(100% - 110px)" (window:resize)="onResize($event)"
+      <ag-grid-angular #pushAlarmGrid style="width: 100%; height: calc(100% - 60px)" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
         [rowData]="pushinfos.entities"
         [columnDefs]="columnDefs"

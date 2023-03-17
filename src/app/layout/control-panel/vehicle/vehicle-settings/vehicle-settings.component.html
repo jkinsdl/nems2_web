@@ -16,76 +16,17 @@
         </div>
       </div>
 
-      <div class="filter"  style="width: calc(100% - 350px);">
+      <div class="filter"  style="width: calc(100% - 500px);">
         <div class="label"></div>
         <div class="value" style="width: 100%;">
           <input type="text" [(ngModel)]="searchText" (keydown.enter)="setSearch()" style="width: 100%;">
         </div>
       </div>
 
-      <!--<div class="filter">
-        <div class="label">VIN</div>
-        <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="label">iccid</div>
-        <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.iccid" (keydown.enter)="setSearch()">
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="label">nemsSn</div>
-        <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.nemsSn" (keydown.enter)="setSearch()">
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="label">registrationPlate</div>
-        <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.registrationPlate" (keydown.enter)="setSearch()">
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="label">region</div>
-        <div class="value">
-          <input type="text" [(ngModel)]="searchFilter.region" (keydown.enter)="setSearch()">
-        </div>
-      </div>
-
-      <div class="filter">
-        <div class="label">pcode</div>
-        <div class="value">
-          <input type="number" [OnlyNumber]="true" [(ngModel)]="searchFilter.pcode" (keydown.enter)="setSearch()">
-        </div>
-      </div>
-    -->
       <div class="filter searchFilter">
         <div class="btn" (click)="setSearch()">
           Search
         </div>
-      </div>
-    </div>
-
-    <div class="gridControlBox">
-      <!--<div class="btn add" (click)="addVehicle()">
-        Add
-      </div>
-      -->
-      <div class="iconBtnBox">
-        <!--<div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="modifyVehicle()">
-          <img src="assets/icon/edit.png">
-        </div>
-
-        <div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="deleteVehicle()">
-          <img src="assets/icon/delete.png">
-        </div>
-        -->
 
         <div class="excel_btn selectItem" (click)="addVehicle()">
           <img src="assets/icon/add-button.png">
@@ -101,12 +42,10 @@
         </div>
 
       </div>
-
-
     </div>
 
     <div style="width: 100%; height: calc(100% - 104px);">
-      <ag-grid-angular #vehicleSettingsGrid style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
+      <ag-grid-angular #vehicleSettingsGrid style="width: 100%; height: 100%" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
         [rowData]="vehicle.vehicleList"
         [rowSelection]="'single'"
