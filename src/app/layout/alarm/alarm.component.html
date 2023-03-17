@@ -327,8 +327,6 @@
             <div class="label" style="width: auto;">State </div>
             <div class="value">
               <select [(ngModel)]="selectionAlarm.state" [disabled]="gridApi == null || gridApi.getSelectedRows().length == 0">
-                <option [value]="''"></option>
-                <option [value]="'UNKNOWN'">UNKNOWN</option>
                 <option [value]="'OPEN'">OPEN</option>
                 <option [value]="'PROGRESS'">PROGRESS</option>
                 <option [value]="'RESOLVED'">RESOLVED</option>
@@ -348,10 +346,12 @@
           <div class="commentList">
             <div class="alarmComment" *ngFor="let comment of selectionAlarm.comments">
               <div class="commentUser">{{comment.user.username}}</div>
-              <div class="comment">{{comment.comment}}</div>
-              <div class="commentCreateTime">{{comment.createAt | dateformat}}</div>
+              <div class="comment">{{comment.comment}} {{comment.createAt | dateformat}}</div>
               <div class="commentNew">
-                <img *ngIf="comment.isNewIcon " style="width: 25px; height: 25px;" src="assets/icon/new.png"></div>
+
+                <span *ngIf="comment.isNewIcon" style="background-color: red; padding: 3px 8px; color: white; font-size: 12px;">N</span>
+
+              </div>
             </div>
           </div>
 

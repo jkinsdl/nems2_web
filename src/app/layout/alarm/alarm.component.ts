@@ -64,7 +64,6 @@ export class AlarmComponent implements OnInit {
 
   isOpenWarningLevelFilter : boolean = false;
   warningLevelToppings = this._formBuilder.group({
-    NORMAL : false,
     MINOR : false,
     MAJOR : false,
     CRITICAL : false,
@@ -74,7 +73,6 @@ export class AlarmComponent implements OnInit {
 
 
   stateToppings = this._formBuilder.group({
-    UNKNOWN : false,
     OPEN : false,
     PROGRESS : false,
     RESOLVED : false,
@@ -305,6 +303,8 @@ export class AlarmComponent implements OnInit {
     this.searchFilter.limit = this.pageSize
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.warningType = []
+    this.searchFilter.desc = []
+    this.searchFilter.desc.push('CREATE_TIME')
     for (const [key, value] of Object.entries(this.warningTypeToppings.value)) {
       if(value){
         this.searchFilter.warningType.push(key)
