@@ -1,4 +1,4 @@
-<div class="dashboardContainer">
+<div class="dashboardContainer" >
 
   <!--<div class="dashboardTopLayout">
     <div class="dashboardPanel whiteBoardBoax">
@@ -217,22 +217,22 @@
 
       <div class="statusLine">
         <div class="statusLabel">
-          Total Login Vehicles
+          Today Login Vehicles
         </div>
         <div class="statusValue">
           <div class="valueText purple" >
-            {{statisticsCurrent.totalLoginVehicles}}
+            {{statisticsCurrent.todayLoginVehicles}}
           </div>
         </div>
       </div>
 
       <div class="statusLine">
         <div class="statusLabel ">
-          Total Logout Vehicles
+          Today Logout Vehicles
         </div>
         <div class="statusValue">
           <div class="valueText blue">
-            {{statisticsCurrent.totalLogoutVehicles}}
+            {{statisticsCurrent.todayLogoutVehicles}}
           </div>
         </div>
       </div>
@@ -267,10 +267,11 @@
       </canvas>-->
 
     </div>
-    <div class="dashBorderAlarmGrid">
+    <div #dashBorderAlarmGrid class="dashBorderAlarmGrid" (window:resize)="onResize($event)">
       <div class="alarmGridHeader">
-        <app-sub-title [title]="'Alarm'"></app-sub-title>
 
+        <app-sub-title [title]="'Alarm'"></app-sub-title>
+<!--
         <mat-select [(ngModel)]="alarmListFilter" (ngModelChange)="getVehiclewarnings()" style="margin-left: 20px; margin-bottom: 6px;">
           <mat-option [value]="'NORMAL'" >NORMAL</mat-option>
           <mat-option [value]="'MINOR'">MINOR</mat-option>
@@ -279,29 +280,77 @@
           <mat-option [value]="'ABNORMAL'">ABNORMAL</mat-option>
           <mat-option [value]="'INVAILD'">INVAILD</mat-option>
         </mat-select>
-
+-->
       </div>
 
-      <div class="alarmGrid">
-        <div class="gridHeader">
-          <div class="header first">VIN</div>
-          <div class="header second">Warning Level </div>
-          <div class="header third">Create Time </div>
-        </div>
-        <div class="gridContents">
-          <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of vehiclewarnings.entities">
-            <div class="gridCell first">
-              {{warning.vin}}
+      <mat-tab-group>
+        <mat-tab label="Critical">
+          <div class="alarmGrid">
+            <div class="gridHeader">
+              <div class="header first">VIN</div>
+              <div class="header second">Warning Type</div>
+              <div class="header third">Create Time </div>
             </div>
-            <div class="gridCell second">
-              {{warning.warningLevel}}
-            </div>
-            <div class="gridCell third">
-              {{warning.createTime | dateformat}}
+            <div class="gridContents">
+              <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of criticalVehiclewarnings.entities">
+                <div class="gridCell first">
+                  {{warning.vin}}
+                </div>
+                <div class="gridCell second" [title]="warning.warningType">
+                  {{warning.warningType}}
+                </div>
+                <div class="gridCell third">
+                  {{warning.createTime | dateformat}}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </mat-tab>
+        <mat-tab label="Major">
+          <div class="alarmGrid">
+            <div class="gridHeader">
+              <div class="header first">VIN</div>
+              <div class="header second">Warning Type </div>
+              <div class="header third">Create Time </div>
+            </div>
+            <div class="gridContents">
+              <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of majorVehiclewarnings.entities">
+                <div class="gridCell first">
+                  {{warning.vin}}
+                </div>
+                <div class="gridCell second" [title]="warning.warningType">
+                  {{warning.warningType}}
+                </div>
+                <div class="gridCell third">
+                  {{warning.createTime | dateformat}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Minor">
+          <div class="alarmGrid">
+            <div class="gridHeader">
+              <div class="header first">VIN</div>
+              <div class="header second">Warning Type </div>
+              <div class="header third">Create Time </div>
+            </div>
+            <div class="gridContents">
+              <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of minorVehiclewarnings.entities">
+                <div class="gridCell first">
+                  {{warning.vin}}
+                </div>
+                <div class="gridCell second" [title]="warning.warningType">
+                  {{warning.warningType}}
+                </div>
+                <div class="gridCell third">
+                  {{warning.createTime | dateformat}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

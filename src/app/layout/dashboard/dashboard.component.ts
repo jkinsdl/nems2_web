@@ -19,6 +19,9 @@ import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 })
 
 export class DashboardComponent implements OnInit {
+
+  @ViewChild('dashBorderAlarmGrid', { read: ElementRef }) alarmGrid : ElementRef;
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -61,8 +64,19 @@ export class DashboardComponent implements OnInit {
 
   alarmStatisticsChart : echarts.ECharts
 
-  alarmListFilter : string = 'NORMAL'
-  vehiclewarnings : any = {
+  criticalVehiclewarnings : any = {
+    count : 0,
+    entities : [],
+    link : {}
+  }
+
+  majorVehiclewarnings : any = {
+    count : 0,
+    entities : [],
+    link : {}
+  }
+
+  minorVehiclewarnings : any = {
     count : 0,
     entities : [],
     link : {}
@@ -74,6 +88,17 @@ export class DashboardComponent implements OnInit {
   subPrefectureData : any = {}
 
   province_statistics_registration_count_data : any[] = []
+  gridHeight : number
+  onResize(event : any){
+    console.log("onResize")
+    if(this.gridHeight != this.alarmGrid.nativeElement.offsetHeight){
+      this.gridHeight = this.alarmGrid.nativeElement.offsetHeight
+      this.getVehiclewarnings()
+    }
+
+    this.alarmStatisticsChart.resize();
+  }
+
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -471,6 +496,7 @@ export class DashboardComponent implements OnInit {
     //this.getStatisticsRegistrationSummary()
     this.getStatisticsVehiclesSummary()
     //this.getStatisticsWarningsSummary()
+    this.gridHeight = this.alarmGrid.nativeElement.offsetHeight
     this.getVehiclewarnings()
 
     this.map.setZoom(3.5)
@@ -482,13 +508,36 @@ export class DashboardComponent implements OnInit {
   getVehiclewarnings(){
     let filter = new SearchFilter()
     filter.warningLevel = []
+    filter.warningLevel.push('CRITICAL')
     filter.state = []
-    filter.warningLevel.push(this.alarmListFilter)
-    filter.state.push('OPEN')
+    //filter.state.push('OPEN')
+    filter.desc = []
+    filter.desc.push('CREATE_TIME')
+    filter.limit = Math.floor((this.gridHeight - 50 - 48 - 50) / 30)
 
     this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
-      this.vehiclewarnings = res.body
-      console.log(this.vehiclewarnings)
+      console.log(res)
+      this.criticalVehiclewarnings = res.body
+    },error=>{
+      console.log(error)
+    })
+
+    filter.warningLevel = []
+    filter.warningLevel.push('MAJOR')
+
+    this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
+      console.log(res)
+      this.majorVehiclewarnings = res.body
+    },error=>{
+      console.log(error)
+    })
+
+    filter.warningLevel = []
+    filter.warningLevel.push('MINOR')
+
+    this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
+      console.log(res)
+      this.minorVehiclewarnings = res.body
     },error=>{
       console.log(error)
     })
