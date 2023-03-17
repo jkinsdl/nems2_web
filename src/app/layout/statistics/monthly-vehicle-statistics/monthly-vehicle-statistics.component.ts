@@ -41,6 +41,10 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
 
   date : any
 
+
+  chinaChart : any
+  cityChart : any
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
@@ -51,18 +55,12 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
     this.date = this.statisticsServce.statisticsDate
     this.setChinaMapChart()
     this.getStatisticsRegistrationSummary()
-    this.getStatisticsRegistrationCount(null)
 
     this.statisticsDate$ = this.statisticsServce.statisticsDate$.subscribe(date=>{
       console.log(date)
       this.date = date
       this.getStatisticsRegistrationSummary()
     })
-
-  }
-
-  getStatisticsRegistrationCount(province : string){
-
   }
 
   getStatisticsRegistrationSummary(){
@@ -85,7 +83,7 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
 
   setChinaMapChart(){
     var chartDom = document.getElementById('chinaMapChart')!;
-    var myChart = echarts.init(chartDom);
+    this.chinaChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
 
     this.utilService.getProvinceCopyData().subscribe((res : any)=>{
@@ -103,28 +101,6 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
             value : count.body.entities[i].count
           })
         }
-
-        /*for(let i = 0; i < res.features.length; i++){
-          let isData = false
-          for(let j = 0; j < count.body.entities.length; j++){
-            if(res.features[i].properties.name == count.body.entities[j].region.province){
-              data.push({
-                name : count.body.entities[j].region.province,
-                value : count.body.entities[j].count
-              })
-              isData = true
-              break;
-            }
-          }
-
-          if(!isData){
-            data.push({
-              name : res.features[i].properties.name,
-              value : 0
-            })
-          }
-        }*/
-
 
         option = {
           tooltip: {
@@ -163,13 +139,12 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
           ]
         };
 
-        myChart.setOption(option,true);
+        this.chinaChart.setOption(option,true);
 
       },error=>{
         console.log(error)
       })
-      myChart.on('click',(params)=>{
-        console.log(params.data)
+      this.chinaChart.on('click',(params:any)=>{
         this.setCityMapChart(params.name)
       })
 
@@ -181,7 +156,7 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
 
   setCityMapChart(name : any){
     var chartDom = document.getElementById('cityMapChart')!;
-    var myChart = echarts.init(chartDom);
+    this.cityChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
 
     this.utilService.getSubPrefectureeCopyData().subscribe((res : any)=>{
@@ -194,8 +169,7 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
         }
       }
 
-      echarts.registerMap('CHINA', res);
-
+      echarts.registerMap('city', res);
 
       let f = new SearchFilter()
       f.province = name
@@ -237,7 +211,7 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
               name: 'City',
               type: 'map',
               roam: false,
-              map: 'CHINA',
+              map: 'city',
               emphasis: {
                 label: {
                   show: true
@@ -247,9 +221,8 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
             }
           ]
         };
-        myChart.setOption(option,true);
+        this.cityChart.setOption(option,true);
       })
     })
   }
-
 }
