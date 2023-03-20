@@ -60,7 +60,7 @@
       <div *ngIf="selectVehicleInfo == null" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: gray; font-size: 20px;">
         Select Vehicle
       </div>
-      <div style="height: 100%;" *ngIf="selectVehicleInfo != null">
+      <div style="height: calc(100% - 50px); min-height: 760px; min-width: 1200px;" *ngIf="selectVehicleInfo != null">
         <div class="infoList">
           <div class="listTitle">
             CAR
@@ -125,7 +125,7 @@
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">state</div>
+              <div class="tabLeft">EVstate</div>
               <div class="tabRight">{{selectVehicleInfo.car.state}}</div>
             </div>
 
@@ -546,7 +546,7 @@
                 </div>
 
                 <div class="tabInforRow">
-                  <div class="tabLeft">state</div>
+                  <div class="tabLeft">EVstate</div>
                   <div class="tabRight">{{selectVehicleInfo.car.state}}</div>
                 </div>
 

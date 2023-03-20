@@ -266,6 +266,11 @@
   border-radius: 10px;
   position: absolute;
   margin-top: 10px;
+
+}
+
+.infomationContainer{
+  overflow: scroll;
 }
 
 .datePickerText{
@@ -285,6 +290,8 @@
 .infoList{
   width: calc(33% - 20px);
   height: calc(33% - 25px);
+  min-height: 250px;
+  min-width: 375px;
   padding: 10px;
   float: left;
   overflow: auto;
