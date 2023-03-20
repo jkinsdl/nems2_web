@@ -240,7 +240,6 @@
 
 .tabList{
   width: 100%;
-  height: 245px;
   overflow: scroll;
 }
 
@@ -315,4 +314,22 @@
   position: absolute;
   right: 0;
   cursor: pointer;
+}
+
+.motorsText{
+  width:145px;
+  text-align: end;
+  float: left;
+  font-weight: bold;
+}
+
+.motorsTabLeft{
+  margin-left: 10px;
+  /* width: 200px; */
+  width: 100%;
+  min-width: 200px;
+}
+
+.motorsLeftText{
+  width: 200px;
 }

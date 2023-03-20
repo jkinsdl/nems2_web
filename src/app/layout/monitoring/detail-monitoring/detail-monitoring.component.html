@@ -291,44 +291,86 @@
             </div>
           </div>
           <div class="listContents">
+
             <div class="tabInforRow">
-              <div class="tabLeft">controllerDcBusAmpere</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].controllerDcBusAmpere}}</div>
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">serialNo</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.serialNo}}
+                </div>
+              </div>
+            </div>
+
+
+            <div class="tabInforRow">
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">controllerDcBusAmpere</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.controllerDcBusAmpere}}
+                </div>
+              </div>
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">controllerTemp</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].controllerTemp}}</div>
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">controllerTemp</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.controllerTemp}}
+                </div>
+              </div>
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">inputVolt</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].inputVolt}}</div>
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">inputVolt</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.inputVolt}}
+                </div>
+              </div>
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">rpm</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].rpm}}</div>
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">rpm</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.rpm}}
+                </div>
+              </div>
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">serialNo</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].serialNo}}</div>
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">state</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.state}}
+                </div>
+              </div>
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">state</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].state}}</div>
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">temp</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.temp}}
+                </div>
+              </div>
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">temp</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].temp}}</div>
-            </div>
-
-            <div class="tabInforRow">
-              <div class="tabLeft">torq</div>
-              <div class="tabRight">{{selectVehicleInfo.motors[0].torq}}</div>
+              <div class="motorsTabLeft">
+                <div class="motorsLeftText">torq</div></div>
+              <div style="display: flex; margin-right: 10px;">
+                <div class="motorsText" *ngFor="let motor of selectVehicleInfo.motors">
+                  {{motor.torq}}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -485,8 +527,8 @@
           Select Vehicle
         </div>
 
-        <div *ngIf="selectVehicleInfo != null">
-          <mat-tab-group>
+        <div style="width:100%; height:100%;" *ngIf="selectVehicleInfo != null">
+          <mat-tab-group style="height: 100%;">
             <mat-tab label="CAR">
 
               <div class="tabList">
