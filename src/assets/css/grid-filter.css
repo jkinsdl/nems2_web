@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   padding: 7px 0 5px 4px;
-  position: relative;
 }
 
 .gridFilterBox .filter{
@@ -39,8 +38,7 @@
 }
 
 .gridFilterBox .filter.searchFilter{
-  position: absolute;
-  right: 20px;
+  margin-left: auto;
 }
 
 .gridFilterBox .filter .label{
