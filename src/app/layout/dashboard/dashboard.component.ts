@@ -700,6 +700,7 @@ export class DashboardComponent implements OnInit {
 
   setAlarmStatisticsChartData(data : any[]){
     var option: echarts.EChartsOption;
+    //'#FFFF00' yellow
     option = {
       tooltip: {
         trigger: 'item'
@@ -713,7 +714,7 @@ export class DashboardComponent implements OnInit {
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
-          color:['#ff0000','#FFA500','#FFFF00'],
+          color:['#ff0000','#FF3399','#FFA500'],
           itemStyle: {
             borderRadius: 10,
             borderColor: '#fff',

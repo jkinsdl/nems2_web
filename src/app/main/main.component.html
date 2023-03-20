@@ -37,13 +37,14 @@
       </div>
 
       <div class="alarm" [routerLink]="['/main/alarm']">
-        <img src="assets/icon/orange_notification.png">
+        <img src="assets/icon/pink_notification.png">
         <div class="alarmCount" *ngIf="warningcount.major > 0">{{warningcount.major}}</div>
       </div>
 
 
       <div class="alarm" [routerLink]="['/main/alarm']">
-        <img src="assets/icon/yellow_notification.png">
+        <img src="assets/icon/orange_notification.png">
+        <!--<img src="assets/icon/yellow_notification.png">-->
         <div class="alarmCount" *ngIf="warningcount.minor > 0">{{warningcount.minor}}</div>
         <!--<div class="alarmPoint" [ngClass]="{'onPoint': warningcount.minor > 0 || warningcount.major > 0 || warningcount.critical > 0}"></div>
         <div class="titleTooltip">
