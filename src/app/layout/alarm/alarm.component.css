@@ -206,7 +206,7 @@
 .alarmDetailMap,
 .alarmDetailIssue{
   width: 100%;
-  height: calc(100% - 375px);
+  height: calc(100% - 410px);
 }
 
 #map{
