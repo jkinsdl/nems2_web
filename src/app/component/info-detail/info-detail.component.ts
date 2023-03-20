@@ -33,7 +33,7 @@ export class InfoDetailComponent implements OnInit {
       rowData = this.data.info.location
     }else if(this.data.type == 'motors'){
       this.titleType = "MOTORS"
-      rowData = this.data.info.motors[0]
+      rowData = this.data.info.motors
     }else if(this.data.type == 'power_battery_infos'){
       this.titleType = "POWER BATTERY INFOS"
       rowData = this.data.info.powerBatteryInfos[0]
@@ -45,20 +45,62 @@ export class InfoDetailComponent implements OnInit {
       rowData = this.data.info.warning
     }
 
-    for (const [key, value] of Object.entries(rowData)) {
-      if(key != "cellAmperes" && key != "sensorTemps"){
-        let k = key
-        let v = value
-        if(key == "time"){
-          v = this.utilService.setDateFormat(new Date(value.toString()));
+    if(this.data.type != 'motors'){
+      for (const [key, value] of Object.entries(rowData)) {
+        if(key != "cellAmperes" && key != "sensorTemps"){
+          let k = key
+          let v = value
+          if(key == "time"){
+            v = this.utilService.setDateFormat(new Date(value.toString()));
+          }
+          this.keyValueList.push({
+            key : k,
+            value : v,
+          })
         }
-        this.keyValueList.push({
-          key : k,
-          value : v,
-        })
       }
-      console.log(`${key}: ${value}`);
+    }else{
+
+      for(let i = 0 ; i < rowData.length; i++ ){
+
+        if(i == 0){
+          for (const [key, value] of Object.entries(rowData[i])) {
+            if(key != "cellAmperes" && key != "sensorTemps"){
+              let k = key
+              let v = value
+              if(key == "time"){
+                v = this.utilService.setDateFormat(new Date(value.toString()));
+              }
+              this.keyValueList.push({
+                key : k,
+                value : v,
+              })
+            }
+          }
+        }else {
+          for (const [key, value] of Object.entries(rowData[i])) {
+
+            if(key != "cellAmperes" && key != "sensorTemps"){
+              let v = value
+              if(key == "time"){
+                v = this.utilService.setDateFormat(new Date(value.toString()));
+              }
+
+              for(let j = 0; j < this.keyValueList.length; j++){
+                if(key == this.keyValueList[j].key){
+                  this.keyValueList[j]["value"+i] = v;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      console.log(this.keyValueList)
+
     }
+
+
 
   }
 

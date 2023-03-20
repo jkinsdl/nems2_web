@@ -9,11 +9,10 @@
 
 
   <div class="popupContents">
-
     <div class="row" *ngFor="let keyValue of keyValueList">
-      <div class="rowLeft">{{keyValue.key}}</div>
-      <div class="rowRight">{{keyValue.value}}</div>
+      <div *ngFor="let value of keyValue | keyvalue; index as i;" [ngClass]="{'rowLeft': i == 0, 'rowRight': i != 0}">
+        {{value.value}}
+      </div>
     </div>
-
   </div>
 </div>
