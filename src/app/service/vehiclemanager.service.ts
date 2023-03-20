@@ -77,6 +77,10 @@ export class VehiclemanagerService {
       httpParams = httpParams.set("pcode", filter.pcode.toString())
     }
 
+    if(filter.modelName != undefined){
+      httpParams = httpParams.set("modelName", filter.modelName)
+    }
+
     if(filter.limit != undefined){
       httpParams = httpParams.set("limit", filter.limit)
     }
@@ -146,6 +150,48 @@ export class VehiclemanagerService {
     var url = `${this.Url}/export`;
 
     return this.http.post<any>(url, JSON.stringify(parameter), {observe: "response" })
+  }
+
+  getVehiclemanagerVehicleinfoExport(filter : SearchFilter){
+    var url = `${this.Url}/vehicleinfo/export`;
+    let httpParams = new HttpParams()
+
+    if(filter.vin != undefined){
+      httpParams = httpParams.set("vin", filter.vin)
+    }
+
+    if(filter.iccid != undefined){
+      httpParams = httpParams.set("iccid", filter.iccid)
+    }
+
+    if(filter.nemsSn != undefined){
+      httpParams = httpParams.set("nemsSn", filter.nemsSn)
+    }
+
+    if(filter.registrationPlate != undefined){
+      httpParams = httpParams.set("registrationPlate", filter.registrationPlate)
+    }
+
+    if(filter.region != undefined){
+      httpParams = httpParams.set("region", filter.region)
+    }
+
+    if(filter.pcode != undefined){
+      httpParams = httpParams.set("pcode", filter.pcode.toString())
+    }
+
+    if(filter.modelName != undefined){
+      httpParams = httpParams.set("modelName", filter.modelName)
+    }
+
+
+    return this.http.get<any>(url, {params : httpParams, observe: "response" })
+
+
+  }
+
+  postVehiclemanagerVehicleinfoImport(){
+
   }
 
 }

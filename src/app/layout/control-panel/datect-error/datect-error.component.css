@@ -12,7 +12,3 @@
   width: 100%;
   height: calc(100% - 40px);
 }
-
-.tabListContainer{
-  border-bottom:1px solid var(--ag-border-color, #babfc7);
-}

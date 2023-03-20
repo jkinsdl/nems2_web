@@ -174,14 +174,29 @@ export class VehicleSettingsComponent implements OnInit {
     this.gridApi = params.api;
   }
 
+  onBtnInport(event : any){
+    console.log(event.target.file)
+
+  }
+
   onBtExport(){
-    this.searchFilter.offset = undefined
+
+    this.vehiclemanagerService.getVehiclemanagerVehicleinfoExport(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.utilService.exportDownload('vehicle_static_info.zip',res.body[0].data)
+    },error=>{
+      console.log(error)
+    })
+
+    /*this.searchFilter.offset = undefined
     this.searchFilter.limit = undefined
+
     this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
       this.utilService.gridDataToExcelData("Vehicle Settings",this.gridApi,res.body.vehicleList)
     },error=>{
       console.log(error)
     })
+    */
   }
 
   setSearch(){
@@ -194,6 +209,7 @@ export class VehicleSettingsComponent implements OnInit {
         this.searchFilter.registrationPlate = undefined
         this.searchFilter.region = undefined
         this.searchFilter.pcode = undefined
+        this.searchFilter.modelName = undefined
       }else if(this.filter == 'iccid'){
         this.searchFilter.iccid = this.searchText
         this.searchFilter.vin = undefined
@@ -201,6 +217,7 @@ export class VehicleSettingsComponent implements OnInit {
         this.searchFilter.registrationPlate = undefined
         this.searchFilter.region = undefined
         this.searchFilter.pcode = undefined
+        this.searchFilter.modelName = undefined
       }else if(this.filter == 'NEMS S/N'){
         this.searchFilter.nemsSn = this.searchText
         this.searchFilter.vin = undefined
@@ -208,6 +225,7 @@ export class VehicleSettingsComponent implements OnInit {
         this.searchFilter.registrationPlate = undefined
         this.searchFilter.region = undefined
         this.searchFilter.pcode = undefined
+        this.searchFilter.modelName = undefined
       }else if(this.filter == 'Reg. number'){
         this.searchFilter.registrationPlate = this.searchText
         this.searchFilter.vin = undefined
@@ -215,6 +233,7 @@ export class VehicleSettingsComponent implements OnInit {
         this.searchFilter.nemsSn = undefined
         this.searchFilter.region = undefined
         this.searchFilter.pcode = undefined
+        this.searchFilter.modelName = undefined
       }else if(this.filter == 'region'){
         this.searchFilter.region = this.searchText
         this.searchFilter.vin = undefined
@@ -222,6 +241,7 @@ export class VehicleSettingsComponent implements OnInit {
         this.searchFilter.nemsSn = undefined
         this.searchFilter.registrationPlate = undefined
         this.searchFilter.pcode = undefined
+        this.searchFilter.modelName = undefined
       }else if(this.filter == 'pcode'){
         this.searchFilter.pcode = this.searchText
         this.searchFilter.vin = undefined
@@ -229,6 +249,15 @@ export class VehicleSettingsComponent implements OnInit {
         this.searchFilter.nemsSn = undefined
         this.searchFilter.registrationPlate = undefined
         this.searchFilter.region = undefined
+        this.searchFilter.modelName = undefined
+      }else if(this.filter == 'modelName'){
+        this.searchFilter.modelName = this.searchText
+        this.searchFilter.vin = undefined
+        this.searchFilter.iccid = undefined
+        this.searchFilter.nemsSn = undefined
+        this.searchFilter.registrationPlate = undefined
+        this.searchFilter.region = undefined
+        this.searchFilter.pcode = undefined
       }
     }else{
       this.searchFilter.vin = undefined
@@ -237,6 +266,7 @@ export class VehicleSettingsComponent implements OnInit {
       this.searchFilter.registrationPlate = undefined
       this.searchFilter.region = undefined
       this.searchFilter.pcode = undefined
+      this.searchFilter.modelName = undefined
     }
 
     this.uiService.setCurrentPage(1);

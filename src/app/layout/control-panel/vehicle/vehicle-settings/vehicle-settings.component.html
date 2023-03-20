@@ -7,6 +7,7 @@
         <div class="value">
           <select [(ngModel)]="filter">
             <option [value]="'VIN'">VIN</option>
+            <option [value]="'modelName'">Model Name</option>
             <option [value]="'iccid'">iccid</option>
             <option [value]="'NEMS S/N'">NEMS S/N</option>
             <option [value]="'Reg. number'">Reg. number</option>
@@ -35,7 +36,7 @@
         <label class="excel_btn selectItem" for="uploadExcel">
           <img src="assets/icon/excel_upload.png">
         </label>
-        <input id="uploadExcel" type="file" style="display: none;">
+        <input id="uploadExcel" type="file" style="display: none;" (change)="onBtnInport($event)">
 
         <div class="excel_btn selectItem" (click)="onBtExport()">
           <img src="assets/icon/excel_download.png">
