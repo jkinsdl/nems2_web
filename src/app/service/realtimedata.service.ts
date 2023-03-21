@@ -158,9 +158,10 @@ export class RealtimedataService {
 
     let httpParams = new HttpParams()
 
-    if(filter.packetTime  != undefined){
-      httpParams = httpParams.set("packetTime",filter.packetTime)
+    if(filter.time  != undefined){
+      httpParams = httpParams.set("time",filter.time)
     }
+
 
     return this.http.get<any>(url, {params:httpParams, observe: "response" })
   }

@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
 import { Subscription } from 'rxjs';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
@@ -12,6 +12,7 @@ import { CheckboxFilterComponent } from 'src/app/component/checkbox-filter/check
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { ModifyAlarmComponent } from 'src/app/component/modify-alarm/modify-alarm.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
 import { UserService } from 'src/app/service/user.service';
 import { UtilService } from 'src/app/service/util.service';
@@ -34,7 +35,7 @@ export class AlarmComponent implements OnInit {
     private dialog: MatDialog,
     private _formBuilder: FormBuilder,
     private actRoute: ActivatedRoute,
-    private userService : UserService
+    private realtimeSerivce : RealtimedataService
   ) { }
 
 
@@ -188,7 +189,7 @@ export class AlarmComponent implements OnInit {
 
     this.issueId = parseInt(this.actRoute.snapshot.paramMap.get('issueId'))
 
-    /*setTimeout(()=>{
+    setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
       this.map = new mapboxgl.Map({
         container: 'map',
@@ -197,7 +198,27 @@ export class AlarmComponent implements OnInit {
         center: [this.lng, this.lat]
       });
       this.map.addControl(new mapboxgl.NavigationControl());
-    },1)*/
+
+      this.map.on('load', () => {
+        this.map.addSource('realtimedataLocation',{
+          type: 'geojson'
+        })
+
+        this.map.addLayer({
+          id: 'realtimedata-location-clusters',
+          type: 'circle',
+          source: 'realtimedataLocation',
+          paint: {
+            'circle-color': '#11b4da',
+            'circle-radius': 4,
+            'circle-stroke-width': 3,
+            'circle-stroke-color': '#fff'
+          }
+        });
+
+      })
+
+    },1)
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
 
       this.currentPage = page
@@ -409,6 +430,44 @@ export class AlarmComponent implements OnInit {
       },error=>{
         console.log(error)
       })
+
+      let f = new SearchFilter()
+      f.vin = this.selectionAlarm.vin
+      f.time = this.selectionAlarm.createTime
+      /*f.vin = "2051508135510957F"
+      f.time = "2023-02-16T04:11:46.085Z"*/
+
+
+      this.realtimeSerivce.getRealtimedataInfoVin(f).subscribe(res=>{
+        console.log(res)
+        let featuresList : any[] = []
+        featuresList.push({
+          "type": "Feature",
+          "properties": {
+            "vin" : res.body.vin
+          },
+          "geometry": {
+            "type": "Point",
+              "coordinates": [res.body.location.longitude, res.body.location.latitude]
+            },
+        })
+
+        let source = (this.map.getSource("realtimedataLocation") as GeoJSONSource).setData({
+          "type": "FeatureCollection",
+          "features": featuresList
+        });
+
+        this.map.flyTo({
+          center: [res.body.location.longitude,res.body.location.latitude],
+          duration: 1500,
+          zoom: 10
+        });
+
+      },error=>{
+        console.log()
+      })
+
+
     }
   }
 
