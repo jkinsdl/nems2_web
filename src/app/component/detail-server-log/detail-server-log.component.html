@@ -1,0 +1,21 @@
+<div class="serverLogPopup">
+  <div class="popupTitle">
+    <div class="text">
+      Server Log
+    </div>
+    <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+
+  <div class="serverLogRow" *ngFor="let logData of serverLogData | keyvalue">
+    <div class="serverLogKey" >
+      {{logData.key}}
+    </div>
+
+    <div class="ServerLogValue" [title]="logData.value">
+      {{logData.value}}
+    </div>
+  </div>
+
+
+</div>

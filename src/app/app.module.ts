@@ -107,6 +107,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CheckboxFilterComponent } from './component/checkbox-filter/checkbox-filter.component';
 import { BtnCellRendererComponent } from './component/btn-cell-renderer/btn-cell-renderer.component';
 import { ToggleCellRendererComponent } from './component/toggle-cell-renderer/toggle-cell-renderer.component';
+import { DetailServerLogComponent } from './component/detail-server-log/detail-server-log.component';
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: 'l, LTS'
@@ -199,7 +200,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     ModifyAlarmComponent,
     CheckboxFilterComponent,
     BtnCellRendererComponent,
-    ToggleCellRendererComponent
+    ToggleCellRendererComponent,
+    DetailServerLogComponent
   ],
   imports: [
     BrowserModule,

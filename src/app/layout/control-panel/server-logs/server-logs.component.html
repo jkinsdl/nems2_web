@@ -52,6 +52,7 @@
         [tooltipShowDelay]="0"
         [rowSelection]="'single'"
         (gridReady)="onGridReady($event)"
+        (rowDoubleClicked)="onGridRowDoubleClicked($event)"
         (filterChanged)="setSearch()">
       </ag-grid-angular>
 

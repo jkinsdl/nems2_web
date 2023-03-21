@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 import { CheckboxFilterComponent } from 'src/app/component/checkbox-filter/checkbox-filter.component';
+import { DetailServerLogComponent } from 'src/app/component/detail-server-log/detail-server-log.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { GbpacketService } from 'src/app/service/gbpacket.service';
@@ -21,6 +23,7 @@ export class ServerLogsComponent implements OnInit {
 
   constant : CommonConstant = new CommonConstant()
   constructor(
+    private dialog: MatDialog,
     private gbpacketService : GbpacketService,
     private utilService : UtilService,
     private uiService : UiService,
@@ -154,6 +157,21 @@ export class ServerLogsComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+  }
+
+  onGridRowDoubleClicked(e : any){
+    console.log(e)
+
+    const dialogRef = this.dialog.open( DetailServerLogComponent, {
+      data:{
+        serverLog : e.data
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+      }
+    });
+
   }
 
   onBtExport() {
