@@ -156,13 +156,26 @@ export class AlarmComponent implements OnInit {
   endDate : Date = null
 
   issueId : number
+  warningLevel : string
 
   commentsText : string = ""
 
   ngAfterViewInit() {
     console.log(this.issueId)
     if( this.issueId ){
-      this.vehiclewarningService.getVehiclewarnings(new SearchFilter()).subscribe(res=>{
+
+      this.stateToppings.controls['OPEN'].setValue(true)
+      this.stateToppings.controls['PROGRESS'].setValue(true)
+      this.stateToppings.controls['ERROR'].setValue(true)
+
+      if(this.warningLevel == "CRITICAL"){
+        this.warningLevelToppings.controls['CRITICAL'].setValue(true)
+      }else if(this.warningLevel == "MAJOR"){
+        this.warningLevelToppings.controls['MAJOR'].setValue(true)
+      }else if(this.warningLevel == "MINOR"){
+        this.warningLevelToppings.controls['MINOR'].setValue(true)
+      }
+      /*this.vehiclewarningService.getVehiclewarnings(new SearchFilter()).subscribe(res=>{
         this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
         this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
         for(let i = 0; i < res.body.entities.length; i++){
@@ -173,10 +186,9 @@ export class AlarmComponent implements OnInit {
         }
       },error=>{
         console.log(error)
-      })
-    }else {
-      this.getPageSize()
+      })*/
     }
+    this.getPageSize()
   }
 
   ngOnDestroy(): void {
@@ -188,6 +200,7 @@ export class AlarmComponent implements OnInit {
   ngOnInit(): void {
 
     this.issueId = parseInt(this.actRoute.snapshot.paramMap.get('issueId'))
+    this.warningLevel = this.actRoute.snapshot.paramMap.get('warningLevel')
 
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"

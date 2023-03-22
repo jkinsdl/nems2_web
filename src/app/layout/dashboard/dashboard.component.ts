@@ -511,9 +511,7 @@ export class DashboardComponent implements OnInit {
     filter.warningLevel.push('CRITICAL')
     filter.state = []
     filter.state.push('OPEN')
-    filter.state.push('UNKNOWN')
     filter.state.push('PROGRESS')
-    filter.state.push('PREOPEN')
     filter.state.push('ERROR')
     filter.desc = []
     filter.desc.push('CREATE_TIME')
@@ -691,7 +689,8 @@ export class DashboardComponent implements OnInit {
   }
 
   pageMoveAlarm(alarm : any){
-    this.router.navigateByUrl(`/main/alarm/${alarm.issueId})`);
+    console.log(alarm)
+    this.router.navigateByUrl(`/main/alarm/${alarm.issueId}/${alarm.warningLevel})`);
   }
 
   setPieChart(){

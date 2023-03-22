@@ -19,9 +19,8 @@ export class CheckboxFilterComponent implements IFilterAngularComp  {
 
   agInit(params: { toppings: any } & IFilterParams): void {
     this.params = params;
-
     this.toppings = params.toppings
-
+    console.log(this.toppings.value)
   }
 
   isFilterActive(): boolean {
@@ -39,6 +38,7 @@ export class CheckboxFilterComponent implements IFilterAngularComp  {
   }
 
   updateFilter() {
+    console.log("!")
     this.params.filterChangedCallback();
   }
 

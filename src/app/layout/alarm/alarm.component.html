@@ -341,18 +341,11 @@
             <div class="alarmComment" *ngFor="let comment of selectionAlarm.comments">
               <div class="commentUser">{{comment.user.username}}</div>
               <div class="comment">
-
                   {{comment.comment}}
-
                   <span style="font-size: 12px;">
                     {{comment.createAt | dateformat}}
                   </span>
-
                   <span *ngIf="comment.isNewIcon" style="background-color: red; padding: 0px 7px; color: white; font-size: 10px; border-radius: 5px;">N</span>
-
-                <!-- -->
-
-
               </div>
             </div>
           </div>
