@@ -510,10 +510,16 @@ export class DashboardComponent implements OnInit {
     filter.warningLevel = []
     filter.warningLevel.push('CRITICAL')
     filter.state = []
-    //filter.state.push('OPEN')
+    filter.state.push('OPEN')
+    filter.state.push('UNKNOWN')
+    filter.state.push('PROGRESS')
+    filter.state.push('PREOPEN')
+    filter.state.push('ERROR')
     filter.desc = []
     filter.desc.push('CREATE_TIME')
     filter.limit = Math.floor((this.gridHeight - 50 - 48 - 50) / 30)
+
+
 
     this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
       console.log(res)
