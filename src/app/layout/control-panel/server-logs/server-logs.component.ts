@@ -175,14 +175,22 @@ export class ServerLogsComponent implements OnInit {
   }
 
   onBtExport() {
-    this.searchFilter.offset = undefined
+
+    this.gbpacketService.getGbpacketExport(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.utilService.exportDownload('server_log.zip',res.body[0].data)
+    },error=>{
+      console.log(error)
+    })
+
+    /*this.searchFilter.offset = undefined
     this.searchFilter.limit = undefined
     this.gbpacketService.getGbpacket(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.utilService.gridDataToExcelData("Server Log", this.gridApi ,res.body.entities)
     },error=>{
       console.log(error)
-    })
+    })*/
   }
 
   setSearch(){

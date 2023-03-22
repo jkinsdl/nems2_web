@@ -156,4 +156,28 @@ export class GbpacketService {
     return this.http.get<any>(url, { params : httpParams, observe: "response" })
   }
 
+  getGbpacketExport(filter : SearchFilter){
+    var url = `${this.Url}/export`;
+    let httpParams = new HttpParams()
+
+
+    if(filter.begin != undefined){
+      httpParams = httpParams.set("begin", filter.begin)
+    }
+
+    if(filter.end != undefined){
+      httpParams = httpParams.set("end", filter.end)
+    }
+
+    if(filter.vin != undefined){
+      httpParams = httpParams.set("vin", filter.vin)
+    }
+
+    for(let i = 0; i < filter.request.length; i++){
+      httpParams = httpParams.append('request', filter.request[i]);
+    }
+
+    return this.http.get<any>(url, { params : httpParams, observe: "response" })
+  }
+
 }
