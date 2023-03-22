@@ -105,9 +105,7 @@ export class UserAccountComponent implements OnInit {
         pageSize : this.pageSize,
         page : this.currentPage
       }
-
       this.uiService.setPagination(pagination)
-
     },error=>{
       console.log(error)
     })

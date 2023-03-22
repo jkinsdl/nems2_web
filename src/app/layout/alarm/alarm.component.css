@@ -263,17 +263,23 @@
 }
 
 .comment{
-  width: calc(100% - 225px);
+  width: calc(100% - 200px);
   padding: 0 10px;
+}
+
+.comment .text{
+  float: left;
+}
+
+.commentDate{
+  float: left;
+  font-size: 12px;
+
 }
 
 .commentCreateTime{
   width: 120px;
   font-size: 12px;
-}
-
-.commentNew{
-  padding: 0 5px;
 }
 
 .commentList{

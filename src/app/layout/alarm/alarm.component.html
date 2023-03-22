@@ -28,19 +28,13 @@
         </div>
       </div>
 
-      <div class="gridBtn">
-        <!--<div class="excel_btn" [ngClass]="{'selectItem': gridApi != null && gridApi.getSelectedRows().length != 0}" (click)="alarmDelete()">
-          <img src="assets/icon/delete.png">
-        </div>
-        -->
-        <div class="excel_btn selectItem" (click)="onBtExport()">
-          <img src="assets/icon/excel_download.png">
-        </div>
-      </div>
-
       <div class="filter searchFilter">
         <div class="btn" (click)="setSearch()">
           Search
+        </div>
+
+        <div class="excel_btn selectItem" (click)="onBtExport()">
+          <img src="assets/icon/excel_download.png">
         </div>
       </div>
     </div>
@@ -327,7 +321,6 @@
 
       <div class="alarmDetailIssue">
         <div class="alarmArea">
-
           <div class="addInfoFilter">
             <div class="label" style="width: auto;">State </div>
             <div class="value">
@@ -339,42 +332,42 @@
                 <option [value]="'ERROR'">ERROR</option>
               </select>
             </div>
-
             <button mat-raised-button color="primary" [disabled]="gridApi == null || gridApi.getSelectedRows().length == 0" (click)="correctionState()">Correction</button>
-
           </div>
-
           <div class="addInfoFilter">
             <div class="label" style="width: auto;">Comments </div>
           </div>
-
           <div class="commentList">
             <div class="alarmComment" *ngFor="let comment of selectionAlarm.comments">
               <div class="commentUser">{{comment.user.username}}</div>
-              <div class="comment">{{comment.comment}} {{comment.createAt | dateformat}}</div>
-              <div class="commentNew">
+              <div class="comment">
 
-                <span *ngIf="comment.isNewIcon" style="background-color: red; padding: 3px 8px; color: white; font-size: 12px;">N</span>
+                  {{comment.comment}}
+
+                  <span style="font-size: 12px;">
+                    {{comment.createAt | dateformat}}
+                  </span>
+
+                  <span *ngIf="comment.isNewIcon" style="background-color: red; padding: 0px 7px; color: white; font-size: 10px; border-radius: 5px;">N</span>
+
+                <!-- -->
+
 
               </div>
             </div>
           </div>
-
           <div>
             <input [(ngModel)]="commentsText" type="text" style="width: 80%; padding: 10px 10px; margin: 5px;" [disabled]="gridApi == null || gridApi.getSelectedRows().length == 0">
             <button mat-raised-button color="primary" [disabled]="gridApi == null || gridApi.getSelectedRows().length == 0" (click)="applyComment()">Apply</button>
           </div>
-
         </div>
       </div>
-
       <div class="alarmTitle">
         <app-sub-title [title]="'LOCATION'"></app-sub-title>
       </div>
       <div class="alarmDetailMap">
         <div class="map" id="map"></div>
       </div>
-
     </div>
   </div>
 </div>

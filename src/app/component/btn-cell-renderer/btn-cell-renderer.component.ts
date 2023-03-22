@@ -10,7 +10,6 @@ export class BtnCellRendererComponent implements ILoadingCellRendererAngularComp
   params: any;
 
   agInit(params: { onlyRemove: boolean } & any): void {
-    console.log(params.onlyRemove)
     this.params = params;
   }
 

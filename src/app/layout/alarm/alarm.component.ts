@@ -41,7 +41,6 @@ export class AlarmComponent implements OnInit {
 
   isOpenWarningTypeFilter : boolean = false;
   warningTypeToppings = this._formBuilder.group({
-    NORMAL : false,
     TEMP_DIFF : false,
     BATTERY_HIGH_TEMP : false,
     POWER_BATTERY_OVER_VOLTAGE : false,
@@ -161,6 +160,7 @@ export class AlarmComponent implements OnInit {
   commentsText : string = ""
 
   ngAfterViewInit() {
+    console.log(this.issueId)
     if( this.issueId ){
       this.vehiclewarningService.getVehiclewarnings(new SearchFilter()).subscribe(res=>{
         this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
