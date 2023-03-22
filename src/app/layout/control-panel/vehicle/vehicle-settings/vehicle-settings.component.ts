@@ -20,6 +20,7 @@ import { CommonConstant } from 'src/app/util/common-constant';
 export class VehicleSettingsComponent implements OnInit {
 
   @ViewChild('vehicleSettingsGrid', { read: ElementRef }) vehicleSettingsGrid : ElementRef;
+  @ViewChild('uploadExcel', { read: ElementRef }) uploadExcel : ElementRef;
   constant : CommonConstant = new CommonConstant()
   constructor(
     private dialog: MatDialog,
@@ -174,9 +175,25 @@ export class VehicleSettingsComponent implements OnInit {
     this.gridApi = params.api;
   }
 
-  onBtnInport(event : any){
-    console.log(event.target.file)
+  async onBtnInport(event : any){
+    console.log(event.target.files)
+    let base64 = await this.utilService.getBase64(event.target.files[0])
 
+    let parameter = {
+      contents : base64
+    }
+
+    this.vehiclemanagerService.postVehiclemanagerVehicleinfoImport(parameter).subscribe(res=>{
+      console.log(res)
+      this.uploadExcel.nativeElement.value = "";
+      this.utilService.alertPopup("Vehicle Settings",
+      `Imported Number : ${res.body.importedNum} \n
+      Request Number : ${res.body.requestNum}`, this.constant.ALERT_CONFIRMATION)
+    },error=>{
+      console.log(error)
+      this.uploadExcel.nativeElement.value = "";
+      this.utilService.alertPopup("Vehicle Settings", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+    })
   }
 
   onBtExport(){

@@ -8,15 +8,15 @@
   </div>
 
   <div class="alertContents">
-    <div>
+    <pre style="font-family: 'notokr-medium';">
       {{contents}}
-    </div>
+    </pre>
   </div>
 
   <div class="alertBtnBox">
     <div class="btn ok" *ngIf="popupType == constant.POPUP_CHOICE" (click)="ok()">OK</div>
     <div class="btn cancel" *ngIf="popupType == constant.POPUP_CHOICE" (click)="close()">Cancel</div>
-    <div class="btn confirm" *ngIf="popupType == constant.POPUP_CONFIRM" (click)="close()">Confirm</div>
+    <div class="btn confirm" *ngIf="popupType == constant.POPUP_CONFIRM" [ngClass]="{'warning': alertType == constant.ALERT_WARNING}" (click)="close()">Confirm</div>
 
 
   </div>

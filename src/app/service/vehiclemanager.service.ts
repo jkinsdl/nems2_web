@@ -190,8 +190,10 @@ export class VehiclemanagerService {
 
   }
 
-  postVehiclemanagerVehicleinfoImport(){
+  postVehiclemanagerVehicleinfoImport(parameter : any){
+    var url = `${this.Url}/vehicleinfo/import`;
 
+    return this.http.post<any>(url, JSON.stringify(parameter), {observe: "response" })
   }
 
 }

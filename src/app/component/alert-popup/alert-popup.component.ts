@@ -27,7 +27,6 @@ export class AlertPopupComponent implements OnInit {
     this.contents = this.data.alertContents
     this.alertType = this.data.alertType
     this.popupType = this.data.popupType
-
   }
 
   ok(){

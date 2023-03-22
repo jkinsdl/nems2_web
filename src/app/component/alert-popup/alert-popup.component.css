@@ -50,6 +50,11 @@
 }
 
 .alertPopupContainer .alertBtnBox .confirm{
-  border: 1px solid red;
-  background-color: red;
+  border: 1px solid blue;
+  background-color: blue;
+}
+
+.warning{
+  border: 1px solid red !important;
+  background-color: red !important;
 }
