@@ -1,6 +1,10 @@
 <div class="otaManagementContainer">
   <div class="leftLayout whiteBoardBoax">
-
+    <div class="listTitleBox">
+      <div class="titleText">
+        MODELS
+      </div>
+    </div>
     <div class="leftListBox">
       <!--<div class="listItem" *ngFor="let model of modelList.modelList">
 
@@ -64,7 +68,16 @@
           {{selectModel.modelName}}
         </div>
         <div class="listBtnBox">
-          <div class="otaBtn add" (click)="leftListAddModal()">
+
+          <div class="otaBtn" (click)="leftListAddModal()">
+            <img src="assets/icon/add-button.png">
+          </div>
+
+          <div class="otaBtn" (click)="leftListRemove()">
+            <img src="assets/icon/delete.png">
+          </div>
+
+          <!--<div class="otaBtn add" (click)="leftListAddModal()">
             <img src="assets/icon/more.png">
             &nbsp;ADD
           </div>
@@ -76,6 +89,7 @@
             <img src="assets/icon/upload.png">
             &nbsp;UPLOAD
           </div>
+          -->
         </div>
       </div>
 
@@ -180,8 +194,16 @@
 
       <div class="filter">
         <div class="label">VIN</div>
-        <div class="value">
-          <input type="text" [(ngModel)]="inputVinText">
+        <div class="value" >
+          <input (focus)="vinSearchListShow=true" (focusout)="vinInputFocusout()" cdkTrapFocus type="text" [(ngModel)]="inputVinText" style="width: 300px;" (ngModelChange)="getVehiclemanagerStaticinfo()" [disabled]="selectFirmware == null">
+          <div class="vinSearchList" *ngIf="inputVinText != '' && vinSearchListShow">
+            <div class="searchListItem" *ngFor="let vehicle of searchVehicleList" (mousedown)="vehicleItemClick(vehicle.vin)">
+              {{vehicle.vin}}
+            </div>
+            <div *ngIf="searchVehicleList.length==0" style="font-weight: bold; color: gray;">
+              VIN not found.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -189,9 +211,9 @@
         <button mat-icon-button (click)="inputVinTextClose()" [disabled]="inputVinText == ''">
           <img src="assets/icon/close.png" [ngClass]="{'imageDisabled': inputVinText == ''}">
         </button>
-
       </div>
     -->
+
       <div class="filter">
         <button mat-icon-button (click)="postDevicemanagersFirmwareFirmwareNo()" [disabled]="inputVinText == '' || selectFirmware == null">
           <img src="assets/icon/plus.png" [ngClass]="{'imageDisabled': inputVinText == ''  || selectFirmware == null}">
@@ -205,6 +227,14 @@
       </div>
 
       <div class="filter">
+        <button mat-icon-button (click)="importFirmwareVehiclesInput.click()" [disabled]="selectFirmware == null">
+          <img src="assets/icon/upload.png" [ngClass]="{'imageDisabled': selectFirmware == null}">
+        </button>
+        <input #importFirmwareVehiclesInput id="importFirmwareVehiclesInput" type="file" style="display: none;" (change)="importFirmwareVehicles($event)">
+      </div>
+
+
+      <!--<div class="filter">
         <button mat-icon-button>
           <img src="assets/icon/check.png">
         </button>
@@ -215,6 +245,7 @@
           <img src="assets/icon/check-box-empty.png">
         </button>
       </div>
+      -->
     </div>
 
     <div style="height: calc(100% - 62px);">

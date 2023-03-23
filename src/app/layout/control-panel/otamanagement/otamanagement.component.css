@@ -33,6 +33,7 @@
 
 .gridFilterBox{
   justify-content: end !important;
+  position: relative;
 }
 
 .otaManagementContainer .centerLayout .listBtnBox .otaBtn{
@@ -44,8 +45,8 @@
 }
 
 .otaManagementContainer .centerLayout .listBtnBox .otaBtn img{
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
 }
 
 .leftListBox{
@@ -178,4 +179,26 @@
     justify-content: center;
     font-size: 50px;
     color: gray;
+}
+
+.vinSearchList{
+  position: absolute;
+  z-index: 1;
+  background: white;
+  width: 294px;
+  padding: 5px;
+  border: 1px solid #9b9b9b;
+  top: 40px;
+  border-radius: 0px 0px 5px 5px;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.searchListItem{
+  padding: 5px;
+  cursor: pointer;
+}
+
+.searchListItem:hover{
+  background-color: rgb(240, 240, 240);
 }

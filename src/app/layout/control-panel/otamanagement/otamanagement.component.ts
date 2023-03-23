@@ -22,6 +22,7 @@ import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 export class OTAManagementComponent implements OnInit {
 
   @ViewChild('otaManagementGrid', { read: ElementRef }) otaManagementGrid : ElementRef;
+  @ViewChild('importFirmwareVehiclesInput', { read: ElementRef }) importFirmwareVehiclesInput : ElementRef;
 
   constant : CommonConstant = new CommonConstant()
   constructor(
@@ -77,6 +78,10 @@ export class OTAManagementComponent implements OnInit {
   currentPage : number = 1
 
   selectModel : any
+
+  searchVehicleList : any[] = []
+
+  vinSearchListShow : boolean = false
 
   ngAfterViewInit() {
     this.getPageSize()
@@ -175,9 +180,21 @@ export class OTAManagementComponent implements OnInit {
   }
 
   leftListRemove(){
+
+
+
     if(this.selectFirmware.firmwareName == undefined){
       return
     }
+
+
+    if(this.firmwareVehiclesList.entities.length != 0 ){
+
+      this.utilService.alertPopup("Unremovable Firmware", "If there is no vehicle using this firmware, it can be deleted",this.constant.ALERT_WARNING)
+
+      return
+    }
+
 
     const dialogRef = this.dialog.open( AlertPopupComponent, {
       data:{
@@ -209,9 +226,14 @@ export class OTAManagementComponent implements OnInit {
 
   rowOpen(item : any){
     console.log(item)
+    this.inputVinText = ""
     if(this.selectFirmware == item){
       this.selectFirmware = null
-      this.firmwareVehiclesList = {}
+      this.firmwareVehiclesList = {
+        count : 0,
+        entities : [],
+        link : {}
+      }
       let pagination = {
         count : 0,
         pageSize : this.pageSize,
@@ -260,6 +282,9 @@ export class OTAManagementComponent implements OnInit {
     }
     this.devicemanageService.postDevicemanagersFirmwareFirmwareNo(this.selectFirmware.firmwareName,parameter).subscribe(res=>{
       console.log(res)
+
+      this.getDevicemanagersFirmwareFirmwareNameVehicles()
+
     },error=>{
       console.log(error)
 
@@ -310,13 +335,53 @@ export class OTAManagementComponent implements OnInit {
 
   modelRowOpen(model : any){
     this.selectFirmware = null
+    this.inputVinText = "";
+    this.searchVehicleList = []
+    this.firmwareVehiclesList = {
+      count : 0,
+      entities : [],
+      link : {}
+    }
     if(this.selectModel == model){
       this.selectModel = null
     }else {
       this.selectModel = model
+      this.getDevicemanagersFirmware()
     }
-
-    this.getDevicemanagersFirmware()
-
   }
+
+  importFirmwareVehicles(event : any){
+    console.log(event.target.files)
+    this.importFirmwareVehiclesInput.nativeElement.value = "";
+  }
+
+  getVehiclemanagerStaticinfo(){
+    console.log(this.inputVinText)
+    if(this.inputVinText != ""){
+      let f = new SearchFilter()
+      f.vin = this.inputVinText
+      f.modelName = this.selectModel.modelName
+      this.vehiclemanagersService.getVehiclemanagerStaticinfo(f).subscribe(res=>{
+        console.log(res)
+        this.searchVehicleList = res.body.vehicleList
+      },error=>{
+        console.log(error)
+      })
+    }else{
+      this.searchVehicleList = []
+    }
+  }
+
+  vehicleItemClick(vin : string){
+    console.log("!@!@")
+    this.inputVinText = vin
+    this.getVehiclemanagerStaticinfo()
+  }
+
+  vinInputFocusout(){
+    setTimeout(()=>{
+      this.vinSearchListShow=false
+    },1)
+  }
+
 }
