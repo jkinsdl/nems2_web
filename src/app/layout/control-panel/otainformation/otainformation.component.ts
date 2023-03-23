@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { CheckboxFilterComponent } from 'src/app/component/checkbox-filter/checkbox-filter.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
@@ -19,25 +22,34 @@ export class OTAInformationComponent implements OnInit {
 
   constant : CommonConstant = new CommonConstant()
 
+
+
   constructor(
     private vehiclemanagerService : VehiclemanagerService,
+    private devicemanagerService : DevicemanagerService,
     private utilService : UtilService,
-    private uiService : UiService
+    private uiService : UiService,
+    private _formBuilder: FormBuilder,
   ) { }
+
+  stateToppings = this._formBuilder.group({
+    RESERVE : false,
+    WAITACK : false,
+    START : false,
+    DOWNLOADING : false,
+    FAIL : false,
+    DISCONNECT : false,
+    COMPLETE : false,
+  });
+
+
   columnDefs: ColDef[] = [
     { field: 'vin', headerName : 'VIN', tooltipField: 'vin'},
-    { field: 'batteryCode', headerName: 'batteryCode', tooltipField: 'batteryCode'},
-    { field: 'engineNo', headerName: 'engineNo', tooltipField: 'engineNo'},
-    { field: 'iccid', headerName : 'iccid', tooltipField: 'iccid'},
-    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName'},
-    { field: 'motorNo', headerName : 'motorNo', tooltipField: 'motorNo'},
-    { field: 'nemsSn', headerName : 'nemsSn', tooltipField: 'nemsSn'},
-    { field: 'purpose', headerName : 'purpose', tooltipField: 'purpose'},
-    { field: 'region', headerName : 'region', tooltipField: 'region'},
-    { field: 'registDate', headerName : 'registDate', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate' }},
-    { field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
-    { field: 'sOffDate', headerName : 'sOffDate', tooltipField: 'sOffDate'},
-    { field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
+    { field: 'firmwareName', headerName: 'Firmware Name', tooltipField: 'firmwareName'},
+    { field: 'currentState', headerName: 'State', tooltipField: 'currentState', filter : CheckboxFilterComponent, filterParams :  { toppings: this.stateToppings}},
+    { field: 'forceOta', headerName : 'Force OTA', tooltipField: 'forceOta'},
+    { field: 'start', headerName : 'Start', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'start', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'start' }},
+    { field: 'end', headerName : 'End', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'end', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'end' }}
   ];
 
   vehicle : any ={
@@ -70,30 +82,37 @@ export class OTAInformationComponent implements OnInit {
   ngOnInit(): void {
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getVehiclemanagerStaticinfo()
+      this.getDevicemanagersVehicleFirmware()
     })
   }
 
   getPageSize(){
     this.gridHeight = this.otaInformationGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getVehiclemanagerStaticinfo()
+    this.getDevicemanagersVehicleFirmware()
+
   }
 
   onResize(event : any){
     if(this.gridHeight != this.otaInformationGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.gridApi){
+      this.gridApi.sizeColumnsToFit()
+    }
   }
 
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+    this.gridApi.sizeColumnsToFit()
   }
 
   getVehiclemanagerStaticinfo(){
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.limit = this.pageSize
+
     this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.vehicle = res.body
@@ -111,6 +130,33 @@ export class OTAInformationComponent implements OnInit {
     })
   }
 
+  getDevicemanagersVehicleFirmware(){
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
+    this.searchFilter.state = []
+
+    for (const [key, value] of Object.entries(this.stateToppings.value)) {
+      if(value){
+        this.searchFilter.state.push(key)
+      }
+    }
+
+    this.devicemanagerService.getDevicemanagersVehicleFirmware(this.searchFilter).subscribe(res=>{
+      console.log(res)
+      this.vehicle = res.body
+
+      let pagination = {
+        count : this.vehicle.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+    },error=>{
+      console.log(error)
+    })
+  }
+
   onBtExport() {
     this.searchFilter.offset = undefined
     this.searchFilter.limit = undefined
@@ -123,62 +169,24 @@ export class OTAInformationComponent implements OnInit {
   }
 
   setSearch(){
-
-
     if(this.searchText != ""){
       if(this.filter == 'VIN'){
         this.searchFilter.vin = this.searchText
-        this.searchFilter.iccid = undefined
-        this.searchFilter.nemsSn = undefined
-        this.searchFilter.registrationPlate = undefined
-        this.searchFilter.region = undefined
-        this.searchFilter.pcode = undefined
-      }else if(this.filter == 'iccid'){
-        this.searchFilter.iccid = this.searchText
+        this.searchFilter.firmwareName = undefined
+      }else if(this.filter == 'firmware_name'){
+        this.searchFilter.firmwareName = this.searchText
         this.searchFilter.vin = undefined
-        this.searchFilter.nemsSn = undefined
-        this.searchFilter.registrationPlate = undefined
-        this.searchFilter.region = undefined
-        this.searchFilter.pcode = undefined
-      }else if(this.filter == 'NEMS S/N'){
-        this.searchFilter.nemsSn = this.searchText
-        this.searchFilter.vin = undefined
-        this.searchFilter.iccid = undefined
-        this.searchFilter.registrationPlate = undefined
-        this.searchFilter.region = undefined
-        this.searchFilter.pcode = undefined
-      }else if(this.filter == 'Reg. number'){
-        this.searchFilter.registrationPlate = this.searchText
-        this.searchFilter.vin = undefined
-        this.searchFilter.iccid = undefined
-        this.searchFilter.nemsSn = undefined
-        this.searchFilter.region = undefined
-        this.searchFilter.pcode = undefined
-      }else if(this.filter == 'region'){
-        this.searchFilter.region = this.searchText
-        this.searchFilter.vin = undefined
-        this.searchFilter.iccid = undefined
-        this.searchFilter.nemsSn = undefined
-        this.searchFilter.registrationPlate = undefined
-        this.searchFilter.pcode = undefined
-      }else if(this.filter == 'pcode'){
-        this.searchFilter.pcode = this.searchText
-        this.searchFilter.vin = undefined
-        this.searchFilter.iccid = undefined
-        this.searchFilter.nemsSn = undefined
-        this.searchFilter.registrationPlate = undefined
-        this.searchFilter.region = undefined
       }
     }else{
       this.searchFilter.vin = undefined
-      this.searchFilter.iccid = undefined
-      this.searchFilter.nemsSn = undefined
-      this.searchFilter.registrationPlate = undefined
-      this.searchFilter.region = undefined
-      this.searchFilter.pcode = undefined
+      this.searchFilter.firmwareName = undefined
     }
-
 
     this.uiService.setCurrentPage(1);
   }
+
+  changeFilter(){
+    this.uiService.setCurrentPage(1);
+  }
 }
+

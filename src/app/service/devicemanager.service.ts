@@ -298,4 +298,46 @@ export class DevicemanagerService {
     return this.http.post<any>(url, JSON.stringify(parameter), { observe: "response" })
   }
 
+
+  getDevicemanagersVehicleFirmware(filter : SearchFilter){
+    var url = `${this.Url}/vehicle/firmware`;
+    let httpParams = new HttpParams()
+
+    if(filter.asc != undefined){
+      for(let i = 0; i < filter.asc.length; i++){
+        httpParams = httpParams.append('asc', filter.asc[i]);
+      }
+    }
+
+    if(filter.desc != undefined){
+      for(let i = 0; i < filter.desc.length; i++){
+        httpParams = httpParams.append('desc', filter.desc[i]);
+      }
+    }
+
+    if(filter.limit != undefined){
+      httpParams = httpParams.set("limit", filter.limit)
+    }
+
+    if(filter.offset != undefined){
+      httpParams = httpParams.set("offset", filter.offset)
+    }
+
+    if(filter.firmwareName != undefined){
+      httpParams = httpParams.set("firmwareName", filter.firmwareName)
+    }
+
+    if(filter.vin != undefined){
+      httpParams = httpParams.set("vin", filter.vin)
+    }
+
+    for(let i = 0; i < filter.state.length; i++){
+      httpParams = httpParams.append('state', filter.state[i]);
+    }
+
+
+
+    return this.http.get<any>(url, {params : httpParams, observe: "response" })
+  }
+
 }

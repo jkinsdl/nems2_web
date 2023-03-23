@@ -8,11 +8,7 @@
         <div class="value">
           <select [(ngModel)]="filter">
             <option [value]="'VIN'">VIN</option>
-            <option [value]="'iccid'">iccid</option>
-            <option [value]="'NEMS S/N'">NEMS S/N</option>
-            <option [value]="'Reg. number'">Reg. number</option>
-            <option [value]="'region'">region</option>
-            <option [value]="'pcode'">pcode</option>
+            <option [value]="'firmware_name'">Firmware Name</option>
           </select>
         </div>
       </div>
@@ -75,11 +71,11 @@
           <img src="assets/icon/excel_upload.png">
         </label>
         <input id="uploadExcel" type="file" style="display: none;">
-        -->
+
         <div class="excel_btn selectItem" (click)="onBtExport()">
           <img src="assets/icon/excel_download.png">
         </div>
-
+        -->
         <div class="btn" (click)="setSearch()">
           Search
         </div>
@@ -89,11 +85,12 @@
     <div class="OTAInformationContents">
       <ag-grid-angular #otaInformationGrid style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
         class="ag-theme-alpine"
-        [rowData]="vehicle.vehicleList"
+        [rowData]="vehicle.entities"
         [columnDefs]="columnDefs"
         [tooltipShowDelay]="0"
         [rowSelection]="'single'"
-        (gridReady)="onGridReady($event)">
+        (gridReady)="onGridReady($event)"
+        (filterChanged)="changeFilter()">
       </ag-grid-angular>
 
       <div style="width: 100%; height: 50px;">
