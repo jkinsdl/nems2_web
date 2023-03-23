@@ -153,6 +153,12 @@ export class GbpacketService {
       }
     }
 
+    if(filter.excludeState != undefined){
+      for(let i = 0; i < filter.excludeState.length; i++){
+        httpParams = httpParams.append('excludeState', filter.excludeState[i]);
+      }
+    }
+
     return this.http.get<any>(url, { params : httpParams, observe: "response" })
   }
 

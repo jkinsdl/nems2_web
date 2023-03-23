@@ -108,6 +108,9 @@ import { CheckboxFilterComponent } from './component/checkbox-filter/checkbox-fi
 import { BtnCellRendererComponent } from './component/btn-cell-renderer/btn-cell-renderer.component';
 import { ToggleCellRendererComponent } from './component/toggle-cell-renderer/toggle-cell-renderer.component';
 import { DetailServerLogComponent } from './component/detail-server-log/detail-server-log.component';
+import { LocationJumpComponent } from './layout/control-panel/datect-error/location-jump/location-jump.component';
+import { MileageJumpComponent } from './layout/control-panel/datect-error/mileage-jump/mileage-jump.component';
+import { AbnormalVehicleStateComponent } from './layout/control-panel/datect-error/abnormal-vehicle-state/abnormal-vehicle-state.component';
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: 'l, LTS'
@@ -201,7 +204,10 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     CheckboxFilterComponent,
     BtnCellRendererComponent,
     ToggleCellRendererComponent,
-    DetailServerLogComponent
+    DetailServerLogComponent,
+    LocationJumpComponent,
+    MileageJumpComponent,
+    AbnormalVehicleStateComponent
   ],
   imports: [
     BrowserModule,

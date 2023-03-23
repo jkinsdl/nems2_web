@@ -82,4 +82,7 @@ export class SearchFilter{
   eMail : string
   aliTextureId : string
   aliVoiceId : string
+
+  excludeState : string[]
+
 }

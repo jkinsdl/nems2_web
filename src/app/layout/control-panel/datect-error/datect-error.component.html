@@ -3,7 +3,7 @@
   <div class="datectErrorLayout whiteBoardBoax">
 
     <div class="tabListContainer">
-      <div class="tab" [ngClass]="{select: router.url.indexOf('abnormalVehicleRealTime') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleRealTime']">
+      <!--<div class="tab" [ngClass]="{select: router.url.indexOf('abnormalVehicleRealTime') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleRealTime']">
         Abnormal vehicle real-time
       </div>
       <div class="tab" [ngClass]="{select: router.url.indexOf('abnormalVehicleHistory') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleHistory']">
@@ -14,6 +14,16 @@
       </div>
       <div class="tab" [ngClass]="{select: router.url.indexOf('offlineVehicleHistory') > -1 }" [routerLink]="['/main/control/detectError/offlineVehicleHistory']">
         Offline vehicle history
+      </div>
+      -->
+      <div class="tab" [ngClass]="{select: router.url.indexOf('abnormalVehicleState') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleState']">
+        Abnormal Vehicle State
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('locationJump') > -1 }" [routerLink]="['/main/control/detectError/locationJump']">
+        Location Jump
+      </div>
+      <div class="tab" [ngClass]="{select: router.url.indexOf('mileageJump') > -1 }" [routerLink]="['/main/control/detectError/mileageJump']">
+        Mileage Jump
       </div>
     </div>
 

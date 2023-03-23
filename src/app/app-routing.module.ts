@@ -52,6 +52,9 @@ import { UserChargingPatternAnalysisComponent } from './layout/statistics/user-c
 import { WarningStatisticsComponent } from './layout/statistics/warning-statistics/warning-statistics.component';
 import { MainComponent } from './main/main.component';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { MileageJumpComponent } from './layout/control-panel/datect-error/mileage-jump/mileage-jump.component';
+import { LocationJumpComponent } from './layout/control-panel/datect-error/location-jump/location-jump.component';
+import { AbnormalVehicleStateComponent } from './layout/control-panel/datect-error/abnormal-vehicle-state/abnormal-vehicle-state.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -118,7 +121,10 @@ const routes: Routes = [
         {path : 'abnormalVehicleRealTime', canActivate: [AuthGuard], component:AbnormalVehicleRealTimeComponent},
         {path : 'abnormalVehicleHistory', canActivate: [AuthGuard], component:AbnormalVehicleHistoryComponent},
         {path : 'offlineVehicleRealTime', canActivate: [AuthGuard], component:OfflineVehicleRealTimeComponent},
-        {path : 'offlineVehicleHistory', canActivate: [AuthGuard], component:OfflineVehicleHistoryComponent}
+        {path : 'offlineVehicleHistory', canActivate: [AuthGuard], component:OfflineVehicleHistoryComponent},
+        {path : 'abnormalVehicleState', canActivate: [AuthGuard], component:AbnormalVehicleStateComponent},
+        {path : 'locationJump', canActivate: [AuthGuard], component:LocationJumpComponent},
+        {path : 'mileageJump', canActivate: [AuthGuard], component:MileageJumpComponent},
       ]},
     ]},
   ]},

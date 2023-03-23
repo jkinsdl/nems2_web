@@ -196,7 +196,7 @@
             <img src="assets/icon/push_alarm_icon.png">
             <span *ngIf="menuMode == 1">Push Alarm</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('detectError') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleRealTime']"  (click)="changeMenu('DETECT ERROR')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('detectError') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleState']"  (click)="changeMenu('DETECT ERROR')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
             <img src="assets/icon/datect_error_icon.png">
             <span *ngIf="menuMode == 1">Detect Error</span>
           </div>
