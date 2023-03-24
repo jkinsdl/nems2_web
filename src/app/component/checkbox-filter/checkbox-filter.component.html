@@ -1,6 +1,6 @@
 <div class="filter">
   <section [formGroup]="toppings" >
-    <p *ngFor="let item of toppings.value | keyvalue"><mat-checkbox [color]="'primary'" [formControlName]="$any(item.key)" (change)="updateFilter()">{{item.key}}</mat-checkbox></p>
+    <p *ngFor="let item of toppings.value | keyvalue"><mat-checkbox [color]="'primary'" [formControlName]="$any(item.key)" (change)="updateFilter()">{{item.key.toString().substr(2)}}</mat-checkbox></p>
   </section>
 
 </div>

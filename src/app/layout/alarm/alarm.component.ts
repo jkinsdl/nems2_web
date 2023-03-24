@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,9 +13,7 @@ import { ModifyAlarmComponent } from 'src/app/component/modify-alarm/modify-alar
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
-import { UserService } from 'src/app/service/user.service';
 import { UtilService } from 'src/app/service/util.service';
-import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 @Component({
@@ -41,45 +38,43 @@ export class AlarmComponent implements OnInit {
 
   isOpenWarningTypeFilter : boolean = false;
   warningTypeToppings = this._formBuilder.group({
-    TEMP_DIFF : false,
-    BATTERY_HIGH_TEMP : false,
-    POWER_BATTERY_OVER_VOLTAGE : false,
-    POWER_BATTERY_UNDER_VOLTAGE : false,
-    SOC_LOW : false,
-    SINGLE_BATTERY_OVER_VOLTAGE : false,
-    SINGLE_BATTERY_UNDER_VOLTAGE : false,
-    SOC_TOO_HIGH : false,
-    SOC_JUMP : false,
-    POWER_BATTERY_MISS_MATCH : false,
-    POOR_BATTERY_UNIFORMILY : false,
-    INSULATION : false,
-    DCDC_TEMP : false,
-    BREAK_SYSTEM : false,
-    DCDC_STATUS : false,
-    MOTOR_CONTROLLER_TEMP : false,
-    HIGH_VOLTAGE_INTERLOCK_STATUS : false,
-    MOTOR_TEMP : false,
-    STORAGE_OVER_CHARGE : false
+    _aTEMP_DIFF : false,
+    _bBATTERY_HIGH_TEMP : false,
+    _cPOWER_BATTERY_OVER_VOLTAGE : false,
+    _dPOWER_BATTERY_UNDER_VOLTAGE : false,
+    _eSOC_LOW : false,
+    _fSINGLE_BATTERY_OVER_VOLTAGE : false,
+    _gSINGLE_BATTERY_UNDER_VOLTAGE : false,
+    _hSOC_TOO_HIGH : false,
+    _iSOC_JUMP : false,
+    _jPOWER_BATTERY_MISS_MATCH : false,
+    _kPOOR_BATTERY_UNIFORMILY : false,
+    _lINSULATION : false,
+    _mDCDC_TEMP : false,
+    _nBREAK_SYSTEM : false,
+    _oDCDC_STATUS : false,
+    _pMOTOR_CONTROLLER_TEMP : false,
+    _qHIGH_VOLTAGE_INTERLOCK_STATUS : false,
+    _rMOTOR_TEMP : false,
+    _sSTORAGE_OVER_CHARGE : false
   });
 
   isOpenWarningLevelFilter : boolean = false;
   warningLevelToppings = this._formBuilder.group({
-    MINOR : false,
-    MAJOR : false,
-    CRITICAL : false,
-    ABNORMAL : false,
-    INVAILD : false,
+    _1MINOR : false,
+    _2MAJOR : false,
+    _3CRITICAL : false,
+    _4ABNORMAL : false,
+    _5INVAILD : false,
   });
 
-
-  stateToppings = this._formBuilder.group({
-    OPEN : false,
-    PROGRESS : false,
-    RESOLVED : false,
-    CLOSED : false,
-    ERROR : false,
+  stateToppings : any = this._formBuilder.group({
+    _1OPEN : false,
+    _2PROGRESS : false,
+    _3RESOLVED : false,
+    _4CLOSED : false,
+    _5ERROR : false,
   });
-
 
   columnDefs: ColDef[] = [
     { field: 'vin',headerName: "VIN", tooltipField: 'vin', width:170},
@@ -198,6 +193,15 @@ export class AlarmComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    let arr = [{key:"test3", value:'test1'},{key:"test1", value:'test2'},{key:"test2", value:'test3'}]
+    let obj : any = {}
+
+    arr.forEach(data => {
+      obj[data.key] = data.value
+    })
+
+    console.log(obj)
 
     this.issueId = parseInt(this.actRoute.snapshot.paramMap.get('issueId'))
     this.warningLevel = this.actRoute.snapshot.paramMap.get('warningLevel')
@@ -341,21 +345,21 @@ export class AlarmComponent implements OnInit {
     this.searchFilter.desc.push('CREATE_TIME')
     for (const [key, value] of Object.entries(this.warningTypeToppings.value)) {
       if(value){
-        this.searchFilter.warningType.push(key)
+        this.searchFilter.warningType.push(key.substr(2))
       }
     }
 
     this.searchFilter.warningLevel = []
     for (const [key, value] of Object.entries(this.warningLevelToppings.value)) {
       if(value){
-        this.searchFilter.warningLevel.push(key)
+        this.searchFilter.warningLevel.push(key.substr(2))
       }
     }
 
     this.searchFilter.state = []
     for (const [key, value] of Object.entries(this.stateToppings.value)) {
       if(value){
-        this.searchFilter.state.push(key)
+        this.searchFilter.state.push(key.substr(2))
       }
     }
 

@@ -31,22 +31,22 @@ export class ServerLogsComponent implements OnInit {
   ) { }
 
   requestToppings = this._formBuilder.group({
-    VEHICLE_LOGIN : false,
-    INFORMATION : false,
-    ADDITIONAL : false,
-    VEHICLE_LOGOUT : false,
-    PLATFORM_LOGIN : false,
-    PLATFORM_LOGOUT : false,
-    VEHICLE_HEARTBEAT : false,
-    VEHICLE_SYNC : false,
-    VEHICLE_QUERY : false,
-    VEHICLE_SETTING : false,
-    VEHICLE_CONTROL : false,
-    PLATFORM_CUSTOM_DATA_REQUEST : false,
-    PLATFORM_CUSTOM_DATA_STATIC_INFO : false,
-    PLATFORM_CUSTOM_TEST_TERMINAL : false,
-    PLATFORM_CUSTOM_TEST_TERMIANL_RESET : false,
-    PLATFORM_CUSTOM_OTA_REPORT : false,
+    _aVEHICLE_LOGIN : false,
+    _bINFORMATION : false,
+    _cADDITIONAL : false,
+    _dVEHICLE_LOGOUT : false,
+    _ePLATFORM_LOGIN : false,
+    _fPLATFORM_LOGOUT : false,
+    _gVEHICLE_HEARTBEAT : false,
+    _hVEHICLE_SYNC : false,
+    _uVEHICLE_QUERY : false,
+    _jVEHICLE_SETTING : false,
+    _kVEHICLE_CONTROL : false,
+    _lPLATFORM_CUSTOM_DATA_REQUEST : false,
+    _mPLATFORM_CUSTOM_DATA_STATIC_INFO : false,
+    _nPLATFORM_CUSTOM_TEST_TERMINAL : false,
+    _oPLATFORM_CUSTOM_TEST_TERMIANL_RESET : false,
+    _pPLATFORM_CUSTOM_OTA_REPORT : false,
   });
 
 
@@ -117,7 +117,7 @@ export class ServerLogsComponent implements OnInit {
 
     for (const [key, value] of Object.entries(this.requestToppings.value)) {
       if(value){
-        this.searchFilter.request.push(key)
+        this.searchFilter.request.push(key.substr(2))
       }
     }
 

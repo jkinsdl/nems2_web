@@ -33,13 +33,13 @@ export class OTAInformationComponent implements OnInit {
   ) { }
 
   stateToppings = this._formBuilder.group({
-    RESERVE : false,
-    WAITACK : false,
-    START : false,
-    DOWNLOADING : false,
-    FAIL : false,
-    DISCONNECT : false,
-    COMPLETE : false,
+    _1RESERVE : false,
+    _2WAITACK : false,
+    _3START : false,
+    _4DOWNLOADING : false,
+    _5FAIL : false,
+    _6DISCONNECT : false,
+    _7COMPLETE : false,
   });
 
 
@@ -137,7 +137,7 @@ export class OTAInformationComponent implements OnInit {
 
     for (const [key, value] of Object.entries(this.stateToppings.value)) {
       if(value){
-        this.searchFilter.state.push(key)
+        this.searchFilter.state.push(key.substr(2))
       }
     }
 

@@ -26,17 +26,17 @@ export class AbnormalVehicleHistoryComponent implements OnInit {
   ) { }
 
   stateToppings = this._formBuilder.group({
-    UNKNOWN : false,
-    CARSTATE_INVALID : false,
-    LOCATIONSTATE_INVALID : false,
-    SPEED : false,
-    TOTAL_VOLT : false,
-    TOTAL_AMPHERE : false,
-    SOC : false,
-    LOCATION : false,
-    MILEAGE_JUMP : false,
-    DUPLICATED_AMPHERE : false,
-    RELAY_DELAY : false,
+    _aUNKNOWN : false,
+    _bCARSTATE_INVALID : false,
+    _cLOCATIONSTATE_INVALID : false,
+    _dSPEED : false,
+    _eTOTAL_VOLT : false,
+    _fTOTAL_AMPHERE : false,
+    _gSOC : false,
+    _hLOCATION : false,
+    _iMILEAGE_JUMP : false,
+    _jDUPLICATED_AMPHERE : false,
+    _kRELAY_DELAY : false,
   });
 
   columnDefs: ColDef[] = [
@@ -95,7 +95,7 @@ export class AbnormalVehicleHistoryComponent implements OnInit {
     this.searchFilter.state = []
     for (const [key, value] of Object.entries(this.stateToppings.value)) {
       if(value){
-        this.searchFilter.state.push(key)
+        this.searchFilter.state.push(key.substr(2))
       }
     }
 
