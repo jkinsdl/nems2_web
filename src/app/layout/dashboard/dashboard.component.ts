@@ -89,6 +89,10 @@ export class DashboardComponent implements OnInit {
 
   province_statistics_registration_count_data : any[] = []
   gridHeight : number
+
+
+  dashboardInterval : any = null
+
   onResize(event : any){
     console.log("onResize")
     if(this.gridHeight != this.alarmGrid.nativeElement.offsetHeight){
@@ -105,6 +109,7 @@ export class DashboardComponent implements OnInit {
     //Add 'implements OnDestroy' to the class.
     if(this.menuMode$)this.menuMode$.unsubscribe()
     if(this.alarmCount$)this.alarmCount$.unsubscribe()
+    if(this.dashboardInterval)clearInterval(this.dashboardInterval)
   }
 
   ngOnInit(): void {
@@ -475,6 +480,17 @@ export class DashboardComponent implements OnInit {
       this.showProvinceLayer()
       this.getStatisticsRegistrationCount()
       //this.getProvinceStatisticsRegistrationCount()
+
+      this.dashboardInterval = setInterval(()=>{
+        this.getStatisticsCurrent()
+        //this.getStatisticsMileages()
+        //this.getStatisticsRegistrationSummary()
+        this.getStatisticsVehiclesSummary()
+        //this.getStatisticsWarningsSummary()
+        this.gridHeight = this.alarmGrid.nativeElement.offsetHeight
+        this.getVehiclewarnings()
+      },10000)
+
     });
   },1)
 
@@ -516,8 +532,6 @@ export class DashboardComponent implements OnInit {
     filter.desc = []
     filter.desc.push('CREATE_TIME')
     filter.limit = Math.floor((this.gridHeight - 50 - 48 - 50) / 30)
-
-
 
     this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
       console.log(res)
