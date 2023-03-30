@@ -24,9 +24,7 @@ import { MatSelectModule,} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SubTitleComponent } from './component/sub-title/sub-title.component';
 import { NgChartsModule } from 'ng2-charts';
-import { CreateStatisticsPlanComponent } from './component/create-statistics-plan/create-statistics-plan.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { PlayStatisticsPlanComponent } from './component/play-statistics-plan/play-statistics-plan.component';
 import { NgxNativeDateModule, NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule, NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
@@ -37,7 +35,6 @@ import { AddVehicleComponent } from './component/add-vehicle/add-vehicle.compone
 import { AddPublicPlatformManagementComponent } from './component/add-public-platform-management/add-public-platform-management.component';
 import { AddPublicPlatformMappingComponent } from './component/add-public-platform-mapping/add-public-platform-mapping.component';
 import { AddPushAlarmComponent } from './component/add-push-alarm/add-push-alarm.component';
-import { WarningIssueComponent } from './component/warning-issue/warning-issue.component';
 import { DetailMonitoringComponent } from './layout/monitoring/detail-monitoring/detail-monitoring.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { HttpClientModule } from '@angular/common/http';
@@ -50,7 +47,6 @@ import { NoopInterceptor } from './shared/intercept/noop-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import { AddOTAManagementComponent } from './component/add-otamanagement/add-otamanagement.component';
-import { UploadOTAManagementComponent } from './component/upload-otamanagement/upload-otamanagement.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgTerminalModule } from 'ng-terminal';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -79,8 +75,6 @@ import { DateformatPipe } from './shared/pipes/dateformat.pipe';
 import { GridTooltipComponent } from './component/grid-tooltip/grid-tooltip.component';
 import { InfoDetailComponent } from './component/info-detail/info-detail.component';
 import { GridPageComponent } from './component/grid-page/grid-page.component';
-import { ModifyAlarmComponent } from './component/modify-alarm/modify-alarm.component';
-
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CheckboxFilterComponent } from './component/checkbox-filter/checkbox-filter.component';
 import { BtnCellRendererComponent } from './component/btn-cell-renderer/btn-cell-renderer.component';
@@ -122,21 +116,17 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     MainComponent,
     DashboardComponent,
     SubTitleComponent,
-    CreateStatisticsPlanComponent,
-    PlayStatisticsPlanComponent,
     AddUserComponent,
     AlertPopupComponent,
     AddVehicleComponent,
     AddPublicPlatformManagementComponent,
     AddPublicPlatformMappingComponent,
     AddPushAlarmComponent,
-    WarningIssueComponent,
     DetailMonitoringComponent,
     AlarmComponent,
     MapMarkerDetailComponent,
     MapMarkerDetailVehicleInformationComponent,
     AddOTAManagementComponent,
-    UploadOTAManagementComponent,
     RemoteControlStateComponent,
     ConfigureComponent,
     AddRegisterRemoteSettingComponent,
@@ -156,7 +146,6 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     GridTooltipComponent,
     InfoDetailComponent,
     GridPageComponent,
-    ModifyAlarmComponent,
     CheckboxFilterComponent,
     BtnCellRendererComponent,
     ToggleCellRendererComponent,

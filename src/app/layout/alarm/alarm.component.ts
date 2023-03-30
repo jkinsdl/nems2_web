@@ -9,7 +9,6 @@ import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.c
 import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 import { CheckboxFilterComponent } from 'src/app/component/checkbox-filter/checkbox-filter.component';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
-import { ModifyAlarmComponent } from 'src/app/component/modify-alarm/modify-alarm.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
@@ -241,34 +240,6 @@ export class AlarmComponent implements OnInit {
       this.currentPage = page
       this.getPageSize()
     })
-  }
-
-  alarmModify(){
-    if(this.gridApi.getSelectedRows().length != 0){
-      const dialogRef = this.dialog.open( ModifyAlarmComponent, {
-        data : {
-          alarm : this.gridApi.getSelectedRows()[0]
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          console.log(result)
-          let parameter = {
-            state : result.warningIssue.state,
-          }
-
-          this.vehiclewarningService.putVehiclewarningsIssueId(result.warningIssue.issueId, parameter).subscribe(res=>{
-            console.log(res)
-            this.getVehiclewarnings()
-          },error=>{
-            console.log(error)
-          })
-
-          //this.getVehiclewarnings()
-
-        }
-      });
-    }
   }
 
   alarmDelete(field: any){

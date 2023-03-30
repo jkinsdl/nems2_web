@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddOTAManagementComponent } from 'src/app/component/add-otamanagement/add-otamanagement.component';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
 import { CommonConstant } from 'src/app/util/common-constant';
-import { UploadOTAManagementComponent } from 'src/app/component/upload-otamanagement/upload-otamanagement.component';
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UiService } from 'src/app/service/ui.service';
@@ -207,19 +206,6 @@ export class OTAManagementComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         this.deleteDevicemanagersFirmwareFirmwareName()
-      }
-    });
-  }
-
-
-
-  leftListUpload(){
-    const dialogRef = this.dialog.open( UploadOTAManagementComponent, {
-
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-
       }
     });
   }
