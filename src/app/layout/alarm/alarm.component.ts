@@ -466,7 +466,7 @@ export class AlarmComponent implements OnInit {
           "geometry": {
             "type": "Point",
               "coordinates": [res.body.location.longitude, res.body.location.latitude]
-            },
+          },
         })
 
         let source = (this.map.getSource("realtimedataLocation") as GeoJSONSource).setData({

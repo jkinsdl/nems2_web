@@ -1092,7 +1092,6 @@ export class DetailMonitoringComponent implements OnInit {
     this.map.setLayoutProperty('province-statistics-registration-count-clusters', 'visibility', 'none');
     this.map.setLayoutProperty("province-statistics-registration-count-text", 'visibility', 'none');
 
-
     this.map.setLayoutProperty("statistics-registration-count-clusters", 'visibility', 'visible');
     this.map.setLayoutProperty("statistics-registration-count-text", 'visibility', 'visible');
   }

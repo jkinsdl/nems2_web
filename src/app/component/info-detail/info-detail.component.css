@@ -28,3 +28,8 @@
   border-bottom: 1px solid #e3e3e3;
 }
 
+#popupmap{
+  height: 300px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

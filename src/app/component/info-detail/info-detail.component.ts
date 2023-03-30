@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import mapboxgl from 'mapbox-gl';
 import { UtilService } from 'src/app/service/util.service';
 
 @Component({
@@ -19,6 +20,8 @@ export class InfoDetailComponent implements OnInit {
   titleType : string = ""
   keyValueList : any[] = []
 
+  map: mapboxgl.Map;
+
   ngOnInit(): void {
     console.log(this.data)
     let rowData : any
@@ -31,6 +34,51 @@ export class InfoDetailComponent implements OnInit {
     }else if(this.data.type == 'location'){
       this.titleType = "LOCATION"
       rowData = this.data.info.location
+
+      setTimeout(()=>{
+        mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
+        this.map = new mapboxgl.Map({
+          container: 'popupmap',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          zoom: 12,
+          center: [rowData.longitude, rowData.latitude]
+        });
+        this.map.addControl(new mapboxgl.NavigationControl());
+
+        this.map.on('load', () => {
+          this.map.addSource('realtimedataLocation',{
+            type: 'geojson',
+            data : {
+              type: "FeatureCollection",
+              features: [
+                {
+                  "type": "Feature",
+                  "properties": {},
+                  "geometry": {
+                    "type": "Point",
+                      "coordinates": [rowData.longitude, rowData.latitude]
+                  },
+                }
+              ]
+            }
+          })
+
+          this.map.addLayer({
+            id: 'realtimedata-location-clusters',
+            type: 'circle',
+            source: 'realtimedataLocation',
+            paint: {
+              'circle-color': '#11b4da',
+              'circle-radius': 4,
+              'circle-stroke-width': 3,
+              'circle-stroke-color': '#fff'
+            }
+          });
+
+        })
+
+      },1)
+
     }else if(this.data.type == 'motors'){
       this.titleType = "MOTORS"
       rowData = this.data.info.motors
