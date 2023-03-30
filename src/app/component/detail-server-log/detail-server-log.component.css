@@ -1,11 +1,11 @@
 .serverLogPopup{
-  width: 500px;
+  min-width: 500px;
 }
 
 .serverLogRow{
   overflow: hidden;
   width: 100%;
-  height: 30px;
+  min-height: 30px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #d9d9d9;
@@ -13,15 +13,14 @@
 
 .serverLogKey{
   float: left;
-  width: 50%;
+  width: 250px;
 }
 
 .ServerLogValue{
   float: left;
-  width: 50%;
+  width: calc(100% - 250px);
   text-align: end;
   font-weight: bold;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  white-space : normal;
+  word-wrap: break-word;
 }

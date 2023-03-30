@@ -56,11 +56,11 @@ export class ServerLogsComponent implements OnInit {
     { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime' }},
     { field: 'request', headerName : 'request', tooltipField: 'request', filter : CheckboxFilterComponent, filterParams :  { toppings: this.requestToppings}},
     { field: 'response', headerName : 'response', tooltipField: 'response'},
+    { field: 'encryption', headerName: 'encryption', tooltipField: 'encryption'},
+    { field: 'flagged', headerName : 'flagged', tooltipField: 'flagged'},
     { field: 'data', headerName: 'data', tooltipField: 'data', },
     { field: 'responsePacket', headerName : 'responsePacket', tooltipField: 'responsePacket'},
-    { field: 'encryption', headerName: 'encryption', tooltipField: 'encryption'},
-    { field: 'flaged', headerName : 'flaged', tooltipField: 'flaged'},
-    { field: 'type', headerName : 'type', tooltipField: 'type'},
+    //{ field: 'type', headerName : 'type', tooltipField: 'type'},
   ];
 
   gridApi!: GridApi;

@@ -7,7 +7,7 @@
   </div>
 
 
-  <div class="serverLogRow" *ngFor="let logData of serverLogData | keyvalue">
+  <!--<div class="serverLogRow" *ngFor="let logData of serverLogData | keyvalue">
     <div class="serverLogKey" >
       {{logData.key}}
     </div>
@@ -16,6 +16,96 @@
       {{logData.value}}
     </div>
   </div>
+  -->
 
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      vin
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.vin}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      serverTime
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.serverTime}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      packetTime
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.packetTime}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      request
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.request}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      response
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.response}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      encryption
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.encryption}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      flagged
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.flagged}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      data
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.data}}
+    </div>
+  </div>
+
+  <div class="serverLogRow">
+    <div class="serverLogKey" >
+      responsePacket
+    </div>
+
+    <div class="ServerLogValue">
+      {{serverLogData.responsePacket}}
+    </div>
+  </div>
 
 </div>
