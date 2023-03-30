@@ -122,10 +122,6 @@ export class UtilService {
     });
   }
 
-  getCountryTerritory(){
-    return this.http.get('assets/data/chn_country_territory.json')
-  }
-
   getProvinceCopyData(){
     return this.http.get('assets/data/chn_province_final_copy.json')
   }
@@ -140,10 +136,6 @@ export class UtilService {
 
   getSubPrefectureeData(){
     return this.http.get('assets/data/chn_sub_prefecture_v2.json')
-  }
-
-  getCountyData(){
-    return this.http.get('assets/data/chn_county.json')
   }
 
   gridDataToExcelData(fileName : string, gridApi : GridApi, data : any[]){

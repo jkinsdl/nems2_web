@@ -322,10 +322,6 @@ export class MapMarkerDetailComponent implements OnInit {
   //this.map.addControl(new MapboxDirections({accessToken: mapboxgl.accessToken}), 'top-left');
 
   this.map.on('load', () => {
-    this.map.addSource('test', {
-      type: 'geojson',
-      data : 'assets/data/test.json'
-    });
 
     this.map.addSource('route', {
       type: 'geojson',
@@ -361,20 +357,6 @@ export class MapMarkerDetailComponent implements OnInit {
         paint: {
           'line-color': '#00AAFF',
           'line-width': 4
-        }
-      });
-
-
-      this.map.addLayer({
-        id: 'unclustered-point',
-        type: 'circle',
-        source: 'test',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-        'circle-color': '#11b4da',
-        'circle-radius': 4,
-        'circle-stroke-width': 3,
-        'circle-stroke-color': '#fff'
         }
       });
     });

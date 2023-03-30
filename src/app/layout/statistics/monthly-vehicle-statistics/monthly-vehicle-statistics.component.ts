@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import mapboxgl, { LngLatBoundsLike } from 'mapbox-gl';
 import * as echarts from 'echarts';
-import usa from '../../../../assets/data/examples.json';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { UtilService } from 'src/app/service/util.service';

@@ -6,16 +6,10 @@ import { AppComponent } from './app.component';
 import { MonitoringComponent } from './layout/monitoring/monitoring.component';
 import { StatusComponent } from './layout/status/status.component';
 import { StatisticsComponent } from './layout/statistics/statistics.component';
-import { FailureComponent } from './layout/failure/failure.component';
 import { ControlPanelComponent } from './layout/control-panel/control-panel.component';
-import { TotalStatisticsComponent } from './layout/statistics/total-statistics/total-statistics.component';
-import { DrivingChargingStatisticsComponent } from './layout/statistics/driving-charging-statistics/driving-charging-statistics.component';
-import { SingleStatisticsComponent } from './layout/statistics/single-statistics/single-statistics.component';
-import { SearchDataComponent } from './layout/statistics/search-data/search-data.component';
 import { UserAccountComponent } from './layout/control-panel/user-account/user-account.component';
 import { VehicleSettingsComponent } from './layout/control-panel/vehicle/vehicle-settings/vehicle-settings.component';
 import { PublicPlatformManagementComponent } from './layout/control-panel/public-platform/public-platform-management/public-platform-management.component';
-import { ShanghaiInfoComponent } from './layout/control-panel/shanghai-info/shanghai-info.component';
 import { ServerLogsComponent } from './layout/control-panel/server-logs/server-logs.component';
 import { OTAInformationComponent } from './layout/control-panel/otainformation/otainformation.component';
 import { TerminalComponent } from './layout/control-panel/terminal/terminal.component';
@@ -45,32 +39,16 @@ import { AddPublicPlatformMappingComponent } from './component/add-public-platfo
 import { AddPushAlarmComponent } from './component/add-push-alarm/add-push-alarm.component';
 import { WarningIssueComponent } from './component/warning-issue/warning-issue.component';
 import { DetailMonitoringComponent } from './layout/monitoring/detail-monitoring/detail-monitoring.component';
-import { MonitoringVehicleComponent } from './layout/monitoring/detail-monitoring/monitoring-vehicle/monitoring-vehicle.component';
-import { MonitoringLocationComponent } from './layout/monitoring/detail-monitoring/monitoring-location/monitoring-location.component';
-import { MonitoringEngineComponent } from './layout/monitoring/detail-monitoring/monitoring-engine/monitoring-engine.component';
-import { MonitoringFuelBatteryComponent } from './layout/monitoring/detail-monitoring/monitoring-fuel-battery/monitoring-fuel-battery.component';
-import { MonitoringWarningComponent } from './layout/monitoring/detail-monitoring/monitoring-warning/monitoring-warning.component';
-import { MonitoringExtremeValueComponent } from './layout/monitoring/detail-monitoring/monitoring-extreme-value/monitoring-extreme-value.component';
-import { MonitoringMotorComponent } from './layout/monitoring/detail-monitoring/monitoring-motor/monitoring-motor.component';
-import { MonitoringPowerBatteryTemperatureComponent } from './layout/monitoring/detail-monitoring/monitoring-power-battery-temperature/monitoring-power-battery-temperature.component';
-import { MonitoringPowerBatteryInfomationComponent } from './layout/monitoring/detail-monitoring/monitoring-power-battery-infomation/monitoring-power-battery-infomation.component';
-import { MonitoringDetailZoomComponent } from './layout/monitoring/detail-monitoring/monitoring-detail-zoom/monitoring-detail-zoom.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { HttpClientModule } from '@angular/common/http';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { AlarmComponent } from './layout/alarm/alarm.component';
-import { AlarmHistoryComponent } from './layout/alarm-history/alarm-history.component';
 import { MapMarkerDetailComponent } from './layout/dashboard/map-marker-detail/map-marker-detail.component';
-import { DataForwardingComponent } from './layout/data-forwarding/data-forwarding.component';
 import { MapMarkerDetailVehicleInformationComponent } from './layout/dashboard/map-marker-detail/map-marker-detail-vehicle-information/map-marker-detail-vehicle-information.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NoopInterceptor } from './shared/intercept/noop-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
-import { AbnormalVehicleRealTimeComponent } from './layout/control-panel/datect-error/abnormal-vehicle-real-time/abnormal-vehicle-real-time.component';
-import { AbnormalVehicleHistoryComponent } from './layout/control-panel/datect-error/abnormal-vehicle-history/abnormal-vehicle-history.component';
-import { OfflineVehicleRealTimeComponent } from './layout/control-panel/datect-error/offline-vehicle-real-time/offline-vehicle-real-time.component';
-import { OfflineVehicleHistoryComponent } from './layout/control-panel/datect-error/offline-vehicle-history/offline-vehicle-history.component';
 import { AddOTAManagementComponent } from './component/add-otamanagement/add-otamanagement.component';
 import { UploadOTAManagementComponent } from './component/upload-otamanagement/upload-otamanagement.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -129,15 +107,9 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     MonitoringComponent,
     StatusComponent,
     StatisticsComponent,
-    FailureComponent,
     ControlPanelComponent,
-    TotalStatisticsComponent,
-    DrivingChargingStatisticsComponent,
-    SingleStatisticsComponent,
-    SearchDataComponent,
     VehicleSettingsComponent,
     PublicPlatformManagementComponent,
-    ShanghaiInfoComponent,
     ServerLogsComponent,
     OTAInformationComponent,
     TerminalComponent,
@@ -160,25 +132,9 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     AddPushAlarmComponent,
     WarningIssueComponent,
     DetailMonitoringComponent,
-    MonitoringVehicleComponent,
-    MonitoringLocationComponent,
-    MonitoringEngineComponent,
-    MonitoringFuelBatteryComponent,
-    MonitoringWarningComponent,
-    MonitoringExtremeValueComponent,
-    MonitoringMotorComponent,
-    MonitoringPowerBatteryTemperatureComponent,
-    MonitoringPowerBatteryInfomationComponent,
-    MonitoringDetailZoomComponent,
     AlarmComponent,
-    AlarmHistoryComponent,
     MapMarkerDetailComponent,
-    DataForwardingComponent,
     MapMarkerDetailVehicleInformationComponent,
-    AbnormalVehicleRealTimeComponent,
-    AbnormalVehicleHistoryComponent,
-    OfflineVehicleRealTimeComponent,
-    OfflineVehicleHistoryComponent,
     AddOTAManagementComponent,
     UploadOTAManagementComponent,
     RemoteControlStateComponent,

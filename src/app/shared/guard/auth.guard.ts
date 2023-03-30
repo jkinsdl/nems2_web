@@ -34,13 +34,6 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/status') < 0 &&
         state.url.indexOf('/statistics') < 0 &&
         state.url.indexOf('/alarm') < 0 &&
-        //state.url.indexOf('/history') < 0 &&
-        //state.url.indexOf('/abnormalLocationVehicle') < 0 &&
-        //state.url.indexOf('/dataForwarding') < 0 &&
-        //state.url.indexOf('/warningStatistics') < 0 &&
-        //state.url.indexOf('/monthlyVehicleStatistics') < 0 &&
-        //state.url.indexOf('/userChargingPatternAnalysis') < 0 &&
-        //state.url.indexOf('/travelDistanceStatistics') < 0 &&
         state.url.indexOf('/control/userAccount') < 0 &&
         state.url.indexOf('/control/vehicle/vehicleSettings') < 0 &&
         state.url.indexOf('/control/vehicle/vehicleModel') < 0 &&
@@ -53,10 +46,6 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/control/terminal') < 0 &&
         state.url.indexOf('/control/otaManagement') < 0 &&
         state.url.indexOf('/control/pushAlarm') < 0 &&
-        //state.url.indexOf('/control/detectError/abnormalVehicleRealTime') < 0 &&
-        //state.url.indexOf('/control/detectError/abnormalVehicleHistory') < 0 &&
-        //state.url.indexOf('/control/detectError/offlineVehicleRealTime') < 0 &&
-        //state.url.indexOf('/control/detectError/offlineVehicleHistory') < 0 &&
         state.url.indexOf('/control/detectError/abnormalVehicleState') < 0 &&
         state.url.indexOf('/control/detectError/locationJump') < 0 &&
         state.url.indexOf('/control/detectError/mileageJump') < 0
@@ -73,18 +62,11 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/status') < 0 &&
         state.url.indexOf('/statistics') < 0 &&
         state.url.indexOf('/alarm') < 0 &&
-        //state.url.indexOf('/history') < 0 &&
-        //state.url.indexOf('/abnormalLocationVehicle') < 0 &&
-        //state.url.indexOf('/dataForwarding') < 0 &&
         state.url.indexOf('/control/vehicle/vehicleSettings') < 0 &&
         state.url.indexOf('/control/vehicle/vehicleModel') < 0 &&
         state.url.indexOf('/control/control/serverLogs') < 0 &&
         state.url.indexOf('/control/remoteControl/state') < 0 &&
         state.url.indexOf('/control/pushAlarm') < 0 &&
-        //state.url.indexOf('/control/detectError/abnormalVehicleRealTime') < 0 &&
-        //state.url.indexOf('/control/detectError/abnormalVehicleHistory') < 0 &&
-        //state.url.indexOf('/control/detectError/offlineVehicleRealTime') < 0 &&
-        //state.url.indexOf('/control/detectError/offlineVehicleHistory') < 0 &&
         state.url.indexOf('/control/detectError/abnormalVehicleState') < 0 &&
         state.url.indexOf('/control/detectError/locationJump') < 0 &&
         state.url.indexOf('/control/detectError/mileageJump') < 0
@@ -100,13 +82,7 @@ export class AuthGuard implements CanActivate {
         state.url.indexOf('/status') < 0 &&
         state.url.indexOf('/statistics') < 0 &&
         state.url.indexOf('/alarm') < 0 &&
-        //state.url.indexOf('/history') < 0 &&
-        //state.url.indexOf('/abnormalLocationVehicle') < 0 &&
         state.url.indexOf('/control/pushAlarm') < 0 &&
-        //state.url.indexOf('/control/detectError/abnormalVehicleRealTime') < 0 &&
-        //state.url.indexOf('/control/detectError/abnormalVehicleHistory') < 0 &&
-        //state.url.indexOf('/control/detectError/offlineVehicleRealTime') < 0 &&
-        //state.url.indexOf('/control/detectError/offlineVehicleHistory') < 0 &&
         state.url.indexOf('/control/detectError/abnormalVehicleState') < 0 &&
         state.url.indexOf('/control/detectError/locationJump') < 0 &&
         state.url.indexOf('/control/detectError/mileageJump') < 0
@@ -117,8 +93,7 @@ export class AuthGuard implements CanActivate {
       }else if(user.authorityId == "user"){
         if(state.url.indexOf('/dashboard') < 0 &&
         state.url.indexOf('/monitoring') < 0 &&
-        state.url.indexOf('/alarm') < 0 /*&&
-        state.url.indexOf('/history') < 0*/ ){
+        state.url.indexOf('/alarm') < 0){
           this.router.navigate(['/dashboard']);
           return true
         }
