@@ -48,8 +48,8 @@ export class OTAInformationComponent implements OnInit {
     { field: 'firmwareName', headerName: 'Firmware Name', tooltipField: 'firmwareName'},
     { field: 'currentState', headerName: 'State', tooltipField: 'currentState', filter : CheckboxFilterComponent, filterParams :  { toppings: this.stateToppings}},
     { field: 'forceOta', headerName : 'Force OTA', tooltipField: 'forceOta'},
-    { field: 'start', headerName : 'Start', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'start', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'start' }},
-    { field: 'end', headerName : 'End', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'end', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'end' }}
+    { field: 'start', headerName : 'Start', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'start', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'start', type : 'date' }},
+    { field: 'end', headerName : 'End', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'end', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'end', type : 'date' }}
   ];
 
   vehicle : any ={

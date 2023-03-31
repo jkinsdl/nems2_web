@@ -26,8 +26,8 @@ export class LocationJumpComponent implements OnInit {
 
   columnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin', width:120 },
-    { field: 'serverTime', headerName: 'Server Time', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime' }, width:140},
-    { field: 'packetTime', headerName : 'Packet Time', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime' }, width:140},
+    { field: 'serverTime', headerName: 'Server Time', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime', type : 'date' }, width:140},
+    { field: 'packetTime', headerName : 'Packet Time', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime', type : 'date' }, width:140},
     { field: 'state',headerName: "State", tooltipField: 'state', width:120},
     { field: 'value', headerName : 'Value', tooltipField: 'value', width:100},
     { field: 'data', headerName : 'Data', tooltipField: 'data'},

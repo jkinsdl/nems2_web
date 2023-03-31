@@ -64,7 +64,7 @@ export class ConfigureComponent implements OnInit {
   mappingColumnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
     { field: 'matched', headerName : 'Matched', tooltipField: 'matched'},
-    { field: 'matched_date', headerName : 'Matched Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date' }},
+    { field: 'matched_date', headerName : 'Matched Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date', type : 'date' }},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
     cellRendererParams: {
       onlyRemove : true,

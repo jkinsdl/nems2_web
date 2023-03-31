@@ -44,7 +44,7 @@ export class OTAManagementComponent implements OnInit {
     headerCheckboxSelection: true,
     checkboxSelection: true, tooltipField: 'vin', },
     { field: 'currentState', headerName: 'State', tooltipField: 'currentState'},
-    { field: 'updatedAt', headerName : 'Update Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }}
+    { field: 'updatedAt', headerName : 'Update Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }}
   ];
 
 

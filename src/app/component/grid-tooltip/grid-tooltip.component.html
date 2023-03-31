@@ -1,6 +1,7 @@
 
 <div class="custom-tooltip">
   <p>
-    <span>{{ date | dateformat }}</span>
+    <span *ngIf="date">{{ date | dateformat }}</span>
+    <span *ngIf="decoding">{{ decoding }}</span>
   </p>
 </div>

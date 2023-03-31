@@ -37,7 +37,7 @@ export class UserAccountComponent implements OnInit {
     { field: 'email', headerName : 'email', tooltipField: 'email' },
     { field: 'authorityId', headerName : 'authority', tooltipField: 'authorityId' },
     { field: 'status', headerName : 'status', tooltipField: 'status'},
-    { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'latestAccess', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'latestAccess' } },
+    { field: 'latestAccess', headerName : 'latestAccess', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'latestAccess', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'latestAccess', type : 'date' } },
     { field: 'action', cellRenderer: BtnCellRendererComponent,
     cellRendererParams: {
       modify: (field: any) => {

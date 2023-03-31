@@ -27,6 +27,9 @@ export class DetailServerLogComponent implements OnInit {
     for (const [key, value] of Object.entries(this.serverLogData)) {
       if(key == "packetTime" || key == "serverTime"){
         this.serverLogData[key] = this.utilService.setDateFormat(new Date(value.toString()));
+      }else if(key == "data" || key == "responsePacket"){
+        let p = {value : this.serverLogData[key]}
+        this.serverLogData[key] = this.utilService.stringDecoding(p)
       }
     }
 

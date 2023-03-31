@@ -213,4 +213,12 @@ export class UtilService {
 
     document.body.removeChild(element);
   }
+
+  stringDecoding(params : any){
+    return atob(params.value)
+  }
+
+  stringEncoding(params : any){
+    return btoa(params.value)
+  }
 }

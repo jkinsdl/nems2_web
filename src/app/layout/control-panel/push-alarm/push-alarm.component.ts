@@ -39,7 +39,7 @@ export class PushAlarmComponent implements OnInit {
     { field: 'userName', headerName : 'userName', tooltipField: 'userName'},
     { field: 'eMail', headerName : 'eMail', tooltipField: 'eMail'},
     { field: 'phoneNumber', headerName : 'phoneNumber', tooltipField: 'phoneNumber'},
-    { field: 'createdAt', headerName : 'createdAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createdAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createdAt' }},
+    { field: 'createdAt', headerName : 'createdAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createdAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createdAt', type : 'date' }},
     { field: 'createdUserId', headerName : 'createdUserId', tooltipField: 'createdUserId', hide:true},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
     cellRendererParams: {

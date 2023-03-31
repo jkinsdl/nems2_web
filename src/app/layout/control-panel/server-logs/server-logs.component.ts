@@ -52,14 +52,14 @@ export class ServerLogsComponent implements OnInit {
 
   columnDefs: ColDef[] = [
     { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
-    { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime' }},
-    { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime' }},
+    { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime', type : 'date' }},
+    { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime', type : 'date' }},
     { field: 'request', headerName : 'request', tooltipField: 'request', filter : CheckboxFilterComponent, filterParams :  { toppings: this.requestToppings}},
     { field: 'response', headerName : 'response', tooltipField: 'response'},
     { field: 'encryption', headerName: 'encryption', tooltipField: 'encryption'},
     { field: 'flagged', headerName : 'flagged', tooltipField: 'flagged'},
-    { field: 'data', headerName: 'data', tooltipField: 'data', },
-    { field: 'responsePacket', headerName : 'responsePacket', tooltipField: 'responsePacket'},
+    { field: 'data', headerName: 'data', valueFormatter: this.utilService.stringDecoding, tooltipField: 'data', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'data', type:'decoding' } },
+    { field: 'responsePacket', headerName : 'responsePacket', valueFormatter: this.utilService.stringDecoding, tooltipField: 'responsePacket', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'responsePacket', type:'decoding' }},
     //{ field: 'type', headerName : 'type', tooltipField: 'type'},
   ];
 
@@ -109,6 +109,9 @@ export class ServerLogsComponent implements OnInit {
   onResize(event : any){
     if(this.gridHeight != this.serverLogGrid.nativeElement.offsetHeight){
       this.getPageSize()
+    }
+    if(this.gridApi){
+      this.gridApi.sizeColumnsToFit()
     }
   }
 

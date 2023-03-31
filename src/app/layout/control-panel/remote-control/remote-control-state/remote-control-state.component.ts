@@ -37,7 +37,7 @@ export class RemoteControlStateComponent implements OnInit {
     { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout', tooltipField: 'platformResponseTimeout'},
     { field: 'publicPlatformName', headerName : 'publicPlatformName', tooltipField: 'publicPlatformName'},
     { field: 'publicPlatformPort', headerName : 'publicPlatformPort', tooltipField: 'publicPlatformPort'},
-    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }},
+    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }},
     { field: 'updatedUserId', headerName : 'updatedUserId', tooltipField: 'updatedUserId'},
     { field: 'dataFilePath', headerName : 'dataFilePath', tooltipField: 'dataFilePath'},
     { field: 'dataSize', headerName : 'dataSize', tooltipField: 'dataSize'},
