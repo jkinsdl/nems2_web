@@ -113,7 +113,7 @@ export class BatteryDetailComponent implements OnInit {
         }
       },
       visualMap: {
-        min: 10,
+        min: -60,
         max: 50,
         calculable: true,
         orient: 'horizontal',
