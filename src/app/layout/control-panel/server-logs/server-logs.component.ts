@@ -164,7 +164,6 @@ export class ServerLogsComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
-
   }
 
   onGridRowDoubleClicked(e : any){

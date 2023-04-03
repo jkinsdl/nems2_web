@@ -21,8 +21,8 @@ export class DetailServerLogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.serverLogData = this.data.serverLog
-
+    this.serverLogData = JSON.parse(JSON.stringify(this.data.serverLog))
+    console.log(this.serverLogData)
 
     for (const [key, value] of Object.entries(this.serverLogData)) {
       if(key == "packetTime" || key == "serverTime"){
