@@ -232,7 +232,7 @@ export class UtilService {
     let result = '';
     for(let i = 0; i<raw.length; i++){
       let hex = raw.charCodeAt(i).toString(16);
-      result += (hex.length == 2 ? hex : '0'+hex);
+      result += (hex.length == 2 ? hex : '0'+hex) + ' ' ;
     }
     return result.toUpperCase();
   }
