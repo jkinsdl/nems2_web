@@ -29,28 +29,28 @@ export class VehicleModelComponent implements OnInit {
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'modelName', headerName : 'Model Name', tooltipField: 'modelName'},
-    { field: 'driveMotorKind', headerName : 'drive motor kind', tooltipField: 'driveMotorKind'},
-    { field: 'maxSpeed', headerName : 'max speed', tooltipField: 'maxSpeed'},
-    { field: 'pureElectricDistance', headerName : 'pure electric distance', tooltipField: 'pureElectricDistance'},
-    { field: 'gearRatio', headerName : 'gear ratio', tooltipField: 'gearRatio'},
-    { field: 'warningPreValue', headerName : 'warning pre value', tooltipField: 'warningPreValue'},
-    { field: 'fuelType', headerName : 'fuel type', tooltipField: 'fuelType'},
-    { field: 'fuelLabel', headerName : 'fuel label', tooltipField: 'fuelLabel'},
-    { field: 'maxPower', headerName : 'max power', tooltipField: 'maxPower'},
-    { field: 'maxTorque', headerName : 'max torque', tooltipField: 'maxTorque'},
-    { field: 'batteryType', headerName : 'battery type', tooltipField: 'batteryType'},
-    { field: 'batteryTotalEnergy', headerName: 'battery total energy', tooltipField: 'batteryTotalEnergy'},
+    { field: 'modelName', headerName : 'Model Name', tooltipField: 'modelName', width:150},
+    { field: 'driveMotorKind', headerName : 'drive motor kind', tooltipField: 'driveMotorKind', width:150},
+    { field: 'maxSpeed', headerName : 'max speed', tooltipField: 'maxSpeed', width:120},
+    { field: 'pureElectricDistance', headerName : 'pure electric distance', tooltipField: 'pureElectricDistance', width:180},
+    { field: 'gearRatio', headerName : 'gear ratio', tooltipField: 'gearRatio', width:120},
+    { field: 'warningPreValue', headerName : 'warning pre value', tooltipField: 'warningPreValue', width:160},
+    { field: 'fuelType', headerName : 'fuel type', tooltipField: 'fuelType', width:120},
+    { field: 'fuelLabel', headerName : 'fuel label', tooltipField: 'fuelLabel', width:120},
+    { field: 'maxPower', headerName : 'max power', tooltipField: 'maxPower', width:120},
+    { field: 'maxTorque', headerName : 'max torque', tooltipField: 'maxTorque', width:120},
+    { field: 'batteryType', headerName : 'battery type', tooltipField: 'batteryType', width:120},
+    { field: 'batteryTotalEnergy', headerName: 'battery total energy', tooltipField: 'batteryTotalEnergy', width:180},
     { field: 'batteryCoolingSystem', headerName: 'battery cooling system', tooltipField: 'batteryCoolingSystem' },
     { field: 'motorCoolingSystem', headerName : 'motor cooling system', tooltipField: 'motorCoolingSystem'},
-    { field: 'ratedVoltage', headerName : 'rated voltage', tooltipField: 'ratedVoltage'},
-    { field: 'motorMaxCurrent', headerName : 'motor max current', tooltipField: 'motorMaxCurrent'},
-    { field: 'motorType', headerName : 'motor type', tooltipField: 'motorType'},
-    { field: 'motorPeakPower', headerName : 'motor peak power', tooltipField: 'motorPeakPower'},
-    { field: 'motorMaxSpeed', headerName : 'motor max speed', tooltipField: 'motorMaxSpeed'},
-    { field: 'motorPeakTorque', headerName : 'motor peak torque', tooltipField: 'motorPeakTorque'},
-    { field: 'motorMaxTorque', headerName : 'motor max torque', tooltipField: 'motorMaxTorque'},
-    { field: 'powerRatio', headerName : 'Power Ratio', tooltipField: 'powerRatio'},
+    { field: 'ratedVoltage', headerName : 'rated voltage', tooltipField: 'ratedVoltage', width:150},
+    { field: 'motorMaxCurrent', headerName : 'motor max current', tooltipField: 'motorMaxCurrent', width:180},
+    { field: 'motorType', headerName : 'motor type', tooltipField: 'motorType', width:120},
+    { field: 'motorPeakPower', headerName : 'motor peak power', tooltipField: 'motorPeakPower', width:180},
+    { field: 'motorMaxSpeed', headerName : 'motor max speed', tooltipField: 'motorMaxSpeed', width:180},
+    { field: 'motorPeakTorque', headerName : 'motor peak torque', tooltipField: 'motorPeakTorque', width:180},
+    { field: 'motorMaxTorque', headerName : 'motor max torque', tooltipField: 'motorMaxTorque', width:180},
+    { field: 'powerRatio', headerName : 'Power Ratio', tooltipField: 'powerRatio', width:150},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
     cellRendererParams: {
       modify: (field: any) => {
@@ -102,6 +102,11 @@ export class VehicleModelComponent implements OnInit {
     if(this.gridHeight != this.vehicleModelGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.vehicleModelGrid.nativeElement.offsetWidth > 3500){
+      this.gridApi.sizeColumnsToFit()
+    }
+
   }
 
 
@@ -179,7 +184,9 @@ export class VehicleModelComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    //this.gridApi.sizeColumnsToFit()
+    if(this.vehicleModelGrid.nativeElement.offsetWidth > 3500){
+      this.gridApi.sizeColumnsToFit()
+    }
   }
 
   onBtExport() {

@@ -119,6 +119,9 @@ export class PushAlarmComponent implements OnInit {
     if(this.gridHeight != this.pushAlarmGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    this.gridApi.sizeColumnsToFit()
+
   }
 
   getNotificationsTemplates(){

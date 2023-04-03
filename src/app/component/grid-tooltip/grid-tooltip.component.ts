@@ -23,7 +23,7 @@ export class GridTooltipComponent implements ITooltipAngularComp {
       this.date = this.data[params.fildName]
     }else if(params.type == 'decoding'){
       let p = {value : this.data[params.fildName]}
-      this.decoding = this.utilService.stringDecoding(p)
+      this.decoding = this.utilService.base64ToHex(p)
     }
 
   }

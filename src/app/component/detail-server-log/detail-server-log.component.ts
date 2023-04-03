@@ -29,7 +29,7 @@ export class DetailServerLogComponent implements OnInit {
         this.serverLogData[key] = this.utilService.setDateFormat(new Date(value.toString()));
       }else if(key == "data" || key == "responsePacket"){
         let p = {value : this.serverLogData[key]}
-        this.serverLogData[key] = this.utilService.stringDecoding(p)
+        this.serverLogData[key] = this.utilService.base64ToHex(p)
       }
     }
 

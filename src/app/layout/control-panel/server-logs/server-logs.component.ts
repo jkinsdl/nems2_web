@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, ColumnApi, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 import { CheckboxFilterComponent } from 'src/app/component/checkbox-filter/checkbox-filter.component';
 import { DetailServerLogComponent } from 'src/app/component/detail-server-log/detail-server-log.component';
@@ -17,6 +17,7 @@ import { CommonConstant } from 'src/app/util/common-constant';
   templateUrl: './server-logs.component.html',
   styleUrls: ['./server-logs.component.css']
 })
+
 export class ServerLogsComponent implements OnInit {
 
   @ViewChild('serverLogGrid', { read: ElementRef }) serverLogGrid : ElementRef;
@@ -49,21 +50,22 @@ export class ServerLogsComponent implements OnInit {
     _pPLATFORM_CUSTOM_OTA_REPORT : false,
   });
 
-
   columnDefs: ColDef[] = [
     { field: 'vin', headerName : 'vin', tooltipField: 'vin'},
     { field: 'serverTime', headerName : 'serverTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime', type : 'date' }},
     { field: 'packetTime', headerName : 'packetTime', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime', type : 'date' }},
     { field: 'request', headerName : 'request', tooltipField: 'request', filter : CheckboxFilterComponent, filterParams :  { toppings: this.requestToppings}},
-    { field: 'response', headerName : 'response', tooltipField: 'response'},
-    { field: 'encryption', headerName: 'encryption', tooltipField: 'encryption'},
-    { field: 'flagged', headerName : 'flagged', tooltipField: 'flagged'},
-    { field: 'data', headerName: 'data', valueFormatter: this.utilService.stringDecoding, tooltipField: 'data', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'data', type:'decoding' } },
-    { field: 'responsePacket', headerName : 'responsePacket', valueFormatter: this.utilService.stringDecoding, tooltipField: 'responsePacket', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'responsePacket', type:'decoding' }},
+    { field: 'response', headerName : 'response', tooltipField: 'response', width:110},
+    { field: 'encryption', headerName: 'encryption', tooltipField: 'encryption', width:110},
+    { field: 'flagged', headerName : 'flagged', tooltipField: 'flagged', width:90},
+    { field: 'data', headerName: 'data', valueFormatter: this.utilService.base64ToHex, tooltipField: 'data', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'data', type:'decoding' }},
+    { field: 'responsePacket', headerName : 'responsePacket', valueFormatter: this.utilService.base64ToHex, tooltipField: 'responsePacket', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'responsePacket', type:'decoding' }},
     //{ field: 'type', headerName : 'type', tooltipField: 'type'},
   ];
 
   gridApi!: GridApi;
+  gridColumnApi!: ColumnApi;
+
   selectNodeID : string = null;
 
   beginDate : Date = null
@@ -73,9 +75,7 @@ export class ServerLogsComponent implements OnInit {
     count : 0,
     entities : [],
     link : {}
-    }
-
-
+  }
 
   page$ : Subscription
   searchFilter : SearchFilter = new SearchFilter()
@@ -145,6 +145,9 @@ export class ServerLogsComponent implements OnInit {
 
     this.gbpacketService.getGbpacket(this.searchFilter).subscribe(res=>{
       console.log(res)
+      let p = {value:'IyMH/jIwNTE1MDgxMzU1MTA5NTdGAQAAvQ=='}
+      let test = this.utilService.base64ToHex(p)
+      console.log(test)
       this.gbpacket = res.body
       let pagination = {
         count : this.gbpacket.count,
@@ -157,9 +160,11 @@ export class ServerLogsComponent implements OnInit {
     })
   }
 
-
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
+
   }
 
   onGridRowDoubleClicked(e : any){
@@ -174,11 +179,9 @@ export class ServerLogsComponent implements OnInit {
       if(result){
       }
     });
-
   }
 
   onBtExport() {
-
     this.gbpacketService.getGbpacketExport(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.utilService.exportDownload('server_log.zip',res.body[0].data)
@@ -207,6 +210,5 @@ export class ServerLogsComponent implements OnInit {
   clearBeginDate(){
     this.beginDate = undefined
   }
-
 
 }

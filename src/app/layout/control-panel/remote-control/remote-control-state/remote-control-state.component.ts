@@ -23,29 +23,29 @@ export class RemoteControlStateComponent implements OnInit {
   ) { }
 
   columnDefs: ColDef[] = [
-    { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
-    { field: 'carHeartBeatPeriod', headerName: 'carHeartBeatPeriod', tooltipField: 'carHeartBeatPeriod'},
-    { field: 'carLocalSavePeriod', headerName : 'carLocalSavePeriod', tooltipField: 'carLocalSavePeriod'},
-    { field: 'carResponseTimeout', headerName : 'carResponseTimeout', tooltipField: 'carResponseTimeout'},
-    { field: 'configureName', headerName : 'configureName', tooltipField: 'configureName'},
-    { field: 'configureFwVersion', headerName : 'configureFwVersion', tooltipField: 'configureFwVersion'},
-    { field: 'configureHwVersion', headerName : 'configureHwVersion', tooltipField: 'configureHwVersion'},
-    { field: 'managePlatformName', headerName : 'managePlatformName', tooltipField: 'managePlatformName'},
-    { field: 'managePlatformPort', headerName : 'managePlatformPort', tooltipField: 'managePlatformPort'},
-    { field: 'monitoring', headerName : 'monitoring', tooltipField: 'monitoring'},
-    { field: 'nextLoginInterval', headerName : 'nextLoginInterval', tooltipField: 'nextLoginInterval'},
-    { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout', tooltipField: 'platformResponseTimeout'},
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin',width:180 },
+    { field: 'carHeartBeatPeriod', headerName: 'carHeartBeatPeriod', tooltipField: 'carHeartBeatPeriod',width:180},
+    { field: 'carLocalSavePeriod', headerName : 'carLocalSavePeriod', tooltipField: 'carLocalSavePeriod',width:180},
+    { field: 'carResponseTimeout', headerName : 'carResponseTimeout', tooltipField: 'carResponseTimeout',width:180},
+    { field: 'configureName', headerName : 'configureName', tooltipField: 'configureName',width:150},
+    { field: 'configureFwVersion', headerName : 'configureFwVersion', tooltipField: 'configureFwVersion',width:180},
+    { field: 'configureHwVersion', headerName : 'configureHwVersion', tooltipField: 'configureHwVersion',width:180},
+    { field: 'managePlatformName', headerName : 'managePlatformName', tooltipField: 'managePlatformName',width:200},
+    { field: 'managePlatformPort', headerName : 'managePlatformPort', tooltipField: 'managePlatformPort',width:180},
+    { field: 'monitoring', headerName : 'monitoring', tooltipField: 'monitoring',width:120},
+    { field: 'nextLoginInterval', headerName : 'nextLoginInterval', tooltipField: 'nextLoginInterval',width:180},
+    { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout', tooltipField: 'platformResponseTimeout',width:220},
     { field: 'publicPlatformName', headerName : 'publicPlatformName', tooltipField: 'publicPlatformName'},
-    { field: 'publicPlatformPort', headerName : 'publicPlatformPort', tooltipField: 'publicPlatformPort'},
+    { field: 'publicPlatformPort', headerName : 'publicPlatformPort', tooltipField: 'publicPlatformPort',width:180},
     { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }},
-    { field: 'updatedUserId', headerName : 'updatedUserId', tooltipField: 'updatedUserId'},
+    { field: 'updatedUserId', headerName : 'updatedUserId', tooltipField: 'updatedUserId',width:120},
     { field: 'dataFilePath', headerName : 'dataFilePath', tooltipField: 'dataFilePath'},
-    { field: 'dataSize', headerName : 'dataSize', tooltipField: 'dataSize'},
-    { field: 'firmwareName', headerName : 'firmwareName', tooltipField: 'firmwareName'},
+    { field: 'dataSize', headerName : 'dataSize', tooltipField: 'dataSize',width:120},
+    { field: 'firmwareName', headerName : 'firmwareName', tooltipField: 'firmwareName',width:150},
     { field: 'firmwareInfoFwVersion', headerName : 'firmwareInfoFwVersion', tooltipField: 'firmwareInfoFwVersion'},
     { field: 'firmwareInfoHwVersion', headerName : 'firmwareInfoHwVersion', tooltipField: 'firmwareInfoHwVersion'},
     { field: 'md5Hash', headerName : 'md5Hash', tooltipField: 'md5Hash'},
-    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName'}
+    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName',width:120}
   ];
 
   gridApi!: GridApi;
@@ -94,6 +94,11 @@ export class RemoteControlStateComponent implements OnInit {
     if(this.gridHeight != this.remoteControlStateGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.remoteControlStateGrid.nativeElement.offsetWidth > 4020){
+      this.gridApi.sizeColumnsToFit()
+    }
+
   }
 
 
@@ -150,6 +155,9 @@ export class RemoteControlStateComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+    if(this.remoteControlStateGrid.nativeElement.offsetWidth > 4020){
+      this.gridApi.sizeColumnsToFit()
+    }
   }
 
   onBtExport() {

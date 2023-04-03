@@ -110,6 +110,7 @@ export class LocationJumpComponent implements OnInit {
     if(this.gridHeight != this.locationJumpGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+    this.gridApi.sizeColumnsToFit()
   }
 
   onGridReady(params: GridReadyEvent) {

@@ -33,21 +33,21 @@ export class ConfigureComponent implements OnInit {
   ) { }
 
   configurationColumnDefs: ColDef[] = [
-    { field: 'configureName', headerName: 'Configure Name', tooltipField: 'configureName' },
+    { field: 'configureName', headerName: 'Configure Name', tooltipField: 'configureName', width:150 },
     { field: 'carLocalSavePeriod', headerName : 'Car Local Save Period (ms)', tooltipField: 'carLocalSavePeriod', minWidth:220},
     { field: 'normalSubmitPeriod', headerName : 'Normal Submit Period (sec)', tooltipField: 'normalSubmitPeriod', minWidth:220},
     { field: 'warningSubmitPeriod', headerName : 'Warning Submit Period (ms)', tooltipField: 'warningSubmitPeriod', minWidth:250},
     { field: 'managePlatformName', headerName : 'Manage Platform Name', tooltipField: 'managePlatformName'},
     { field: 'managePlatformPort', headerName : 'Manage Platform Port', tooltipField: 'managePlatformPort'},
     { field: 'hwVersion', headerName : 'Hardware Version(sw)', tooltipField: 'hwVersion'},
-    { field: 'fwVersion', headerName : 'Firmware Version', tooltipField: 'fwVersion'},
+    { field: 'fwVersion', headerName : 'Firmware Version', tooltipField: 'fwVersion', width:180 },
     { field: 'carHeartBeatPeriod', headerName: 'Car Heart Beat Period (sec)', tooltipField: 'carHeartBeatPeriod', minWidth:220},
     { field: 'carResponseTimeout', headerName : 'Car Response Timeout (sec)', tooltipField: 'carResponseTimeout', minWidth:250},
     { field: 'platformResponseTimeout', headerName : 'Platform Response Timeout (sec)', tooltipField: 'platformResponseTimeout', minWidth:280},
     { field: 'nextLoginInterval', headerName : 'Next Login Interval (sec)', tooltipField: 'nextLoginInterval'},
     { field: 'publicPlatformName', headerName : 'Public Platform Name', tooltipField: 'publicPlatformName'},
     { field: 'publicPlatformPort', headerName : 'Public Platform Port', tooltipField: 'publicPlatformPort'},
-    { field: 'monitoring', headerName : 'Monitoring', tooltipField: 'monitoring'},
+    { field: 'monitoring', headerName : 'Monitoring', tooltipField: 'monitoring', width:150 },
     //{ field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }},
     //{ field: 'updatedUserId', headerName : 'updated User Id', tooltipField: 'updatedUserId'},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
@@ -142,6 +142,11 @@ export class ConfigureComponent implements OnInit {
     if(this.grid1Height != this.configure1.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.configure1.nativeElement.offsetWidth > 3240){
+      this.configureGridApi.sizeColumnsToFit()
+    }
+    this.mappingGridApi.sizeColumnsToFit()
   }
 
   getDevicemanagersParameter(){
@@ -169,6 +174,9 @@ export class ConfigureComponent implements OnInit {
 
   onServerGridReady(params: GridReadyEvent) {
     this.configureGridApi = params.api;
+    if(this.configure1.nativeElement.offsetWidth > 3240){
+      this.configureGridApi.sizeColumnsToFit()
+    }
   }
 
   onMappingGridReady(params: GridReadyEvent) {

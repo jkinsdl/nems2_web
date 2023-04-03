@@ -27,18 +27,18 @@ export class MonitoringComponent implements OnInit {
   mapsBtn$ : Subscription
 
   columnDefs: ColDef[] = [
-    { field: 'isLogin',  headerName: 'Login', tooltipField: 'isLogin'},
+    { field: 'isLogin',  headerName: 'Login', tooltipField: 'isLogin', width:80},
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
-    { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber'},
-    { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn'},
+    { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber', width:150},
+    { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn', width:180},
     { field: 'lastUpdate', headerName : 'Last Updated', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastUpdate'},
     { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)', tooltipField: 'accumulatedMile' },
-    { field: 'packetCount', headerName : 'Packet Count', tooltipField: 'packetCount' },
-    { field: 'model', headerName : 'model', tooltipField: 'model' },
-    { field: 'region', headerName : 'region', tooltipField: 'region' },
-    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose' },
-    { field: 'warningLevel', headerName : 'Warning', tooltipField: 'warningLevel' },
-    { field: 'soc', headerName : 'soc(%)', tooltipField: 'soc' },
+    { field: 'packetCount', headerName : 'Packet Count', tooltipField: 'packetCount', width:150 },
+    { field: 'model', headerName : 'model', tooltipField: 'model', width:100 },
+    { field: 'region', headerName : 'region', tooltipField: 'region', width:100 },
+    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose', width:100 },
+    { field: 'warningLevel', headerName : 'Warning', tooltipField: 'warningLevel', width:100 },
+    { field: 'soc', headerName : 'soc(%)', tooltipField: 'soc', width:100 },
   ];
 
   vehicleInfo : any ={
@@ -78,6 +78,11 @@ export class MonitoringComponent implements OnInit {
     if(this.gridHeight != this.realTimeMonitoringGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.realTimeMonitoringGrid.nativeElement.offsetWidth > 1660){
+      this.gridApi.sizeColumnsToFit()
+    }
+
   }
 
   getVehicleRow(event : any){
@@ -132,6 +137,9 @@ export class MonitoringComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+    if(this.realTimeMonitoringGrid.nativeElement.offsetWidth > 1660){
+      this.gridApi.sizeColumnsToFit()
+    }
   }
 
   onBtExport() {

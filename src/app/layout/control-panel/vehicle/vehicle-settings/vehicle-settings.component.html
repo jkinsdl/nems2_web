@@ -36,7 +36,8 @@
         <label class="excel_btn selectItem" for="uploadExcel">
           <img src="assets/icon/excel_upload.png">
         </label>
-        <input #uploadExcel id="uploadExcel" type="file" style="display: none;" (change)="onBtnInport($event)">
+
+        <input #uploadExcel id="uploadExcel" type="file" style="display: none;" (change)="onBtnImport($event)">
 
         <div class="excel_btn selectItem" (click)="onBtExport()">
           <img src="assets/icon/excel_download.png">

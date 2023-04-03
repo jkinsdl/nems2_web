@@ -33,13 +33,13 @@ export class PublicPlatformManagementComponent implements OnInit {
     private uiService : UiService
   ) { }
   forwardingColumnDefs: ColDef[] = [
-    { field: 'serverName', headerName : 'name', tooltipField: 'serverName'},
-    { field: 'domain', headerName : 'IP', tooltipField: 'domain'},
-    { field: 'port', headerName : 'port', tooltipField: 'port'},
-    { field: 'platformId', headerName : 'platform ID', tooltipField: 'platformId'},
+    { field: 'serverName', headerName : 'name', tooltipField: 'serverName', width : 150},
+    { field: 'domain', headerName : 'IP', tooltipField: 'domain', width : 150},
+    { field: 'port', headerName : 'port', tooltipField: 'port', width : 80},
+    { field: 'platformId', headerName : 'platform ID', tooltipField: 'platformId', width : 150},
     { field: 'lastLogin', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogin', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogin', type : 'date' }},
     { field: 'lastLogout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogout', type : 'date' }},
-    { field: 'connectionStatus', headerName : 'start/stop', tooltipField: 'connectionStatus'},
+    { field: 'connectionStatus', headerName : 'start/stop', tooltipField: 'connectionStatus', width : 150},
     { headerName: 'state', cellRenderer: ToggleCellRendererComponent,
     cellRendererParams: {
       toggle:(field:any, toggle : boolean)=>{
@@ -47,12 +47,12 @@ export class PublicPlatformManagementComponent implements OnInit {
         this.sendManagement(field,toggle)
       }
     }, width:120},
-    { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck'},
-    { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle'},
-    { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo'},
-    { field: 'encryptionMode', headerName : 'encryption Mode', tooltipField: 'encryptionMode'},
-    { field: 'encryptionKey', headerName : 'encryption Key', tooltipField: 'encryptionKey'},
-    { field: '', headerName : 'enterprise code', tooltipField: ''},
+    { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck', width : 130},
+    { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle', width : 160},
+    { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo', width : 160},
+    { field: 'encryptionMode', headerName : 'encryption Mode', tooltipField: 'encryptionMode', width : 160},
+    { field: 'encryptionKey', headerName : 'encryption Key', tooltipField: 'encryptionKey', width : 150},
+    //{ field: '', headerName : 'enterprise code', tooltipField: ''},
     { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
     { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
@@ -144,6 +144,11 @@ export class PublicPlatformManagementComponent implements OnInit {
     if(this.grid1Height != this.publicPlatformManagementGrid1.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.publicPlatformManagementGrid1.nativeElement.offsetWidth > 2480){
+      this.managementGridApi.sizeColumnsToFit()
+    }
+    this.mappingGridApi.sizeColumnsToFit()
   }
 
   getForwarding(){
@@ -171,6 +176,9 @@ export class PublicPlatformManagementComponent implements OnInit {
 
   onServerGridReady(params: GridReadyEvent) {
     this.managementGridApi = params.api;
+    if(this.publicPlatformManagementGrid1.nativeElement.offsetWidth > 2480){
+      this.managementGridApi.sizeColumnsToFit()
+    }
   }
 
   onForwardingRowClick(event : any ){

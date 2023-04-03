@@ -108,6 +108,9 @@ export class OTAManagementComponent implements OnInit {
     if(this.gridHeight != this.otaManagementGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    this.gridApi.sizeColumnsToFit()
+
   }
 
   getVehiclemanagerModel(){
@@ -143,9 +146,6 @@ export class OTAManagementComponent implements OnInit {
   getOtaFirmware(){
     this.otaService.getOtaFirmware().subscribe(res=>{
       console.log(res)
-
-
-
     },error=>{
       console.log(error)
     })

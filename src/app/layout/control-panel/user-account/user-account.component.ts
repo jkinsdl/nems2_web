@@ -92,6 +92,7 @@ export class UserAccountComponent implements OnInit {
     if(this.gridHeight != this.userGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+    this.gridApi.sizeColumnsToFit()
   }
 
   getUsers(){

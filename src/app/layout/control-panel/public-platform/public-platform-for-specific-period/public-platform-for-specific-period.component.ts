@@ -33,19 +33,19 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   ) { }
 
   forwardingColumnDefs: ColDef[] = [
-    { field: 'serverName', headerName : 'name', tooltipField: 'serverName'},
-    { field: 'domain', headerName : 'IP', tooltipField: 'domain'},
-    { field: 'port', headerName : 'port', tooltipField: 'port'},
-    { field: 'platformId', headerName : 'platform ID', tooltipField: 'platformId'},
+    { field: 'serverName', headerName : 'name', tooltipField: 'serverName', width : 150},
+    { field: 'domain', headerName : 'IP', tooltipField: 'domain', width : 150},
+    { field: 'port', headerName : 'port', tooltipField: 'port', width : 80},
+    { field: 'platformId', headerName : 'platform ID', tooltipField: 'platformId', width : 150},
     { field: 'lastLogin', headerName : 'last login', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogin', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogin', type : 'date' }},
     { field: 'lastLogout', headerName : 'last logout', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogout', type : 'date' }},
-    { field: 'connectionStatus', headerName : 'start/stop', tooltipField: 'connectionStatus'},
-    { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck'},
-    { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle'},
-    { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo'},
-    { field: 'encryptionMode', headerName : 'encryption Mode', tooltipField: 'encryptionMode'},
-    { field: 'encryptionKey', headerName : 'encryption Key', tooltipField: 'encryptionKey'},
-    { field: '', headerName : 'enterprise code', tooltipField: ''},
+    { field: 'connectionStatus', headerName : 'start/stop', tooltipField: 'connectionStatus', width : 150},
+    { field: 'noAck', headerName : 'no Ack Mode', tooltipField: 'noAck', width : 130},
+    { field: 'forceLoginVehicle', headerName : 'force vehcile login', tooltipField: 'forceLoginVehicle', width : 160},
+    { field: 'filterLocationInfo', headerName : 'filter location info', tooltipField: 'filterLocationInfo', width : 160},
+    { field: 'encryptionMode', headerName : 'encryption Mode', tooltipField: 'encryptionMode', width : 160},
+    { field: 'encryptionKey', headerName : 'encryption Key', tooltipField: 'encryptionKey', width : 150},
+    //{ field: '', headerName : 'enterprise code', tooltipField: ''},
     { field: 'connectionStatus', headerName : 'connectionStatus', tooltipField: 'connectionStatus'},
     { field: 'platformPw', headerName : 'platformPw', tooltipField: 'platformPw'},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
@@ -58,9 +58,6 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
       },
     }, width:120},
   ];
-
-
-
 
   relationsColumnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
@@ -157,10 +154,19 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
     if(this.grid1Height != this.publicPlatformForSpecificPeriod1.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.publicPlatformForSpecificPeriod1.nativeElement.offsetWidth > 2360){
+      this.managementGridApi.sizeColumnsToFit()
+    }
+    this.mappingGridApi.sizeColumnsToFit()
+
   }
 
   onServerGridReady(params: GridReadyEvent) {
     this.managementGridApi = params.api;
+    if(this.publicPlatformForSpecificPeriod1.nativeElement.offsetWidth > 2360){
+      this.managementGridApi.sizeColumnsToFit()
+    }
   }
 
   onMappingGridReady(params: GridReadyEvent) {

@@ -35,11 +35,11 @@ export class VehicleSettingsComponent implements OnInit {
     { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn'},
     { field: 'registDate', headerName : 'Regist Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate', type : 'date' }},
     { field: 'sOffDate', headerName : 'S Off Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'sOffDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'sOffDate', type : 'date' }},
-    { field: 'region', headerName : 'region', tooltipField: 'region'},
-    { field: 'registrationPlate', headerName : 'Reg. number', tooltipField: 'registrationPlate'},
-    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose'},
-    { field: 'modelName', headerName : 'model', tooltipField: 'modelName'},
-    { field: 'batteryCode', headerName: 'battery code', tooltipField: 'batteryCode'},
+    { field: 'region', headerName : 'region', tooltipField: 'region', width:150},
+    { field: 'registrationPlate', headerName : 'Reg. number', tooltipField: 'registrationPlate', width:150},
+    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose', width:150},
+    { field: 'modelName', headerName : 'model', tooltipField: 'modelName', width:100},
+    { field: 'batteryCode', headerName: 'battery code', tooltipField: 'batteryCode', width:150},
     { field: 'motorNo', headerName : 'motor no', tooltipField: 'motorNo'},
     { field: 'engineNo', headerName: 'engine no', tooltipField: 'engineNo'},
     { field: 'histories', headerName: 'histories', tooltipField: 'histories'},
@@ -99,6 +99,11 @@ export class VehicleSettingsComponent implements OnInit {
     if(this.gridHeight != this.vehicleSettingsGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+
+    if(this.vehicleSettingsGrid.nativeElement.offsetWidth > 2420){
+      this.gridApi.sizeColumnsToFit()
+    }
+
   }
 
   getVehiclemanagerStaticinfo(){
@@ -173,9 +178,12 @@ export class VehicleSettingsComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+    if(this.vehicleSettingsGrid.nativeElement.offsetWidth > 2420){
+      this.gridApi.sizeColumnsToFit()
+    }
   }
 
-  async onBtnInport(event : any){
+  async onBtnImport(event : any){
     console.log(event.target.files)
     let base64 = await this.utilService.getBase64(event.target.files[0])
 

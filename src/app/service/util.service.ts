@@ -221,4 +221,19 @@ export class UtilService {
   stringEncoding(params : any){
     return btoa(params.value)
   }
+
+  decodingStringByteArray(str : string){
+    const arr = str.split('\\');
+    console.log(arr)
+  }
+
+  base64ToHex(params : any) {
+    let raw = atob(params.value)
+    let result = '';
+    for(let i = 0; i<raw.length; i++){
+      let hex = raw.charCodeAt(i).toString(16);
+      result += (hex.length == 2 ? hex : '0'+hex);
+    }
+    return result.toUpperCase();
+  }
 }

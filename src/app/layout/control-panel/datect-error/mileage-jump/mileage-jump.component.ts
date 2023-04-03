@@ -109,6 +109,7 @@ export class MileageJumpComponent implements OnInit {
     if(this.gridHeight != this.mileageJumpGrid.nativeElement.offsetHeight){
       this.getPageSize()
     }
+    this.gridApi.sizeColumnsToFit()
   }
 
   onGridReady(params: GridReadyEvent) {

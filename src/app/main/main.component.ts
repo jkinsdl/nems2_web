@@ -21,9 +21,6 @@ export class MainComponent implements OnInit {
     private vehiclewarningsService : VehiclewarningService
   ) {
     router.events.subscribe((val) => {
-      // see also
-      console.log(val instanceof NavigationEnd)
-
       if(val instanceof NavigationEnd){
         this.setSubTitle()
       }
