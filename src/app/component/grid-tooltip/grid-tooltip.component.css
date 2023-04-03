@@ -15,10 +15,8 @@
   border-radius: 3px;
 }
 
-.custom-tooltip p {
+.custom-tooltip div {
   margin: 5px;
-  white-space: nowrap;
-}
-
-.custom-tooltip p:first-of-type {
+  word-break:break-all;
+  max-width: 500px;
 }
