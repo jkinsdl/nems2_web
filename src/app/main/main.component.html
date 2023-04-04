@@ -31,18 +31,18 @@
         <div class="alarmCount">789</div>
       </div>
       -->
-      <div class="alarm" [routerLink]="['/main/alarm']">
+      <div class="alarm" [routerLink]="['/main/alarm/'+null+'/CRITICAL']">
         <img src="assets/icon/red_notification.png">
         <div class="alarmCount" *ngIf="warningcount.critical > 0">{{warningcount.critical}}</div>
       </div>
 
-      <div class="alarm" [routerLink]="['/main/alarm']">
+      <div class="alarm" [routerLink]="['/main/alarm/'+null+'/MAJOR']">
         <img src="assets/icon/pink_notification.png">
         <div class="alarmCount" *ngIf="warningcount.major > 0">{{warningcount.major}}</div>
       </div>
 
 
-      <div class="alarm" [routerLink]="['/main/alarm']">
+      <div class="alarm" [routerLink]="['/main/alarm/'+null+'/MINOR']">
         <img src="assets/icon/orange_notification.png">
         <!--<img src="assets/icon/yellow_notification.png">-->
         <div class="alarmCount" *ngIf="warningcount.minor > 0">{{warningcount.minor}}</div>

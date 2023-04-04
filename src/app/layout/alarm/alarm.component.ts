@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+
 import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
 import { Subscription } from 'rxjs';
 import { AlertPopupComponent } from 'src/app/component/alert-popup/alert-popup.component';
@@ -24,6 +25,8 @@ export class AlarmComponent implements OnInit {
   constant : CommonConstant = new CommonConstant()
   @ViewChild('alarmGrid', { read: ElementRef }) alarmGrid : ElementRef;
 
+  router$ : Subscription
+  isOnAfterViewInit = false
   constructor(
     private vehiclewarningService : VehiclewarningService,
     private utilService : UtilService,
@@ -31,8 +34,46 @@ export class AlarmComponent implements OnInit {
     private dialog: MatDialog,
     private _formBuilder: FormBuilder,
     private actRoute: ActivatedRoute,
-    private realtimeSerivce : RealtimedataService
-  ) { }
+    private realtimeSerivce : RealtimedataService,
+    public router: Router,
+  ) {
+    this.router$ = router.events.subscribe((val) => {
+      if(val instanceof NavigationEnd && val.url.indexOf('alarm') > -1){
+
+        console.log(val)
+        console.log(this.actRoute.snapshot.paramMap.get('issueId'))
+        console.log(this.actRoute.snapshot.paramMap.get('warningLevel'))
+        this.warningLevelToppings.controls['_1MINOR'].setValue(false)
+        this.warningLevelToppings.controls['_2MAJOR'].setValue(false)
+        this.warningLevelToppings.controls['_3CRITICAL'].setValue(false)
+        this.warningLevelToppings.controls['_4ABNORMAL'].setValue(false)
+        this.warningLevelToppings.controls['_5INVAILD'].setValue(false)
+        if(val.url.indexOf("CRITICAL") > -1){
+          this.warningLevelToppings.controls['_3CRITICAL'].setValue(true)
+        }else if(val.url.indexOf("MAJOR") > -1){
+          this.warningLevelToppings.controls['_2MAJOR'].setValue(true)
+        }else if(val.url.indexOf("MINOR") > -1){
+          this.warningLevelToppings.controls['_1MINOR'].setValue(true)
+        }
+
+        this.stateToppings.controls['_1OPEN'].setValue(false)
+        this.stateToppings.controls['_2PROGRESS'].setValue(false)
+        this.stateToppings.controls['_3RESOLVED'].setValue(false)
+        this.stateToppings.controls['_4CLOSED'].setValue(false)
+        this.stateToppings.controls['_5ERROR'].setValue(false)
+
+        if(this.actRoute.snapshot.paramMap.get('issueId') && this.actRoute.snapshot.paramMap.get('issueId') != 'null'){
+          this.stateToppings.controls['_1OPEN'].setValue(true)
+          this.stateToppings.controls['_2PROGRESS'].setValue(true)
+          this.stateToppings.controls['_5ERROR'].setValue(true)
+        }
+
+        if(this.isOnAfterViewInit){
+          this.getPageSize()
+        }
+      }
+    });
+  }
 
 
   isOpenWarningTypeFilter : boolean = false;
@@ -149,62 +190,20 @@ export class AlarmComponent implements OnInit {
   beginDate : Date = null
   endDate : Date = null
 
-  issueId : number
-  warningLevel : string
 
   commentsText : string = ""
 
   ngAfterViewInit() {
-    console.log(this.issueId)
-    if( this.issueId ){
-
-      this.stateToppings.controls['OPEN'].setValue(true)
-      this.stateToppings.controls['PROGRESS'].setValue(true)
-      this.stateToppings.controls['ERROR'].setValue(true)
-
-      if(this.warningLevel == "CRITICAL"){
-        this.warningLevelToppings.controls['CRITICAL'].setValue(true)
-      }else if(this.warningLevel == "MAJOR"){
-        this.warningLevelToppings.controls['MAJOR'].setValue(true)
-      }else if(this.warningLevel == "MINOR"){
-        this.warningLevelToppings.controls['MINOR'].setValue(true)
-      }
-      /*this.vehiclewarningService.getVehiclewarnings(new SearchFilter()).subscribe(res=>{
-        this.gridHeight = this.alarmGrid.nativeElement.offsetHeight;
-        this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-        for(let i = 0; i < res.body.entities.length; i++){
-          if(this.issueId == res.body.entities[i].issueId){
-            this.uiService.setCurrentPage((Math.floor(i/this.pageSize)) + 1);
-            break;
-          }
-        }
-      },error=>{
-        console.log(error)
-      })*/
-    }
+    this.isOnAfterViewInit = true
     this.getPageSize()
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     if(this.page$)this.page$.unsubscribe()
+    if(this.router$)this.router$.unsubscribe()
   }
 
   ngOnInit(): void {
-
-    let arr = [{key:"test3", value:'test1'},{key:"test1", value:'test2'},{key:"test2", value:'test3'}]
-    let obj : any = {}
-
-    arr.forEach(data => {
-      obj[data.key] = data.value
-    })
-
-    console.log(obj)
-
-    this.issueId = parseInt(this.actRoute.snapshot.paramMap.get('issueId'))
-    this.warningLevel = this.actRoute.snapshot.paramMap.get('warningLevel')
-
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
       this.map = new mapboxgl.Map({
@@ -219,7 +218,6 @@ export class AlarmComponent implements OnInit {
         this.map.addSource('realtimedataLocation',{
           type: 'geojson'
         })
-
         this.map.addLayer({
           id: 'realtimedata-location-clusters',
           type: 'circle',
@@ -231,9 +229,7 @@ export class AlarmComponent implements OnInit {
             'circle-stroke-color': '#fff'
           }
         });
-
       })
-
     },1)
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
 
@@ -359,23 +355,12 @@ export class AlarmComponent implements OnInit {
       }
       this.uiService.setPagination(pagination)
 
-      if( this.issueId ){
+      if( this.actRoute.snapshot.paramMap.get('issueId') ){
 
         setTimeout(()=>{
-          this.gridApi.forEachNode(node=> node.data.issueId == this.issueId ? node.setSelected(true) : 0)
-          this.issueId = undefined
+          this.gridApi.forEachNode(node=> node.data.issueId == this.actRoute.snapshot.paramMap.get('issueId') ? node.setSelected(true) : 0)
         },1)
 
-
-        /*for(let i = 0; i < this.vehiclewarning.entities.length; i++){
-          if(this.vehiclewarning.entities[i].issueId == this.issueId){
-            //this.gridApi.getSelectedRows().push(this.vehiclewarning.entities[i])
-
-            this.selectAlarm()
-            this.issueId = undefined
-            break;
-          }
-        }*/
       }
 
     },error=>{
