@@ -110,33 +110,37 @@ export class RemoteControlStateComponent implements OnInit {
       this.devicemanagersVehicles = res.body
       this.rowData = []
       for(let i = 0; i < res.body.entities.length; i++) {
+
+
+
+
         this.rowData.push({
           vin : res.body.entities[i].vin,
-          carHeartBeatPeriod : res.body.entities[i].configure.carHeartBeatPeriod,
-          carLocalSavePeriod : res.body.entities[i].configure.carLocalSavePeriod,
-          carResponseTimeout : res.body.entities[i].configure.carResponseTimeout,
-          configureName : res.body.entities[i].configure.configureName,
-          configureFwVersion : res.body.entities[i].configure.fwVersion,
-          configureHwVersion : res.body.entities[i].configure.hwVersion,
-          managePlatformName : res.body.entities[i].configure.managePlatformName,
-          managePlatformPort : res.body.entities[i].configure.managePlatformPort,
-          monitoring : res.body.entities[i].configure.monitoring,
-          nextLoginInterval : res.body.entities[i].configure.nextLoginInterval,
-          platformResponseTimeout : res.body.entities[i].configure.platformResponseTimeout,
-          publicPlatformName : res.body.entities[i].configure.publicPlatformName,
-          publicPlatformPort : res.body.entities[i].configure.publicPlatformPort,
-          updatedAt : res.body.entities[i].configure.updatedAt,
-          updatedUserId : res.body.entities[i].configure.updatedUserId,
-          warningSubmitPeriod : res.body.entities[i].configure.warningSubmitPeriod,
-          createdAt : res.body.entities[i].firmwareInfo.createdAt,
-          createdUserId : res.body.entities[i].firmwareInfo.createdUserId,
-          dataFilePath : res.body.entities[i].firmwareInfo.dataFilePath,
-          dataSize : res.body.entities[i].firmwareInfo.dataSize,
-          firmwareName : res.body.entities[i].firmwareInfo.firmwareName,
-          firmwareInfoFwVersion : res.body.entities[i].firmwareInfo.fwVersion,
-          firmwareInfoHwVersion : res.body.entities[i].firmwareInfo.hwVersion,
-          md5Hash : res.body.entities[i].firmwareInfo.md5Hash,
-          modelName : res.body.entities[i].firmwareInfo.modelName,
+          carHeartBeatPeriod : res.body.entities[i].configure ? res.body.entities[i].configure.carHeartBeatPeriod : null,
+          carLocalSavePeriod : res.body.entities[i].configure ? res.body.entities[i].configure.carLocalSavePeriod : null,
+          carResponseTimeout : res.body.entities[i].configure ? res.body.entities[i].configure.carResponseTimeout : null,
+          configureName : res.body.entities[i].configure ? res.body.entities[i].configure.configureName : null,
+          configureFwVersion : res.body.entities[i].configure ? res.body.entities[i].configure.fwVersion : null,
+          configureHwVersion : res.body.entities[i].configure ? res.body.entities[i].configure.hwVersion : null,
+          managePlatformName : res.body.entities[i].configure ? res.body.entities[i].configure.managePlatformName : null,
+          managePlatformPort : res.body.entities[i].configure ? res.body.entities[i].configure.managePlatformPort : null,
+          monitoring : res.body.entities[i].configure ? res.body.entities[i].configure.monitoring : null,
+          nextLoginInterval : res.body.entities[i].configure ? res.body.entities[i].configure.nextLoginInterval : null,
+          platformResponseTimeout : res.body.entities[i].configure ? res.body.entities[i].configure.platformResponseTimeout : null,
+          publicPlatformName : res.body.entities[i].configure ? res.body.entities[i].configure.publicPlatformName : null,
+          publicPlatformPort : res.body.entities[i].configure ? res.body.entities[i].configure.publicPlatformPort : null,
+          updatedAt : res.body.entities[i].configure ? res.body.entities[i].configure.updatedAt : null,
+          updatedUserId : res.body.entities[i].configure ? res.body.entities[i].configure.updatedUserId : null,
+          warningSubmitPeriod : res.body.entities[i].configure ? res.body.entities[i].configure.warningSubmitPeriod : null,
+          createdAt : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.createdAt : null,
+          createdUserId : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.createdUserId : null,
+          dataFilePath : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.dataFilePath : null,
+          dataSize : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.dataSize : null,
+          firmwareName : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.firmwareName : null,
+          firmwareInfoFwVersion : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.fwVersion : null,
+          firmwareInfoHwVersion : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.hwVersion : null,
+          md5Hash : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.md5Hash : null,
+          modelName : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.modelName : null,
         })
       }
 
