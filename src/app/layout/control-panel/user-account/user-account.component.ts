@@ -85,7 +85,9 @@ export class UserAccountComponent implements OnInit {
   getPageSize(){
     this.gridHeight = this.userGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getUsers()
+    if(this.searchFilter.limit != this.pageSize){
+      this.getUsers()
+    }
   }
 
   onResize(event : any){

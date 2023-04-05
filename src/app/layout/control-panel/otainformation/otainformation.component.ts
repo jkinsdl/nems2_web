@@ -89,7 +89,9 @@ export class OTAInformationComponent implements OnInit {
   getPageSize(){
     this.gridHeight = this.otaInformationGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getDevicemanagersVehicleFirmware()
+    if(this.searchFilter.limit != this.pageSize){
+      this.getDevicemanagersVehicleFirmware()
+    }
 
   }
 

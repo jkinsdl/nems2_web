@@ -103,7 +103,9 @@ export class ServerLogsComponent implements OnInit {
   getPageSize(){
     this.gridHeight = this.serverLogGrid.nativeElement.offsetHeight
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getGbpacket()
+    if(this.searchFilter.limit != this.pageSize){
+      this.getGbpacket()
+    }
   }
 
   onResize(event : any){
@@ -209,5 +211,4 @@ export class ServerLogsComponent implements OnInit {
   clearBeginDate(){
     this.beginDate = undefined
   }
-
 }

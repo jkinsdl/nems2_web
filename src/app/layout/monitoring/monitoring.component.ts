@@ -71,7 +71,9 @@ export class MonitoringComponent implements OnInit {
   getPageSize(){
     this.gridHeight = this.realTimeMonitoringGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getRealtimedataVehiclelist()
+    if(this.searchFilter.limit != this.pageSize){
+      this.getRealtimedataVehiclelist()
+    }
   }
 
   onResize(event : any){

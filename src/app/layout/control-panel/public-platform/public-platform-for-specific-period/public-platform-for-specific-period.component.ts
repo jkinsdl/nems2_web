@@ -119,7 +119,9 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   getPageSize(){
     this.grid1Height = this.publicPlatformForSpecificPeriod1.nativeElement.offsetHeight
     this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
-    this.getForwarding()
+    if(this.uiService.getGridPageSize(this.grid1Height) != this.pageSize){
+      this.getForwarding()
+    }
 
     this.grid2Height = this.publicPlatformForSpecificPeriod2.nativeElement.offsetHeight
     this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)

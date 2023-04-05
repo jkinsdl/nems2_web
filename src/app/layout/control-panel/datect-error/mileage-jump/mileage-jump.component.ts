@@ -69,7 +69,9 @@ export class MileageJumpComponent implements OnInit {
   getPageSize(){
     this.gridHeight = this.mileageJumpGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getGbpacketInvalid()
+    if(this.searchFilter.limit != this.pageSize){
+      this.getGbpacketInvalid()
+    }
   }
 
   getGbpacketInvalid(){

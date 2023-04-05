@@ -1,5 +1,6 @@
 :host {
   position: absolute;
+  max-width: 500px;
   height: 70px;
   pointer-events: none;
   transition: opacity 1s;
@@ -18,5 +19,4 @@
 .custom-tooltip div {
   margin: 5px;
   word-break:break-all;
-  max-width: 500px;
 }

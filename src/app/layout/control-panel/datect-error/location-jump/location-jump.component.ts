@@ -70,7 +70,10 @@ export class LocationJumpComponent implements OnInit {
   getPageSize(){
     this.gridHeight = this.locationJumpGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
-    this.getGbpacketInvalid()
+    if(this.searchFilter.limit != this.pageSize){
+      this.getGbpacketInvalid()
+    }
+
   }
 
   getGbpacketInvalid(){

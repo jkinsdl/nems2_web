@@ -128,12 +128,14 @@ export class ConfigureComponent implements OnInit {
 
   getPageSize(){
     this.grid1Height = this.configure1.nativeElement.offsetHeight;
-    this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
-    this.getDevicemanagersParameter()
+    if(this.uiService.getGridPageSize(this.grid1Height) != this.pageSize){
+      this.pageSize = this.uiService.getGridPageSize(this.grid1Height)
+      this.getDevicemanagersParameter()
+    }
 
     this.grid2Height = this.configure2.nativeElement.offsetHeight
-    this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
-    if(this.selectConfigureRow != null){
+    if(this.selectConfigureRow != null && this.uiService.getGridPageSize(this.grid1Height) != this.pageSize2){
+      this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
       this.getDevicemanagersParametersConfigureNameVehicles()
     }
   }
