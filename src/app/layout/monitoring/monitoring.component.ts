@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { LoginCarRendererComponent } from 'src/app/component/login-car-renderer/login-car-renderer.component';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
@@ -27,7 +28,7 @@ export class MonitoringComponent implements OnInit {
   mapsBtn$ : Subscription
 
   columnDefs: ColDef[] = [
-    { field: 'isLogin',  headerName: 'Login', tooltipField: 'isLogin', width:80},
+    { headerName: 'Login', width:80, cellRenderer : LoginCarRendererComponent},
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
     { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber', width:150},
     { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn', width:180},
