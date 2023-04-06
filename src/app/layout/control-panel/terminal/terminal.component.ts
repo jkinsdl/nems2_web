@@ -38,12 +38,15 @@ export class TerminalComponent implements OnInit {
   ) { }
 
   command : string = ""
-
+  consoleText : string
+  currentUser : any
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('user'))
+    this.consoleText = "Hi, '" + this.currentUser.username + "'. Welcome to NEMS terminal. \n"
   }
 
   ngAfterViewInit() {
-    this.underlying = this.child.underlying;
+    /*this.underlying = this.child.underlying;
     this.underlying.options.fontSize = 20;
     console.debug("example: font apply" );
     //this.underlying.loadAddon(new WebLinksAddon());
@@ -53,7 +56,7 @@ export class TerminalComponent implements OnInit {
       theme: this.baseTheme,
       cursorBlink: true
     });
-    this.child.write('$ NgTerminal Live Example');
+    this.child.write("Hi, '" + this.currentUser.username + "'. Welcome to NEMS terminal.");
     this.child.write(this.prompt);
     this.child.onData().subscribe((input) => {
       if (input === '\r') { // Carriage Return (When Enter is pressed)
@@ -84,7 +87,7 @@ export class TerminalComponent implements OnInit {
       //onData() is used more often.
     });
     this._cols = 162
-    this._rows = 39
+    this._rows = 1*/
   }
 
   postDevicemanagersTerminal(command : string){
@@ -124,5 +127,12 @@ export class TerminalComponent implements OnInit {
     brightWhite: '#FFFFFF',
     border: '#85858a'
   };
+
+  setCommand(){
+    console.log("!")
+
+    this.consoleText += this.currentUser.username +">" + this.command +'\n'
+    this.command = ""
+  }
 
 }
