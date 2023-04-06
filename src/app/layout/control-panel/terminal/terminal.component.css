@@ -16,6 +16,14 @@
   font-size: 20px;
   background-color: white;
   border-bottom: 1px solid gray;
+  display: flex;
+  align-items: center;
+}
+
+.title img{
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
 }
 
 .consoleResult{
