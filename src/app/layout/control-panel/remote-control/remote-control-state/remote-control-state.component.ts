@@ -103,7 +103,7 @@ export class RemoteControlStateComponent implements OnInit {
       this.getPageSize()
     }
 
-    if(this.remoteControlStateGrid.nativeElement.offsetWidth > 4020){
+    if(this.remoteControlStateGrid.nativeElement.offsetWidth > 3020){
       this.gridApi.sizeColumnsToFit()
     }
 
@@ -166,7 +166,7 @@ export class RemoteControlStateComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    if(this.remoteControlStateGrid.nativeElement.offsetWidth > 4020){
+    if(this.remoteControlStateGrid.nativeElement.offsetWidth > 3020){
       this.gridApi.sizeColumnsToFit()
     }
   }
