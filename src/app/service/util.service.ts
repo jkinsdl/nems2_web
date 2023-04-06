@@ -201,6 +201,11 @@ export class UtilService {
     document.body.removeChild(link);
   }
 
+  purposeValueToString(parameter : any){
+    let result = ["PERSONAL", "PUBLIC", "COMMERCIAL", "Reserved"]
+    return result[parameter.value]
+  }
+
   exportDownload(filename : string, data : string) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;base64,' + data);

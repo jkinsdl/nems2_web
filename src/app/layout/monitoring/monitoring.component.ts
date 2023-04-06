@@ -29,15 +29,15 @@ export class MonitoringComponent implements OnInit {
 
   columnDefs: ColDef[] = [
     { headerName: 'Login', width:80, cellRenderer : LoginCarRendererComponent},
-    { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
-    { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber', width:150},
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin', width:180},
+    { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber', width:130},
     { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn', width:180},
     { field: 'lastUpdate', headerName : 'Last Updated', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastUpdate'},
-    { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)', tooltipField: 'accumulatedMile' },
+    { field: 'accumulatedMile', headerName : 'Accumulated Mile(km)', tooltipField: 'accumulatedMile', width:200 },
     { field: 'packetCount', headerName : 'Packet Count', tooltipField: 'packetCount', width:150 },
     { field: 'model', headerName : 'model', tooltipField: 'model', width:100 },
     { field: 'region', headerName : 'region', tooltipField: 'region', width:100 },
-    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose', width:100 },
+    { field: 'purpose', headerName : 'Purpose', tooltipField: 'purpose', valueFormatter : this.utilService.purposeValueToString, width:120 },
     { field: 'warningLevel', headerName : 'Warning', tooltipField: 'warningLevel', width:100 },
     { field: 'soc', headerName : 'soc(%)', tooltipField: 'soc', width:100 },
   ];
@@ -82,7 +82,7 @@ export class MonitoringComponent implements OnInit {
       this.getPageSize()
     }
 
-    if(this.realTimeMonitoringGrid.nativeElement.offsetWidth > 1660){
+    if(this.realTimeMonitoringGrid.nativeElement.offsetWidth > 1640){
       this.gridApi.sizeColumnsToFit()
     }
 
@@ -140,7 +140,7 @@ export class MonitoringComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    if(this.realTimeMonitoringGrid.nativeElement.offsetWidth > 1660){
+    if(this.realTimeMonitoringGrid.nativeElement.offsetWidth > 1640){
       this.gridApi.sizeColumnsToFit()
     }
   }
