@@ -24,28 +24,33 @@ export class RemoteControlStateComponent implements OnInit {
 
   columnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin',width:180 },
-    { field: 'carHeartBeatPeriod', headerName: 'carHeartBeatPeriod', tooltipField: 'carHeartBeatPeriod',width:180},
-    { field: 'carLocalSavePeriod', headerName : 'carLocalSavePeriod', tooltipField: 'carLocalSavePeriod',width:180},
-    { field: 'carResponseTimeout', headerName : 'carResponseTimeout', tooltipField: 'carResponseTimeout',width:180},
+    { field: 'updatedAt', headerName : 'Updated At', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }},
+    //state
+    { field: 'carLocalSavePeriod', headerName : 'Car Local Save Period', tooltipField: 'carLocalSavePeriod',width:180},
+    { field: 'normalSubmitPeriod', headerName : 'Normal Submit Period', tooltipField: 'normalSubmitPeriod',width:200},
+    { field: 'warningSubmitPeriod', headerName : 'Warning Submit Period', tooltipField: 'warningSubmitPeriod',width:200},
+    { field: 'managePlatformName', headerName : 'Manage Platform Name', tooltipField: 'managePlatformName',width:200},
+    { field: 'managePlatformPort', headerName : 'Manage Platform Port', tooltipField: 'managePlatformPort',width:200},
+    { field: 'configureHwVersion', headerName : 'Hardware Version', tooltipField: 'configureHwVersion',width:180},
+    { field: 'configureFwVersion', headerName : 'Firmware Version', tooltipField: 'configureFwVersion',width:180},
+    { field: 'carHeartBeatPeriod', headerName: 'Car Heart Beat Period', tooltipField: 'carHeartBeatPeriod',width:180},
+    { field: 'carResponseTimeout', headerName : 'Car Response Timeout', tooltipField: 'carResponseTimeout',width:200},
+    { field: 'platformResponseTimeout', headerName : 'Platform Response Timeout', tooltipField: 'platformResponseTimeout',width:240},
+    { field: 'nextLoginInterval', headerName : 'Next Login Interval', tooltipField: 'nextLoginInterval',width:180},
+    { field: 'publicPlatformName', headerName : 'Public Platform Name', tooltipField: 'publicPlatformName'},
+    { field: 'publicPlatformPort', headerName : 'Public Platform Port', tooltipField: 'publicPlatformPort',width:180},
+    { field: 'monitoring', headerName : 'Monitoring', tooltipField: 'monitoring',width:120},
+
+    /*
     { field: 'configureName', headerName : 'configureName', tooltipField: 'configureName',width:150},
-    { field: 'configureFwVersion', headerName : 'configureFwVersion', tooltipField: 'configureFwVersion',width:180},
-    { field: 'configureHwVersion', headerName : 'configureHwVersion', tooltipField: 'configureHwVersion',width:180},
-    { field: 'managePlatformName', headerName : 'managePlatformName', tooltipField: 'managePlatformName',width:200},
-    { field: 'managePlatformPort', headerName : 'managePlatformPort', tooltipField: 'managePlatformPort',width:180},
-    { field: 'monitoring', headerName : 'monitoring', tooltipField: 'monitoring',width:120},
-    { field: 'nextLoginInterval', headerName : 'nextLoginInterval', tooltipField: 'nextLoginInterval',width:180},
-    { field: 'platformResponseTimeout', headerName : 'platformResponseTimeout', tooltipField: 'platformResponseTimeout',width:220},
-    { field: 'publicPlatformName', headerName : 'publicPlatformName', tooltipField: 'publicPlatformName'},
-    { field: 'publicPlatformPort', headerName : 'publicPlatformPort', tooltipField: 'publicPlatformPort',width:180},
-    { field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }},
+{ field: 'firmwareInfoHwVersion', headerName : 'Firmware Info Hw Version', tooltipField: 'firmwareInfoHwVersion', width:220},
+    { field: 'firmwareInfoFwVersion', headerName : 'Firmware Info Fw Version', tooltipField: 'firmwareInfoFwVersion', width:220},
     { field: 'updatedUserId', headerName : 'updatedUserId', tooltipField: 'updatedUserId',width:120},
     { field: 'dataFilePath', headerName : 'dataFilePath', tooltipField: 'dataFilePath'},
     { field: 'dataSize', headerName : 'dataSize', tooltipField: 'dataSize',width:120},
     { field: 'firmwareName', headerName : 'firmwareName', tooltipField: 'firmwareName',width:150},
-    { field: 'firmwareInfoFwVersion', headerName : 'firmwareInfoFwVersion', tooltipField: 'firmwareInfoFwVersion'},
-    { field: 'firmwareInfoHwVersion', headerName : 'firmwareInfoHwVersion', tooltipField: 'firmwareInfoHwVersion'},
     { field: 'md5Hash', headerName : 'md5Hash', tooltipField: 'md5Hash'},
-    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName',width:120}
+    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName',width:120}*/
   ];
 
   gridApi!: GridApi;
@@ -115,8 +120,6 @@ export class RemoteControlStateComponent implements OnInit {
       for(let i = 0; i < res.body.entities.length; i++) {
 
 
-
-
         this.rowData.push({
           vin : res.body.entities[i].vin,
           carHeartBeatPeriod : res.body.entities[i].configure ? res.body.entities[i].configure.carHeartBeatPeriod : null,
@@ -129,6 +132,7 @@ export class RemoteControlStateComponent implements OnInit {
           managePlatformPort : res.body.entities[i].configure ? res.body.entities[i].configure.managePlatformPort : null,
           monitoring : res.body.entities[i].configure ? res.body.entities[i].configure.monitoring : null,
           nextLoginInterval : res.body.entities[i].configure ? res.body.entities[i].configure.nextLoginInterval : null,
+          normalSubmitPeriod : res.body.entities[i].configure ? res.body.entities[i].configure.normalSubmitPeriod : null,
           platformResponseTimeout : res.body.entities[i].configure ? res.body.entities[i].configure.platformResponseTimeout : null,
           publicPlatformName : res.body.entities[i].configure ? res.body.entities[i].configure.publicPlatformName : null,
           publicPlatformPort : res.body.entities[i].configure ? res.body.entities[i].configure.publicPlatformPort : null,
