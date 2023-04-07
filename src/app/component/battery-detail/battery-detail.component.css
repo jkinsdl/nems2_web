@@ -1,5 +1,6 @@
 .batteryDetailConatiner{
   width: 800px;
+  overflow: hidden;
 }
 
 

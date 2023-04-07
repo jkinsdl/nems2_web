@@ -47,10 +47,10 @@
 }
 
 .map{
-  width: 100% !important;
+  width: calc(100% - 10px) !important;
   height: 100% !important;
   position: absolute !important;
-  margin: 0 !important;
+  margin: 0 0 0 10px !important;
 }
 
 .infoBox{
@@ -131,18 +131,20 @@
   background-color: white;
   /*background-color: #1b1826;*/
   /*background-color: rgb(16, 12, 42);*/
+}
 
+#batteryChartContiner div canvas{
+  cursor: pointer;
 }
 
 .listAbsoluteBox{
   width: 250px;
-  height: calc(100% - 60px);
+  height: calc(100% - 40px);
   position: absolute;
   z-index: 1;
   background-color: rgba(255, 255, 255);
   border-radius: 10px;
   padding: 20px 10px;
-  margin: 10px;
   border: 1px solid #ebebeb;
 }
 
@@ -155,14 +157,18 @@
 }
 
 .searchTitle{
+  width: 30px;
   margin-right: 10px;
   font-size: 12px;
 }
 
 .listSearch input{
+  width: 200px;
   border: 1px solid #9b9b9b;
   border-radius: 5px;
   height: 25px;
+  padding: 0;
+  margin: 0;
 }
 
 .monitoringMapList{
@@ -257,15 +263,14 @@
 
 .historyGridContainer,
 .infomationContainer{
-  margin-left: 300px;
-  width: calc(100% - 300px);
-  height: calc(100% - 20px);
+  margin-left: 290px;
+  width: calc(100% - 288px);
+  height: 100%;
   background-color: white;
   border: 1px solid #ebebeb;
   border-radius: 10px;
   position: absolute;
-  margin-top: 10px;
-
+  overflow: hidden;
 }
 
 .infomationContainer{
@@ -332,4 +337,15 @@
 
 .motorsLeftText{
   width: 200px;
+}
+
+.selectMode{
+  background-color: white;
+  color: black;
+}
+
+.value{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

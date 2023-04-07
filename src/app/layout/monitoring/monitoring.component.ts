@@ -65,7 +65,7 @@ export class MonitoringComponent implements OnInit {
     this.endDate = new Date(new Date().getTime());
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getPageSize()
+      this.getRealtimedataVehiclelist()
     })
   }
 

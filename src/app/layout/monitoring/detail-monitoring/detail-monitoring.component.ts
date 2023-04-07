@@ -65,18 +65,27 @@ export class DetailMonitoringComponent implements OnInit {
 
   historyEndDate : Date = new Date()
   historyStartDate : Date = new Date()
+  historySubject : string = 'CAR'
+
+  historyDataList : any[] = []
 
   columnDefs: ColDef[] = [
-    { field: 'warningLevel',headerName: "warningLevel"},
-    { field: 'vin',headerName: "vin"},
-    { field: 'warningCode',headerName: "warningCode"},
-    { field: 'createTime',headerName: "createTime"},
-    { field: 'updateTime',headerName: "updateTime"},
+    { field: 'time',headerName: "time"},
     { field: 'state',headerName: "state"},
-    { field: 'maxWarning',headerName: "maxWarning"},
-    { field: 'warningFlag',headerName: "warningFlag"},
-    { field: 'region',headerName: "region"},
-    { field: 'comment',headerName: "comment"},
+    { field: 'chargeState',headerName: "chargeState"},
+    { field: 'driveMode',headerName: "driveMode"},
+    { field: 'speed',headerName: "speed"},
+    { field: 'drivenDistance',headerName: "drivenDistance"},
+    { field: 'totalVolt',headerName: "totalVolt"},
+    { field: 'totalAmpere',headerName: "totalAmpere"},
+    { field: 'soc',headerName: "soc"},
+    { field: 'dcdcState',headerName: "dcdcState"},
+    { field: 'accel',headerName: "accel"},
+    { field: 'breaking',headerName: "breaking"},
+    { field: 'gearState',headerName: "gearState"},
+    { field: 'resistance',headerName: "resistance"},
+    { field: 'acceleratorVal',headerName: "acceleratorVal"},
+    { field: 'breakState',headerName: "breakState"},
   ];
 
   gridApi!: GridApi;
@@ -482,13 +491,19 @@ export class DetailMonitoringComponent implements OnInit {
 
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getPageSize()
+
+      this.getRealtimedataInfoVinSubject()
+
     })
   }
 
   getPageSize(){
+    console.log("!")
     this.gridHeight = this.vinHistoryGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
+    if(this.searchFilter.limit != this.pageSize && this.selectVehicle){
+      this.getRealtimedataInfoVinSubject()
+    }
   }
 
   onResize(event : any){
@@ -549,6 +564,8 @@ export class DetailMonitoringComponent implements OnInit {
     this.selectVehicle = vehicle
     this.isPanelOnOff = true
     this.getRealtimedataInfoVin()
+    this.getRealtimedataPathVin()
+    this.getRealtimedataInfoVinSubject()
   }
 
   getRealtimedataInfoVin(){
@@ -588,9 +605,6 @@ export class DetailMonitoringComponent implements OnInit {
     },error=>{
       console.log(error)
     })
-
-    this.getRealtimedataPathVin()
-
   }
 
   getRealtimedataPathVin(){
@@ -623,6 +637,226 @@ export class DetailMonitoringComponent implements OnInit {
     },error=>{
       console.log(error)
     })
+  }
+
+  getRealtimedataInfoVinSubject(){
+
+    if(!this.selectVehicle){
+      return
+    }
+
+    this.searchFilter.vin = this.selectVehicle.vin
+    this.searchFilter.subject = this.historySubject
+
+    if(this.historyStartDate){
+      this.searchFilter.begin = this.historyStartDate.toISOString()
+    }else{
+      this.searchFilter.begin = undefined
+    }
+
+    if(this.historyEndDate){
+      this.searchFilter.end = this.historyEndDate.toISOString()
+    }else{
+      this.searchFilter.end = undefined
+    }
+
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
+
+
+    this.realtimedataService.getRealtimedataInfoVinSubject(this.searchFilter).subscribe(res=>{
+      console.log(res)
+
+      let pagination = {
+        count : 0,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      if(this.historySubject == 'CAR'){
+        this.historyDataList = res.body.car.carHistory
+        pagination.count = res.body.car.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'state',headerName: "state"},
+          { field: 'chargeState',headerName: "chargeState"},
+          { field: 'driveMode',headerName: "driveMode"},
+          { field: 'speed',headerName: "speed"},
+          { field: 'drivenDistance',headerName: "drivenDistance"},
+          { field: 'totalVolt',headerName: "totalVolt"},
+          { field: 'totalAmpere',headerName: "totalAmpere"},
+          { field: 'soc',headerName: "soc"},
+          { field: 'dcdcState',headerName: "dcdcState"},
+          { field: 'accel',headerName: "accel"},
+          { field: 'breaking',headerName: "breaking"},
+          { field: 'gearState',headerName: "gearState"},
+          { field: 'resistance',headerName: "resistance"},
+          { field: 'acceleratorVal',headerName: "acceleratorVal"},
+          { field: 'breakState',headerName: "breakState"},
+        ];
+
+
+      }else if(this.historySubject == 'MOTOR'){
+        this.historyDataList = res.body.motor.motorHistory
+        pagination.count = res.body.motor.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'serialNo',headerName: "serialNo"},
+          { field: 'state',headerName: "state"},
+          { field: 'controllerTemp',headerName: "controllerTemp"},
+          { field: 'rpm',headerName: "rpm"},
+          { field: 'torq',headerName: "torq"},
+          { field: 'temp',headerName: "temp"},
+          { field: 'inputVolt',headerName: "inputVolt"},
+          { field: 'controllerDcBusAmpere',headerName: "controllerDcBusAmpere"},
+        ];
+
+      }else if(this.historySubject == 'FUELBATTERY'){
+        this.historyDataList = res.body.fuelBattery.fuelBatteryHistory
+        pagination.count = res.body.fuelBattery.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'volt',headerName: "volt"},
+          { field: 'ampere',headerName: "ampere"},
+          { field: 'attritionRate',headerName: "attritionRate"},
+          { field: 'tempProbeCnt',headerName: "tempProbeCnt"},
+          { field: 'probeTemps',headerName: "probeTemps"},
+          { field: 'hydrogenMaxTemp',headerName: "hydrogenMaxTemp"},
+          { field: 'hydrogenMaxProbeCode',headerName: "hydrogenMaxProbeCode"},
+          { field: 'hydrogenMaxConcentration',headerName: "hydrogenMaxConcentration"},
+          { field: 'hydrogenMaxConcentrationSensorCode',headerName: "hydrogenMaxConcentrationSensorCode"},
+          { field: 'hydrogenMaxPressure',headerName: "hydrogenMaxPressure"},
+          { field: 'hydrogenMaxPressureSensorCode',headerName: "hydrogenMaxPressureSensorCode"},
+          { field: 'maxPressureDcdcState',headerName: "maxPressureDcdcState"},
+        ];
+
+      }else if(this.historySubject == 'ENGINE'){
+        this.historyDataList = res.body.engine.engineHistory
+        pagination.count = res.body.engine.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'state',headerName: "state"},
+          { field: 'crankshaftRotationVelocity',headerName: "crankshaftRotationVelocity"},
+          { field: 'fuelConsumption',headerName: "fuelConsumption"}
+        ];
+
+        setTimeout(()=>{
+          this.gridApi.sizeColumnsToFit()
+        },1)
+
+
+      }else if(this.historySubject == 'LOCATION'){
+        this.historyDataList = res.body.location.locationHistory
+        pagination.count = res.body.location.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'state',headerName: "state"},
+          { field: 'ewFlag',headerName: "ewFlag"},
+          { field: 'longitude',headerName: "longitude"},
+          { field: 'nsFlag',headerName: "nsFlag"},
+          { field: 'latitude',headerName: "latitude"}
+        ];
+
+        setTimeout(()=>{
+          this.gridApi.sizeColumnsToFit()
+        },1)
+
+      }else if(this.historySubject == 'EXTREMEVALUE'){
+        this.historyDataList = res.body.extremeValue.extremeValueHistory
+        pagination.count = res.body.extremeValue.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'batteryMaxVoltSubsystemNo',headerName: "batteryMaxVoltSubsystemNo"},
+          { field: 'batteryMaxVoltCellCode',headerName: "batteryMaxVoltCellCode"},
+          { field: 'batteryMaxVolt',headerName: "batteryMaxVolt"},
+          { field: 'batteryMinVoltSubsystemNo',headerName: "batteryMinVoltSubsystemNo"},
+          { field: 'batteryMinVoltCellCode',headerName: "batteryMinVoltCellCode"},
+          { field: 'batteryMinVolt',headerName: "batteryMinVolt"},
+          { field: 'batteryMaxTempSubsystemNo',headerName: "batteryMaxTempSubsystemNo"},
+          { field: 'batteryMaxTempSensorCode',headerName: "batteryMaxTempSensorCode"},
+          { field: 'batteryMaxTemp',headerName: "batteryMaxTemp"},
+          { field: 'batteryMinTempSubsystemNo',headerName: "batteryMinTempSubsystemNo"},
+          { field: 'batteryMinTempSensorCode',headerName: "batteryMinTempSensorCode"},
+          { field: 'batteryMinTemp',headerName: "batteryMinTemp"}
+        ];
+
+      }else if(this.historySubject == 'WARNING'){
+        this.historyDataList = res.body.warning.warningHistory
+        pagination.count = res.body.warning.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'maxWarning',headerName: "maxWarning"},
+          { field: 'flag',headerName: "flag"},
+          { field: 'powerBatteryTroubleCnt',headerName: "powerBatteryTroubleCnt"},
+          { field: 'powerBatteryTroubleCodes',headerName: "powerBatteryTroubleCodes"},
+          { field: 'motorTroubleCnt',headerName: "motorTroubleCnt"},
+          { field: 'motorTroubleCodes',headerName: "motorTroubleCodes"},
+          { field: 'engineTroubleCnt',headerName: "engineTroubleCnt"},
+          { field: 'engineTroubleCodes',headerName: "engineTroubleCodes"},
+          { field: 'etcTroubleCnt',headerName: "etcTroubleCnt"},
+          { field: 'etcTroubleCodes',headerName: "etcTroubleCodes"},
+          { field: 'warningName',headerName: "warningName"}
+        ];
+
+      }else if(this.historySubject == 'POWERBATTERYINFO'){
+        this.historyDataList = res.body.powerBatteryInfo.powerBatteryInfoHistory
+        pagination.count = res.body.powerBatteryInfo.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'subsystemNo',headerName: "subsystemNo"},
+          { field: 'volt',headerName: "volt"},
+          { field: 'ampere',headerName: "ampere"},
+          { field: 'cellCnt',headerName: "cellCnt"},
+          { field: 'frameSequenceNo',headerName: "frameSequenceNo"},
+          { field: 'frameSequenceCnt',headerName: "frameSequenceCnt"},
+          { field: 'cellAmperes',headerName: "cellAmperes"}
+        ];
+
+      }else if(this.historySubject == 'POWERBATTERYTEMPERATURE'){
+        this.historyDataList = res.body.powerBatteryTemperature.powerBatteryTemperatureHistory
+        pagination.count = res.body.powerBatteryTemperature.count
+
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'subsystemNo',headerName: "subsystemNo"},
+          { field: 'tempProbeCnt',headerName: "tempProbeCnt"},
+          { field: 'sensorTemps',headerName: "sensorTemps"}
+        ];
+
+        setTimeout(()=>{
+          this.gridApi.sizeColumnsToFit()
+        },1)
+
+      } else if(this.historySubject == 'USERDEFINE'){
+        this.historyDataList = res.body.userDefine.userdefineHistory
+        pagination.count = res.body.userDefine.count
+        this.columnDefs = [
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'len',headerName: "len"},
+          { field: 'userDefineData',headerName: "userDefineData"}
+        ];
+
+        setTimeout(()=>{
+          this.gridApi.sizeColumnsToFit()
+        },1)
+
+      }
+
+      this.uiService.setPagination(pagination)
+
+
+    },error=>{
+      console.log(error)
+    })
+
   }
 
   zoomIn(url : string){
@@ -762,116 +996,111 @@ export class DetailMonitoringComponent implements OnInit {
   setBatteryChartOption(data :number){
     var option: echarts.EChartsOption;
 
-    const gaugeData = [
-      {
-        value: data,
-        name: 'SOC',
-        title: {
-          offsetCenter: ['0%', '-20%']
-        },
-        detail: {
-          valueAnimation: true,
-          offsetCenter: ['0%', '0%']
-        }
-      }
-    ];
+    let img : string = "path://M1993 5096 c-28 -24 -28 -24 -31 -169 l-3 -145 -212 -4 c-208 -3 -213 -4 -272 -31 -101 -47 -162 -122 -184 -227 -9 -41 -11 -578 -9 -2165 l3 -2110 22 -47 c30 -66 96 -133 162 -165 l56 -28 1035 0 1035 0 47 22 c66 30 133 96 165 162 l28 56 3 2110 c2 1587 0 2124 -9 2165 -22 105 -83 180 -184 227 -59 27 -64 28 -272 31 l-212 4 -3 145 c-3 145 -3 145 -31 169 l-28 24 -539 0 -539 0 -28 -24z m1130 -1360 c46 -35 46 -35 -121 -663 -88 -326 -156 -595 -154 -598 3 -3 101 -5 219 -5 199 0 214 -1 233 -20 28 -28 34 -63 16 -96 -12 -24 -1019 -1252 -1173 -1432 -25 -29 -56 -57 -69 -62 -34 -13 -82 7 -100 42 -17 34 -30 -20 174 743 l128 480 -210 5 c-138 3 -218 9 -232 17 -32 18 -50 68 -35 99 10 23 1137 1400 1204 1472 24 25 39 32 66 32 20 0 44 -7 54 -14z"
+
+    //"M2467 2801 l-408 -496 185 -3 185 -2 20 -27 c12 -14 21 -39 21 -55 0-16 -52 -223 -115 -460 -64 -237 -114 -435 -113 -439 3 -6 799 953 806 972 2 4 -76 9 -173 11 l-177 3 -24 28 c-13 16 -24 41 -24 57 0 15 52 223 115 460 64 238 115 436 113 440 -2 4 -187 -216 -411 -489z"
+
+    const labelSetting: echarts.PictorialBarSeriesOption['label'] = {
+      show: true,
+      position: 'inside',
+      offset: [0, -20],
+      formatter: function (param: any) {
+        return param.value + '%';
+      },
+      fontSize: 18,
+      fontFamily: 'Arial',
+      fontWeight: 'bold',
+      color: '#000000'
+    };
 
     option = {
+      tooltip: {},
+      legend: {
+        show:false
+      },
+      xAxis: {
+        data: ['battery'],
+        axisTick: { show: false },
+        axisLine: { show: false },
+        axisLabel: { show: false }
+      },
+      yAxis: {
+        max: 100,
+        offset: 20,
+        splitLine: { show: false }
+      },
+
+      grid: {
+        top: 'center',
+        height: 200
+      },
       series: [
         {
-          type: 'gauge',
-          startAngle: 90,
-          endAngle: -270,
-          pointer: {
-            show: false
+          name: '',
+          type: 'pictorialBar',
+          symbolClip: true,
+          symbolBoundingData: 100,
+          label: labelSetting,
+          itemStyle: {
+            color: '#81c147'
           },
-          progress: {
-            show: true,
-            roundCap: true,
-            clip: false,
-            width: 10,
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                /*{
-                  offset: 0,
-                  color: 'rgb(0, 255, 0)'
-                },
-                {
-                  offset: 1,
-                  color: 'rgb(103, 200, 255)'
-                }*/
-                {
-                  offset: 0,
-                  color: 'rgb(15, 246, 3)'
-                }])
+          data: [
+            {
+              value: data,
+              symbol: img
 
             }
+          ],
+          z: 10
+        },
+        {
+          name: '',
+          type: 'pictorialBar',
+          symbolBoundingData: 100,
+          animationDuration: 0,
+          itemStyle: {
+            color: '#ccc'
           },
-          axisLine: {
-            lineStyle: {
-              width: 12,
-
+          tooltip :{
+            show:false
+          },
+          data: [
+            {
+              value: 0,
+              symbol: img
             }
-          },
-          splitLine: {
-            show: false,
-            distance: 0,
-            length: 10
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false,
-            distance: 50
-          },
-          data: gaugeData,
-          title: {
-            fontSize: 20
-          },
-          detail: {
-            width: 50,
-            height: 20,
-            fontSize: 20,
-            formatter: function (value : any) {
-              return '{value|' + value.toFixed(0) + '}{unit|%}';
-            },
-            rich: {
-              value: {
-                fontSize: 30,
-                fontWeight: 'bolder',
-                color: '#000000',
-              },
-              unit: {
-                fontSize: 15,
-                color: '#000000',
-                padding: [0, 0, 0, 5]
-              }
-            }
-          }
+          ]
         }
       ]
     };
+
+
     option && this.batteryChart.setOption(option);
+
   }
 
   openBattery(e : any){
     e.stopPropagation()
-    const dialogRef = this.dialog.open( BatteryDetailComponent, {
-      data:this.selectVehicleInfo,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
+    if(this.selectVehicleInfo){
+      const dialogRef = this.dialog.open( BatteryDetailComponent, {
+        data:this.selectVehicleInfo,
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
 
-      }
-    });
+        }
+      });
+    }
   }
 
   changeHistoryMode(e : any){
     this.mode = 'history'
-    this.historyEndDate = new Date()
-    this.historyStartDate = new Date()
-    this.historyStartDate.setDate(this.historyEndDate.getDate() - 1)
+    this.historyEndDate = undefined
+    this.historyStartDate = undefined
+    this.historySubject = 'CAR'
+    setTimeout(()=>{
+      this.getPageSize()
+    },1)
   }
 
   changeMapMode(e : any){

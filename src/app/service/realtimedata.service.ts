@@ -182,5 +182,29 @@ export class RealtimedataService {
     return this.http.get<any>(url, {params:httpParams, observe: "response" })
   }
 
+  getRealtimedataInfoVinSubject(filter : SearchFilter){
+    var url = `${this.Url}/info/${filter.vin}/${filter.subject}`;
+
+    let httpParams = new HttpParams()
+
+    if(filter.limit != undefined){
+      httpParams = httpParams.set("limit",filter.limit)
+    }
+
+    if(filter.offset != undefined){
+      httpParams = httpParams.set("offset",filter.offset)
+    }
+
+    if(filter.begin  != undefined){
+      httpParams = httpParams.set("begin",filter.begin)
+    }
+
+    if(filter.end  != undefined){
+      httpParams = httpParams.set("end",filter.end)
+    }
+
+    return this.http.get<any>(url, {params:httpParams, observe: "response" })
+  }
+
 
 }

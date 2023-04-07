@@ -6,31 +6,33 @@
         [checked]="realTimeOnOff"
         [disabled]="selectVehicle == null || mode != 'map'"
         (change)="setRealTimeSwitch()"
-        style="float: left; margin-right: 40px; padding-top: 10px;">
+        style="float: left; height: 30px;">
       Real Time !
     </mat-slide-toggle>
 
-    <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;">
+    <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;position: absolute; right: 0;">
       <span>deselect</span>
     </button>
 
     <div class="listSearch">
+      <div class="searchTitle" [ngClass]="{'textDisabled': selectVehicle == null || mode != 'map'}">Time</div>
+
       <div class="value">
-        <input class="datePickerText" [ngxMatDatetimePicker]="packetTime" readonly="true" (click)="packetTime.open()" style="width: 130px; padding: 0 10px; margin: 0 10px;"
+        <input class="datePickerText" [ngxMatDatetimePicker]="packetTime" readonly="true" (click)="packetTime.open()"
         [(ngModel)]="startRealTime"
         [max]="currentTime"
         [disabled]="selectVehicle == null || mode != 'map'"
         (ngModelChange)="setTime()">
         <ngx-mat-datetime-picker #packetTime [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
       </div>
-      <div style="font-size: 12px;" [ngClass]="{'textDisabled': selectVehicle == null || mode != 'map'}">Time</div>
+
     </div>
     <div class="listSearch">
       <div class="searchTitle">VIN</div>
-      <input class="" [(ngModel)]="vinSearchText" (keydown.enter)="getRealtimedataVehiclelist()">
-      <div style="width:20px; margin-left: 5px; display: flex; align-items: center; cursor: pointer;" (click)="getRealtimedataVehiclelist()">
+      <input class="" [(ngModel)]="vinSearchText" (keydown.enter)="getRealtimedataVehiclelist()" (ngModelChange)="getRealtimedataVehiclelist()">
+      <!--<div style="width:20px; margin-left: 5px; display: flex; align-items: center; cursor: pointer;" (click)="getRealtimedataVehiclelist()">
         <img src="assets/icon/find.png" style="width:20px">
-      </div>
+      </div>-->
     </div>
     <div class="monitoringMapList">
       <div class="listRow" *ngFor="let vehicle of vehicleInfo" (click)="clickVin(vehicle)" [ngClass]="{'selectBackground': selectVehicle == vehicle}">
@@ -44,23 +46,38 @@
     </div>
   </div>
 
+  <div class="monitoringNavigator">
+    <div style="position: absolute; right: 0; top: 15px; z-index: 1; display: flex;">
+
+      <!--<button mat-raised-button color="primary" (click)="openBattery($event)" [disabled]="selectVehicle == null" style="margin: 0 5px; height: 30px;">
+        <span>Battery</span>
+      </button>-->
+
+      <button mat-raised-button color="primary" (click)="changeMapMode($event)" style="margin: 0 5px; height: 30px;" [ngClass]="{'selectMode': mode == 'map'}" >
+        <span>Map</span>
+      </button>
+
+      <button mat-raised-button color="primary" (click)="changeInfoMode($event)" style="margin: 0 5px; height: 30px;" [ngClass]="{'selectMode': mode == 'info'}">
+        <span>Info</span>
+      </button>
+
+      <button mat-raised-button color="primary" (click)="changeHistoryMode($event)" style="margin: 0 5px; height: 30px;" [ngClass]="{'selectMode': mode == 'history'}">
+        <span>History</span>
+      </button>
+
+      <div (click)="moveListPage()" style="background-color: white; width: 30px; height: 30px; border-radius: 5px; cursor: pointer; margin: 0 5px;">
+        <img src="assets/icon/list-interface-symbol.png" style="width: 20px; height: 20px; padding: 5px;">
+      </div>
+    </div>
+  </div>
+
   <div class="infoContainer" [ngClass]="{'visibilityHidden': mode != 'info'}">
     <div class="infomationContainer">
-
-      <div style="width: 100%; height: 30px; margin-top: 20px;">
-        <button mat-raised-button color="primary" (click)="changeMapMode($event)" style="margin: 0 5px; height: 30px;">
-          <span>map</span>
-        </button>
-
-        <button mat-raised-button color="primary" (click)="changeHistoryMode($event)" style="margin: 0 5px; height: 30px;">
-          <span>history</span>
-        </button>
-      </div>
 
       <div *ngIf="selectVehicleInfo == null" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: gray; font-size: 20px;">
         Select Vehicle
       </div>
-      <div style="height: calc(100% - 50px); min-height: 760px; min-width: 1200px;" *ngIf="selectVehicleInfo != null">
+      <div style="height: calc(100% - 50px); min-height: 760px; min-width: 1200px; margin-top: 50px;" *ngIf="selectVehicleInfo != null">
         <div class="infoList">
           <div class="listTitle">
             CAR
@@ -446,54 +463,54 @@
   <div class="historyContainer" [ngClass]="{'visibilityHidden': mode != 'history'}">
     <div class="historyGridContainer">
       <div class="gridFilterBox" style="margin-left:20px">
-        <select style="border: 1px solid #9b9b9b; border-radius: 5px; height: 30px; width: 150px;">
-          <option>Vehicle</option>
-          <option>Location</option>
-          <option>Engine</option>
-          <option>Fuel Battery</option>
-          <option>Warning</option>
-          <option>Extreme value</option>
-          <option>Motor</option>
-          <option>Power Battery Information</option>
-          <option>Power Battery temperature</option>
-          <option>Check state flag</option>
-        </select>
-        <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="historyStart" readonly="true" (click)="historyStart.open()"
-          [(ngModel)]="historyStartDate"
-          [max]="historyEndDate">
-          <ngx-mat-datetime-picker #historyStart [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
-        </div>
-          ~
-        <div class="value">
-          <input class="datePickerText" [ngxMatDatetimePicker]="historyEnd" readonly="true" (click)="historyEnd.open()"
-          [(ngModel)]="historyEndDate"
-          [min]="historyStartDate">
-          <ngx-mat-datetime-picker #historyEnd [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
-        </div>
-        <button mat-raised-button color="primary" (click)="historyExport()" style="height: 30px;">
-          Export
-        </button>
-        <button mat-raised-button color="primary" (click)="changeMapMode($event)" style="margin: 0 5px; height: 30px;">
-          <span>map</span>
-        </button>
 
-        <button mat-raised-button color="primary" (click)="changeInfoMode($event)" style="margin: 0 5px; height: 30px;">
-          <span>info</span>
-        </button>
+        <div class="filter">
+          <div class="label">Subject</div>
+          <select [(ngModel)]="historySubject" style="border: 1px solid #9b9b9b; border-radius: 5px; height: 30px; width: 150px;">
+            <option [value]="'CAR'">CAR</option>
+            <option [value]="'MOTOR'">MOTOR</option>
+            <option [value]="'FUELBATTERY'">FUELBATTERY</option>
+            <option [value]="'ENGINE'">ENGINE</option>
+            <option [value]="'LOCATION'">LOCATION</option>
+            <option [value]="'EXTREMEVALUE'">EXTREMEVALUE</option>
+            <option [value]="'WARNING'">WARNING</option>
+            <option [value]="'POWERBATTERYINFO'">POWERBATTERYINFO</option>
+            <option [value]="'POWERBATTERYTEMPERATURE'">POWERBATTERYTEMPERATURE</option>
+            <option [value]="'USERDEFINE'">USERDEFINE</option>
+          </select>
+        </div>
 
-        <div class="excel_btn" (click)="onBtExport()">
-          <img src="assets/icon/excel_download.png">
+
+        <div class="filter">
+          <div class="label">Begin</div>
+          <div class="value">
+            <input class="datePickerText" [ngxMatDatetimePicker]="historyStart" readonly="true" (click)="historyStart.open()" [(ngModel)]="historyStartDate" [max]="historyEndDate">
+            <mat-icon matDatepickerToggleIcon style="cursor: pointer;"  (click)="historyStartDate = undefined">clear</mat-icon>
+            <ngx-mat-datetime-picker #historyStart [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
+          </div>
+        </div>
+        <div class="filter">
+          <div class="label">End</div>
+          <div class="value">
+            <input class="datePickerText" [ngxMatDatetimePicker]="historyEnd" readonly="true" (click)="historyEnd.open()" [(ngModel)]="historyEndDate" [min]="historyStartDate">
+            <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="historyEndDate = undefined">clear</mat-icon>
+            <ngx-mat-datetime-picker #historyEnd [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
+          </div>
+        </div>
+
+        <div class="filter">
+          <div class="btn" (click)="getRealtimedataInfoVinSubject()">
+            Search
+          </div>
         </div>
 
       </div>
+
       <div class="grid">
         <ag-grid-angular #vinHistoryGrid style="width: 100%; height: calc(100% - 60px)"  (window:resize)="onResize($event)"
           class="ag-theme-alpine"
-          [rowData]="[]"
+          [rowData]="historyDataList"
           [columnDefs]="columnDefs"
-          [pagination]="true"
-          [paginationPageSize]="50"
           [tooltipShowDelay]="0"
           [rowSelection]="'single'"
           (gridReady)="onGridReady($event)">
@@ -502,9 +519,7 @@
         <div style="width: 100%; height: 50px;">
           <app-grid-page [gridNumber]="1"></app-grid-page>
         </div>
-
       </div>
-
     </div>
   </div>
 
@@ -526,7 +541,7 @@
           </div>
         </div>
         <div class="inforBoxContent" [ngClass]="{'contentsActive': isPanelOnOff}">
-          <div id="batteryChartContiner"></div>
+          <div id="batteryChartContiner" (click)="openBattery($event)"></div>
           <div id="speedChartContiner"></div>
         </div>
       </div>
@@ -820,124 +835,8 @@
             </mat-tab>
           </mat-tab-group>
         </div>
-
-      </div>
-
-      <div style="position: absolute; right: 10px; top: 10px; z-index: 1; display: flex;">
-
-        <button mat-raised-button color="primary" (click)="openBattery($event)" [disabled]="selectVehicle == null" style="margin: 0 5px; height: 30px;">
-          <span>Battery</span>
-        </button>
-
-        <button mat-raised-button color="primary" (click)="changeInfoMode($event)" style="margin: 0 5px; height: 30px;">
-          <span>Info</span>
-        </button>
-
-        <button mat-raised-button color="primary" (click)="changeHistoryMode($event)" style="margin: 0 5px; height: 30px;">
-          <span>history</span>
-        </button>
-
-        <div (click)="moveListPage()" style="background-color: white; width: 30px; height: 30px; border-radius: 5px; cursor: pointer; margin: 0 5px;">
-          <img src="assets/icon/list-interface-symbol.png" style="width: 20px; height: 20px; padding: 5px;">
-        </div>
       </div>
 
       <div class="map" id="map"></div>
-
   </div>
-
-  <!--
-  <div class="firstLeftLayout firstTopLayout detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'VEHICLE'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('vehicle')">
-    </div>
-    <div class="contents">
-      <app-monitoring-vehicle></app-monitoring-vehicle>
-    </div>
-  </div>
-
-  <div class="firstTopLayout detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'LOCATION'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('location')">
-    </div>
-    <div class="contents" style="overflow: hidden;">
-      <app-monitoring-location></app-monitoring-location>
-    </div>
-  </div>
-
-
-  <div class="firstTopLayout detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'ENGINE'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('engine')">
-    </div>
-    <div class="contents">
-      <app-monitoring-engine></app-monitoring-engine>
-    </div>
-  </div>
-
-  <div class="firstLeftLayout detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'FUEL BATTERY'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('fuel_battery')">
-    </div>
-
-    <div class="contents">
-      <app-monitoring-fuel-battery></app-monitoring-fuel-battery>
-    </div>
-
-  </div>
-
-  <div class="detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'WARNING'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('warning')">
-    </div>
-    <div class="contents">
-      <app-monitoring-warning></app-monitoring-warning>
-    </div>
-  </div>
-
-  <div class="detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'EXTREME VALUE'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('extreme_value')">
-    </div>
-    <div class="contents">
-      <app-monitoring-extreme-value></app-monitoring-extreme-value>
-    </div>
-  </div>
-
-  <div class="firstLeftLayout detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'MOTOR'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('motor')">
-    </div>
-    <div class="contents">
-      <app-monitoring-motor></app-monitoring-motor>
-    </div>
-  </div>
-
-  <div class="detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'POWER BATTERY TEMPERATURE'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('power_battery_temperature')">
-    </div>
-    <div class="contents">
-      <app-monitoring-power-battery-temperature></app-monitoring-power-battery-temperature>
-    </div>
-  </div>
-
-  <div class="detailMonitoringLayout whiteBoardBoax">
-    <app-sub-title [title]="'POWER BATTERY INFOMATION'"></app-sub-title>
-    <div class="layoutZoom">
-      <img src="assets/icon/layout_zoom_in.png" (click)="zoomIn('power_battery_infomation')">
-    </div>
-    <div class="contents">
-      <app-monitoring-power-battery-infomation></app-monitoring-power-battery-infomation>
-    </div>
-  </div>
-  -->
 </div>

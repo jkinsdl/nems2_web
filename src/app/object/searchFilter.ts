@@ -85,4 +85,6 @@ export class SearchFilter{
 
   excludeState : string[]
 
+  subject : string
+
 }
