@@ -129,8 +129,6 @@ export class TerminalComponent implements OnInit {
   };
 
   setCommand(){
-    console.log("!")
-
     this.consoleText += this.currentUser.username +">" + this.command +'\n'
     this.command = ""
   }

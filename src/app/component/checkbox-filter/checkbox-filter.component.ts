@@ -38,7 +38,6 @@ export class CheckboxFilterComponent implements IFilterAngularComp  {
   }
 
   updateFilter() {
-    console.log("!")
     this.params.filterChangedCallback();
   }
 

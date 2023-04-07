@@ -63,7 +63,6 @@ export class GridPageComponent implements OnInit {
   }
 
   setPageArray(){
-    console.log("!!")
     if(this.pagination){
       this.pageArray = [];
       this.isPageNextTurn = false;

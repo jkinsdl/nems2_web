@@ -70,7 +70,7 @@ export class DetailMonitoringComponent implements OnInit {
   historyDataList : any[] = []
 
   columnDefs: ColDef[] = [
-    { field: 'time',headerName: "time"},
+    { field: 'time',headerName: "time", width:180},
     { field: 'state',headerName: "state"},
     { field: 'chargeState',headerName: "chargeState"},
     { field: 'driveMode',headerName: "driveMode"},
@@ -498,7 +498,6 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   getPageSize(){
-    console.log("!")
     this.gridHeight = this.vinHistoryGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     if(this.searchFilter.limit != this.pageSize && this.selectVehicle){
@@ -509,6 +508,18 @@ export class DetailMonitoringComponent implements OnInit {
   onResize(event : any){
     if(this.gridHeight != this.vinHistoryGrid.nativeElement.offsetHeight){
       this.getPageSize()
+    }
+
+    if((this.vinHistoryGrid.nativeElement.offsetWidth > 1830 && this.searchFilter.subject == 'CAR') ||
+    this.searchFilter.subject == 'MOTOR' ||
+    (this.vinHistoryGrid.nativeElement.offsetWidth > 2340 && this.searchFilter.subject == 'FUELBATTERY')||
+    this.searchFilter.subject == 'ENGINE' ||
+    this.searchFilter.subject == 'LOCATION' ||
+    (this.vinHistoryGrid.nativeElement.offsetWidth > 2600 && this.searchFilter.subject == 'EXTREMEVALUE')||
+    this.searchFilter.subject == 'POWERBATTERYINFO' ||
+    this.searchFilter.subject == 'POWERBATTERYTEMPERATURE' ||
+    this.searchFilter.subject == 'USERDEFINE'){
+      this.gridApi.sizeColumnsToFit()
     }
   }
 
@@ -678,60 +689,75 @@ export class DetailMonitoringComponent implements OnInit {
         pagination.count = res.body.car.count
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'state',headerName: "state"},
-          { field: 'chargeState',headerName: "chargeState"},
-          { field: 'driveMode',headerName: "driveMode"},
-          { field: 'speed',headerName: "speed"},
-          { field: 'drivenDistance',headerName: "drivenDistance"},
-          { field: 'totalVolt',headerName: "totalVolt"},
-          { field: 'totalAmpere',headerName: "totalAmpere"},
-          { field: 'soc',headerName: "soc"},
-          { field: 'dcdcState',headerName: "dcdcState"},
-          { field: 'accel',headerName: "accel"},
-          { field: 'breaking',headerName: "breaking"},
-          { field: 'gearState',headerName: "gearState"},
-          { field: 'resistance',headerName: "resistance"},
-          { field: 'acceleratorVal',headerName: "acceleratorVal"},
-          { field: 'breakState',headerName: "breakState"},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180 },
+          { field: 'state',headerName: "state", width:80},
+          { field: 'chargeState',headerName: "chargeState", width:120},
+          { field: 'driveMode',headerName: "driveMode", width:120},
+          { field: 'speed',headerName: "speed", width:80},
+          { field: 'drivenDistance',headerName: "drivenDistance", width:150},
+          { field: 'totalVolt',headerName: "totalVolt", width:100},
+          { field: 'totalAmpere',headerName: "totalAmpere", width:130},
+          { field: 'soc',headerName: "soc", width:80},
+          { field: 'dcdcState',headerName: "dcdcState", width:130},
+          { field: 'accel',headerName: "accel", width:80},
+          { field: 'breaking',headerName: "breaking", width:100},
+          { field: 'gearState',headerName: "gearState", width:100},
+          { field: 'resistance',headerName: "resistance", width:120},
+          { field: 'acceleratorVal',headerName: "acceleratorVal", width:140},
+          { field: 'breakState',headerName: "breakState", width:120},
         ];
 
+        if((this.vinHistoryGrid.nativeElement.offsetWidth > 1830 && this.searchFilter.subject == 'CAR')){
+          setTimeout(()=>{
+            this.gridApi.sizeColumnsToFit()
+          })
+        }
 
       }else if(this.historySubject == 'MOTOR'){
         this.historyDataList = res.body.motor.motorHistory
         pagination.count = res.body.motor.count
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'serialNo',headerName: "serialNo"},
-          { field: 'state',headerName: "state"},
-          { field: 'controllerTemp',headerName: "controllerTemp"},
-          { field: 'rpm',headerName: "rpm"},
-          { field: 'torq',headerName: "torq"},
-          { field: 'temp',headerName: "temp"},
-          { field: 'inputVolt',headerName: "inputVolt"},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
+          { field: 'serialNo',headerName: "serialNo", width:120},
+          { field: 'state',headerName: "state", width:80},
+          { field: 'controllerTemp',headerName: "controllerTemp", width:150},
+          { field: 'rpm',headerName: "rpm", width:80},
+          { field: 'torq',headerName: "torq", width:80},
+          { field: 'temp',headerName: "temp", width:80},
+          { field: 'inputVolt',headerName: "inputVolt", width:100},
           { field: 'controllerDcBusAmpere',headerName: "controllerDcBusAmpere"},
         ];
+
+        setTimeout(()=>{
+          this.gridApi.sizeColumnsToFit()
+        },1)
 
       }else if(this.historySubject == 'FUELBATTERY'){
         this.historyDataList = res.body.fuelBattery.fuelBatteryHistory
         pagination.count = res.body.fuelBattery.count
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'volt',headerName: "volt"},
-          { field: 'ampere',headerName: "ampere"},
-          { field: 'attritionRate',headerName: "attritionRate"},
-          { field: 'tempProbeCnt',headerName: "tempProbeCnt"},
-          { field: 'probeTemps',headerName: "probeTemps"},
-          { field: 'hydrogenMaxTemp',headerName: "hydrogenMaxTemp"},
-          { field: 'hydrogenMaxProbeCode',headerName: "hydrogenMaxProbeCode"},
-          { field: 'hydrogenMaxConcentration',headerName: "hydrogenMaxConcentration"},
-          { field: 'hydrogenMaxConcentrationSensorCode',headerName: "hydrogenMaxConcentrationSensorCode"},
-          { field: 'hydrogenMaxPressure',headerName: "hydrogenMaxPressure"},
-          { field: 'hydrogenMaxPressureSensorCode',headerName: "hydrogenMaxPressureSensorCode"},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
+          { field: 'volt',headerName: "volt", width:70},
+          { field: 'ampere',headerName: "ampere", width:90},
+          { field: 'attritionRate',headerName: "attritionRate", width:130},
+          { field: 'tempProbeCnt',headerName: "tempProbeCnt", width:150},
+          { field: 'probeTemps',headerName: "probeTemps", width:120},
+          { field: 'hydrogenMaxTemp',headerName: "hydrogenMaxTemp", width:180},
+          { field: 'hydrogenMaxProbeCode',headerName: "hydrogenMaxProbeCode", width:210},
+          { field: 'hydrogenMaxConcentration',headerName: "hydrogenMaxConcentration", width:230},
+          { field: 'hydrogenMaxConcentrationSensorCode',headerName: "hydrogenMaxConcentrationSensorCode", width:320},
+          { field: 'hydrogenMaxPressure',headerName: "hydrogenMaxPressure", width:190},
+          { field: 'hydrogenMaxPressureSensorCode',headerName: "hydrogenMaxPressureSensorCode", width:270},
           { field: 'maxPressureDcdcState',headerName: "maxPressureDcdcState"},
         ];
+
+        if(this.vinHistoryGrid.nativeElement.offsetWidth > 2340 && this.searchFilter.subject == 'FUELBATTERY'){
+          setTimeout(()=>{
+            this.gridApi.sizeColumnsToFit()
+          })
+        }
 
       }else if(this.historySubject == 'ENGINE'){
         this.historyDataList = res.body.engine.engineHistory
@@ -771,27 +797,31 @@ export class DetailMonitoringComponent implements OnInit {
         pagination.count = res.body.extremeValue.count
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'batteryMaxVoltSubsystemNo',headerName: "batteryMaxVoltSubsystemNo"},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
+          { field: 'batteryMaxVoltSubsystemNo',headerName: "batteryMaxVoltSubsystemNo", width:230},
           { field: 'batteryMaxVoltCellCode',headerName: "batteryMaxVoltCellCode"},
-          { field: 'batteryMaxVolt',headerName: "batteryMaxVolt"},
-          { field: 'batteryMinVoltSubsystemNo',headerName: "batteryMinVoltSubsystemNo"},
+          { field: 'batteryMaxVolt',headerName: "batteryMaxVolt", width:140},
+          { field: 'batteryMinVoltSubsystemNo',headerName: "batteryMinVoltSubsystemNo", width:230},
           { field: 'batteryMinVoltCellCode',headerName: "batteryMinVoltCellCode"},
-          { field: 'batteryMinVolt',headerName: "batteryMinVolt"},
-          { field: 'batteryMaxTempSubsystemNo',headerName: "batteryMaxTempSubsystemNo"},
-          { field: 'batteryMaxTempSensorCode',headerName: "batteryMaxTempSensorCode"},
-          { field: 'batteryMaxTemp',headerName: "batteryMaxTemp"},
-          { field: 'batteryMinTempSubsystemNo',headerName: "batteryMinTempSubsystemNo"},
-          { field: 'batteryMinTempSensorCode',headerName: "batteryMinTempSensorCode"},
-          { field: 'batteryMinTemp',headerName: "batteryMinTemp"}
+          { field: 'batteryMinVolt',headerName: "batteryMinVolt", width:150},
+          { field: 'batteryMaxTempSubsystemNo',headerName: "batteryMaxTempSubsystemNo", width:240},
+          { field: 'batteryMaxTempSensorCode',headerName: "batteryMaxTempSensorCode", width:230},
+          { field: 'batteryMaxTemp',headerName: "batteryMaxTemp", width:150},
+          { field: 'batteryMinTempSubsystemNo',headerName: "batteryMinTempSubsystemNo", width:240},
+          { field: 'batteryMinTempSensorCode',headerName: "batteryMinTempSensorCode", width:230},
+          { field: 'batteryMinTemp',headerName: "batteryMinTemp", width:180}
         ];
-
+        if(this.vinHistoryGrid.nativeElement.offsetWidth > 2600 && this.searchFilter.subject == 'EXTREMEVALUE'){
+          setTimeout(()=>{
+            this.gridApi.sizeColumnsToFit()
+          })
+        }
       }else if(this.historySubject == 'WARNING'){
         this.historyDataList = res.body.warning.warningHistory
         pagination.count = res.body.warning.count
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
           { field: 'maxWarning',headerName: "maxWarning"},
           { field: 'flag',headerName: "flag"},
           { field: 'powerBatteryTroubleCnt',headerName: "powerBatteryTroubleCnt"},
@@ -810,25 +840,29 @@ export class DetailMonitoringComponent implements OnInit {
         pagination.count = res.body.powerBatteryInfo.count
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'subsystemNo',headerName: "subsystemNo"},
-          { field: 'volt',headerName: "volt"},
-          { field: 'ampere',headerName: "ampere"},
-          { field: 'cellCnt',headerName: "cellCnt"},
-          { field: 'frameSequenceNo',headerName: "frameSequenceNo"},
-          { field: 'frameSequenceCnt',headerName: "frameSequenceCnt"},
-          { field: 'cellAmperes',headerName: "cellAmperes"}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
+          { field: 'subsystemNo',headerName: "subsystemNo", width:150},
+          { field: 'volt',headerName: "volt", width:70},
+          { field: 'ampere',headerName: "ampere", width:90},
+          { field: 'cellCnt',headerName: "cellCnt", width:100},
+          { field: 'frameSequenceNo',headerName: "frameSequenceNo", width:150},
+          { field: 'frameSequenceCnt',headerName: "frameSequenceCnt", width:180},
+          { field: 'cellAmperes',headerName: "cellAmperes", width:420}
         ];
+
+        setTimeout(()=>{
+          this.gridApi.sizeColumnsToFit()
+        },1)
 
       }else if(this.historySubject == 'POWERBATTERYTEMPERATURE'){
         this.historyDataList = res.body.powerBatteryTemperature.powerBatteryTemperatureHistory
         pagination.count = res.body.powerBatteryTemperature.count
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'subsystemNo',headerName: "subsystemNo"},
-          { field: 'tempProbeCnt',headerName: "tempProbeCnt"},
-          { field: 'sensorTemps',headerName: "sensorTemps"}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:150},
+          { field: 'subsystemNo',headerName: "subsystemNo", width:150},
+          { field: 'tempProbeCnt',headerName: "tempProbeCnt", width:180},
+          { field: 'sensorTemps',headerName: "sensorTemps", width:700}
         ];
 
         setTimeout(()=>{
