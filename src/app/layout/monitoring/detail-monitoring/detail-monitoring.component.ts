@@ -516,6 +516,7 @@ export class DetailMonitoringComponent implements OnInit {
     this.searchFilter.subject == 'ENGINE' ||
     this.searchFilter.subject == 'LOCATION' ||
     (this.vinHistoryGrid.nativeElement.offsetWidth > 2600 && this.searchFilter.subject == 'EXTREMEVALUE')||
+    (this.vinHistoryGrid.nativeElement.offsetWidth > 2150 && this.searchFilter.subject == 'WARNING')||
     this.searchFilter.subject == 'POWERBATTERYINFO' ||
     this.searchFilter.subject == 'POWERBATTERYTEMPERATURE' ||
     this.searchFilter.subject == 'USERDEFINE'){
@@ -685,8 +686,14 @@ export class DetailMonitoringComponent implements OnInit {
       }
 
       if(this.historySubject == 'CAR'){
-        this.historyDataList = res.body.car.carHistory
-        pagination.count = res.body.car.count
+        if(res.body.car){
+          this.historyDataList = res.body.car.carHistory
+          pagination.count = res.body.car.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
+
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180 },
@@ -707,15 +714,20 @@ export class DetailMonitoringComponent implements OnInit {
           { field: 'breakState',headerName: "breakState", width:120},
         ];
 
-        if((this.vinHistoryGrid.nativeElement.offsetWidth > 1830 && this.searchFilter.subject == 'CAR')){
+        if((this.vinHistoryGrid.nativeElement.offsetWidth > 1830 )){
           setTimeout(()=>{
             this.gridApi.sizeColumnsToFit()
           })
         }
 
       }else if(this.historySubject == 'MOTOR'){
-        this.historyDataList = res.body.motor.motorHistory
-        pagination.count = res.body.motor.count
+        if(res.body.motor){
+          this.historyDataList = res.body.motor.motorHistory
+          pagination.count = res.body.motor.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
@@ -734,8 +746,14 @@ export class DetailMonitoringComponent implements OnInit {
         },1)
 
       }else if(this.historySubject == 'FUELBATTERY'){
-        this.historyDataList = res.body.fuelBattery.fuelBatteryHistory
-        pagination.count = res.body.fuelBattery.count
+
+        if(res.body.fuelBattery){
+          this.historyDataList = res.body.fuelBattery.fuelBatteryHistory
+          pagination.count = res.body.fuelBattery.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
@@ -753,15 +771,21 @@ export class DetailMonitoringComponent implements OnInit {
           { field: 'maxPressureDcdcState',headerName: "maxPressureDcdcState"},
         ];
 
-        if(this.vinHistoryGrid.nativeElement.offsetWidth > 2340 && this.searchFilter.subject == 'FUELBATTERY'){
+        if(this.vinHistoryGrid.nativeElement.offsetWidth > 2340){
           setTimeout(()=>{
             this.gridApi.sizeColumnsToFit()
           })
         }
 
       }else if(this.historySubject == 'ENGINE'){
-        this.historyDataList = res.body.engine.engineHistory
-        pagination.count = res.body.engine.count
+
+        if(res.body.engine){
+          this.historyDataList = res.body.engine.engineHistory
+          pagination.count = res.body.engine.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
@@ -776,8 +800,14 @@ export class DetailMonitoringComponent implements OnInit {
 
 
       }else if(this.historySubject == 'LOCATION'){
-        this.historyDataList = res.body.location.locationHistory
-        pagination.count = res.body.location.count
+
+        if(res.body.location){
+          this.historyDataList = res.body.location.locationHistory
+          pagination.count = res.body.location.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
@@ -793,8 +823,14 @@ export class DetailMonitoringComponent implements OnInit {
         },1)
 
       }else if(this.historySubject == 'EXTREMEVALUE'){
-        this.historyDataList = res.body.extremeValue.extremeValueHistory
-        pagination.count = res.body.extremeValue.count
+
+        if(res.body.extremeValue){
+          this.historyDataList = res.body.extremeValue.extremeValueHistory
+          pagination.count = res.body.extremeValue.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
@@ -811,33 +847,50 @@ export class DetailMonitoringComponent implements OnInit {
           { field: 'batteryMinTempSensorCode',headerName: "batteryMinTempSensorCode", width:230},
           { field: 'batteryMinTemp',headerName: "batteryMinTemp", width:180}
         ];
-        if(this.vinHistoryGrid.nativeElement.offsetWidth > 2600 && this.searchFilter.subject == 'EXTREMEVALUE'){
+        if(this.vinHistoryGrid.nativeElement.offsetWidth > 2600 ){
           setTimeout(()=>{
             this.gridApi.sizeColumnsToFit()
           })
         }
       }else if(this.historySubject == 'WARNING'){
-        this.historyDataList = res.body.warning.warningHistory
-        pagination.count = res.body.warning.count
+
+        if(res.body.warning){
+          this.historyDataList = res.body.warning.warningHistory
+          pagination.count = res.body.warning.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
-          { field: 'maxWarning',headerName: "maxWarning"},
-          { field: 'flag',headerName: "flag"},
-          { field: 'powerBatteryTroubleCnt',headerName: "powerBatteryTroubleCnt"},
-          { field: 'powerBatteryTroubleCodes',headerName: "powerBatteryTroubleCodes"},
-          { field: 'motorTroubleCnt',headerName: "motorTroubleCnt"},
-          { field: 'motorTroubleCodes',headerName: "motorTroubleCodes"},
-          { field: 'engineTroubleCnt',headerName: "engineTroubleCnt"},
+          { field: 'maxWarning',headerName: "maxWarning", width:180},
+          { field: 'flag',headerName: "flag", width:100},
+          { field: 'powerBatteryTroubleCnt',headerName: "powerBatteryTroubleCnt", width:220},
+          { field: 'powerBatteryTroubleCodes',headerName: "powerBatteryTroubleCodes", width:250},
+          { field: 'motorTroubleCnt',headerName: "motorTroubleCnt", width:180},
+          { field: 'motorTroubleCodes',headerName: "motorTroubleCodes", width:180},
+          { field: 'engineTroubleCnt',headerName: "engineTroubleCnt", width:180},
           { field: 'engineTroubleCodes',headerName: "engineTroubleCodes"},
-          { field: 'etcTroubleCnt',headerName: "etcTroubleCnt"},
-          { field: 'etcTroubleCodes',headerName: "etcTroubleCodes"},
-          { field: 'warningName',headerName: "warningName"}
+          { field: 'etcTroubleCnt',headerName: "etcTroubleCnt", width:150},
+          { field: 'etcTroubleCodes',headerName: "etcTroubleCodes", width:180},
+          { field: 'warningName',headerName: "warningName", width:150}
         ];
 
+        if(this.vinHistoryGrid.nativeElement.offsetWidth > 2150){
+          setTimeout(()=>{
+            this.gridApi.sizeColumnsToFit()
+          })
+        }
+
       }else if(this.historySubject == 'POWERBATTERYINFO'){
-        this.historyDataList = res.body.powerBatteryInfo.powerBatteryInfoHistory
-        pagination.count = res.body.powerBatteryInfo.count
+        if(res.body.powerBatteryInfo){
+          this.historyDataList = res.body.powerBatteryInfo.powerBatteryInfoHistory
+          pagination.count = res.body.powerBatteryInfo.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
@@ -855,8 +908,13 @@ export class DetailMonitoringComponent implements OnInit {
         },1)
 
       }else if(this.historySubject == 'POWERBATTERYTEMPERATURE'){
-        this.historyDataList = res.body.powerBatteryTemperature.powerBatteryTemperatureHistory
-        pagination.count = res.body.powerBatteryTemperature.count
+        if(res.body.powerBatteryTemperature){
+          this.historyDataList = res.body.powerBatteryTemperature.powerBatteryTemperatureHistory
+          pagination.count = res.body.powerBatteryTemperature.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:150},
@@ -870,8 +928,15 @@ export class DetailMonitoringComponent implements OnInit {
         },1)
 
       } else if(this.historySubject == 'USERDEFINE'){
-        this.historyDataList = res.body.userDefine.userdefineHistory
-        pagination.count = res.body.userDefine.count
+
+        if(res.body.userDefine){
+          this.historyDataList = res.body.userDefine.userdefineHistory
+          pagination.count = res.body.userDefine.count
+        }else{
+          this.historyDataList = []
+          pagination.count = 0
+        }
+
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
           { field: 'len',headerName: "len"},
