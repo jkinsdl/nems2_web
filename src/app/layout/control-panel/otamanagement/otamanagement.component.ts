@@ -84,6 +84,8 @@ export class OTAManagementComponent implements OnInit {
 
   ngAfterViewInit() {
     this.getPageSize()
+    this.gridHeight = this.otaManagementGrid.nativeElement.offsetHeight;
+    this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
   }
 
   ngOnDestroy(): void {
@@ -94,6 +96,10 @@ export class OTAManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getVehiclemanagerModel()
+    this.page$ = this.uiService.page$.subscribe((page : number)=>{
+      this.currentPage = page
+      this.getDevicemanagersFirmwareFirmwareNameVehicles()
+    })
   }
 
   getPageSize(){
@@ -179,14 +185,9 @@ export class OTAManagementComponent implements OnInit {
   }
 
   leftListRemove(){
-
-
-
     if(this.selectFirmware.firmwareName == undefined){
       return
     }
-
-
     if(this.firmwareVehiclesList.entities.length != 0 ){
 
       this.utilService.alertPopup("Unremovable Firmware", "If there is no vehicle using this firmware, it can be deleted",this.constant.ALERT_WARNING)
@@ -225,13 +226,11 @@ export class OTAManagementComponent implements OnInit {
         pageSize : this.pageSize,
         page : this.currentPage
       }
-
       this.uiService.setPagination(pagination)
     }else{
       this.selectFirmware = item
       this.getDevicemanagersFirmwareFirmwareNameVehicles()
     }
-
   }
 
   getDevicemanagersFirmwareFirmwareNameVehicles(){
@@ -359,7 +358,6 @@ export class OTAManagementComponent implements OnInit {
   }
 
   vehicleItemClick(vin : string){
-    console.log("!@!@")
     this.inputVinText = vin
     this.getVehiclemanagerStaticinfo()
   }

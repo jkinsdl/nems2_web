@@ -99,6 +99,8 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
 
   ngAfterViewInit() {
     this.getPageSize()
+    this.grid2Height = this.publicPlatformForSpecificPeriod2.nativeElement.offsetHeight
+    this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
   }
 
   ngOnDestroy(): void {
@@ -109,6 +111,7 @@ export class PublicPlatformForSpecificPeriodComponent implements OnInit {
   ngOnInit(): void {
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
+      this.getForwarding()
     })
 
     this.page2$ = this.uiService.page2$.subscribe((page : number)=>{

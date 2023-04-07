@@ -85,7 +85,7 @@ export class VehicleSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getPageSize()
+      this.getVehiclemanagerStaticinfo()
     })
   }
 

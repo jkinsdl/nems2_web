@@ -84,7 +84,7 @@ export class PushAlarmComponent implements OnInit {
     //this.getNotificationsTemplates()
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getPageSize()
+      this.getPushinfos()
     })
   }
 

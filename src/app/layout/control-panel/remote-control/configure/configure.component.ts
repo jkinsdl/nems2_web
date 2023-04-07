@@ -105,6 +105,8 @@ export class ConfigureComponent implements OnInit {
 
   ngAfterViewInit() {
     this.getPageSize()
+    this.grid2Height = this.configure2.nativeElement.offsetHeight
+    this.pageSize2 = this.uiService.getGridPageSize(this.grid2Height)
   }
 
   ngOnDestroy(): void {
@@ -134,8 +136,8 @@ export class ConfigureComponent implements OnInit {
     }
 
     this.grid2Height = this.configure2.nativeElement.offsetHeight
-    if(this.selectConfigureRow != null && this.uiService.getGridPageSize(this.grid1Height) != this.pageSize2){
-      this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
+    if(this.selectConfigureRow != null && this.uiService.getGridPageSize(this.grid2Height) != this.pageSize2){
+      this.pageSize2 = this.uiService.getGridPageSize(this.grid2Height)
       this.getDevicemanagersParametersConfigureNameVehicles()
     }
   }

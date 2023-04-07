@@ -232,9 +232,8 @@ export class AlarmComponent implements OnInit {
       })
     },1)
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
-
       this.currentPage = page
-      this.getPageSize()
+      this.getVehiclewarnings()
     })
   }
 

@@ -105,6 +105,8 @@ export class PublicPlatformManagementComponent implements OnInit {
 
   ngAfterViewInit() {
     this.getPageSize()
+    this.grid2Height = this.publicPlatformManagementGrid2.nativeElement.offsetHeight
+    this.pageSize2 = this.uiService.getGridPageSize(this.grid1Height)
   }
 
   ngOnDestroy(): void {
