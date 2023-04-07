@@ -686,6 +686,7 @@ export class DetailMonitoringComponent implements OnInit {
       }
 
       if(this.historySubject == 'CAR'){
+
         if(res.body.car){
           this.historyDataList = res.body.car.carHistory
           pagination.count = res.body.car.count
@@ -693,7 +694,6 @@ export class DetailMonitoringComponent implements OnInit {
           this.historyDataList = []
           pagination.count = 0
         }
-
 
         this.columnDefs = [
           { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180 },
@@ -1453,6 +1453,10 @@ export class DetailMonitoringComponent implements OnInit {
     this.map.setLayoutProperty("vehiclePathsLastPoint", 'visibility', 'none');
     this.map.setLayoutProperty("vehiclePathsLine", 'visibility', 'none');
 
+  }
+
+  setSearch(){
+    this.uiService.setCurrentPage(1);
   }
 
 }
