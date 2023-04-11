@@ -1210,11 +1210,8 @@ export class DetailMonitoringComponent implements OnInit {
     this.mode = 'info'
   }
 
-
   setTime(){
-
     console.log(this.startRealTime)
-
   }
 
   historyExport(){

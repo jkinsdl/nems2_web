@@ -31,6 +31,13 @@ export class StatusComponent implements OnInit {
   failureRankChart : any
   failureOccupancyChart : any
 
+  statisticsCurrent : any = {
+    totalVehicles: 0,
+    totalLoginVehicles: 0,
+    totalLogoutVehicles: 0,
+    todayRegistVehicles: 0
+  }
+
   onResize(event : any){
     this.distributionChart.resize();
     this.failureRankChart.resize();
@@ -38,8 +45,18 @@ export class StatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getStatisticsVehiclesSummary()
+    //this.getStatisticsVehiclesSummary()
+    this.getStatisticsCurrent()
     this.getStatisticsWarnings()
+  }
+
+  getStatisticsCurrent(){
+    this.statisticsService.getStatisticsCurrent().subscribe(res=>{
+      console.log(res)
+      this.statisticsCurrent = res.body
+    },error=>{
+      console.log(error)
+    })
   }
 
   getStatisticsVehiclesSummary(){

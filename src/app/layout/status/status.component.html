@@ -2,7 +2,36 @@
 
   <div class="statusLayout whiteBoardBoax">
     <app-sub-title [title]="'STATUS'"></app-sub-title>
+
     <div class="statusContents">
+      <div class="status">
+        <div class="statusValue">{{statisticsCurrent.totalVehicles}}</div>
+        <div class="statusLabel">Total Vehicles</div>
+      </div>
+
+      <div class="statusLine"></div>
+
+      <div class="status">
+          <div class="statusValue">{{statisticsCurrent.todayLoginVehicles}}</div>
+          <div class="statusLabel">Today Login Vehicles</div>
+      </div>
+
+      <div class="statusLine"></div>
+
+      <div class="status">
+          <div class="statusValue">{{statisticsCurrent.todayLogoutVehicles}}</div>
+          <div class="statusLabel">Today Logout Vehicles</div>
+      </div>
+
+      <div class="statusLine"></div>
+
+      <div class="status">
+          <div class="statusValue">{{statisticsCurrent.todayRegistVehicles}}</div>
+          <div class="statusLabel">Today Regist Vehicles</div>
+      </div>
+    </div>
+
+    <!--<div class="statusContents">
       <div class="status">
         <div class="statusValue">{{statisticsVehiclesSummary.totalVehicles}}</div>
         <div class="statusLabel">Total Vehicles</div>
@@ -34,7 +63,7 @@
           <div class="statusValue">{{statisticsVehiclesSummary.totalEnergyUsage}}</div>
           <div class="statusLabel">Total Energy Usage</div>
       </div>
-    </div>
+    </div>-->
   </div>
 
   <div class="distributionByRegion whiteBoardBoax">
