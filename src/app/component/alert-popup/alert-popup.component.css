@@ -1,5 +1,5 @@
 .alertPopupContainer{
-  width: 400px;
+  min-width: 400px;
 }
 
 .alertPopupContainer .alertTitle {
