@@ -707,11 +707,11 @@ export class DetailMonitoringComponent implements OnInit {
           { field: 'soc',headerName: "soc", width:80},
           { field: 'dcdcState',headerName: "dcdcState", width:130},
           { field: 'accel',headerName: "accel", width:80},
-          { field: 'breaking',headerName: "breaking", width:100},
+          { field: 'braking',headerName: "braking", width:100},
           { field: 'gearState',headerName: "gearState", width:100},
           { field: 'resistance',headerName: "resistance", width:120},
           { field: 'acceleratorVal',headerName: "acceleratorVal", width:140},
-          { field: 'breakState',headerName: "breakState", width:120},
+          { field: 'brakeState',headerName: "brakeState", width:120},
         ];
 
         if((this.vinHistoryGrid.nativeElement.offsetWidth > 1830 )){
