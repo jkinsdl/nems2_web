@@ -34,11 +34,11 @@ export class PushAlarmComponent implements OnInit {
 
   columnDefs: ColDef[] = [
     { field: 'pushinfoId', headerName: 'pushinfoId', tooltipField: 'pushinfoId', hide:true },
-    { field: 'aliTextureId', headerName: 'aliTextureId', tooltipField: 'aliTextureId'},
-    { field: 'aliVoiceId', headerName : 'aliVoiceId', tooltipField: 'aliVoiceId'},
     { field: 'userName', headerName : 'userName', tooltipField: 'userName'},
     { field: 'eMail', headerName : 'eMail', tooltipField: 'eMail'},
     { field: 'phoneNumber', headerName : 'phoneNumber', tooltipField: 'phoneNumber'},
+    { field: 'aliTextureId', headerName: 'aliTextureId', tooltipField: 'aliTextureId'},
+    { field: 'aliVoiceId', headerName : 'aliVoiceId', tooltipField: 'aliVoiceId'},
     { field: 'createdAt', headerName : 'createdAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createdAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createdAt', type : 'date' }},
     { field: 'createdUserId', headerName : 'createdUserId', tooltipField: 'createdUserId', hide:true},
     { field: 'action', cellRenderer: BtnCellRendererComponent,
