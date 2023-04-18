@@ -56,15 +56,14 @@ export class AddVehicleComponent implements OnInit {
 
   cityList : any[] = []
   selectCity : any
+
   ngOnInit(): void {
     console.log(this.data)
     this.getRegionmanagers()
     this.getVehiclemanagerModel()
     if(this.data.type == this.constant.MODIFY_TYPE){
       this.getVehiclemanagerStaticinfoVin(this.data.vehicle.vin)
-
     }
-
   }
 
   getRegionmanagers(){
@@ -120,9 +119,7 @@ export class AddVehicleComponent implements OnInit {
     this.vehiclemanagersService.getVehiclemanagerStaticinfoVin(vin).subscribe(res=>{
       console.log(res)
       this.addVehiclemanagerStaticinfoParameter = res.body.vehicle
-
       this.getRegionmanagersPcode(this.addVehiclemanagerStaticinfoParameter.pcode)
-
     },error=>{
       console.log(error)
     })
@@ -171,11 +168,11 @@ export class AddVehicleComponent implements OnInit {
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.sOffDate){
-      this.addVehiclemanagerStaticinfoParameter.sOffDate = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
+      this.addVehiclemanagerStaticinfoParameter.sOffDate = this.addVehiclemanagerStaticinfoParameter.sOffDate._d == undefined ? new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate).toISOString() : new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
     }
 
-    if(this.addVehiclemanagerStaticinfoParameter.registDate){
-      this.addVehiclemanagerStaticinfoParameter.registDate = new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
+    if(this.addVehiclemanagerStaticinfoParameter.registDat){
+      this.addVehiclemanagerStaticinfoParameter.registDate = this.addVehiclemanagerStaticinfoParameter.registDate._d == undefined ? new Date(this.addVehiclemanagerStaticinfoParameter.registDate).toISOString() : new Date(this.addVehiclemanagerStaticinfoParameter.registDate._d).toISOString()
     }
 
     this.vehiclemanagerService.postVehiclemanagerStaticinfo(this.addVehiclemanagerStaticinfoParameter).subscribe(res=>{
@@ -185,9 +182,8 @@ export class AddVehicleComponent implements OnInit {
       console.log(error)
       this.utilService.alertPopup("Vehicle Settings", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
     })
-
-
   }
+
 
   modifyVehicle(){
     console.log(this.addVehiclemanagerStaticinfoParameter)
