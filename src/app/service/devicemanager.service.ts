@@ -156,7 +156,7 @@ export class DevicemanagerService {
     return this.http.get<any>(url, {params : httpParams,  observe: "response" })
   }
 
-  getDevicemanagersParameterVehicle(){ // TODO: 필요 여부 확인 후 삭제 차량 - 설정 관계 정보 조회
+  getDevicemanagersParameterVehicle(){
     var url = `${this.Url}/parameter/vehicle`;
     return this.http.get<any>(url, { observe: "response" })
   }
@@ -299,8 +299,8 @@ export class DevicemanagerService {
   }
 
 
-  getDevicemanagersVehicleFirmware(filter : SearchFilter){
-    var url = `${this.Url}/vehicle/firmware`;
+  getDevicemanagersVehiclesFirmware(filter : SearchFilter){
+    var url = `${this.Url}/vehicles/firmware`;
     let httpParams = new HttpParams()
 
     if(filter.asc != undefined){
@@ -335,9 +335,44 @@ export class DevicemanagerService {
       httpParams = httpParams.append('state', filter.state[i]);
     }
 
+    return this.http.get<any>(url, {params : httpParams, observe: "response" })
+  }
 
+  getDevicemanagersVehiclesParametervalues(filter : SearchFilter){
+
+    var url = `${this.Url}/vehicles/parametervalues`;
+    let httpParams = new HttpParams()
+
+    if(filter.asc != undefined){
+      for(let i = 0; i < filter.asc.length; i++){
+        httpParams = httpParams.append('asc', filter.asc[i]);
+      }
+    }
+
+    if(filter.desc != undefined){
+      for(let i = 0; i < filter.desc.length; i++){
+        httpParams = httpParams.append('desc', filter.desc[i]);
+      }
+    }
+
+    if(filter.limit != undefined){
+      httpParams = httpParams.set("limit", filter.limit)
+    }
+
+    if(filter.offset != undefined){
+      httpParams = httpParams.set("offset", filter.offset)
+    }
+
+    if(filter.vin != undefined){
+      httpParams = httpParams.set("vin", filter.vin)
+    }
+
+    if(filter.model != undefined){
+      httpParams = httpParams.set("model", filter.model)
+    }
 
     return this.http.get<any>(url, {params : httpParams, observe: "response" })
+
   }
 
 }

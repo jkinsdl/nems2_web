@@ -82,7 +82,7 @@ export class OTAInformationComponent implements OnInit {
   ngOnInit(): void {
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getDevicemanagersVehicleFirmware()
+      this.getDevicemanagersVehiclesFirmware()
     })
   }
 
@@ -90,7 +90,7 @@ export class OTAInformationComponent implements OnInit {
     this.gridHeight = this.otaInformationGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     if(this.searchFilter.limit != this.pageSize){
-      this.getDevicemanagersVehicleFirmware()
+      this.getDevicemanagersVehiclesFirmware()
     }
 
   }
@@ -132,7 +132,7 @@ export class OTAInformationComponent implements OnInit {
     })
   }
 
-  getDevicemanagersVehicleFirmware(){
+  getDevicemanagersVehiclesFirmware(){
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.limit = this.pageSize
     this.searchFilter.state = []
@@ -143,7 +143,7 @@ export class OTAInformationComponent implements OnInit {
       }
     }
 
-    this.devicemanagerService.getDevicemanagersVehicleFirmware(this.searchFilter).subscribe(res=>{
+    this.devicemanagerService.getDevicemanagersVehiclesFirmware(this.searchFilter).subscribe(res=>{
       console.log(res)
       this.vehicle = res.body
 
