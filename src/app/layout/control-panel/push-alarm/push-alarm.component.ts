@@ -179,10 +179,13 @@ export class PushAlarmComponent implements OnInit {
   }
 
   deleteAlarm(field: any){
+
+    console.log(field)
+
     const dialogRef = this.dialog.open( AlertPopupComponent, {
       data:{
         alertTitle : "Delete Push Alarm",
-        alertContents : "Do you want to delete the alarm ? (name : " + field.name+ ")",
+        alertContents : "Do you want to delete the alarm ? (aliTextureId : " + field.aliTextureId+ ")",
         alertType : this.constant.ALERT_WARNING,
         popupType : this.constant.POPUP_CHOICE,
       }
