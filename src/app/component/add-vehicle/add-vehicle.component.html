@@ -114,8 +114,9 @@
     <div class="addInfoFilter">
       <div class="label">vehicle registration date </div>
       <div class="value">
-        <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate">
-        <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="true" [hideTime]="false"   ><button mat-button>text</button></ngx-mat-datetime-picker>
+        <div class="sOffText" (click)="sOffDatePicker.open()"> {{sOffDateText}} </div>
+        <input class="datePickerText" style="margin-right: 0; visibility: hidden; width: 0; height: 0;" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate" (ngModelChange)="changeSOffDate($event)">
+        <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="false" [hideTime]="true"></ngx-mat-datetime-picker>
         <div style="cursor: pointer;" (click)="removeSOffDate()">
           <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
         </div>
@@ -126,7 +127,7 @@
       <div class="label">registDate </div>
       <div class="value">
         <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="registDatePicker" readonly="true" (click)="registDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registDate">
-        <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false"  ></ngx-mat-datetime-picker>
+        <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
         <div style="cursor: pointer;" (click)="removeregistDate()">
           <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
         </div>
@@ -242,8 +243,9 @@
       <div class="addInfoFilter">
         <div class="label">vehicle registration date </div>
         <div class="value">
-          <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate">
-          <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="true" [hideTime]="false"   ><button mat-button>text</button></ngx-mat-datetime-picker>
+          <div class="sOffText" (click)="sOffDatePicker.open()"> {{sOffDateText}} </div>
+          <input class="datePickerText" style="margin-right: 0; visibility: hidden; width: 0; height: 0;" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate" (ngModelChange)="changeSOffDate($event)">
+          <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="false" [hideTime]="true"></ngx-mat-datetime-picker>
           <div style="cursor: pointer;" (click)="removeSOffDate()">
             <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
           </div>

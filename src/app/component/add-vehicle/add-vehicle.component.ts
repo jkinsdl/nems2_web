@@ -59,6 +59,8 @@ export class AddVehicleComponent implements OnInit {
 
   modifyHistory : any[] = []
 
+  sOffDateText : string = ""
+
   ngOnInit(): void {
     console.log(this.data)
     this.getRegionmanagers()
@@ -171,7 +173,19 @@ export class AddVehicleComponent implements OnInit {
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.sOffDate){
-      this.addVehiclemanagerStaticinfoParameter.sOffDate = this.addVehiclemanagerStaticinfoParameter.sOffDate._d == undefined ? new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate).toISOString() : new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
+      let date : Date
+
+      if(this.addVehiclemanagerStaticinfoParameter.sOffDate._d == undefined){
+        date = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate)
+      }else {
+        date = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d)
+      }
+
+      date.setHours(0)
+      date.setMinutes(0)
+      date.setSeconds(0)
+      console.log(date)
+      this.addVehiclemanagerStaticinfoParameter.sOffDate = date.toISOString()
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.registDat){
@@ -217,7 +231,20 @@ export class AddVehicleComponent implements OnInit {
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.sOffDate){
-      this.addVehiclemanagerStaticinfoParameter.sOffDate = this.addVehiclemanagerStaticinfoParameter.sOffDate._d == undefined ? new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate).toISOString() : new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d).toISOString()
+
+      let date : Date
+
+      if(this.addVehiclemanagerStaticinfoParameter.sOffDate._d == undefined){
+        date = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate)
+      }else {
+        date = new Date(this.addVehiclemanagerStaticinfoParameter.sOffDate._d)
+      }
+
+      date.setHours(0)
+      date.setMinutes(0)
+      date.setSeconds(0)
+      console.log(date)
+      this.addVehiclemanagerStaticinfoParameter.sOffDate = date.toISOString()
     }
 
     if(this.addVehiclemanagerStaticinfoParameter.registDate){
@@ -254,4 +281,10 @@ export class AddVehicleComponent implements OnInit {
     this.addVehiclemanagerStaticinfoParameter.registDate = null
   }
 
+  changeSOffDate(e : any){
+    let parameter = {
+      value : this.addVehiclemanagerStaticinfoParameter.sOffDate._d
+    }
+    this.sOffDateText = this.utilService.dateFormatDate(parameter)
+  }
 }

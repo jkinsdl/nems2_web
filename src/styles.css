@@ -40,6 +40,11 @@ div{
   font-size: 14px;
 }
 
+input{
+  font-family: 'notokr-medium';
+  font-size: 12px;
+}
+
 input[type="text"],
 input[type="password"]{
   border: 2px solid rgb(238, 238, 238);
