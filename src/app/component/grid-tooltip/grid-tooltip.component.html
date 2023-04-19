@@ -1,6 +1,13 @@
 <div class="custom-tooltip">
   <div *ngIf="date">
-    {{ date | dateformat }}
+    <div *ngIf="fildName == 'sOffDate'">
+      {{ date | dateformatdate }}
+    </div>
+
+    <div *ngIf="fildName != 'sOffDate'">
+      {{ date | dateformat }}
+    </div>
+
   </div>
   <div *ngIf="decoding">
     {{ decoding }}

@@ -13,14 +13,17 @@ export class GridTooltipComponent implements ITooltipAngularComp {
   public date!:string
   public decoding! : string
 
+  fildName : string = ""
+
   constructor(private utilService : UtilService,){}
 
   agInit(params: { fildName: string, type : string } & ITooltipParams): void {
     this.data = params.api!.getDisplayedRowAtIndex(params.rowIndex!)!.data;
-
+    this.fildName = params.fildName
 
     if(params.type == 'date'){
       this.date = this.data[params.fildName]
+
     }else if(params.type == 'decoding'){
       let p = {value : this.data[params.fildName]}
       this.decoding = this.utilService.base64ToHex(p)
