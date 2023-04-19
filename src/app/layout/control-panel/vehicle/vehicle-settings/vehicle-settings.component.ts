@@ -105,7 +105,6 @@ export class VehicleSettingsComponent implements OnInit {
     if(this.vehicleSettingsGrid.nativeElement.offsetWidth > 2420){
       this.gridApi.sizeColumnsToFit()
     }
-
   }
 
   getVehiclemanagerStaticinfo(){

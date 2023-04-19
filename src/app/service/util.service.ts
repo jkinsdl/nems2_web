@@ -89,6 +89,28 @@ export class UtilService {
     return result
   }
 
+  dateFormatDate(params : any){
+    let date = new Date(params.value)
+    let result : string = "";
+
+    if(params.value){
+      result = date.getFullYear() + "-"
+      if(date.getMonth() + 1 > 9){
+        result += (date.getMonth() + 1) + "-"
+      }else{
+        result += "0" + (date.getMonth() + 1) + "-"
+      }
+      if(date.getDate() > 9){
+        result += date.getDate() + " "
+      }else {
+        result += "0" + date.getDate() + " "
+      }
+    }
+
+    return result
+  }
+
+
   alertPopup(title : string, contents : string, alertType : number ){
     const dialogRef = this.dialog.open( AlertPopupComponent, {
       data:{

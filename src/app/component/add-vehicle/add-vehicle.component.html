@@ -1,4 +1,4 @@
-<div class="addVehicleConatiner">
+<div class="addVehicleConatiner" [ngClass]="{'addHeight': data.type == constant.ADD_TYPE}">
 
   <div class="popupTitle">
     <div class="text">
@@ -7,132 +7,272 @@
     <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
   </div>
 
-  <div class="addInfoFilter">
-    <div class="label">VIN <span>*</span> </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin" [disabled]="data.type == constant.MODIFY_TYPE">
+  <div *ngIf="data.type == constant.ADD_TYPE">
+    <div class="addInfoFilter">
+      <div class="label">VIN <span>*</span> </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin" [disabled]="data.type == constant.MODIFY_TYPE">
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">ICCID <span>*</span> </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.iccid">
+    <div class="addInfoFilter">
+      <div class="label">ICCID <span>*</span> </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.iccid">
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">NEMS S/N <span>*</span> </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.nemsSn">
+    <div class="addInfoFilter">
+      <div class="label">NEMS S/N <span>*</span> </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.nemsSn">
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">Model Name <span>*</span> </div>
-    <div class="value">
-      <select (ngModelChange)="changeModel($event)" [(ngModel)]="addVehiclemanagerStaticinfoParameter.modelName">
-        <option [value]="null"  disabled></option>
-        <option *ngFor="let model of modelList" [value]="model.modelName" > {{model.modelName}} </option>
-      </select>
+    <div class="addInfoFilter">
+      <div class="label">Model Name <span>*</span> </div>
+      <div class="value">
+        <select (ngModelChange)="changeModel($event)" [(ngModel)]="addVehiclemanagerStaticinfoParameter.modelName">
+          <option [value]="null"  disabled></option>
+          <option *ngFor="let model of modelList" [value]="model.modelName" > {{model.modelName}} </option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">province <span>*</span> </div>
-    <div class="value">
-      <select (ngModelChange)="setProvince($event)" [(ngModel)]="selectProvince">
-        <option *ngFor="let province of provinceList" [value]="province.province">{{province.province}}</option>
-      </select>
+    <div class="addInfoFilter">
+      <div class="label">province <span>*</span> </div>
+      <div class="value">
+        <select (ngModelChange)="setProvince($event)" [(ngModel)]="selectProvince">
+          <option *ngFor="let province of provinceList" [value]="province.province">{{province.province}}</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">region <span>*</span> </div>
-    <div class="value">
-      <select (ngModelChange)="setCity($event)" [(ngModel)]="selectCity">
-        <option [value]="undefined"  disabled></option>
-        <option *ngFor="let city of cityList" [value]="city.city">{{city.city}}</option>
-      </select>
+    <div class="addInfoFilter">
+      <div class="label">region <span>*</span> </div>
+      <div class="value">
+        <select (ngModelChange)="setCity($event)" [(ngModel)]="selectCity">
+          <option [value]="undefined"  disabled></option>
+          <option *ngFor="let city of cityList" [value]="city.city">{{city.city}}</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-
-
-  <!--<div class="addInfoFilter">
-    <div class="label">pcode </div>
-    <div class="value">
-      <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehiclemanagerStaticinfoParameter.pcode">
+    <!--<div class="addInfoFilter">
+      <div class="label">pcode </div>
+      <div class="value">
+        <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehiclemanagerStaticinfoParameter.pcode">
+      </div>
     </div>
-  </div>
+    -->
+    <!--<div class="addInfoFilter">
+      <div class="label">region </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.region">
+      </div>
+    </div>
   -->
-  <!--<div class="addInfoFilter">
-    <div class="label">region </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.region">
+    <div class="addInfoFilter">
+      <div class="label">registrationPlate </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registrationPlate">
+      </div>
     </div>
-  </div>
--->
-  <div class="addInfoFilter">
-    <div class="label">registrationPlate </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registrationPlate">
+
+    <div class="addInfoFilter">
+      <div class="label">purpose </div>
+      <div class="value">
+        <select [(ngModel)]="addVehiclemanagerStaticinfoParameter.purpose">
+          <option [value]="'PERSONAL'"> PERSONAL </option>
+          <option [value]="'PUBLIC'"> PUBLIC  </option>
+        </select>
+
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">purpose </div>
-    <div class="value">
-      <select [(ngModel)]="addVehiclemanagerStaticinfoParameter.purpose">
-        <option [value]="'PERSONAL'"> PERSONAL </option>
-        <option [value]="'PUBLIC'"> PUBLIC  </option>
-      </select>
-
+    <div class="addInfoFilter">
+      <div class="label">engineNo </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.engineNo">
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">engineNo </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.engineNo">
+    <div class="addInfoFilter">
+      <div class="label">motorNo </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.motorNo">
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">motorNo </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.motorNo">
+    <div class="addInfoFilter">
+      <div class="label">batteryCode </div>
+      <div class="value">
+        <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.batteryCode">
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">batteryCode </div>
-    <div class="value">
-      <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.batteryCode">
+    <div class="addInfoFilter">
+      <div class="label">vehicle registration date </div>
+      <div class="value">
+        <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate">
+        <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="true" [hideTime]="false"   ><button mat-button>text</button></ngx-mat-datetime-picker>
+        <div style="cursor: pointer;" (click)="removeSOffDate()">
+          <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="addInfoFilter">
-    <div class="label">vehicle registration date </div>
-    <div class="value">
-      <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate">
-      <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="true" [hideTime]="false"   ><button mat-button>text</button></ngx-mat-datetime-picker>
-      <div style="cursor: pointer;" (click)="removeSOffDate()">
-        <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
+    <div class="addInfoFilter">
+      <div class="label">registDate </div>
+      <div class="value">
+        <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="registDatePicker" readonly="true" (click)="registDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registDate">
+        <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false"  ></ngx-mat-datetime-picker>
+        <div style="cursor: pointer;" (click)="removeregistDate()">
+          <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="addInfoFilter">
-    <div class="label">registDate </div>
-    <div class="value">
-      <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="registDatePicker" readonly="true" (click)="registDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registDate">
-      <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false"  ></ngx-mat-datetime-picker>
-      <div style="cursor: pointer;" (click)="removeregistDate()">
-        <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
+  <mat-tab-group *ngIf="data.type == constant.MODIFY_TYPE">
+    <mat-tab label="Modify">
+      <div class="addInfoFilter">
+        <div class="label">VIN <span>*</span> </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin" [disabled]="data.type == constant.MODIFY_TYPE">
+        </div>
       </div>
-    </div>
-  </div>
+
+      <div class="addInfoFilter">
+        <div class="label">ICCID <span>*</span> </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.iccid">
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">NEMS S/N <span>*</span> </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.nemsSn">
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">Model Name <span>*</span> </div>
+        <div class="value">
+          <select (ngModelChange)="changeModel($event)" [(ngModel)]="addVehiclemanagerStaticinfoParameter.modelName">
+            <option [value]="null"  disabled></option>
+            <option *ngFor="let model of modelList" [value]="model.modelName" > {{model.modelName}} </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">province <span>*</span> </div>
+        <div class="value">
+          <select (ngModelChange)="setProvince($event)" [(ngModel)]="selectProvince">
+            <option *ngFor="let province of provinceList" [value]="province.province">{{province.province}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">region <span>*</span> </div>
+        <div class="value">
+          <select (ngModelChange)="setCity($event)" [(ngModel)]="selectCity">
+            <option [value]="undefined"  disabled></option>
+            <option *ngFor="let city of cityList" [value]="city.city">{{city.city}}</option>
+          </select>
+        </div>
+      </div>
+
+      <!--<div class="addInfoFilter">
+        <div class="label">pcode </div>
+        <div class="value">
+          <input type="number" [OnlyNumber]="true" [(ngModel)]="addVehiclemanagerStaticinfoParameter.pcode">
+        </div>
+      </div>
+      -->
+      <!--<div class="addInfoFilter">
+        <div class="label">region </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.region">
+        </div>
+      </div>
+    -->
+      <div class="addInfoFilter">
+        <div class="label">registrationPlate </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registrationPlate">
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">purpose </div>
+        <div class="value">
+          <select [(ngModel)]="addVehiclemanagerStaticinfoParameter.purpose">
+            <option [value]="'PERSONAL'"> PERSONAL </option>
+            <option [value]="'PUBLIC'"> PUBLIC  </option>
+          </select>
+
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">engineNo </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.engineNo">
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">motorNo </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.motorNo">
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">batteryCode </div>
+        <div class="value">
+          <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.batteryCode">
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">vehicle registration date </div>
+        <div class="value">
+          <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate">
+          <ngx-mat-datetime-picker #sOffDatePicker [showSpinners]="true" [hideTime]="false"   ><button mat-button>text</button></ngx-mat-datetime-picker>
+          <div style="cursor: pointer;" (click)="removeSOffDate()">
+            <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
+          </div>
+        </div>
+      </div>
+
+      <div class="addInfoFilter">
+        <div class="label">registDate </div>
+        <div class="value">
+          <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="registDatePicker" readonly="true" (click)="registDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registDate">
+          <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false"  ></ngx-mat-datetime-picker>
+          <div style="cursor: pointer;" (click)="removeregistDate()">
+            <img src="assets/icon/close_icon.png" style="width: 10px; height: 10px;">
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="History">
+      <div class="historyList">
+        <div class="item" *ngFor="let modify of modifyHistory">
+          <div class="createTime"> {{modify.createTime | dateformatdate}} </div>
+          <div class="message"> {{modify.message}} </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+
 
   <div class="btnBox">
     <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addVehicle()" >

@@ -228,6 +228,15 @@ input::-webkit-inner-spin-button {
   box-shadow: 1px 1px 5px #a5a5a5;
 }
 
+.addVehicleConatiner .mat-tab-label {
+  padding: 0 24px !important;
+  min-width: 225px !important;
+}
+
+.addVehicleConatiner .mat-tab-label-content{
+  font-size: 14px !important;
+}
+
 .mat-tab-label{
   padding: 0 10px !important;
   min-width: 0 !important;

@@ -57,6 +57,8 @@ export class AddVehicleComponent implements OnInit {
   cityList : any[] = []
   selectCity : any
 
+  modifyHistory : any[] = []
+
   ngOnInit(): void {
     console.log(this.data)
     this.getRegionmanagers()
@@ -118,6 +120,7 @@ export class AddVehicleComponent implements OnInit {
   getVehiclemanagerStaticinfoVin(vin : string){
     this.vehiclemanagersService.getVehiclemanagerStaticinfoVin(vin).subscribe(res=>{
       console.log(res)
+      this.modifyHistory = res.body.modifyHistory
       this.addVehiclemanagerStaticinfoParameter = res.body.vehicle
       this.getRegionmanagersPcode(this.addVehiclemanagerStaticinfoParameter.pcode)
     },error=>{
