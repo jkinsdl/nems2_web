@@ -313,7 +313,6 @@
 
 .listContents{
   overflow: auto;
-  height: calc(100% - 30px);
 }
 
 .popupIconBox{
