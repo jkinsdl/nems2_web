@@ -22,7 +22,31 @@ export class RemoteControlStateComponent implements OnInit {
     private uiService: UiService
   ) { }
 
+
   columnDefs: ColDef[] = [
+    { field: 'vin', headerName: 'VIN', tooltipField: 'vin',width:180 },
+    { field: 'updatedAt', headerName : 'Updated At', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }},
+
+    { field: 'vehicleStaticInfo', headerName : 'Vehicle Static Info', tooltipField: 'vehicleStaticInfo',width:180},
+
+    { field: 'carLocalSavePeriod', headerName : 'Car Local Save Period', tooltipField: 'carLocalSavePeriod',width:180},
+    { field: 'normalSubmitPeriod', headerName : 'Normal Submit Period', tooltipField: 'normalSubmitPeriod',width:200},
+    { field: 'warningSubmitPeriod', headerName : 'Warning Submit Period', tooltipField: 'warningSubmitPeriod',width:200},
+    { field: 'managePlatformName', headerName : 'Manage Platform Name', tooltipField: 'managePlatformName',width:200},
+    { field: 'managePlatformPort', headerName : 'Manage Platform Port', tooltipField: 'managePlatformPort',width:200},
+    { field: 'hwVersion', headerName : 'Hardware Version', tooltipField: 'hwVersion',width:180},
+    { field: 'fwVersion', headerName : 'Firmware Version', tooltipField: 'fwVersion',width:180},
+    { field: 'carHeartBeatPeriod', headerName: 'Car Heart Beat Period', tooltipField: 'carHeartBeatPeriod',width:180},
+    { field: 'carResponseTimeout', headerName : 'Car Response Timeout', tooltipField: 'carResponseTimeout',width:200},
+    { field: 'platformResponseTimeout', headerName : 'Platform Response Timeout', tooltipField: 'platformResponseTimeout',width:240},
+    { field: 'nextLoginInterval', headerName : 'Next Login Interval', tooltipField: 'nextLoginInterval',width:180},
+    { field: 'publicPlatformName', headerName : 'Public Platform Name', tooltipField: 'publicPlatformName'},
+    { field: 'publicPlatformPort', headerName : 'Public Platform Port', tooltipField: 'publicPlatformPort',width:180},
+    { field: 'monitoring', headerName : 'Monitoring', tooltipField: 'monitoring',width:120},
+    { field: 'packetTime', headerName : 'Packet Time', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime', type : 'date' }},
+  ];
+
+  /*columnDefs: ColDef[] = [
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin',width:180 },
     { field: 'updatedAt', headerName : 'Updated At', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }},
     //state
@@ -41,17 +65,17 @@ export class RemoteControlStateComponent implements OnInit {
     { field: 'publicPlatformPort', headerName : 'Public Platform Port', tooltipField: 'publicPlatformPort',width:180},
     { field: 'monitoring', headerName : 'Monitoring', tooltipField: 'monitoring',width:120},
 
-    /*
-    { field: 'configureName', headerName : 'configureName', tooltipField: 'configureName',width:150},
-{ field: 'firmwareInfoHwVersion', headerName : 'Firmware Info Hw Version', tooltipField: 'firmwareInfoHwVersion', width:220},
-    { field: 'firmwareInfoFwVersion', headerName : 'Firmware Info Fw Version', tooltipField: 'firmwareInfoFwVersion', width:220},
-    { field: 'updatedUserId', headerName : 'updatedUserId', tooltipField: 'updatedUserId',width:120},
-    { field: 'dataFilePath', headerName : 'dataFilePath', tooltipField: 'dataFilePath'},
-    { field: 'dataSize', headerName : 'dataSize', tooltipField: 'dataSize',width:120},
-    { field: 'firmwareName', headerName : 'firmwareName', tooltipField: 'firmwareName',width:150},
-    { field: 'md5Hash', headerName : 'md5Hash', tooltipField: 'md5Hash'},
-    { field: 'modelName', headerName : 'modelName', tooltipField: 'modelName',width:120}*/
-  ];
+
+    //{ field: 'configureName', headerName : 'configureName', tooltipField: 'configureName',width:150},
+    //{ field: 'firmwareInfoHwVersion', headerName : 'Firmware Info Hw Version', tooltipField: 'firmwareInfoHwVersion', width:220},
+    //{ field: 'firmwareInfoFwVersion', headerName : 'Firmware Info Fw Version', tooltipField: 'firmwareInfoFwVersion', width:220},
+    //{ field: 'updatedUserId', headerName : 'updatedUserId', tooltipField: 'updatedUserId',width:120},
+    //{ field: 'dataFilePath', headerName : 'dataFilePath', tooltipField: 'dataFilePath'},
+    //{ field: 'dataSize', headerName : 'dataSize', tooltipField: 'dataSize',width:120},
+    //{ field: 'firmwareName', headerName : 'firmwareName', tooltipField: 'firmwareName',width:150},
+    //{ field: 'md5Hash', headerName : 'md5Hash', tooltipField: 'md5Hash'},
+    //{ field: 'modelName', headerName : 'modelName', tooltipField: 'modelName',width:120}
+  ];*/
 
   gridApi!: GridApi;
 
@@ -85,7 +109,8 @@ export class RemoteControlStateComponent implements OnInit {
 
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getDevicemanagersVehicles()
+      //this.getDevicemanagersVehicles()
+      this.getDevicemanagersVehiclesParametervalues();
     })
   }
 
@@ -93,7 +118,8 @@ export class RemoteControlStateComponent implements OnInit {
     this.gridHeight = this.remoteControlStateGrid.nativeElement.offsetHeight
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)
     if(this.searchFilter.limit != this.pageSize){
-      this.getDevicemanagersVehicles()
+      //this.getDevicemanagersVehicles()
+      this.getDevicemanagersVehiclesParametervalues()
     }
 
   }
@@ -110,6 +136,29 @@ export class RemoteControlStateComponent implements OnInit {
   }
 
 
+  getDevicemanagersVehiclesParametervalues(){
+    this.searchFilter.offset = (this.currentPage-1) * this.pageSize
+    this.searchFilter.limit = this.pageSize
+    this.devicemanagersService.getDevicemanagersVehiclesParametervalues(this.searchFilter).subscribe(res=>{
+      console.log(res)
+
+      this.devicemanagersVehicles = res.body
+
+      let pagination = {
+        count : this.devicemanagersVehicles.count,
+        pageSize : this.pageSize,
+        page : this.currentPage
+      }
+
+      this.uiService.setPagination(pagination)
+
+    },error=>{
+      console.log(error)
+    })
+  }
+
+
+
   getDevicemanagersVehicles(){
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.limit = this.pageSize
@@ -118,8 +167,6 @@ export class RemoteControlStateComponent implements OnInit {
       this.devicemanagersVehicles = res.body
       this.rowData = []
       for(let i = 0; i < res.body.entities.length; i++) {
-
-
         this.rowData.push({
           vin : res.body.entities[i].vin,
           carHeartBeatPeriod : res.body.entities[i].configure ? res.body.entities[i].configure.carHeartBeatPeriod : null,
