@@ -82,6 +82,10 @@ export class AddVehicleComponent implements OnInit {
   getRegionmanagersPcode(pcode : string){
     this.regionmanagersService.getRegionmanagersPcode(pcode).subscribe(res=>{
       console.log(res)
+      this.selectProvince = res.body.province
+      this.setProvince(this.selectProvince)
+      this.selectCity = res.body.city
+      this.setCity(this.selectCity)
     },error=>{
       console.log(error)
     })

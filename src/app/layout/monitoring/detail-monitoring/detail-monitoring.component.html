@@ -102,7 +102,7 @@
             </div>
 
             <div class="tabInforRow">
-              <div class="tabLeft">braking</div>
+              <div class="tabLeft">brakeing</div>
               <div class="tabRight">{{selectVehicleInfo.car.breaking}}</div>
             </div>
 
@@ -549,7 +549,34 @@
           </div>
         </div>
         <div class="inforBoxContent" [ngClass]="{'contentsActive': isPanelOnOff}">
-          <div id="batteryChartContiner" (click)="openBattery($event)"></div>
+
+          <div class="infoBatteryContainer" (click)="openBattery($event)">
+            <div class="title">
+              <div class="label">
+                Battery
+              </div>
+              <div class="value">
+                {{soc}} %
+              </div>
+            </div>
+
+            <mat-progress-bar
+              [mode]="'determinate'"
+              [value]="soc"
+              [bufferValue]="75">
+            </mat-progress-bar>
+          </div>
+
+
+
+          <!--<div id="batteryChartContiner" ></div>-->
+          <div class="infoSppedContainer">
+            <div class="title">
+              <div class="label">
+                Speed
+              </div>
+            </div>
+          </div>
           <div id="speedChartContiner"></div>
         </div>
       </div>

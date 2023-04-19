@@ -99,6 +99,9 @@ export class DetailMonitoringComponent implements OnInit {
 
   provinceJSONData : any = {}
   subPrefectureeJSONData : any = {}
+
+  soc : number = 0;
+
   ngAfterViewInit() {
     this.getPageSize()
   }
@@ -486,7 +489,7 @@ export class DetailMonitoringComponent implements OnInit {
       console.log(result)
     })
     this.setSpeedChart()
-    this.setBatteryChart()
+    //this.setBatteryChart()
     this.getRealtimedataVehiclelist()
 
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
@@ -596,7 +599,8 @@ export class DetailMonitoringComponent implements OnInit {
 
       this.selectVehicleInfo = res.body
       this.setSpeedChartOption(this.selectVehicleInfo.car.speed)
-      this.setBatteryChartOption(this.selectVehicleInfo.car.soc)
+      this.soc = this.selectVehicleInfo.car.soc
+      //this.setBatteryChartOption(this.selectVehicleInfo.car.soc)
 
       this.map.flyTo({
         center: [res.body.location.longitude,res.body.location.latitude],
@@ -1438,7 +1442,7 @@ export class DetailMonitoringComponent implements OnInit {
     this.selectVehicle = null
     this.selectVehicleInfo = null
     this.setSpeedChartOption(0)
-    this.setBatteryChartOption(0)
+    //this.setBatteryChartOption(0)
 
     this.map.flyTo({
       center: [this.lng,this.lat],
