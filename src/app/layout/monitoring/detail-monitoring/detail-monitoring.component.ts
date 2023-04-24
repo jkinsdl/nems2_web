@@ -605,11 +605,19 @@ export class DetailMonitoringComponent implements OnInit {
       this.soc = this.selectVehicleInfo.car.soc
       //this.setBatteryChartOption(this.selectVehicleInfo.car.soc)
 
-      this.map.flyTo({
-        center: [res.body.location.longitude,res.body.location.latitude],
-        duration: 1500,
-        zoom: 13
-      });
+      if(this.realTimeOnOff){
+        this.map.flyTo({
+          center: [res.body.location.longitude,res.body.location.latitude],
+          duration: 1500,
+        });
+      }else{
+        this.map.flyTo({
+          center: [res.body.location.longitude,res.body.location.latitude],
+          duration: 1500,
+          zoom: 13
+        });
+      }
+
 
       let source = (this.map.getSource("vehiclePathsLast") as GeoJSONSource).setData({
         "type": "Feature",
