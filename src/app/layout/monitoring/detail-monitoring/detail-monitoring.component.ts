@@ -548,8 +548,11 @@ export class DetailMonitoringComponent implements OnInit {
     if(this.realTimeOnOff){
       this.startRealTime = new Date()
 
-      this.interval = interval(10000).pipe().subscribe(x =>
+      this.interval = interval(10000).pipe().subscribe(x =>{
         this.getRealtimedataInfoVin()
+        this.getRealtimedataPathVin()
+        //this.getRealtimedataInfoVinSubject()
+      }
       );
 
     }else {
