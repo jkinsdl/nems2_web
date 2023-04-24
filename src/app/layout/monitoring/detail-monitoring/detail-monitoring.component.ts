@@ -548,7 +548,7 @@ export class DetailMonitoringComponent implements OnInit {
     if(this.realTimeOnOff){
       this.startRealTime = new Date()
 
-      this.interval = interval(10000).pipe().subscribe(x =>{
+      this.interval = interval(7000).pipe().subscribe(x =>{
         this.getRealtimedataInfoVin()
         this.getRealtimedataPathVin()
         //this.getRealtimedataInfoVinSubject()
@@ -590,12 +590,13 @@ export class DetailMonitoringComponent implements OnInit {
 
     let filter = new SearchFilter()
     filter.vin = this.selectVehicle.vin
+    filter.time = new Date().toISOString()
 
-    if(this.startRealTime == null){
-      filter.time = new Date().toISOString()
+    /*if(this.startRealTime == null){
+
     }else {
       filter.time = this.startRealTime.toISOString()
-    }
+    }*/
 
     this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(res=>{
       console.log(res)
