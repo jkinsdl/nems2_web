@@ -1460,4 +1460,8 @@ export class DetailMonitoringComponent implements OnInit {
     this.uiService.setCurrentPage(1);
   }
 
+  setAdditional(event:any){
+    this.searchFilter.additional = event.checked
+  }
+
 }

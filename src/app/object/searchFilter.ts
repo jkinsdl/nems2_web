@@ -87,4 +87,6 @@ export class SearchFilter{
 
   subject : string
 
+  additional : boolean
+
 }

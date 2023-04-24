@@ -485,7 +485,7 @@
             <option [value]="'EXTREMEVALUE'">Extreme Value</option>
             <option [value]="'WARNING'">Warning</option>
             <option [value]="'POWERBATTERYINFO'">Power Battery Info</option>
-            <option [value]="'POWERBATTERYTEMPERATURE'">Power Battery Emperature</option>
+            <option [value]="'POWERBATTERYTEMPERATURE'">Power Battery Temperature</option>
             <option [value]="'USERDEFINE'">User Define</option>
           </select>
         </div>
@@ -505,6 +505,10 @@
             <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="historyEndDate = undefined">clear</mat-icon>
             <ngx-mat-datetime-picker #historyEnd [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
           </div>
+        </div>
+
+        <div class="filter">
+          <p><mat-checkbox [color]="'primary'" formControlName="additional" (change)="setAdditional($event)">additional</mat-checkbox></p>
         </div>
 
         <div class="filter">

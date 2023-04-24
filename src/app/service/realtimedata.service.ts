@@ -203,6 +203,10 @@ export class RealtimedataService {
       httpParams = httpParams.set("end",filter.end)
     }
 
+    if(filter.additional != undefined && filter.additional){
+      httpParams = httpParams.set("additional",filter.additional)
+    }
+
     return this.http.get<any>(url, {params:httpParams, observe: "response" })
   }
 
