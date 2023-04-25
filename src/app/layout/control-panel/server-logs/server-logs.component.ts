@@ -147,9 +147,6 @@ export class ServerLogsComponent implements OnInit {
 
     this.gbpacketService.getGbpacket(this.searchFilter).subscribe(res=>{
       console.log(res)
-      let p = {value:'IyMH/jIwNTE1MDgxMzU1MTA5NTdGAQAAvQ=='}
-      let test = this.utilService.base64ToHex(p)
-      console.log(test)
       this.gbpacket = res.body
       let pagination = {
         count : this.gbpacket.count,

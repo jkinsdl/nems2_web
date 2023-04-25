@@ -66,7 +66,17 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
     }
 
     let configureName = this.configureName
-    let body = this.configureData.body
+    let body = this.configureData
+
+    console.log(configureName)
+    console.log(body)
+
+    for (const [key, value] of Object.entries(body)) {
+      if(value == null || value == undefined || value === ""){
+        delete body[key]
+      }
+    }
+
 
     this.devicemanagerService.putDevicemanagersParameterVehicle(configureName,body).subscribe(res=>{
       console.log(res)
@@ -87,6 +97,12 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
     let configureName = this.configureName
     let body = this.configureData
     body.updatedUserId = JSON.parse(localStorage.getItem('user')).userId
+
+    for (const [key, value] of Object.entries(body)) {
+      if(value == null || value == undefined || value === ""){
+        delete body[key]
+      }
+    }
 
     this.devicemanagerService.putDevicemanagersParameterVehicle(configureName,body).subscribe(res=>{
       console.log(res)

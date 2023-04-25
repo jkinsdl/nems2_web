@@ -229,6 +229,8 @@ export class UtilService {
   }
 
   exportDownload(filename : string, data : string) {
+    let p = {value : data}
+    console.log(this.base64ToHex(p))
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;base64,' + data);
     element.setAttribute('download', filename);

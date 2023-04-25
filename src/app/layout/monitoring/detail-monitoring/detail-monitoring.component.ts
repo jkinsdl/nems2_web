@@ -636,12 +636,12 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   getRealtimedataPathVin(){
-
     let filter = new SearchFilter()
     filter.vin = this.selectVehicle.vin
     if(this.startRealTime != null){
       filter.begin = this.startRealTime.toISOString()
     }
+
     this.realtimedataService.getRealtimedataPathVin(filter).subscribe(res=>{
       console.log(res)
       let coordinates : any[] = []
