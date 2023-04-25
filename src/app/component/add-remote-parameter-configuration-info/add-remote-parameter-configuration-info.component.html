@@ -9,12 +9,20 @@
 
   <div class="addInfoFilter">
     <div class="label">VIN <span>*</span> </div>
-    <div class="value">
-      <!--<select>
-        <option>test</option>
-      </select>
-    -->
-    <input type="text" [(ngModel)]="vinText">
+    <div class="value" style="position: relative;">
+        <!--<select>
+          <option>test</option>
+        </select>
+      -->
+      <input (focus)="vinSearchListShow=true" (focusout)="vinInputFocusout()" type="text" [(ngModel)]="vinText" (ngModelChange)="getVehiclemanagerStaticinfo()">
+      <div class="vinSearchList" *ngIf="vinText != '' && vinSearchListShow">
+        <div class="searchListItem" *ngFor="let vehicle of searchVehicleList" (mousedown)="vehicleItemClick(vehicle.vin)">
+          {{vehicle.vin}}
+        </div>
+        <div *ngIf="searchVehicleList.length==0" style="font-weight: bold; color: gray;">
+          VIN not found.
+        </div>
+      </div>
     </div>
   </div>
 

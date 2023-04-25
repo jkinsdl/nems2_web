@@ -9,3 +9,26 @@
   border-radius: 5px;
   margin-right: 10%;
 }
+
+.vinSearchList{
+  position: absolute;
+  z-index: 1;
+  background: white;
+  width: 220px;
+  left: 0;
+  padding: 5px;
+  border: 1px solid #9b9b9b;
+  top: 40px;
+  border-radius: 0px 0px 5px 5px;
+  max-height: 50px;
+  overflow-y: scroll;
+}
+
+.searchListItem{
+  padding: 5px;
+  cursor: pointer;
+}
+
+.searchListItem:hover{
+  background-color: rgb(240, 240, 240);
+}

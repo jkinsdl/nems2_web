@@ -189,17 +189,20 @@ export class ConfigureComponent implements OnInit {
   }
 
   addVehicle(){
-    const dialogRef = this.dialog.open( AddRemoteParameterConfigurationInfoComponent, {
-      data:{
-        type:this.constant.ADD_TYPE,
-        configureName : this.selectConfigureRow.configureName
-      }
-    });
-    dialogRef.afterClosed().subscribe((result:any) => {
-      if(result){
-        this.getDevicemanagersParametersConfigureNameVehicles()
-      }
-    });
+
+    if(this.selectConfigureRow){
+      const dialogRef = this.dialog.open( AddRemoteParameterConfigurationInfoComponent, {
+        data:{
+          type:this.constant.ADD_TYPE,
+          configureName : this.selectConfigureRow.configureName
+        }
+      });
+      dialogRef.afterClosed().subscribe((result:any) => {
+        if(result){
+          this.getDevicemanagersParametersConfigureNameVehicles()
+        }
+      });
+    }
   }
 
   modifyMapping(){
