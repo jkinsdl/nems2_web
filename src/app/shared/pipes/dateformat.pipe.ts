@@ -10,7 +10,7 @@ export class DateformatPipe implements PipeTransform {
     private utilService: UtilService
   ) { }
 
-  transform(isoDate : string): unknown {
+  transform(isoDate : string | unknown): unknown {
     let parameter : any = {
       value : isoDate
     }

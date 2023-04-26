@@ -525,6 +525,7 @@
           [columnDefs]="columnDefs"
           [tooltipShowDelay]="0"
           [rowSelection]="'single'"
+          (rowDoubleClicked)="onGridRowDoubleClicked($event)"
           (gridReady)="onGridReady($event)">
         </ag-grid-angular>
 

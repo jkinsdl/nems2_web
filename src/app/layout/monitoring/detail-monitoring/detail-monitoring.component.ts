@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
 import { interval, Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
-import { MapMarkerDetailComponent } from '../../dashboard/map-marker-detail/map-marker-detail.component';
 import * as echarts from 'echarts';
 import { BatteryDetailComponent } from 'src/app/component/battery-detail/battery-detail.component';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
@@ -13,6 +12,10 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { InfoDetailComponent } from 'src/app/component/info-detail/info-detail.component';
 import { UtilService } from 'src/app/service/util.service';
 import { StatisticsService } from 'src/app/service/statistics.service';
+import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
+import { DetailMonitoringHistoryComponent } from 'src/app/component/detail-monitoring-history/detail-monitoring-history.component';
+
+
 @Component({
   selector: 'app-detail-monitoring',
   templateUrl: './detail-monitoring.component.html',
@@ -88,6 +91,11 @@ export class DetailMonitoringComponent implements OnInit {
     { field: 'breakState',headerName: "breakState"},
   ];
 
+  defaultColDef: ColDef = {
+    editable: false,
+    resizable: true,
+  };
+
   gridApi!: GridApi;
   gridColumnApi : any
 
@@ -101,6 +109,8 @@ export class DetailMonitoringComponent implements OnInit {
   subPrefectureeJSONData : any = {}
 
   soc : number = 0;
+
+
 
   ngAfterViewInit() {
     this.getPageSize()
@@ -221,8 +231,6 @@ export class DetailMonitoringComponent implements OnInit {
           zoom: 7
         });
       });
-
-
 
       this.map.addSource('sub_prefecture', {
         type: 'geojson',
@@ -712,22 +720,22 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180 },
-          { field: 'state',headerName: "state", width:80},
-          { field: 'chargeState',headerName: "chargeState", width:120},
-          { field: 'driveMode',headerName: "driveMode", width:120},
-          { field: 'speed',headerName: "speed", width:80},
-          { field: 'drivenDistance',headerName: "drivenDistance", width:150},
-          { field: 'totalVolt',headerName: "totalVolt", width:100},
-          { field: 'totalAmpere',headerName: "totalAmpere", width:130},
-          { field: 'soc',headerName: "soc", width:80},
-          { field: 'dcdcState',headerName: "dcdcState", width:130},
-          { field: 'accel',headerName: "accel", width:80},
-          { field: 'braking',headerName: "braking", width:100},
-          { field: 'gearState',headerName: "gearState", width:100},
-          { field: 'resistance',headerName: "resistance", width:120},
-          { field: 'acceleratorVal',headerName: "acceleratorVal", width:140},
-          { field: 'brakeState',headerName: "brakeState", width:120},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180, tooltipField: 'time' },
+          { field: 'state',headerName: "state", width:80, tooltipField: 'state'},
+          { field: 'chargeState',headerName: "chargeState", width:120, tooltipField: 'chargeState'},
+          { field: 'driveMode',headerName: "driveMode", width:120, tooltipField: 'driveMode'},
+          { field: 'speed',headerName: "speed", width:80, tooltipField: 'speed'},
+          { field: 'drivenDistance',headerName: "drivenDistance", width:150, tooltipField: 'drivenDistance'},
+          { field: 'totalVolt',headerName: "totalVolt", width:100, tooltipField: 'totalVolt'},
+          { field: 'totalAmpere',headerName: "totalAmpere", width:130, tooltipField: 'totalAmpere'},
+          { field: 'soc',headerName: "soc", width:80, tooltipField: 'soc'},
+          { field: 'dcdcState',headerName: "dcdcState", width:130, tooltipField: 'dcdcState'},
+          { field: 'accel',headerName: "accel", width:80, tooltipField: 'accel'},
+          { field: 'braking',headerName: "braking", width:100, tooltipField: 'braking'},
+          { field: 'gearState',headerName: "gearState", width:100, tooltipField: 'gearState'},
+          { field: 'resistance',headerName: "resistance", width:120, tooltipField: 'resistance'},
+          { field: 'acceleratorVal',headerName: "acceleratorVal", width:140, tooltipField: 'acceleratorVal'},
+          { field: 'brakeState',headerName: "brakeState", width:120, tooltipField: 'brakeState'},
         ];
 
         if((this.vinHistoryGrid.nativeElement.offsetWidth > 1830 )){
@@ -746,15 +754,15 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
-          { field: 'serialNo',headerName: "serialNo", width:120},
-          { field: 'state',headerName: "state", width:80},
-          { field: 'controllerTemp',headerName: "controllerTemp", width:150},
-          { field: 'rpm',headerName: "rpm", width:80},
-          { field: 'torq',headerName: "torq", width:80},
-          { field: 'temp',headerName: "temp", width:80},
-          { field: 'inputVolt',headerName: "inputVolt", width:100},
-          { field: 'controllerDcBusAmpere',headerName: "controllerDcBusAmpere"},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180, tooltipField: 'time'},
+          { field: 'serialNo',headerName: "serialNo", width:120, tooltipField: 'serialNo'},
+          { field: 'state',headerName: "state", width:80, tooltipField: 'state'},
+          { field: 'controllerTemp',headerName: "controllerTemp", width:150, tooltipField: 'controllerTemp'},
+          { field: 'rpm',headerName: "rpm", width:80, tooltipField: 'rpm'},
+          { field: 'torq',headerName: "torq", width:80, tooltipField: 'torq'},
+          { field: 'temp',headerName: "temp", width:80, tooltipField: 'temp'},
+          { field: 'inputVolt',headerName: "inputVolt", width:100, tooltipField: 'inputVolt'},
+          { field: 'controllerDcBusAmpere',headerName: "controllerDcBusAmpere", tooltipField: 'controllerDcBusAmpere'},
         ];
 
         setTimeout(()=>{
@@ -772,19 +780,19 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
-          { field: 'volt',headerName: "volt", width:70},
-          { field: 'ampere',headerName: "ampere", width:90},
-          { field: 'attritionRate',headerName: "attritionRate", width:130},
-          { field: 'tempProbeCnt',headerName: "tempProbeCnt", width:150},
-          { field: 'probeTemps',headerName: "probeTemps", width:120},
-          { field: 'hydrogenMaxTemp',headerName: "hydrogenMaxTemp", width:180},
-          { field: 'hydrogenMaxProbeCode',headerName: "hydrogenMaxProbeCode", width:210},
-          { field: 'hydrogenMaxConcentration',headerName: "hydrogenMaxConcentration", width:230},
-          { field: 'hydrogenMaxConcentrationSensorCode',headerName: "hydrogenMaxConcentrationSensorCode", width:320},
-          { field: 'hydrogenMaxPressure',headerName: "hydrogenMaxPressure", width:190},
-          { field: 'hydrogenMaxPressureSensorCode',headerName: "hydrogenMaxPressureSensorCode", width:270},
-          { field: 'maxPressureDcdcState',headerName: "maxPressureDcdcState"},
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180, tooltipField: 'time'},
+          { field: 'volt',headerName: "volt", width:70, tooltipField: 'volt'},
+          { field: 'ampere',headerName: "ampere", width:90, tooltipField: 'ampere'},
+          { field: 'attritionRate',headerName: "attritionRate", width:130, tooltipField: 'attritionRate'},
+          { field: 'tempProbeCnt',headerName: "tempProbeCnt", width:150, tooltipField: 'tempProbeCnt'},
+          { field: 'probeTemps',headerName: "probeTemps", width:120, tooltipField: 'probeTemps'},
+          { field: 'hydrogenMaxTemp',headerName: "hydrogenMaxTemp", width:180, tooltipField: 'hydrogenMaxTemp'},
+          { field: 'hydrogenMaxProbeCode',headerName: "hydrogenMaxProbeCode", width:210, tooltipField: 'hydrogenMaxProbeCode'},
+          { field: 'hydrogenMaxConcentration',headerName: "hydrogenMaxConcentration", width:230, tooltipField: 'hydrogenMaxConcentration'},
+          { field: 'hydrogenMaxConcentrationSensorCode',headerName: "hydrogenMaxConcentrationSensorCode", width:320, tooltipField: 'hydrogenMaxConcentrationSensorCode'},
+          { field: 'hydrogenMaxPressure',headerName: "hydrogenMaxPressure", width:190, tooltipField: 'hydrogenMaxPressure'},
+          { field: 'hydrogenMaxPressureSensorCode',headerName: "hydrogenMaxPressureSensorCode", width:270, tooltipField: 'hydrogenMaxPressureSensorCode'},
+          { field: 'maxPressureDcdcState',headerName: "maxPressureDcdcState", tooltipField: 'maxPressureDcdcState'},
         ];
 
         if(this.vinHistoryGrid.nativeElement.offsetWidth > 2340){
@@ -804,10 +812,10 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'state',headerName: "state"},
-          { field: 'crankshaftRotationVelocity',headerName: "crankshaftRotationVelocity"},
-          { field: 'fuelConsumption',headerName: "fuelConsumption"}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'time'},
+          { field: 'state',headerName: "state", tooltipField: 'state'},
+          { field: 'crankshaftRotationVelocity',headerName: "crankshaftRotationVelocity", tooltipField: 'crankshaftRotationVelocity'},
+          { field: 'fuelConsumption',headerName: "fuelConsumption", tooltipField: 'fuelConsumption'}
         ];
 
         setTimeout(()=>{
@@ -826,12 +834,12 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'state',headerName: "state"},
-          { field: 'ewFlag',headerName: "ewFlag"},
-          { field: 'longitude',headerName: "longitude"},
-          { field: 'nsFlag',headerName: "nsFlag"},
-          { field: 'latitude',headerName: "latitude"}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'time'},
+          { field: 'state',headerName: "state", tooltipField: 'state'},
+          { field: 'ewFlag',headerName: "ewFlag", tooltipField: 'ewFlag'},
+          { field: 'longitude',headerName: "longitude", tooltipField: 'longitude'},
+          { field: 'nsFlag',headerName: "nsFlag", tooltipField: 'nsFlag'},
+          { field: 'latitude',headerName: "latitude", tooltipField: 'latitude'}
         ];
 
         setTimeout(()=>{
@@ -849,19 +857,19 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
-          { field: 'batteryMaxVoltSubsystemNo',headerName: "batteryMaxVoltSubsystemNo", width:230},
-          { field: 'batteryMaxVoltCellCode',headerName: "batteryMaxVoltCellCode"},
-          { field: 'batteryMaxVolt',headerName: "batteryMaxVolt", width:140},
-          { field: 'batteryMinVoltSubsystemNo',headerName: "batteryMinVoltSubsystemNo", width:230},
-          { field: 'batteryMinVoltCellCode',headerName: "batteryMinVoltCellCode"},
-          { field: 'batteryMinVolt',headerName: "batteryMinVolt", width:150},
-          { field: 'batteryMaxTempSubsystemNo',headerName: "batteryMaxTempSubsystemNo", width:240},
-          { field: 'batteryMaxTempSensorCode',headerName: "batteryMaxTempSensorCode", width:230},
-          { field: 'batteryMaxTemp',headerName: "batteryMaxTemp", width:150},
-          { field: 'batteryMinTempSubsystemNo',headerName: "batteryMinTempSubsystemNo", width:240},
-          { field: 'batteryMinTempSensorCode',headerName: "batteryMinTempSensorCode", width:230},
-          { field: 'batteryMinTemp',headerName: "batteryMinTemp", width:180}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180, tooltipField: 'time'},
+          { field: 'batteryMaxVoltSubsystemNo',headerName: "batteryMaxVoltSubsystemNo", width:230, tooltipField: 'batteryMaxVoltSubsystemNo'},
+          { field: 'batteryMaxVoltCellCode',headerName: "batteryMaxVoltCellCode", tooltipField: 'batteryMaxVoltCellCode'},
+          { field: 'batteryMaxVolt',headerName: "batteryMaxVolt", width:140, tooltipField: 'batteryMaxVolt'},
+          { field: 'batteryMinVoltSubsystemNo',headerName: "batteryMinVoltSubsystemNo", width:230, tooltipField: 'batteryMinVoltSubsystemNo'},
+          { field: 'batteryMinVoltCellCode',headerName: "batteryMinVoltCellCode", tooltipField: 'batteryMinVoltCellCode'},
+          { field: 'batteryMinVolt',headerName: "batteryMinVolt", width:150, tooltipField: 'batteryMinVolt'},
+          { field: 'batteryMaxTempSubsystemNo',headerName: "batteryMaxTempSubsystemNo", width:240, tooltipField: 'batteryMaxTempSubsystemNo'},
+          { field: 'batteryMaxTempSensorCode',headerName: "batteryMaxTempSensorCode", width:230, tooltipField: 'batteryMaxTempSensorCode'},
+          { field: 'batteryMaxTemp',headerName: "batteryMaxTemp", width:150, tooltipField: 'batteryMaxTemp'},
+          { field: 'batteryMinTempSubsystemNo',headerName: "batteryMinTempSubsystemNo", width:240, tooltipField: 'batteryMinTempSubsystemNo'},
+          { field: 'batteryMinTempSensorCode',headerName: "batteryMinTempSensorCode", width:230, tooltipField: 'batteryMinTempSensorCode'},
+          { field: 'batteryMinTemp',headerName: "batteryMinTemp", width:180, tooltipField: 'batteryMinTemp'}
         ];
         if(this.vinHistoryGrid.nativeElement.offsetWidth > 2600 ){
           setTimeout(()=>{
@@ -879,18 +887,18 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
-          { field: 'maxWarning',headerName: "maxWarning", width:180},
-          { field: 'flag',headerName: "flag", width:100},
-          { field: 'powerBatteryTroubleCnt',headerName: "powerBatteryTroubleCnt", width:220},
-          { field: 'powerBatteryTroubleCodes',headerName: "powerBatteryTroubleCodes", width:250},
-          { field: 'motorTroubleCnt',headerName: "motorTroubleCnt", width:180},
-          { field: 'motorTroubleCodes',headerName: "motorTroubleCodes", width:180},
-          { field: 'engineTroubleCnt',headerName: "engineTroubleCnt", width:180},
-          { field: 'engineTroubleCodes',headerName: "engineTroubleCodes"},
-          { field: 'etcTroubleCnt',headerName: "etcTroubleCnt", width:150},
-          { field: 'etcTroubleCodes',headerName: "etcTroubleCodes", width:180},
-          { field: 'warningName',headerName: "warningName", width:150}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180, tooltipField: 'time'},
+          { field: 'maxWarning',headerName: "maxWarning", width:180, tooltipField: 'maxWarning'},
+          { field: 'flag',headerName: "flag", width:100, tooltipField: 'flag'},
+          { field: 'powerBatteryTroubleCnt',headerName: "powerBatteryTroubleCnt", width:220, tooltipField: 'powerBatteryTroubleCnt'},
+          { field: 'powerBatteryTroubleCodes',headerName: "powerBatteryTroubleCodes", width:250, tooltipField: 'powerBatteryTroubleCodes'},
+          { field: 'motorTroubleCnt',headerName: "motorTroubleCnt", width:180, tooltipField: 'motorTroubleCnt'},
+          { field: 'motorTroubleCodes',headerName: "motorTroubleCodes", width:180, tooltipField: 'motorTroubleCodes'},
+          { field: 'engineTroubleCnt',headerName: "engineTroubleCnt", width:180, tooltipField: 'engineTroubleCnt'},
+          { field: 'engineTroubleCodes',headerName: "engineTroubleCodes", tooltipField: 'engineTroubleCodes'},
+          { field: 'etcTroubleCnt',headerName: "etcTroubleCnt", width:150, tooltipField: 'etcTroubleCnt'},
+          { field: 'etcTroubleCodes',headerName: "etcTroubleCodes", width:180, tooltipField: 'etcTroubleCodes'},
+          { field: 'warningName',headerName: "warningName", width:150, tooltipField: 'warningName'}
         ];
 
         if(this.vinHistoryGrid.nativeElement.offsetWidth > 2150){
@@ -909,14 +917,14 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180},
-          { field: 'subsystemNo',headerName: "subsystemNo", width:150},
-          { field: 'volt',headerName: "volt", width:70},
-          { field: 'ampere',headerName: "ampere", width:90},
-          { field: 'cellCnt',headerName: "cellCnt", width:100},
-          { field: 'frameSequenceNo',headerName: "frameSequenceNo", width:150},
-          { field: 'frameSequenceCnt',headerName: "frameSequenceCnt", width:180},
-          { field: 'cellAmperes',headerName: "cellAmperes", width:420}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:180, tooltipField: 'time'},
+          { field: 'subsystemNo',headerName: "subsystemNo", width:150, tooltipField: 'subsystemNo'},
+          { field: 'volt',headerName: "volt", width:70, tooltipField: 'volt'},
+          { field: 'ampere',headerName: "ampere", width:90, tooltipField: 'ampere'},
+          { field: 'cellCnt',headerName: "cellCnt", width:100, tooltipField: 'cellCnt'},
+          { field: 'frameSequenceNo',headerName: "frameSequenceNo", width:150, tooltipField: 'frameSequenceNo'},
+          { field: 'frameSequenceCnt',headerName: "frameSequenceCnt", width:180, tooltipField: 'frameSequenceCnt'},
+          { field: 'cellAmperes',headerName: "cellAmperes", width:420, tooltipField: 'cellAmperes' , tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'cellAmperes', type:'cellAmperes' }}
         ];
 
         setTimeout(()=>{
@@ -933,10 +941,10 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:150},
-          { field: 'subsystemNo',headerName: "subsystemNo", width:150},
-          { field: 'tempProbeCnt',headerName: "tempProbeCnt", width:180},
-          { field: 'sensorTemps',headerName: "sensorTemps", width:700}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, width:150, tooltipField: 'time'},
+          { field: 'subsystemNo',headerName: "subsystemNo", width:150, tooltipField: 'subsystemNo'},
+          { field: 'tempProbeCnt',headerName: "tempProbeCnt", width:180, tooltipField: 'tempProbeCnt'},
+          { field: 'sensorTemps',headerName: "sensorTemps", width:700, tooltipField: 'sensorTemps'}
         ];
 
         setTimeout(()=>{
@@ -954,15 +962,14 @@ export class DetailMonitoringComponent implements OnInit {
         }
 
         this.columnDefs = [
-          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat},
-          { field: 'len',headerName: "len"},
-          { field: 'userDefineData',headerName: "userDefineData"}
+          { field: 'time',headerName: "time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'time'},
+          { field: 'len',headerName: "len", tooltipField: 'len'},
+          { field: 'userDefineData',headerName: "userDefineData", tooltipField: 'userDefineData'}
         ];
 
         setTimeout(()=>{
           this.gridApi.sizeColumnsToFit()
         },1)
-
       }
 
       this.uiService.setPagination(pagination)
@@ -1474,6 +1481,20 @@ export class DetailMonitoringComponent implements OnInit {
 
   setAdditional(event:any){
     this.searchFilter.additional = event.checked
+  }
+
+  onGridRowDoubleClicked(e : any){
+    console.log(e)
+
+    const dialogRef = this.dialog.open( DetailMonitoringHistoryComponent, {
+      data:{
+        data : e.data
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+      }
+    });
   }
 
 }

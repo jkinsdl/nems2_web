@@ -189,7 +189,6 @@ export class ConfigureComponent implements OnInit {
   }
 
   addVehicle(){
-
     if(this.selectConfigureRow){
       const dialogRef = this.dialog.open( AddRemoteParameterConfigurationInfoComponent, {
         data:{

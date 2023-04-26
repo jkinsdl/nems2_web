@@ -85,6 +85,9 @@ import { MileageJumpComponent } from './layout/control-panel/datect-error/mileag
 import { AbnormalVehicleStateComponent } from './layout/control-panel/datect-error/abnormal-vehicle-state/abnormal-vehicle-state.component';
 import { LoginCarRendererComponent } from './component/login-car-renderer/login-car-renderer.component';
 import { DateformatdatePipe } from './shared/pipes/dateformatdate.pipe';
+import { DetailMonitoringHistoryComponent } from './component/detail-monitoring-history/detail-monitoring-history.component';
+
+
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: 'l, LTS'
@@ -156,7 +159,8 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     MileageJumpComponent,
     AbnormalVehicleStateComponent,
     LoginCarRendererComponent,
-    DateformatdatePipe
+    DateformatdatePipe,
+    DetailMonitoringHistoryComponent
   ],
   imports: [
     BrowserModule,

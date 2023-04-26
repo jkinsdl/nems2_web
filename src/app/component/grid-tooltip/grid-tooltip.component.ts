@@ -11,7 +11,7 @@ import { UtilService } from 'src/app/service/util.service';
 export class GridTooltipComponent implements ITooltipAngularComp {
   public data!: any;
   public date!:string
-  public decoding! : string
+  public text! : string
 
   fildName : string = ""
 
@@ -26,7 +26,9 @@ export class GridTooltipComponent implements ITooltipAngularComp {
 
     }else if(params.type == 'decoding'){
       let p = {value : this.data[params.fildName]}
-      this.decoding = this.utilService.base64ToHex(p)
+      this.text = this.utilService.base64ToHex(p)
+    }else {
+      this.text = this.data[params.fildName]
     }
 
   }

@@ -1,0 +1,24 @@
+<div class="monitoringHistoryPopup">
+  <div class="popupTitle">
+    <div class="text">
+      Vehicel History Data
+    </div>
+    <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
+  </div>
+
+  <div class="row" *ngFor="let item of data.data | keyvalue">
+    <div class="key" >
+      {{item.key}}
+    </div>
+
+    <div class="value" *ngIf="item.key == 'time'">
+      {{item.value | dateformat}}
+    </div>
+
+    <div class="value" *ngIf="item.key != 'time'">
+      {{item.value}}
+    </div>
+
+  </div>
+
+</div>

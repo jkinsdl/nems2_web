@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UtilService } from 'src/app/service/util.service';
-import { AddUserComponent } from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-detail-server-log',
@@ -12,7 +11,7 @@ export class DetailServerLogComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private dialogRef: MatDialogRef<AddUserComponent>,
+    private dialogRef: MatDialogRef<DetailServerLogComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private utilService : UtilService
   ) { }

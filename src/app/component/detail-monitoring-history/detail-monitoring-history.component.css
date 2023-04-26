@@ -1,0 +1,22 @@
+.row{
+  overflow: hidden;
+  width: 100%;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.key{
+  float: left;
+  width: 250px;
+}
+
+.value{
+  float: left;
+  width: calc(100% - 250px);
+  text-align: end;
+  font-weight: bold;
+  white-space : normal;
+  word-wrap: break-word;
+}
