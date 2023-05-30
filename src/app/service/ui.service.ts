@@ -35,6 +35,16 @@ export class UiService {
   currentPageSubject = new Subject()
   currentPage$ = this.currentPageSubject.asObservable()
 
+  currentLanguage : string = 'en';
+  currentLanguageSubject = new Subject()
+  currentLanguage$ = this.currentLanguageSubject.asObservable()
+
+
+  setCurrentLanguage(currentLanguage:string){
+    this.currentLanguage = currentLanguage
+    this.currentLanguageSubject.next(this.currentLanguage)
+  }
+
   getGridPageSize(gridHeight : number){
     return Math.floor((gridHeight - 50)/43) < 1 ? 1 : Math.floor((gridHeight - 50)/43)
   }

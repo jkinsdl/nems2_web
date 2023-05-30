@@ -5,6 +5,9 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import { UtilService } from 'src/app/service/util.service';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-warning-statistics',
@@ -12,10 +15,17 @@ import { UtilService } from 'src/app/service/util.service';
   styleUrls: ['./warning-statistics.component.css']
 })
 export class WarningStatisticsComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
+  stateOptions: { label: string; value: string; }[];
 
   constructor(
     private statisticsServce : StatisticsService,
-    private utilService : UtilService
+    private utilService : UtilService,
+
+    private translate: TranslateService,
+    private http: HttpClient
+
+
   ) { }
 
   map: mapboxgl.Map;
@@ -47,6 +57,20 @@ export class WarningStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    const languageToLoad = this.selectedLanguage;
+    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+    this.translate.use(languageToLoad).subscribe(() => {
+      this.http.get<any>(translationFile).subscribe((data) => {
+        this.translate.setTranslation(languageToLoad, data);
+        console.log('Translation file loaded successfully');
+      });
+    });
+
     this.date = this.statisticsServce.statisticsDate
     this.setMap()
 
@@ -56,6 +80,24 @@ export class WarningStatisticsComponent implements OnInit {
       this.getStatisticsWarningsSummary()
     })
   }
+
+     //MINE//
+     isDropdownOpen = false;
+
+     toggleDropdown():void{
+       this.isDropdownOpen = !this.isDropdownOpen;
+     }
+   
+    //  changeLanguage(language:string): void{
+    //    this.language = language;
+    //  } 
+   
+    onLanguageChange(event: any) {
+     const language = event.target.value;
+     this.translate.use(language).subscribe(() => {
+       // Translation changed successfully
+     });
+   }
 
   getStatisticsWarningsSummary(){
     let f = new SearchFilter()

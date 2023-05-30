@@ -14,12 +14,16 @@ import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-public-platform-management',
   templateUrl: './public-platform-management.component.html',
   styleUrls: ['./public-platform-management.component.css']
 })
 export class PublicPlatformManagementComponent implements OnInit {
+  selectedLanguage: string;
 
   @ViewChild('publicPlatformManagementGrid1', { read: ElementRef }) publicPlatformManagementGrid1 : ElementRef;
 
@@ -30,7 +34,10 @@ export class PublicPlatformManagementComponent implements OnInit {
     private dialog: MatDialog,
     private forwardingService : ForwardingService,
     private utilService : UtilService,
-    private uiService : UiService
+    private uiService : UiService,
+    
+    private translate : TranslateService,
+    private http : HttpClient
   ) { }
   forwardingColumnDefs: ColDef[] = [
     { field: 'serverName', headerName : 'name', tooltipField: 'serverName', width : 150},
@@ -118,6 +125,19 @@ export class PublicPlatformManagementComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    const languageToLoad = this.selectedLanguage;
+    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+    this.translate.use(languageToLoad).subscribe(() => {
+      this.http.get<any>(translationFile).subscribe((data) => {
+        this.translate.setTranslation(languageToLoad, data);
+        console.log('Translation file loaded successfully');
+      });
+    });
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getForwarding()
@@ -128,6 +148,25 @@ export class PublicPlatformManagementComponent implements OnInit {
       this.getForwardingServerNameRelations(this.selectForwardingServerName)
     })
   }
+
+     //MINE//
+     isDropdownOpen = false;
+
+     toggleDropdown():void{
+       this.isDropdownOpen = !this.isDropdownOpen;
+     }
+   
+    //  changeLanguage(language:string): void{
+    //    this.language = language;
+    //  } 
+   
+    onLanguageChange(event: any) {
+     const language = event.target.value;
+     this.translate.use(language).subscribe(() => {
+       // Translation changed successfully
+      //  this.translateColumnHeaders();
+     });
+   }
 
   getPageSize(){
 

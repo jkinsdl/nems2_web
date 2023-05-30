@@ -3,46 +3,46 @@
 
     <div class="gridFilterBox" style="min-width: 1642px;">
       <div class="filter">
-        <div class="label">VIN</div>
+        <div class="label">{{ 'VIN' | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">reg number</div>
+        <div class="label">{{ 'reg number' | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.registrationPlate" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">Login</div>
+        <div class="label">{{ 'Login' | translate }}</div>
         <div class="value">
           <select [(ngModel)]="searchFilter.isLogin">
             <option [value]="undefined"></option>
-            <option [value]="true">Online</option>
+            <option [value]="true">Online</option>  
             <option [value]="false">Offline</option>
           </select>
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">purpose</div>
+        <div class="label">{{ 'purpose' | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.purpose" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">model</div>
+        <div class="label">{{ 'model' | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.model" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">region</div>
+        <div class="label">{{ 'region' | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.region" (keydown.enter)="setSearch()">
         </div>

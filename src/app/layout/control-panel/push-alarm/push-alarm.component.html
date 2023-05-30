@@ -6,14 +6,14 @@
     <div class="gridFilterBox">
 
       <div class="filter">
-        <div class="label">Filter</div>
+        <div class="label">{{ 'Filter' | translate }}</div>
         <div class="value">
           <select [(ngModel)]="filter">
-            <option [value]="'userName'">User Name</option>
-            <option [value]="'phoneNumber'">Phone Number</option>
-            <option [value]="'eMail'">E-Mail</option>
-            <option [value]="'aliTextureId'">Alicloud texture ID</option>
-            <option [value]="'aliVoiceId'">Alicloud Voice ID</option>
+            <option [value]="'userName'">{{ 'User Name' | translate }}</option>
+            <option [value]="'phoneNumber'">{{ 'Phone Number' | translate }}</option>
+            <option [value]="'eMail'">{{ 'E-Mail' | translate }}</option>
+            <option [value]="'aliTextureId'">{{ 'Alicloud texture ID' | translate }}</option>
+            <option [value]="'aliVoiceId'">{{ 'Alicloud Voice ID' | translate }}</option>
           </select>
         </div>
       </div>

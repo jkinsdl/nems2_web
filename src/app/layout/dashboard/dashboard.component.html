@@ -181,10 +181,10 @@
     </div>
 
     <div class="dashBorderStatus">
-      <app-sub-title [title]="'STATUS'"></app-sub-title>
+      <app-sub-title [title]="'STATUS' | translate"></app-sub-title>
       <div class="statusLine total">
         <div class="statusLabel">
-          Total Vehicles
+          {{ 'Total Vehicles' | translate }}
         </div>
 
         <div class="statusValue">
@@ -217,7 +217,7 @@
 
       <div class="statusLine">
         <div class="statusLabel">
-          Today Login Vehicles
+          {{ 'Today Login Vehicles' | translate }}
         </div>
         <div class="statusValue">
           <div class="valueText purple" >
@@ -228,7 +228,7 @@
 
       <div class="statusLine">
         <div class="statusLabel ">
-          Today Logout Vehicles
+          {{ 'Today Logout Vehicles' | translate }}
         </div>
         <div class="statusValue">
           <div class="valueText blue">
@@ -239,7 +239,7 @@
 
       <div class="statusLine">
         <div class="statusLabel">
-          Today Regist Vehicles
+          {{ 'Today Regist Vehicles' | translate }}
         </div>
         <div class="statusValue">
           <div class="valueText mint">
@@ -250,7 +250,7 @@
     </div>
 
     <div class="dashBorderPieChart">
-      <app-sub-title [title]="'Alarm Statistics'"></app-sub-title>
+      <app-sub-title [title]="'Alarm Statistics' | translate "></app-sub-title>
       <div id="pieChart" style="width: 100%; height: calc(100% - 40px);"></div>
 
       <!--<canvas style="width: 100%; height: 100%;"
@@ -270,7 +270,7 @@
     <div #dashBorderAlarmGrid class="dashBorderAlarmGrid" (window:resize)="onResize($event)">
       <div class="alarmGridHeader">
 
-        <app-sub-title [title]="'Alarm'"></app-sub-title>
+        <app-sub-title [title]="'Alarm' | translate "></app-sub-title>
 <!--
         <mat-select [(ngModel)]="alarmListFilter" (ngModelChange)="getVehiclewarnings()" style="margin-left: 20px; margin-bottom: 6px;">
           <mat-option [value]="'NORMAL'" >NORMAL</mat-option>
@@ -287,9 +287,9 @@
         <mat-tab label="Critical">
           <div class="alarmGrid">
             <div class="gridHeader">
-              <div class="header first">VIN</div>
-              <div class="header second">Warning Type</div>
-              <div class="header third">Create Time </div>
+              <div class="header first">{{ 'VIN' | translate }}</div>
+              <div class="header second">{{ 'Warning Type' | translate }}</div>
+              <div class="header third">{{ 'Create Time' | translate }} </div>
             </div>
             <div class="gridContents">
               <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of criticalVehiclewarnings.entities">
@@ -309,9 +309,9 @@
         <mat-tab label="Major">
           <div class="alarmGrid">
             <div class="gridHeader">
-              <div class="header first">VIN</div>
-              <div class="header second">Warning Type </div>
-              <div class="header third">Create Time </div>
+              <div class="header first">{{ 'VIN' | translate }}</div>
+              <div class="header second">{{ 'Warning Type' | translate }}</div>
+              <div class="header third">{{ 'Create Time' | translate }}</div>
             </div>
             <div class="gridContents">
               <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of majorVehiclewarnings.entities">
@@ -331,9 +331,9 @@
         <mat-tab label="Minor">
           <div class="alarmGrid">
             <div class="gridHeader">
-              <div class="header first">VIN</div>
-              <div class="header second">Warning Type </div>
-              <div class="header third">Create Time </div>
+              <div class="header first">{{ 'VIN' | translate }}</div>
+              <div class="header second">{{ 'Warning Type' | translate }}</div>
+              <div class="header third">{{ 'Create Time' | translate }}</div>
             </div>
             <div class="gridContents">
               <div class="gridRowData" (click)="pageMoveAlarm(warning)" *ngFor="let warning of minorVehiclewarnings.entities">

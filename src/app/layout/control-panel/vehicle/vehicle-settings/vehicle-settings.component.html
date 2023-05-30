@@ -3,16 +3,16 @@
     <div class="gridFilterBox">
 
       <div class="filter">
-        <div class="label">Filter</div>
+        <div class="label">{{ 'Filter' | translate }}</div>
         <div class="value">
           <select [(ngModel)]="filter">
-            <option [value]="'VIN'">VIN</option>
-            <option [value]="'modelName'">Model Name</option>
-            <option [value]="'iccid'">iccid</option>
-            <option [value]="'NEMS S/N'">NEMS S/N</option>
-            <option [value]="'Reg. number'">Reg. number</option>
-            <option [value]="'region'">region</option>
-            <option [value]="'pcode'">pcode</option>
+            <option [value]="'VIN'">{{ 'VIN' | translate }}</option>
+            <option [value]="'modelName'">{{ 'Model Name' | translate }}</option>
+            <option [value]="'iccid'">{{ 'iccid' | translate }}</option>
+            <option [value]="'NEMS S/N'">{{ 'NEMS S/N' | translate }}</option>
+            <option [value]="'Reg. number'">{{ 'Reg. number' | translate }}</option>
+            <option [value]="'region'">{{ 'region' | translate }}</option>
+            <option [value]="'pcode'">{{ 'pcode' | translate }}</option>
           </select>
         </div>
       </div>

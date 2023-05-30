@@ -13,12 +13,16 @@ import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-toolti
 import { Subscription } from 'rxjs';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-otamanagement',
   templateUrl: './otamanagement.component.html',
   styleUrls: ['./otamanagement.component.css']
 })
 export class OTAManagementComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
 
   @ViewChild('otaManagementGrid', { read: ElementRef }) otaManagementGrid : ElementRef;
   @ViewChild('importFirmwareVehiclesInput', { read: ElementRef }) importFirmwareVehiclesInput : ElementRef;
@@ -30,7 +34,10 @@ export class OTAManagementComponent implements OnInit {
     private dialog: MatDialog,
     private uiService : UiService,
     private utilService : UtilService,
-    private vehiclemanagersService : VehiclemanagerService
+    private vehiclemanagersService : VehiclemanagerService,
+
+    private translate: TranslateService,
+    private http: HttpClient
   ) { }
 
   gridApi!: GridApi;
@@ -95,12 +102,45 @@ export class OTAManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    const languageToLoad = this.selectedLanguage;
+    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+    this.translate.use(languageToLoad).subscribe(() => {
+      this.http.get<any>(translationFile).subscribe((data) => {
+        this.translate.setTranslation(languageToLoad, data);
+        console.log('Translation file loaded successfully');
+        //this.translateColumnHeaders();
+      });
+    });
     this.getVehiclemanagerModel()
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getDevicemanagersFirmwareFirmwareNameVehicles()
     })
   }
+
+     //MINE//
+   isDropdownOpen = false;
+
+   toggleDropdown():void{
+     this.isDropdownOpen = !this.isDropdownOpen;
+   }
+ 
+  //  changeLanguage(language:string): void{
+  //    this.language = language;
+  //  } 
+ 
+  onLanguageChange(event: any) {
+   const language = event.target.value;
+   this.translate.use(language).subscribe(() => {
+     // Translation changed successfully
+     //this.translateColumnHeaders();
+   });
+ }
 
   getPageSize(){
     this.gridHeight = this.otaManagementGrid.nativeElement.offsetHeight;

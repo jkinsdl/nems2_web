@@ -4,10 +4,10 @@
 
     <div class="tabListContainer">
       <div class="tab" [ngClass]="{select: router.url.indexOf('vehicleSettings') > -1 }" [routerLink]="['/main/control/vehicle/vehicleSettings']">
-        Vehicle Settings
+        {{ 'Vehicle Settings' | translate }}
       </div>
       <div class="tab" [ngClass]="{select: router.url.indexOf('vehicleModel') > -1 }" [routerLink]="['/main/control/vehicle/vehicleModel']">
-        Vehicle Model
+        {{ 'Vehicle Model' | translate }}
       </div>
     </div>
 

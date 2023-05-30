@@ -11,12 +11,16 @@ import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http'
+
 @Component({
   selector: 'app-otainformation',
   templateUrl: './otainformation.component.html',
   styleUrls: ['./otainformation.component.css']
 })
 export class OTAInformationComponent implements OnInit {
+  selectedLanguage: string;
 
   @ViewChild('otaInformationGrid', { read: ElementRef }) otaInformationGrid : ElementRef;
 
@@ -30,6 +34,9 @@ export class OTAInformationComponent implements OnInit {
     private utilService : UtilService,
     private uiService : UiService,
     private _formBuilder: FormBuilder,
+
+    private translate: TranslateService,
+    private http: HttpClient
   ) { }
 
   stateToppings = this._formBuilder.group({
@@ -80,11 +87,44 @@ export class OTAInformationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    const languageToLoad = this.selectedLanguage;
+    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+    this.translate.use(languageToLoad).subscribe(() => {
+      this.http.get<any>(translationFile).subscribe((data) => {
+        this.translate.setTranslation(languageToLoad, data);
+        console.log('Translation file loaded successfully');
+        //this.translateColumnHeaders();
+      });
+    });
+
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getDevicemanagersVehiclesFirmware()
     })
   }
+
+  isDropdownOpen =false;
+
+   toggleDropdown():void{
+     this.isDropdownOpen = !this.isDropdownOpen;
+   }
+ 
+  //  changeLanguage(language:string): void{
+  //    this.language = language;
+  //  } 
+ 
+  onLanguageChange(event: any) {
+   const language = event.target.value;
+   this.translate.use(language).subscribe(() => {
+     // Translation changed successfully
+     //this.translateColumnHeaders();
+   });
+ }
 
   getPageSize(){
     this.gridHeight = this.otaInformationGrid.nativeElement.offsetHeight;

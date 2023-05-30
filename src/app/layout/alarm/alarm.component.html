@@ -4,14 +4,14 @@
 
     <div class="gridFilterBox">
       <div class="filter">
-        <div class="label">VIN</div>
+        <div class="label">{{ 'VIN' | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">Begin</div>
+        <div class="label">{{ 'Begin' | translate }} </div>
         <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="beginPicker" readonly="true" (click)="beginPicker.open()" [(ngModel)]="beginDate" [max]="endDate">
           <mat-icon matDatepickerToggleIcon style="cursor: pointer;"  (click)="clearBeginDate()">clear</mat-icon>
@@ -20,7 +20,7 @@
       </div>
 
       <div class="filter">
-        <div class="label">End</div>
+        <div class="label">{{ 'End' | translate }}</div>
         <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="beginDate">
           <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="clearEndDate()">clear</mat-icon>
@@ -155,6 +155,14 @@
     </div>
   </div>
 
+  <!-- {{ 'app.column.vin' | translate }}
+  {{ 'app.column.createTime' | translate }}
+  {{ 'app.column.lastPacketTime' | translate }}
+  {{ 'app.column.state' | translate }}
+  {{ 'app.column.warningLevel' | translate }}
+  {{ 'app.column.warningType' | translate }} -->
+
+
 
   <div class="alarmRightLayout whiteBoardBoax">
     <!--<div class="alarmDetailStatus">
@@ -228,67 +236,67 @@
     <div class="alarmDetailContents">
 
       <div class="alarmTitle">
-        <app-sub-title [title]="'VEHICLE'"></app-sub-title>
+        <app-sub-title [title]="'VEHICLE' | translate"></app-sub-title>
       </div>
 
       <div class="alarmDetailArea">
         <div class="alarmArea">
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">VIN</div>
+            <div class="alarmfildLable">{{ 'VIN' | translate }}</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.vin}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Model Name</div>
+            <div class="alarmfildLable">{{ 'Model Name' | translate }}</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.modelName}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">NEMS S/N</div>
+            <div class="alarmfildLable">{{ 'NEMS S/N' | translate }}</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.nemsSn}}</div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Purpose</div>
+            <div class="alarmfildLable">{{ 'Purpose' | translate }}</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.purpose}}</div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Region</div>
+            <div class="alarmfildLable">{{ 'Region' | translate }}</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.region}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Regist Date</div>
+            <div class="alarmfildLable">{{ 'Regist Date' | translate }}</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.registDate | dateformat}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">s-off-date</div>
+            <div class="alarmfildLable">{{ 's-off-date' | translate }}</div>
             <div class="alarmfildValue"> {{selectVehicle.vehicle.sOffDate | dateformat}} </div>
           </div>
         </div>
       </div>
 
       <div class="alarmTitle">
-        <app-sub-title [title]="'WARNING'"></app-sub-title>
+        <app-sub-title [title]="'WARNING' | translate"></app-sub-title>
       </div>
 
       <div class="alarmDetailArea">
         <div class="alarmArea">
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Issue ID</div>
+            <div class="alarmfildLable">{{ 'Issue ID' | translate }}</div>
             <div class="alarmfildValue"> {{selectionAlarm.issueId}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Create Time</div>
+            <div class="alarmfildLable">{{ 'Create Time' | translate }}</div>
             <div class="alarmfildValue"> {{selectionAlarm.createTime | dateformat}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Last Packet Time</div>
+            <div class="alarmfildLable">{{ 'Last Packet Time' | translate }}</div>
             <div class="alarmfildValue"> {{selectionAlarm.lastPacketTime | dateformat}}</div>
           </div>
 
@@ -298,12 +306,12 @@
           </div>
           -->
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Warning Level</div>
+            <div class="alarmfildLable">{{ 'Warning Level' | translate }}</div>
             <div class="alarmfildValue"> {{selectionAlarm.warningLevel}} </div>
           </div>
 
           <div class="alarmDetailFild">
-            <div class="alarmfildLable">Warning Type</div>
+            <div class="alarmfildLable">{{ 'Warning Type' | translate }}</div>
             <div class="alarmfildValue"> {{selectionAlarm.warningType}} </div>
           </div>
 
@@ -316,13 +324,13 @@
       </div>
 
       <div class="alarmTitle">
-        <app-sub-title [title]="'ISSUE MANAGEMENT'"></app-sub-title>
+        <app-sub-title [title]="'ISSUE MANAGEMENT' | translate"></app-sub-title>
       </div>
 
       <div class="alarmDetailIssue">
         <div class="alarmArea">
           <div class="addInfoFilter">
-            <div class="label" style="width: auto;">State </div>
+            <div class="label" style="width: auto;">{{ 'State' | translate }} </div>
             <div class="value">
               <select [(ngModel)]="selectionAlarm.state" [disabled]="gridApi == null || gridApi.getSelectedRows().length == 0">
                 <option [value]="'OPEN'">OPEN</option>
@@ -335,7 +343,7 @@
             <button mat-raised-button color="primary" [disabled]="gridApi == null || gridApi.getSelectedRows().length == 0" (click)="correctionState()">Correction</button>
           </div>
           <div class="addInfoFilter">
-            <div class="label" style="width: auto;">Comments </div>
+            <div class="label" style="width: auto;">{{ 'Comments' | translate }} </div>
           </div>
           <div class="commentList">
             <div class="alarmComment" *ngFor="let comment of selectionAlarm.comments">
@@ -356,7 +364,7 @@
         </div>
       </div>
       <div class="alarmTitle">
-        <app-sub-title [title]="'LOCATION'"></app-sub-title>
+        <app-sub-title [title]="'LOCATION'  | translate"></app-sub-title>
       </div>
       <div class="alarmDetailMap">
         <div class="map" id="map"></div>

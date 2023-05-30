@@ -2,7 +2,7 @@
   <div class="terminalLayout whiteBoardBoax">
     <div class="title" style="  border-radius: 8px 8px 0px 0px;">
       <img src="assets/icon/monitor.png">
-      Console
+      {{ 'Console' | translate }}
     </div>
 
     <div class="consoleResult">
@@ -18,7 +18,7 @@
 
     <div class="title">
       <img src="assets/icon/window.png">
-      Command
+      {{ 'Command' | translate }}
     </div>
     <div class="commandInputTextBox">
       <input class="commandInputText" type="text" (keydown.enter)="setCommand()" [(ngModel)]="command">

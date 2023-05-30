@@ -17,13 +17,13 @@
       </div>
       -->
       <div class="tab" [ngClass]="{select: router.url.indexOf('abnormalVehicleState') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleState']">
-        Abnormal Vehicle State
+        {{ 'Abnormal Vehicle State' | translate }}
       </div>
       <div class="tab" [ngClass]="{select: router.url.indexOf('locationJump') > -1 }" [routerLink]="['/main/control/detectError/locationJump']">
-        Location Jump
+        {{ 'Location Jump' | translate }}
       </div>
       <div class="tab" [ngClass]="{select: router.url.indexOf('mileageJump') > -1 }" [routerLink]="['/main/control/detectError/mileageJump']">
-        Mileage Jump
+        {{ 'Mileage Jump' | translate }}
       </div>
     </div>
 

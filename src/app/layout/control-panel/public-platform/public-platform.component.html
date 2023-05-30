@@ -3,10 +3,10 @@
   <div class="publicPlatformLayout whiteBoardBoax">
     <div class="tabListContainer">
       <div class="tab" [ngClass]="{select: router.url.indexOf('publicPlatformManagement') > -1 }" [routerLink]="['/main/control/publicPlatform/publicPlatformManagement']">
-        Public Platform Management
+        {{ 'Public Platform Management' | translate }}
       </div>
       <div class="tab" [ngClass]="{select: router.url.indexOf('publicPlatformForSpecificPeriod') > -1 }" [routerLink]="['/main/control/publicPlatform/publicPlatformForSpecificPeriod']">
-        Public Platform For Specific Period
+        {{ 'Public Platform For Specific Period' | translate }}
       </div>
     </div>
 

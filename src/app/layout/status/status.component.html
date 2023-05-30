@@ -1,33 +1,34 @@
 <div class="statusContainer" (window:resize)="onResize($event)">
 
+  
   <div class="statusLayout whiteBoardBoax">
-    <app-sub-title [title]="'STATUS'"></app-sub-title>
+    <app-sub-title [title]="'STATUS' | translate"></app-sub-title>
 
     <div class="statusContents">
       <div class="status">
         <div class="statusValue">{{statisticsCurrent.totalVehicles}}</div>
-        <div class="statusLabel">Total Vehicles</div>
+        <div class="statusLabel">{{ 'Total Vehicles' | translate }}</div>
       </div>
 
       <div class="statusLine"></div>
 
       <div class="status">
           <div class="statusValue">{{statisticsCurrent.todayLoginVehicles}}</div>
-          <div class="statusLabel">Today Login Vehicles</div>
+          <div class="statusLabel">{{ 'Today Login Vehicles' | translate }}</div>
       </div>
 
       <div class="statusLine"></div>
 
       <div class="status">
           <div class="statusValue">{{statisticsCurrent.todayLogoutVehicles}}</div>
-          <div class="statusLabel">Today Logout Vehicles</div>
+          <div class="statusLabel">{{ 'Today Logout Vehicles' | translate }}</div>
       </div>
 
       <div class="statusLine"></div>
 
       <div class="status">
           <div class="statusValue">{{statisticsCurrent.todayRegistVehicles}}</div>
-          <div class="statusLabel">Today Regist Vehicles</div>
+          <div class="statusLabel">{{ 'Today Regist Vehicles' | translate }}</div>
       </div>
     </div>
 
@@ -67,28 +68,28 @@
   </div>
 
   <div class="distributionByRegion whiteBoardBoax">
-    <app-sub-title [title]="'DISTRIBUTION BY REGION'"></app-sub-title>
+    <app-sub-title [title]="'DISTRIBUTION BY REGION' | translate"></app-sub-title>
     <div class="chartLayout">
       <div id="distributionChart"></div>
     </div>
   </div>
 
   <div class="vehicleFailureRate whiteBoardBoax">
-    <app-sub-title [title]="'VEHICLE FAILURE RATE'"></app-sub-title>
+    <app-sub-title [title]="'VEHICLE FAILURE RATE' | translate"></app-sub-title>
     <div class="chartLayout">
       <div id="failureRankChart" ></div>
     </div>
   </div>
 
   <div class="failureOccupancyRate whiteBoardBoax">
-    <app-sub-title [title]="'FAILURE OCCUPANCY RATE'"></app-sub-title>
+    <app-sub-title [title]="'FAILURE OCCUPANCY RATE' | translate"></app-sub-title>
     <div class="chartLayout">
       <div id="failureOccupancyChart"></div>
     </div>
   </div>
 
   <div class="top10VehicleByFailure whiteBoardBoax">
-    <app-sub-title [title]="'TOP 10 VEHICLE BY FAILURE'"></app-sub-title>
+    <app-sub-title [title]="'TOP 10 VEHICLE BY FAILURE' | translate"></app-sub-title>
 
     <div class="vehicleByFalureList">
       <div class="vehicleByFalure" *ngFor="let vehicle of vehicleFailure; let i = index">

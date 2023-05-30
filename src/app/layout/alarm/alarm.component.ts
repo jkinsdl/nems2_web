@@ -16,12 +16,21 @@ import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-alarm',
   templateUrl: './alarm.component.html',
   styleUrls: ['./alarm.component.css']
 })
 export class AlarmComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
+  translationFile : string = ""
+  //stateOptions: { label: string; value: string; }[];
+
   constant : CommonConstant = new CommonConstant()
   @ViewChild('alarmGrid', { read: ElementRef }) alarmGrid : ElementRef;
 
@@ -36,6 +45,10 @@ export class AlarmComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private realtimeSerivce : RealtimedataService,
     public router: Router,
+
+    private translate: TranslateService,
+    private http: HttpClient,
+    
   ) {
     this.router$ = router.events.subscribe((val) => {
       if(val instanceof NavigationEnd && val.url.indexOf('alarm') > -1){
@@ -118,8 +131,8 @@ export class AlarmComponent implements OnInit {
 
   columnDefs: ColDef[] = [
     { field: 'vin',headerName: "VIN", tooltipField: 'vin', width:170},
-    { field: 'createTime',headerName: "Create Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createTime', type : 'date' }, width:170},
-    { field: 'lastPacketTime',headerName: "Last Packet Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastPacketTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastPacketTime', type : 'date' }, width:170},
+    { field: 'createTime',headerName:"Create Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createTime', type : 'date' }, width:170},
+    { field: 'lastPacketTime',headerName:"Last Packet Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastPacketTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastPacketTime', type : 'date' }, width:170},
     //{ field: 'releasedTime',headerName: "Released Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'releasedTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'releasedTime' }},
     { field: 'state',headerName: "State", tooltipField: 'state', filter : CheckboxFilterComponent, filterParams :  { toppings: this.stateToppings}, width:120},
     //{ field: 'maxWarning',headerName: "Max Warning", tooltipField: 'maxWarning'},
@@ -138,6 +151,10 @@ export class AlarmComponent implements OnInit {
       },
     }, width:80},
   ];
+
+
+  
+  
 
   vehiclewarning : any = {
     totalCount : 0,
@@ -192,6 +209,7 @@ export class AlarmComponent implements OnInit {
 
 
   commentsText : string = ""
+  
 
   ngAfterViewInit() {
     this.isOnAfterViewInit = true
@@ -204,6 +222,37 @@ export class AlarmComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+   
+  
+    // Load the translation file for the selected language
+    //const languageToLoad = this.selectedLanguage;
+    // const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+    // this.translate.use(languageToLoad).subscribe(() => {
+    //   this.http.get<any>(translationFile).subscribe((data) => {
+    //     this.translate.setTranslation(languageToLoad, data);
+    //     console.log('Translation file loaded successfully');
+    //     this.translateColumnHeaders();
+    //   });
+    // });
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
+
+
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
       this.map = new mapboxgl.Map({
@@ -235,7 +284,69 @@ export class AlarmComponent implements OnInit {
       this.currentPage = page
       this.getVehiclewarnings()
     })
+
   }
+
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'VIN', 'Create Time', 'Last Packet Time', 'State', 'Warning Level', 'Warning Type', 'action' ]).subscribe((translations: any) => {
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.columnDefs = [
+            { field: 'vin',headerName: translations["VIN"], tooltipField: 'vin', width:170},
+            { field: 'createTime',headerName:translations["Create Time"], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createTime', type : 'date' }, width:170},
+            { field: 'lastPacketTime',headerName:translations["Last Packet Time"], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastPacketTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastPacketTime', type : 'date' }, width:170},
+            //{ field: 'releasedTime',headerName: "Released Time", valueFormatter : this.utilService.gridDateFormat, tooltipField: 'releasedTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'releasedTime' }},
+            { field: 'state',headerName:translations["State"], tooltipField: 'state', filter : CheckboxFilterComponent, filterParams :  { toppings: this.stateToppings}, width:120},
+            //{ field: 'maxWarning',headerName: "Max Warning", tooltipField: 'maxWarning'},
+            //{ field: 'warningFlag',headerName: "Warning Flag", tooltipField: 'warningFlag'},
+            //{ field: 'region',headerName: "Region", tooltipFiYeld: 'region'},
+            //{ field: 'comment',headerName: "Comment", tooltipField: 'comment'},
+            { field: 'warningLevel',headerName:translations["Warning Level"], tooltipField: 'warningLevel', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningLevelToppings}, width:110},
+            { field: 'warningType',headerName:translations["Warning Type"], tooltipField: 'warningType', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningTypeToppings}},
+            //{ field: 'warningCode',headerName: "Warning Code", tooltipField: 'warningCode'},
+            //{ field: 'code',headerName: "Code", tooltipField: 'code'},
+            { field: 'action', cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              onlyRemove : true,
+              delete : (field: any) => {
+                this.alarmDelete(field)
+              },
+            }, width:80},
+          ];
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.columnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.columnDefs);
+        });
+      });
+    });
+
+
+   }
+     //MINE//
+     isDropdownOpen = false;
+
+     toggleDropdown():void{
+       this.isDropdownOpen = !this.isDropdownOpen;
+     }
+   
+    //  changeLanguage(language:string): void{
+    //    this.language = language;
+    //  } 
+   
+    onLanguageChange(event: any) {
+     const language = event.target.value;
+     this.translate.use(language).subscribe(() => {
+       // Translation changed successfully
+       this.translateColumnHeaders();
+     });
+   }
 
   alarmDelete(field: any){
     const dialogRef = this.dialog.open( AlertPopupComponent, {

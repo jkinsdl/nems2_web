@@ -5,7 +5,7 @@
       <div class="status">
         <div class="statusBox">
           <div class="statusValue">{{registrationSummary.totalVehicles}}</div>
-          <div class="statusLabel">Total Vehicles</div>
+          <div class="statusLabel">{{ 'Total Vehicles' | translate }}</div>
         </div>
       </div>
 
@@ -14,7 +14,7 @@
       <div class="status">
         <div class="statusBox">
           <div class="statusValue">{{registrationSummary.newVehicles}}</div>
-          <div class="statusLabel">New Vehicles</div>
+          <div class="statusLabel">{{ 'New Vehicles' | translate }}</div>
         </div>
       </div>
 
@@ -23,7 +23,7 @@
       <div class="status">
         <div class="statusBox">
           <div class="statusValue">{{registrationSummary.useVehicles}}</div>
-          <div class="statusLabel">Use Vehicles</div>
+          <div class="statusLabel">{{ 'Use Vehicles' | translate }}</div>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
 
 
   <div class="contentRightLayout">
-    <app-sub-title [title]="'PROVINCE'"></app-sub-title>
+    <app-sub-title [title]="'PROVINCE' | translate"></app-sub-title>
 
     <div id="chinaMapChart"></div>
 
@@ -39,7 +39,7 @@
   </div>
 
   <div class="contentLeftLayout">
-    <app-sub-title [title]="'CITY'"></app-sub-title>
+    <app-sub-title [title]="'CITY' | translate"></app-sub-title>
     <div id="cityMapChart"></div>
   </div>
 </div>

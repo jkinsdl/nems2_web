@@ -1,0 +1,155 @@
+ {
+    "MAIN": "MAIN",
+    "Dashboard": "Dashboard",
+    "Realtime Monitoring": "Realtime Monitoring",
+    "Realtime Status": "Realtime Status",
+    "Statistics": "Statistics",
+    "Alarm": "Alarm",
+    "CONTROL PANEL": "CONTROL PANEL",
+    "User Account": "User Account",
+    "Vehicle Settings": "Vehicle Settings",
+    "Public Platform": "Public Platform", 
+    "Server Log": "Server Log",
+    "OTA Information": "OTA Information",
+    "Remote Control": "Remote Control",
+    "Terminal": "Terminal",
+    "OTA Management": "OTA Management",
+    "Push Alarm": "Push Alarm",
+    "Detect Error": "Detect Error",
+    "STATUS": "STATUS",
+    "Total Vehicles": "Total Vehicles",
+    "Today Login Vehicles": "Today Login Vehicles",
+    "Today Logout Vehicles": "Today Logout Vehicles",
+    "Today Regist Vehicles": "Today Regist Vehicles",
+    "Alarm Statistics": "Alarm Statistics",
+    "ALARM": "ALARM",
+    "VIN" : "VIN",
+    "Warning Type" : "Warning Type",
+    "Create Time" : "Create Time",
+    "DASHBOARD": "DASHBOARD",
+    "REALTIME MONITORING" : "REALTIME MONITORING",
+    "REALTIME STATUS": "REALTIME STATUS",
+    "STATISTICS" : "STATISTICS",
+    "USER ACCOUNT" : "USER ACCOUNT",
+    "VEHICLE SETTINGS": "VEHICLE SETTINGS",
+    "PUBLIC PLATFORM" : "PUBLIC PLATFORM",
+    "SERVER LOG" : "SERVER LOG",
+    "OTA INFORMATION" : "OTA INFORMATION",
+    "REMOTE CONTROL" : "REMOTE CONTROL",
+    "TERMINAL" : "TERMINAL",
+    "OTA MANAGEMENT" : "OTA MANAGEMENT",
+    "PUSH ALARM" : "PUSH ALARM",
+    "DETECT ERROR" : "DETECT ERROR",
+
+   
+    "Begin" : "Begin",
+    "End" : "End",
+    "VEHICLE" : "VEHICLE",
+    "Model Name" : "Model Name",
+    "NEMS S/N" : "NEMS S/N",
+    "Purpose" : "Purpose",
+    "Region" : "Region",
+    "Regist Date" : "Regist Date",
+    "s-off-date" : "s-off-date",
+    "WARNING" : "WARNING",
+    "Issue ID" : "Issue ID",
+    "Last Packet Time" : "Last Packet Time",
+    "Warning Level" : "Warning Level",
+    "ISSUE MANAGEMENT" : "ISSUE MANAGEMENT",
+    "State" : "State",
+    "Comments" : "Comments",
+    
+    "vin" : "VIN",
+    "createTime" : "Create Time",
+    "lastPacketTime" : "Last Packet Time",
+    "state" : "State",
+    "warningLevel" : "Warning Level",
+    "warningType" : "Warning Type",
+    
+
+    "reg number" : "reg number",
+    "Login" : "Login",
+    "purpose" : "purpose",
+    "model" : "model",
+    "region" : "region",
+    "Reg. number" : "Reg. number",
+    "Last Updated" : "Last Updated",
+    "Accumulated Mile(km)" : "Accumulated Mile(km)",
+    "Packet Count" : "Packet Count",
+    "soc(%)" : "soc(%)",
+    "regNumber" : "Reg. number",
+
+   
+    
+    
+
+    "DISTRIBUTION BY REGION" : "DISTRIBUTION BY REGION",
+    "VEHICLE FAILURE RATE" : "VEHICLE FAILURE RATE",
+    "FAILURE OCCUPANCY RATE" : "FAILURE OCCUPANCY RATE",
+    "TOP 10 VEHICLE BY FAILURE" : "TOP 10 VEHICLE BY FAILURE",
+
+    "Warning" : "Warning",
+    "Monthly Vehicle" : "Monthly Vehicle",
+    "Travel Distance" : "Travel Distance",
+    "Warning Vehicles" :"Warning Vehicles",
+    "warnings" : "warnings",
+    "MAP" : "MAP",
+    "GAUGE" : "GAUGE",
+    "New Vehicles": "New Vehicles",
+    "Use Vehicles" : "Use Vehicles",
+    "PROVINCE" : "PROVINCE",
+    "CITY" : "CITY",
+    "Total Mileage" : "Total Mileage",
+    "Period Mileage" : "Period Mileage",
+    "BAR CHART" : "BAR CHART",
+    "PIE CHART" : "PIE CHART",
+
+    "email" : "email",
+    "name" : "name",
+    "authority" : "authority",
+    "username" : "username",
+    "status" : "status",
+    "latestAccess" : "latestAccess",
+
+    
+    "battery code": "battery code",
+    "motor no" : "motor no",
+    "engine no" : "engine no",
+    "histories" :"histories",
+
+
+    "Filter" : "Filter",
+    "Vehicle Model": "Vehicle Model",
+    "iccid" : "iccid",
+    "pcode" : "pcode",
+
+    "Public Platform Management" : "Public Platform Management",
+    "Public Platform For Specific Period" : "Public Platform For Specific Period",
+    "Server Name" : "Server Name",
+
+    "Firmware Name" : "Firmware Name",
+
+    "Remote control" : "Remote control",
+    "CONFIGURE" : "CONFIGURE",
+
+    "Console" : "Console",
+    "Command" : "Command",
+
+    "MODELS" : "MODELS",
+    "Select Model" : "Select Model",
+
+    "User Name" : "User Name",
+    "Phone Number" : "Phone Number",
+    "E-Mail" : "E-Mail",
+    "Alicloud texture ID" : "Alicloud texture ID",
+    "Alicloud Voice ID" : "Alicloud Voice ID",
+
+    "Abnormal Vehicle State" : "Abnormal Vehicle State",
+    "Location Jump": "Location Jump",
+    "Mileage Jump" : "Mileage Jump"
+
+
+  }
+
+  
+  

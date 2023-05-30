@@ -3,6 +3,10 @@ import { Chart } from 'chart.js';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import * as echarts from 'echarts';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-status',
   templateUrl: './status.component.html',
@@ -10,9 +14,15 @@ import * as echarts from 'echarts';
 })
 
 export class StatusComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
+  stateOptions: { label: string; value: string; }[];
+  language: string;
 
   constructor(
-    private statisticsService : StatisticsService
+    private statisticsService : StatisticsService,
+
+    private translate: TranslateService,
+    private http: HttpClient
   ) { }
 
   chart! : Chart;
@@ -45,6 +55,21 @@ export class StatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('status.component.ts initialized!');
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    const languageToLoad = this.selectedLanguage;
+    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+     // Request to load the translation file
+     this.translate.use(languageToLoad).subscribe(() => {
+      this.http.get<any>(translationFile).subscribe((data) => {
+        this.translate.setTranslation(languageToLoad, data);
+        console.log('Translation file loaded successfully');
+      });
+    });
     //this.getStatisticsVehiclesSummary()
     this.getStatisticsCurrent()
     this.getStatisticsWarnings()
@@ -58,6 +83,26 @@ export class StatusComponent implements OnInit {
       console.log(error)
     })
   }
+
+
+   //MINE//
+   isDropdownOpen = false;
+
+   toggleDropdown():void{
+     this.isDropdownOpen = !this.isDropdownOpen;
+   }
+ 
+  //  changeLanguage(language:string): void{
+  //    this.language = language;
+  //  } 
+ 
+  onLanguageChange(event: any) {
+   const language = event.target.value;
+   this.translate.use(language).subscribe(() => {
+     // Translation changed successfully
+   });
+ }
+ 
 
   getStatisticsVehiclesSummary(){
     this.statisticsService.getStatisticsVehiclesSummary().subscribe(res=>{

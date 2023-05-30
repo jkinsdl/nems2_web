@@ -13,12 +13,16 @@ import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
 import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-configure',
   templateUrl: './configure.component.html',
   styleUrls: ['./configure.component.css']
 })
 export class ConfigureComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
 
   @ViewChild('configure1', { read: ElementRef }) configure1 : ElementRef;
 
@@ -29,7 +33,10 @@ export class ConfigureComponent implements OnInit {
     private dialog: MatDialog,
     private devicemanagerService : DevicemanagerService,
     private utilService : UtilService,
-    private uiService : UiService
+    private uiService : UiService,
+
+    private translate: TranslateService,
+    private http: HttpClient
   ) { }
 
   configurationColumnDefs: ColDef[] = [
@@ -117,6 +124,21 @@ export class ConfigureComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    const languageToLoad = this.selectedLanguage;
+    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+    this.translate.use(languageToLoad).subscribe(() => {
+      this.http.get<any>(translationFile).subscribe((data) => {
+        this.translate.setTranslation(languageToLoad, data);
+        console.log('Translation file loaded successfully');
+        //this.translateColumnHeaders();
+      });
+    });
+
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getDevicemanagersParameter()
@@ -127,6 +149,25 @@ export class ConfigureComponent implements OnInit {
       this.getDevicemanagersParametersConfigureNameVehicles()
     })
   }
+
+     //MINE//
+   isDropdownOpen = false;
+
+   toggleDropdown():void{
+     this.isDropdownOpen = !this.isDropdownOpen;
+   }
+ 
+  //  changeLanguage(language:string): void{
+  //    this.language = language;
+  //  } 
+ 
+  onLanguageChange(event: any) {
+   const language = event.target.value;
+   this.translate.use(language).subscribe(() => {
+     // Translation changed successfully
+     //this.translateColumnHeaders();
+   });
+ }
 
   getPageSize(){
     this.grid1Height = this.configure1.nativeElement.offsetHeight;

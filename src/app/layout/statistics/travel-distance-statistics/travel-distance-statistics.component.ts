@@ -4,15 +4,22 @@ import { Subscription } from 'rxjs';
 import { SearchFilter } from 'src/app/object/searchFilter';
 import { StatisticsService } from 'src/app/service/statistics.service';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-travel-distance-statistics',
   templateUrl: './travel-distance-statistics.component.html',
   styleUrls: ['./travel-distance-statistics.component.css']
 })
 export class TravelDistanceStatisticsComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
+  stateOptions: { label: string; value: string; }[];
 
   constructor(
-    private statisticsService : StatisticsService
+    private statisticsService : StatisticsService,
+    private translate : TranslateService,
+    private http : HttpClient
   ) { }
 
   totalMileage : number = 0;
@@ -29,6 +36,19 @@ export class TravelDistanceStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    const languageToLoad = this.selectedLanguage;
+    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+    
+    this.translate.use(languageToLoad).subscribe(() => {
+      this.http.get<any>(translationFile).subscribe((data) => {
+        this.translate.setTranslation(languageToLoad, data);
+        console.log('Translation file loaded successfully');
+      });
+    });
     this.date = this.statisticsService.statisticsDate
     this.getStatisticsMileages()
 
@@ -39,6 +59,24 @@ export class TravelDistanceStatisticsComponent implements OnInit {
     })
 
   }
+
+     //MINE//
+     isDropdownOpen = false;
+
+     toggleDropdown():void{
+       this.isDropdownOpen = !this.isDropdownOpen;
+     }
+   
+    //  changeLanguage(language:string): void{
+    //    this.language = language;
+    //  } 
+   
+    onLanguageChange(event: any) {
+     const language = event.target.value;
+     this.translate.use(language).subscribe(() => {
+       // Translation changed successfully
+     });
+   }
 
   getStatisticsMileages(){
     let f = new SearchFilter()

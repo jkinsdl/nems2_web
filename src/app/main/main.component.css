@@ -333,6 +333,69 @@
   width: 80% !important;
 }
 
+/*Mine*/
+.language-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.language-selector select {
+  width: 100%;
+}
+
+.language-selector .flag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+}
+
+.language-selector .flag.en {
+  background-image: url(https://media.geeksforgeeks.org/wp-content/uploads/20200630132502/eflag.jpg);
+}
+
+.language-selector .flag.zh-CN {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg);
+}
+
+.language-selector option img{
+  vertical-align: middle;
+  margin-right: 5px;
+}
+/* .dropbtn {
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 4px 0 4px;
+  border-color: #666 transparent transparent transparent;
+  pointer-events: none;
+}
+
+.dropbtn.open .arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.dropdown-content {
+  display: none;
+}
+
+.dropdown-content.show {
+  display: block;
+} */
+
+/*Till here*/
+
+
 .alertBox{
   width: 100%;
   position: absolute;

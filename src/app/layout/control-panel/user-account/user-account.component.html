@@ -2,21 +2,21 @@
   <div class="userAccountLayout whiteBoardBoax">
     <div class="gridFilterBox">
       <div class="filter">
-        <div class="label">email</div>
+        <div class="label">{{ 'email'  | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.email" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">name</div>
+        <div class="label">{{ 'name'  | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.name" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">authority</div>
+        <div class="label">{{ 'authority'  | translate }}</div>
         <div class="value">
 
           <select [(ngModel)]="searchFilter.authority">

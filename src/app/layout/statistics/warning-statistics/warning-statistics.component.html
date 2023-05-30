@@ -5,7 +5,7 @@
       <div class="status">
         <div class="statusBox">
           <div class="statusValue">{{warningsSummary.warningVehicles}}</div>
-          <div class="statusLabel">Warning Vehicles</div>
+          <div class="statusLabel">{{ 'Warning Vehicles' | translate }}</div>
         </div>
       </div>
 
@@ -14,7 +14,7 @@
       <div class="status">
         <div class="statusBox">
           <div class="statusValue">{{warningsSummary.warnings}}</div>
-          <div class="statusLabel">warnings</div>
+          <div class="statusLabel">{{ 'warnings' | translate }}</div>
         </div>
       </div>
     </div>
@@ -22,12 +22,12 @@
 
 
   <div class="contentRightLayout">
-    <app-sub-title [title]="'MAP'"></app-sub-title>
+    <app-sub-title [title]="'MAP' | translate"></app-sub-title>
     <div id="map"></div>
   </div>
 
   <div class="contentLeftLayout">
-    <app-sub-title [title]="'GAUGE'"></app-sub-title>
+    <app-sub-title [title]="'GAUGE' | translate"></app-sub-title>
 
     <div class="statisticsFilter" *ngFor="let model of warningsSummary.warningByModel; let i = index">
 

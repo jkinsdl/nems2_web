@@ -30,7 +30,32 @@
         <img src="assets/icon/yellow_alarm_icon.png">
         <div class="alarmCount">789</div>
       </div>
-      -->
+      --> 
+      
+      <div class="language-selector">
+        <select name="language" (change)="onLanguageChange($event)">
+          <option value="en">English</option>
+
+          <option value="zh-CN">中文</option>
+        </select>
+      </div>
+      
+
+      <!-- <div class="language-selector">
+        <select name="language" (change)="onLanguageChange($event)">
+          <option value="en">
+            <img src="assets/icon/american_flag_icon.png" style="width: 20px; height: 20px;">
+            English
+          </option>
+          <option value="zh-CN">
+            <img src="assets/icon/chinese_flag_icon.png" alt="Chinese Flag" class="language-flag" />
+            中文
+          </option>
+        </select>
+      </div>
+       -->
+      
+      
       <div class="alarm" [routerLink]="['/main/alarm/'+null+'/CRITICAL']">
         <img src="assets/icon/red_notification.png">
         <div class="alarmCount" *ngIf="warningcount.critical > 0">{{warningcount.critical}}</div>
@@ -87,22 +112,22 @@
       -->
         <div class="menuBox">
           <div class="headline">
-            <span>MAIN</span></div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('dashboard') > -1 }" [routerLink]="['/main/dashboard']" (click)="changeMenu('DASHBOARD')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser' || currentLoginUser.authorityId == 'user'">
+            <span>{{ 'MAIN' | translate }}</span></div>
+          <div class="menu" [ngClass]="{select: router.url.indexOf('dashboard') > -1 }" [routerLink]="['/main/dashboard']" (click)="changeMenu(translateText('DASHBOARD'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser' || currentLoginUser.authorityId == 'user'">
             <img src="assets/icon/dashboard_icon.png">
-            <span *ngIf="menuMode == 1">Dashboard</span>
+            <span *ngIf="menuMode == 1">{{ 'Dashboard' | translate }}</span>
           </div>
           <div class="menu" [ngClass]="{select: router.url.indexOf('monitoring') > -1 }" [routerLink]="['/main/monitoring']" (click)="changeMenu('REALTIME MONITORING')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser' || currentLoginUser.authorityId == 'user'">
             <img src="assets/icon/realtime_monitoring_icon.png">
-            <span *ngIf="menuMode == 1">Realtime Monitoring</span>
+            <span *ngIf="menuMode == 1">{{ 'Realtime Monitoring' | translate }}</span>
           </div>
           <div class="menu" [ngClass]="{select: router.url.indexOf('status') > -1 }" [routerLink]="['/main/status']" (click)="changeMenu('REALTIME STATUS')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
             <img src="assets/icon/realtime_status_icon.png">
-            <span *ngIf="menuMode == 1">Realtime Status</span>
+            <span *ngIf="menuMode == 1">{{ 'Realtime Status' | translate }}</span>
           </div>
           <div class="menu" [ngClass]="{select: router.url.indexOf('statistics') > -1 }" [routerLink]="['/main/statistics/warningStatistics']" (click)="changeMenu('STATISTICS')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
             <img src="assets/icon/statistics_icon.png">
-            <span *ngIf="menuMode == 1">Statistics</span>
+            <span *ngIf="menuMode == 1">{{ 'Statistics' | translate }}</span>
           </div>
           <!--<div class="menu" [ngClass]="{select: router.url.indexOf('failure') > -1 }" [routerLink]="['/main/failure']" (click)="changeMenu('FAILURE')">
             <img src="assets/icon/failure_icon.png">
@@ -111,7 +136,7 @@
         -->
           <div class="menu" [ngClass]="{select: router.url.indexOf('alarm') > -1 }" [routerLink]="['/main/alarm']" (click)="changeMenu('ALARM')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser' || currentLoginUser.authorityId == 'user'">
             <img src="assets/icon/push_alarm_icon.png">
-            <span *ngIf="menuMode == 1">Alarm</span>
+            <span *ngIf="menuMode == 1">{{ 'Alarm' | translate }}</span>
           </div>
           <!--<div class="menu" [ngClass]="{select: router.url.indexOf('history') > -1 }" [routerLink]="['/main/history']" (click)="changeMenu('ALARM HISTORY')" *ngIf="currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser' || currentLoginUser.authorityId == 'user'">
             <img src="assets/icon/alarm_history_icon.png">
@@ -152,53 +177,53 @@
 
         <div class="menuBox" *ngIf=" currentLoginUser.authorityId != 'user'">
           <div class="headline">
-            <span *ngIf="menuMode == 1">CONTROL PANEL</span>
+            <span *ngIf="menuMode == 1">{{ 'CONTROL PANEL' | translate }}</span>
             <span *ngIf="menuMode == 2">PANEL</span>
           </div>
           <div class="menu" [ngClass]="{select: router.url.indexOf('userAccount') > -1 }" [routerLink]="['/main/control/userAccount']" (click)="changeMenu('USER ACCOUNT')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
             <img src="assets/icon/user_account_icon.png">
-            <span *ngIf="menuMode == 1">User Account</span>
+            <span *ngIf="menuMode == 1">{{ 'User Account' | translate }}</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('vehicle') > -1 }" [routerLink]="['/main/control/vehicle/vehicleSettings']" (click)="changeMenu('VEHICLE SETTINGS')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('vehicle') > -1 }" [routerLink]="['/main/control/vehicle/vehicleSettings']" (click)="changeMenu(translateText('VEHICLE SETTINGS'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
             <img src="assets/icon/vehicle_settings_icon.png">
-            <span *ngIf="menuMode == 1">Vehicle Settings</span>
+            <span *ngIf="menuMode == 1">{{ 'Vehicle Settings' | translate }}</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('publicPlatform') > -1 }" [routerLink]="['/main/control/publicPlatform/publicPlatformManagement']" (click)="changeMenu('PUBLIC PLATFORM')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('publicPlatform') > -1 }" [routerLink]="['/main/control/publicPlatform/publicPlatformManagement']" (click)="changeMenu(translateText('PUBLIC PLATFORM'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
             <img src="assets/icon/public_platform_icon.png">
-            <span *ngIf="menuMode == 1">Public Platform</span>
+            <span *ngIf="menuMode == 1">{{ 'Public Platform' | translate }}</span>
           </div>
           <!--<div class="menu" [ngClass]="{select: router.url.indexOf('shanghaiInfo') > -1 }" [routerLink]="['/nems/control/shanghaiInfo']">Shanghai Info</div>-->
-          <div class="menu" [ngClass]="{select: router.url.indexOf('serverLogs') > -1 }" [routerLink]="['/main/control/serverLogs']" (click)="changeMenu('SERVER LOG')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('serverLogs') > -1 }" [routerLink]="['/main/control/serverLogs']" (click)="changeMenu(translateText('SERVER LOG'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
             <img src="assets/icon/server_log_icon.png">
-            <span *ngIf="menuMode == 1">Server Log</span>
+            <span *ngIf="menuMode == 1">{{ 'Server Log' | translate }}</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('otaInformation') > -1 }" [routerLink]="['/main/control/otaInformation']" (click)="changeMenu('OTA INFORMATION')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('otaInformation') > -1 }" [routerLink]="['/main/control/otaInformation']" (click)="changeMenu(translateText('OTA INFORMATION'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
             <img src="assets/icon/ota_information_icon.png">
-            <span *ngIf="menuMode == 1">OTA Information</span>
+            <span *ngIf="menuMode == 1">{{ 'OTA Information' | translate }}</span>
           </div>
 
-          <div class="menu" [ngClass]="{select: router.url.indexOf('remoteControl') > -1 }" [routerLink]="['/main/control/remoteControl/state']" (click)="changeMenu('Remote Control')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('remoteControl') > -1 }" [routerLink]="['/main/control/remoteControl/state']" (click)="changeMenu(translateText('REMOTE CONTROL'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin'">
             <img src="assets/icon/remote_control_icon.png">
-            <span *ngIf="menuMode == 1">Remote Control</span>
+            <span *ngIf="menuMode == 1">{{ 'Remote Control' | translate }}</span>
           </div>
 
-          <div class="menu" [ngClass]="{select: router.url.indexOf('terminal') > -1 }" [routerLink]="['/main/control/terminal']" (click)="changeMenu('Terminal')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('terminal') > -1 }" [routerLink]="['/main/control/terminal']" (click)="changeMenu(translateText('TERMINAL'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
             <img src="assets/icon/terminal_icon.png">
-            <span *ngIf="menuMode == 1">Terminal</span>
+            <span *ngIf="menuMode == 1">{{ 'Terminal' | translate }}</span>
           </div>
 
-          <div class="menu" [ngClass]="{select: router.url.indexOf('otaManagement') > -1 }" [routerLink]="['/main/control/otaManagement']" (click)="changeMenu('OTA Management')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('otaManagement') > -1 }" [routerLink]="['/main/control/otaManagement']" (click)="changeMenu(translateText('OTA MANAGEMENT'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root'">
             <img src="assets/icon/ota_management_icon.png">
-            <span *ngIf="menuMode == 1">OTA Management</span>
+            <span *ngIf="menuMode == 1">{{ 'OTA Management' | translate }}</span>
           </div>
 
-          <div class="menu" [ngClass]="{select: router.url.indexOf('pushAlarm') > -1 }" [routerLink]="['/main/control/pushAlarm']"  (click)="changeMenu('PUSH ALARM')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('pushAlarm') > -1 }" [routerLink]="['/main/control/pushAlarm']"  (click)="changeMenu(translateText('PUSH ALARM'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
             <img src="assets/icon/push_alarm_icon.png">
-            <span *ngIf="menuMode == 1">Push Alarm</span>
+            <span *ngIf="menuMode == 1">{{ 'Push Alarm' | translate }}</span>
           </div>
-          <div class="menu" [ngClass]="{select: router.url.indexOf('detectError') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleState']"  (click)="changeMenu('DETECT ERROR')" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
+          <div class="menu" [ngClass]="{select: router.url.indexOf('detectError') > -1 }" [routerLink]="['/main/control/detectError/abnormalVehicleState']"  (click)="changeMenu(translateText('DETECT ERROR'))" *ngIf="currentLoginUser.authorityId == 'admin' || currentLoginUser.authorityId == 'root' || currentLoginUser.authorityId == 'service-admin' || currentLoginUser.authorityId == 'poweruser'">
             <img src="assets/icon/datect_error_icon.png">
-            <span *ngIf="menuMode == 1">Detect Error</span>
+            <span *ngIf="menuMode == 1">{{ 'Detect Error' | translate }}</span>
           </div>
         </div>
       </div>

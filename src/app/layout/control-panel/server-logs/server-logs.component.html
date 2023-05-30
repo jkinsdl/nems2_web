@@ -3,14 +3,14 @@
 
     <div class="gridFilterBox">
       <div class="filter">
-        <div class="label">VIN</div>
+        <div class="label">{{ 'VIN' | translate }}</div>
         <div class="value">
           <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
         </div>
       </div>
 
       <div class="filter">
-        <div class="label">Begin</div>
+        <div class="label">{{ 'Begin' | translate }}</div>
         <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="beginPicker" readonly="true" (click)="beginPicker.open()" [(ngModel)]="beginDate" [max]="endDate">
           <mat-icon matDatepickerToggleIcon style="cursor: pointer;"  (click)="clearBeginDate()">clear</mat-icon>
@@ -19,7 +19,7 @@
       </div>
 
       <div class="filter">
-        <div class="label">End</div>
+        <div class="label">{{ 'End' | translate }}</div>
         <div class="value" style="display: flex; align-items: center;">
           <input class="datePickerText" [ngxMatDatetimePicker]="endPicker" readonly="true" (click)="endPicker.open()" [(ngModel)]="endDate" [min]="beginDate">
           <mat-icon matDatepickerToggleIcon style="cursor: pointer;" (click)="clearEndDate()">clear</mat-icon>

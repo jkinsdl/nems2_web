@@ -1,21 +1,21 @@
 <app-sub-title *ngIf="currentUser.authorityId == 'service-admin'" [title]="'Remote control'"></app-sub-title>
 <div class="gridFilterBox">
   <div class="filter">
-    <div class="label">VIN</div>
+    <div class="label">{{ 'VIN' | translate }}</div>
     <div class="value">
       <input type="text" [(ngModel)]="searchFilter.vin" (keydown.enter)="setSearch()">
     </div>
   </div>
 
   <div class="filter">
-    <div class="label">firmware</div>
+    <div class="label">{{ 'firmware' | translate }}</div>
     <div class="value">
       <input type="text" [(ngModel)]="searchFilter.firmware" (keydown.enter)="setSearch()">
     </div>
   </div>
 
   <div class="filter">
-    <div class="label">configure</div>
+    <div class="label">{{ 'configure' | translate }}</div>
     <div class="value">
       <input type="text" [(ngModel)]="searchFilter.configure" (keydown.enter)="setSearch()">
     </div>

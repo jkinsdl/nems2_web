@@ -37,7 +37,7 @@ import { AddPublicPlatformMappingComponent } from './component/add-public-platfo
 import { AddPushAlarmComponent } from './component/add-push-alarm/add-push-alarm.component';
 import { DetailMonitoringComponent } from './layout/monitoring/detail-monitoring/detail-monitoring.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient} from '@angular/common/http';   //CHANGED
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { AlarmComponent } from './layout/alarm/alarm.component';
 import { MapMarkerDetailComponent } from './layout/dashboard/map-marker-detail/map-marker-detail.component';
@@ -86,6 +86,11 @@ import { AbnormalVehicleStateComponent } from './layout/control-panel/datect-err
 import { LoginCarRendererComponent } from './component/login-car-renderer/login-car-renderer.component';
 import { DateformatdatePipe } from './shared/pipes/dateformatdate.pipe';
 import { DetailMonitoringHistoryComponent } from './component/detail-monitoring-history/detail-monitoring-history.component';
+
+
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
 
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
@@ -191,13 +196,27 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     MatSlideToggleModule,
     MatIconModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+
+   TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
   ],
   providers: [
     {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS},
-    { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true },
+    
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, `../assets/i18n/dashboard/`, '.json');
+}
 

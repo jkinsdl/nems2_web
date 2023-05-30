@@ -12,12 +12,17 @@ import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-vehicle-settings',
   templateUrl: './vehicle-settings.component.html',
   styleUrls: ['./vehicle-settings.component.css']
 })
 export class VehicleSettingsComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
+  translationFile : string = ""
 
   @ViewChild('vehicleSettingsGrid', { read: ElementRef }) vehicleSettingsGrid : ElementRef;
   @ViewChild('uploadExcel', { read: ElementRef }) uploadExcel : ElementRef;
@@ -26,7 +31,10 @@ export class VehicleSettingsComponent implements OnInit {
     private dialog: MatDialog,
     private vehiclemanagerService : VehiclemanagerService,
     private utilService : UtilService,
-    private uiService : UiService
+    private uiService : UiService,
+    private translate: TranslateService,
+    private http: HttpClient
+
   ) { }
 
   columnDefs: ColDef[] = [
@@ -83,11 +91,79 @@ export class VehicleSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getVehiclemanagerStaticinfo()
     })
   }
+
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'iccid', 'VIN', 'NEMS S/N', 'Regist Date', 'S Off Date', 'region', 'Reg. number',  'Purpose', 'battery code', 'motor no', 'engine no', 'histories', 'action' ]).subscribe((translations: any) => {
+
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.columnDefs = [
+            { field: 'iccid', headerName : translations['iccid'], tooltipField: 'iccid'},
+            { field: 'vin', headerName : translations['VIN'], tooltipField: 'vin'},
+            { field: 'nemsSn', headerName : translations['NEMS S/N'], tooltipField: 'nemsSn'},
+            { field: 'registDate', headerName :translations ['Regist Date'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'registDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'registDate', type : 'date' }, width:180},
+            { field: 'sOffDate', headerName : translations['S Off Date'], valueFormatter : this.utilService.dateFormatDate, tooltipField: 'sOffDate', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'sOffDate', type : 'date' }, width:120},
+            { field: 'region', headerName : translations['region'], tooltipField: 'region', width:150},
+            { field: 'registrationPlate', headerName :translations['Reg. number'], tooltipField: 'registrationPlate', width:150},
+            { field: 'purpose', headerName :translations ['Purpose'], tooltipField: 'purpose', width:150},
+            { field: 'modelName', headerName : translations ['model'], tooltipField: 'modelName', width:100},
+            { field: 'batteryCode', headerName:translations ['battery code'], tooltipField: 'batteryCode', width:150},
+            { field: 'motorNo', headerName :translations ['motor no'], tooltipField: 'motorNo'},
+            { field: 'engineNo', headerName: translations['engine no'], tooltipField: 'engineNo'},
+            { field: 'histories', headerName: translations['histories'], tooltipField: 'histories'},
+            //{ field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
+            //{ field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
+            { field: 'action', cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              modify: (field: any) => {
+                this.modifyVehicle(field)
+              },
+              delete : (field: any) => {
+                this.deleteVehicle(field)
+              },
+            }, width:120},
+          ];
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.columnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.columnDefs);
+        });
+      });
+    });
+
+   }
+
+
 
   getPageSize(){
     this.gridHeight = this.vehicleSettingsGrid.nativeElement.offsetHeight;

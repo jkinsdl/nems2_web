@@ -12,6 +12,9 @@ import { UserService } from 'src/app/service/user.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
@@ -19,6 +22,8 @@ import { CommonConstant } from 'src/app/util/common-constant';
 })
 
 export class UserAccountComponent implements OnInit {
+  selectedLanguage: string;
+  translationFile : string = ""
 
   @ViewChild('userGrid', { read: ElementRef }) userGrid : ElementRef;
 
@@ -29,7 +34,10 @@ export class UserAccountComponent implements OnInit {
     private dialog: MatDialog,
     private userService : UserService,
     private utilService : UtilService,
-    private uiService : UiService
+    private uiService : UiService,
+
+    private translate: TranslateService,
+    private http : HttpClient
   ) { }
   columnDefs: ColDef[] = [
     { field: 'selected', hide:true, tooltipField: 'selected'},
@@ -76,11 +84,88 @@ export class UserAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getUsers()
     })
   }
+
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'username', 'email', 'authority', 'status', 'latestAccess', 'action']).subscribe((translations: any) => {
+
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.columnDefs = [
+            { field: 'selected', hide:true, tooltipField: 'selected'},
+            { field: 'username', headerName:translations ['username'], tooltipField: 'username' },
+            { field: 'email', headerName : translations['email'], tooltipField: 'email' },
+            { field: 'authorityId', headerName : translations['authority'], tooltipField: 'authorityId' },
+            { field: 'status', headerName :translations['status'], tooltipField: 'status'},
+            { field: 'latestAccess', headerName : translations['latestAccess'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'latestAccess', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'latestAccess', type : 'date' } },
+            { field: translations['action'], cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              modify: (field: any) => {
+                this.modifyUser(field)
+              },
+              delete : (field: any) => {
+                this.deleteUser(field)
+              },
+            }, width:120},
+          ];
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.columnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.columnDefs);
+        });
+      });
+    });
+
+   }
+   
+     //MINE//
+     isDropdownOpen = false;
+
+     toggleDropdown():void{
+       this.isDropdownOpen = !this.isDropdownOpen;
+     }
+   
+    //  changeLanguage(language:string): void{
+    //    this.language = language;
+    //  } 
+   
+    onLanguageChange(event: any) {
+     const language = event.target.value;
+     this.translate.use(language).subscribe(() => {
+       // Translation changed successfully
+      //  this.translateColumnHeaders();
+     });
+   }
+
+
 
   getPageSize(){
     this.gridHeight = this.userGrid.nativeElement.offsetHeight;
