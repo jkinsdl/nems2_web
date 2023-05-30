@@ -65,6 +65,7 @@ export class MonitoringComponent implements OnInit {
   gridHeight : number
   pageSize : number
   currentPage : number = 1
+
   ngAfterViewInit() {
     this.getPageSize()
   }
@@ -72,7 +73,7 @@ export class MonitoringComponent implements OnInit {
   ngOnInit(): void {
     this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
-  
+
     // Load the translation file for the selected language
     this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
@@ -139,11 +140,11 @@ export class MonitoringComponent implements OnInit {
    toggleDropdown():void{
      this.isDropdownOpen = !this.isDropdownOpen;
    }
- 
+
   //  changeLanguage(language:string): void{
   //    this.language = language;
-  //  } 
- 
+  //  }
+
   onLanguageChange(event: any) {
    const language = event.target.value;
    this.translate.use(language).subscribe(() => {
@@ -233,7 +234,7 @@ export class MonitoringComponent implements OnInit {
       this.gridApi.sizeColumnsToFit()
     }
   }
-  
+
 
 
 

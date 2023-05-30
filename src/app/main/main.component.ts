@@ -31,14 +31,14 @@ export class MainComponent implements OnInit {
     private translate: TranslateService,
     private http: HttpClient
   ) {
-     
+
     router.events.subscribe((val) => {
       if(val instanceof NavigationEnd){
         this.setSubTitle()
       }
   });
   }
-  
+
   translateText(key: string): string {
     return this.translate.instant(key);
   }
@@ -68,14 +68,16 @@ export class MainComponent implements OnInit {
 
   alarmInterval : any
 
+  currntLanguage = 'en';
+
   ngOnInit(): void {
     this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
-  
+
     // Load the translation file for the selected language
     const languageToLoad = this.selectedLanguage;
     const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
+
     this.translate.use(languageToLoad).subscribe(() => {
       this.http.get<any>(translationFile).subscribe((data) => {
         this.translate.setTranslation(languageToLoad, data);
@@ -106,9 +108,9 @@ export class MainComponent implements OnInit {
     //     console.log('Translation file loaded successfully');
     //   });
     // });
-    
-    
-    
+
+
+
   }
 
   //MINE//
@@ -120,17 +122,17 @@ export class MainComponent implements OnInit {
 
   changeLanguage(language:string): void{
     this.language = language;
-  } 
+  }
 
- onLanguageChange(event: any) {
-  const language = event.target.value;
+ onLanguageChange() {
+  const language = this.currntLanguage;
   this.uiService.setCurrentLanguage(language)
   this.translate.use(language).subscribe(() => {
     // Translation changed successfully
     this.setSubTitle();
   });
 }
-  
+
   //MINE//
 
   getVehiclewarningsStatisticsCount(){
@@ -185,25 +187,25 @@ export class MainComponent implements OnInit {
   setSubTitle(){
     if(this.router.url.indexOf("dashboard") > -1){
       //this.subTitle = "DASHBOARD"
-      this.translate.get("DASHBOARD").subscribe((translatedText: string) => {  
+      this.translate.get("DASHBOARD").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("monitoring") > -1){
-      this.translate.get("REALTIME MONITORING").subscribe((translatedText: string) => {  
+      this.translate.get("REALTIME MONITORING").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("status") > -1){
-      this.translate.get("REALTIME STATUS").subscribe((translatedText: string) => {  
+      this.translate.get("REALTIME STATUS").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("statistics") > -1){
-      this.translate.get("STATISTICS").subscribe((translatedText: string) => {  
+      this.translate.get("STATISTICS").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("failure") > -1){
       this.subTitle = "FAILURE"
     }else if(this.router.url.indexOf("alarm") > -1){
-      this.translate.get("ALARM").subscribe((translatedText: string) => {  
+      this.translate.get("ALARM").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("history") > -1){
@@ -213,43 +215,43 @@ export class MainComponent implements OnInit {
     }else if(this.router.url.indexOf("dataForwarding") > -1){
       this.subTitle = "DATA FORWARDING"
     }else if(this.router.url.indexOf("userAccount") > -1){
-      this.translate.get("USER ACCOUNT").subscribe((translatedText: string) => {  
+      this.translate.get("USER ACCOUNT").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("vehicle") > -1){
-      this.translate.get("VEHICLE SETTINGS").subscribe((translatedText: string) => {  
+      this.translate.get("VEHICLE SETTINGS").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("publicPlatform") > -1){
-      this.translate.get("PUBLIC PLATFORM").subscribe((translatedText: string) => {  
+      this.translate.get("PUBLIC PLATFORM").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("serverLogs") > -1){
-      this.translate.get("SERVER LOG").subscribe((translatedText: string) => {  
+      this.translate.get("SERVER LOG").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("otaInformation") > -1){
-      this.translate.get("OTA INFORMATION").subscribe((translatedText: string) => {  
+      this.translate.get("OTA INFORMATION").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("remoteControl") > -1){
-      this.translate.get("REMOTE CONTROL").subscribe((translatedText: string) => {  
+      this.translate.get("REMOTE CONTROL").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("terminal") > -1){
-      this.translate.get("TERMINAL").subscribe((translatedText: string) => {  
+      this.translate.get("TERMINAL").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("otaManagement") > -1){
-      this.translate.get("OTA MANAGEMENT").subscribe((translatedText: string) => {  
+      this.translate.get("OTA MANAGEMENT").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("pushAlarm") > -1){
-      this.translate.get("PUSH ALARM").subscribe((translatedText: string) => {  
+      this.translate.get("PUSH ALARM").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }else if(this.router.url.indexOf("detectError") > -1){
-      this.translate.get("DETECT ERROR").subscribe((translatedText: string) => {  
+      this.translate.get("DETECT ERROR").subscribe((translatedText: string) => {
         this.subTitle = translatedText;
       });
     }
