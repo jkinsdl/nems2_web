@@ -38,7 +38,7 @@ export class MonitoringComponent implements OnInit {
   mapsBtn$ : Subscription
 
   columnDefs: ColDef[] = [
-    { headerName: this.translate.instant('translationKeyLogin'), width:80, cellRenderer : LoginCarRendererComponent},
+    { headerName: 'Login', width:80, cellRenderer : LoginCarRendererComponent},
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin', width:180},
     { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber', width:130},
     { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn', width:180},
@@ -146,6 +146,7 @@ export class MonitoringComponent implements OnInit {
  
   onLanguageChange(event: any) {
    const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
      this.translateColumnHeaders();

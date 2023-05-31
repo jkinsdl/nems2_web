@@ -7,12 +7,17 @@ import { GbpacketService } from 'src/app/service/gbpacket.service';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-location-jump',
   templateUrl: './location-jump.component.html',
   styleUrls: ['./location-jump.component.css']
 })
 export class LocationJumpComponent implements OnInit {
+  selectedLanguage: string; // Property to track the selected language(MINE)
+  translationFile : string = ""
 
 
   @ViewChild('locationJumpGrid', { read: ElementRef }) locationJumpGrid : ElementRef;
@@ -21,6 +26,9 @@ export class LocationJumpComponent implements OnInit {
     private utilService : UtilService,
     private uiService : UiService,
     private gbpacketService : GbpacketService,
+    private translate: TranslateService,
+    private http: HttpClient
+
   ) { }
 
 
@@ -61,11 +69,77 @@ export class LocationJumpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedLanguage = 'en'; // Set the default language
+    this.translate.setDefaultLang('en'); // Set the default language
+  
+    // Load the translation file for the selected language
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getGbpacketInvalid()
     })
   }
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'VIN', 'Server Time', 'Packet Time', 'State', 'Value', 'Data' ]).subscribe((translations: any) => {
+    
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.columnDefs = [
+            { field: 'vin', headerName: translations['VIN'], tooltipField: 'vin', width:120 },
+            { field: 'serverTime', headerName: translations['Server Time'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime', type : 'date' }, width:140},
+            { field: 'packetTime', headerName : translations['Packet Time'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime', type : 'date' }, width:140},
+            { field: 'state',headerName: translations["State"], tooltipField: 'state', width:120},
+            { field: 'value', headerName : translations['Value'], tooltipField: 'value', width:100},
+            { field: 'data', headerName : translations['Data'], tooltipField: 'data'},
+          ];
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.columnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.columnDefs);
+        });
+      });
+    });
+
+   }
+
+   //MINE//
+   isDropdownOpen = false;
+
+   toggleDropdown():void{
+     this.isDropdownOpen = !this.isDropdownOpen;
+   }
+ 
+  //  changeLanguage(language:string): void{
+  //    this.language = language;
+  //  } 
+ 
+  onLanguageChange(event: any) {
+   const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
+   this.translate.use(language).subscribe(() => {
+     // Translation changed successfully
+     this.translateColumnHeaders();
+   });
+ }
 
   getPageSize(){
     this.gridHeight = this.locationJumpGrid.nativeElement.offsetHeight;

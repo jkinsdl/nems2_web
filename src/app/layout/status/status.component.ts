@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import * as echarts from 'echarts';
+import { UiService } from 'src/app/service/ui.service';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -20,6 +21,7 @@ export class StatusComponent implements OnInit {
 
   constructor(
     private statisticsService : StatisticsService,
+    private uiService : UiService,
 
     private translate: TranslateService,
     private http: HttpClient
@@ -98,6 +100,7 @@ export class StatusComponent implements OnInit {
  
   onLanguageChange(event: any) {
    const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
    });

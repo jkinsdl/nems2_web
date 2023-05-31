@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StatisticsService } from 'src/app/service/statistics.service';
+import { UiService } from 'src/app/service/ui.service';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -36,6 +37,7 @@ export class StatisticsComponent implements OnInit {
   constructor(
     public router: Router,
     private statisticsService : StatisticsService,
+    private uiService :UiService,
 
     private translate: TranslateService,
     private http: HttpClient  
@@ -74,6 +76,7 @@ export class StatisticsComponent implements OnInit {
    
     onLanguageChange(event: any) {
      const language = event.target.value;
+     this.uiService.setCurrentLanguage(language)
      this.translate.use(language).subscribe(() => {
        // Translation changed successfully
      });

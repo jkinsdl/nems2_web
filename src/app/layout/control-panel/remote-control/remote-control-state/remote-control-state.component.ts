@@ -19,6 +19,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RemoteControlStateComponent implements OnInit {
   selectedLanguage: string; 
+  translationFile : string = ""
 
   @ViewChild('remoteControlStateGrid', { read: ElementRef }) remoteControlStateGrid : ElementRef;
 
@@ -118,16 +119,20 @@ export class RemoteControlStateComponent implements OnInit {
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
-        console.log('Translation file loaded successfully');
-        //this.translateColumnHeaders();
-      });
-    });
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
     this.currentUser = JSON.parse(localStorage.getItem('user'))
 
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
@@ -136,6 +141,50 @@ export class RemoteControlStateComponent implements OnInit {
       this.getDevicemanagersVehiclesParametervalues();
     })
   }
+
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'VIN', 'Updated At', 'Vehicle Static Info', 'Car Local Save Period', 'Normal Submit Period', 'Warning Submit Period', 'Manage Platform Name', 'Manage Platform Port', 'Hardware Version', 'Firmware Version', 'Car Heart Beat Period', 'Car Response Timeout', 'Platform Response Timeout', 'Next Login Interval', 'Public Platform Name',  'Public Platform Port', 'Monitoring', 'Packet Time']).subscribe((translations: any) => {
+;
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.columnDefs = [
+            { field: 'vin', headerName: translations['VIN'], tooltipField: 'vin',width:180 },
+            { field: 'updatedAt', headerName : translations['Updated At'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }},
+        
+            { field: 'vehicleStaticInfo', headerName : translations['Vehicle Static Info'], tooltipField: 'vehicleStaticInfo',width:180},
+        
+            { field: 'carLocalSavePeriod', headerName : translations['Car Local Save Period'], tooltipField: 'carLocalSavePeriod',width:180},
+            { field: 'normalSubmitPeriod', headerName : translations['Normal Submit Period'], tooltipField: 'normalSubmitPeriod',width:200},
+            { field: 'warningSubmitPeriod', headerName : translations['Warning Submit Period'], tooltipField: 'warningSubmitPeriod',width:200},
+            { field: 'managePlatformName', headerName : translations['Manage Platform Name'], tooltipField: 'managePlatformName',width:200},
+            { field: 'managePlatformPort', headerName : translations['Manage Platform Port'], tooltipField: 'managePlatformPort',width:200},
+            { field: 'hwVersion', headerName : translations['Hardware Version'], tooltipField: 'hwVersion',width:180},
+            { field: 'fwVersion', headerName : translations['Firmware Version'], tooltipField: 'fwVersion',width:180},
+            { field: 'carHeartBeatPeriod', headerName: translations['Car Heart Beat Period'], tooltipField: 'carHeartBeatPeriod',width:180},
+            { field: 'carResponseTimeout', headerName : translations['Car Response Timeout'], tooltipField: 'carResponseTimeout',width:200},
+            { field: 'platformResponseTimeout', headerName : translations['Platform Response Timeout'], tooltipField: 'platformResponseTimeout',width:240},
+            { field: 'nextLoginInterval', headerName : translations['Next Login Interval'], tooltipField: 'nextLoginInterval',width:180},
+            { field: 'publicPlatformName', headerName : translations['Public Platform Name'], tooltipField: 'publicPlatformName'},
+            { field: 'publicPlatformPort', headerName : translations['Public Platform Port'], tooltipField: 'publicPlatformPort',width:180},
+            { field: 'monitoring', headerName : translations['Monitoring'], tooltipField: 'monitoring',width:120},
+            { field: 'packetTime', headerName : translations['Packet Time'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime', type : 'date' }},
+          ];
+         
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.columnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.columnDefs);
+        });
+      });
+    });
+
+   }
 
   
    //MINE//
@@ -151,9 +200,10 @@ export class RemoteControlStateComponent implements OnInit {
  
   onLanguageChange(event: any) {
    const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
-     //this.translateColumnHeaders();
+     this.translateColumnHeaders();
    });
  }
 

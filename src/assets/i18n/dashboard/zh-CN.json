@@ -120,17 +120,60 @@
     "Public Platform Management" : "公共平台管理",
     "Public Platform For Specific Period" : "特定时期的公共平台",
     "Server Name" : "平台名称",
+    "IP" : "IP",
+    "port" :"端口",
+    "platform ID":"平台ID",
+    "last login" : "last login",
+    "last logout" : "最后登录时间",
+    "start/stop" :"开始/结束",
+    "no Ack Mode" : "无应答模式",
+    "force vehcile login" : "强制车辆登记",
+    "filter location info" : "过滤位置信息",
+    "encryption Mode" : "加密模式",
+    "encryption Key" : "加密密钥",
+    "connectionStatus" : "连接状态",
+    "platformPw" : "平台PW",
+    "Last sync(packet time)" : "最后一次同步（包时间）",
+
+    "serverTime" : "serverTime",
+    "packetTime" : "数据包时间",
+    "request" :"请求",
+    "response" : "应答",
+    "encryption" : "加密",
+    "flagged" : "flagged",
+    "data" : "数据",
+    "responsePacket" : "应答包",
 
     "Firmware Name" : "固件名",
+    "Force OTA" : "执行OTA",
+    "Start" : "开始",
 
     "Remote control" : "远程控制",
     "CONFIGURE" : "CONFIGURE",
+    "Updated At" : "更新时间",
+    "Vehicle Static Info" : "车辆静态信息",
+    "Car Local Save Period" : "汽车本地保存周期",
+    "Normal Submit Period" : "正常传输周期",
+    "Warning Submit Period" : "报警传输周期",
+    "Manage Platform Name" : "管理平台名称",
+    "Manage Platform Port" : "管理平台端口",
+    "Hardware Version" : "硬件版本",
+    "Firmware Version" : "固件版本",
+    "Car Heart Beat Period" : "车辆心跳周期",
+    "Car Response Timeout" : "车辆应答超时",
+    "Platform Response Timeout" : "平台应答超时",
+    "Next Login Interval" : "下一次登录间隔",
+    "Public Platform Name" : "公共平台名称",
+    "Public Platform Port" : "公共平台端口",
+    "Monitoring" : "监控",
+    "Packet Time" : "数据包时间",
 
     "Console" : "控制台",
     "Command" : "命令",
 
     "MODELS" : "车型",
     "Select Model" : "选择车型",
+    "Update Date" : "更新时间",
 
     
     "User Name" : "用户名",
@@ -138,10 +181,20 @@
     "E-Mail" : "电子邮箱",
     "Alicloud texture ID" : "阿里云短信ID",
     "Alicloud Voice ID" : "阿里云语音ID",
+    "userName": "用户名",
+    "eMail" : "电子邮箱",
+    "phoneNumber": "电话号码",
+    "aliTextureId" : "阿里云短信ID",
+    "aliVoiceId" : "阿里云语音ID",
+    "createdAt" : "创建时间",
+   
 
     "Abnormal Vehicle State" : "异常车辆状态",
     "Location Jump": "位置跳变",
-    "Mileage Jump" : "里程跳变"
+    "Mileage Jump" : "里程跳变",
+    "Server Time": "平台时间",
+    "Value" : "值",
+    "Data" : "日期"
 
 
   } 

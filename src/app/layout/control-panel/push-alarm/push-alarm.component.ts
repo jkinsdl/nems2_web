@@ -15,6 +15,7 @@ import { CommonConstant } from 'src/app/util/common-constant';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { lang } from 'moment';
 
 @Component({
   selector: 'app-push-alarm',
@@ -23,6 +24,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PushAlarmComponent implements OnInit {
   selectedLanguage: string;
+  translationFile : string = ""
 
   @ViewChild('pushAlarmGrid', { read: ElementRef }) pushAlarmGrid : ElementRef;
 
@@ -90,16 +92,20 @@ export class PushAlarmComponent implements OnInit {
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
-        console.log('Translation file loaded successfully');
-        //this.translateColumnHeaders();
-      });
-    });
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
     //this.getNotifications()
     //this.getNotificationsRejections()
     //this.getNotificationsTemplates()
@@ -108,6 +114,46 @@ export class PushAlarmComponent implements OnInit {
       this.getPushinfos()
     })
   }
+
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'userName', 'eMail', 'phoneNumber', 'aliTextureId', 'aliVoiceId', 'createdAt', 'createdUserId' ]).subscribe((translations: any) => {
+      
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.columnDefs = [
+            { field: 'pushinfoId', headerName: translations['pushinfoId'], tooltipField: 'pushinfoId', hide:true },
+            { field: 'userName', headerName : translations['userName'], tooltipField: 'userName'},
+            { field: 'eMail', headerName : translations['eMail'], tooltipField: 'eMail'},
+            { field: 'phoneNumber', headerName : translations['phoneNumber'], tooltipField: 'phoneNumber'},
+            { field: 'aliTextureId', headerName: translations['aliTextureId'], tooltipField: 'aliTextureId'},
+            { field: 'aliVoiceId', headerName : translations['aliVoiceId'], tooltipField: 'aliVoiceId'},
+            { field: 'createdAt', headerName : translations['createdAt'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'createdAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'createdAt', type : 'date' }},
+            { field: 'createdUserId', headerName : translations['createdUserId'], tooltipField: 'createdUserId', hide:true},
+            { field: 'action', cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              modify: (field: any) => {
+                this.modifyAlarm(field)
+              },
+              delete : (field: any) => {
+                this.deleteAlarm(field)
+              },
+            }, width:120},
+          ];
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.columnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.columnDefs);
+        });
+      });
+    });
+
+   }
 
   
    //MINE//
@@ -123,9 +169,10 @@ export class PushAlarmComponent implements OnInit {
  
   onLanguageChange(event: any) {
    const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
-     //this.translateColumnHeaders();
+     this.translateColumnHeaders();
    });
  }
 

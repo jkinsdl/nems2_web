@@ -342,6 +342,7 @@ export class AlarmComponent implements OnInit {
    
     onLanguageChange(event: any) {
      const language = event.target.value;
+     this.uiService.setCurrentLanguage(language)
      this.translate.use(language).subscribe(() => {
        // Translation changed successfully
        this.translateColumnHeaders();

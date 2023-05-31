@@ -23,6 +23,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class ServerLogsComponent implements OnInit {
   selectedLanguage: string;
+  translationFile : string = ""
 
   @ViewChild('serverLogGrid', { read: ElementRef }) serverLogGrid : ElementRef;
 
@@ -105,22 +106,58 @@ export class ServerLogsComponent implements OnInit {
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
-        console.log('Translation file loaded successfully');
-        //this.translateColumnHeaders();
-      });
-    });
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
 
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getGbpacket()
     })
   }
+
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'vin', 'serverTime', 'packetTime', 'request', 'response', 'encryption', 'flagged', 'data', 'responsePacket']).subscribe((translations: any) => {
+        
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.columnDefs = [
+            { field: 'vin', headerName : translations['vin'], tooltipField: 'vin'},
+            { field: 'serverTime', headerName : translations['serverTime'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'serverTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'serverTime', type : 'date' }},
+            { field: 'packetTime', headerName : translations['packetTime'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'packetTime', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'packetTime', type : 'date' }},
+            { field: 'request', headerName : translations['request'], tooltipField: 'request', filter : CheckboxFilterComponent, filterParams :  { toppings: this.requestToppings}},
+            { field: 'response', headerName : translations['response'], tooltipField: 'response', width:110},
+            { field: 'encryption', headerName: translations['encryption'], tooltipField: 'encryption', width:110},
+            { field: 'flagged', headerName : translations['flagged'], tooltipField: 'flagged', width:90},
+            { field: 'data', headerName: translations['data'], valueFormatter: this.utilService.base64ToHex, tooltipField: 'data', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'data', type:'decoding' }},
+            { field: 'responsePacket', headerName : translations['responsePacket'], valueFormatter: this.utilService.base64ToHex, tooltipField: 'responsePacket', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'responsePacket', type:'decoding' }},
+          ];
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.columnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.columnDefs);
+        });
+      });
+    });
+
+   }
 
      //MINE//
   isDropdownOpen = false;
@@ -135,9 +172,10 @@ export class ServerLogsComponent implements OnInit {
    
   onLanguageChange(event: any) {
      const language = event.target.value;
+     this.uiService.setCurrentLanguage(language)
      this.translate.use(language).subscribe(() => {
        // Translation changed successfully
-       //this.translateColumnHeaders();
+       this.translateColumnHeaders();
      });
    }
 

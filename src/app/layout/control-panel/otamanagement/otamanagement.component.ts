@@ -23,6 +23,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class OTAManagementComponent implements OnInit {
   selectedLanguage: string; // Property to track the selected language(MINE)
+  translationFile : string = ""
+
 
   @ViewChild('otaManagementGrid', { read: ElementRef }) otaManagementGrid : ElementRef;
   @ViewChild('importFirmwareVehiclesInput', { read: ElementRef }) importFirmwareVehiclesInput : ElementRef;
@@ -106,22 +108,53 @@ export class OTAManagementComponent implements OnInit {
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
-        console.log('Translation file loaded successfully');
-        //this.translateColumnHeaders();
-      });
-    });
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translateColumnHeaders()
+    })
     this.getVehiclemanagerModel()
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getDevicemanagersFirmwareFirmwareNameVehicles()
     })
   }
+
+  translateColumnHeaders(): void {
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'VIN', 'State', 'NEMS S/N', 'Update Date' ]).subscribe((translations: any) => {
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.firmwareVehiclesColumn = [
+            { field: 'vin', headerName: translations['VIN'],
+            headerCheckboxSelection: true,
+            checkboxSelection: true, tooltipField: 'vin', },
+            { field: 'currentState', headerName: translations['State'], tooltipField: 'currentState'},
+            { field: 'updatedAt', headerName : translations['Update Date'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt', type : 'date' }}
+          ];
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.firmwareVehiclesColumn );
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.firmwareVehiclesColumn );
+        });
+      });
+    });
+
+   }
 
      //MINE//
    isDropdownOpen = false;
@@ -136,9 +169,10 @@ export class OTAManagementComponent implements OnInit {
  
   onLanguageChange(event: any) {
    const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
-     //this.translateColumnHeaders();
+     this.translateColumnHeaders();
    });
  }
 
