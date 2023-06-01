@@ -214,7 +214,7 @@ export class VehicleSettingsComponent implements OnInit {
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.limit = this.pageSize
     this.vehiclemanagerService.getVehiclemanagerStaticinfo(this.searchFilter).subscribe(res=>{
-      console.log(res)
+      console.log("Vehicle:",res)
       this.vehicle = res.body
       let pagination = {
         count : this.vehicle.count,

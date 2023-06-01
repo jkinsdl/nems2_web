@@ -115,6 +115,8 @@ export class RemoteControlStateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.fetchData();
+    console.log('currentUser.authorityId:', this.currentUser.authorityId);
     this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
     //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
@@ -245,32 +247,30 @@ export class RemoteControlStateComponent implements OnInit {
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.limit = this.pageSize
     this.devicemanagersService.getDevicemanagersVehiclesParametervalues(this.searchFilter).subscribe(res=>{
-      console.log(res)
-
+      console.log("Data is here:",res)
       this.devicemanagersVehicles = res.body
-
       let pagination = {
         count : this.devicemanagersVehicles.count,
         pageSize : this.pageSize,
         page : this.currentPage
       }
-
       this.uiService.setPagination(pagination)
-
     },error=>{
       console.log(error)
     })
   }
 
-
+  fetchData() {
+    this.getDevicemanagersVehicles(); // Call the function
+  }
 
   getDevicemanagersVehicles(){
     this.searchFilter.offset = (this.currentPage-1) * this.pageSize
     this.searchFilter.limit = this.pageSize
     this.devicemanagersService.getDevicemanagersVehicles(this.searchFilter).subscribe(res=>{
-      console.log(res)
+      console.log("This data",res)
       this.devicemanagersVehicles = res.body
-      this.rowData = []
+      this.rowData = [];
       for(let i = 0; i < res.body.entities.length; i++) {
         this.rowData.push({
           vin : res.body.entities[i].vin,
@@ -302,6 +302,7 @@ export class RemoteControlStateComponent implements OnInit {
           modelName : res.body.entities[i].firmwareInfo ? res.body.entities[i].firmwareInfo.modelName : null,
         })
       }
+      // this.rowData = [...this.rowData];
 
       let pagination = {
         count : this.devicemanagersVehicles.count,

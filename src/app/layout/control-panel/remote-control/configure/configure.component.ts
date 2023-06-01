@@ -279,7 +279,7 @@ export class ConfigureComponent implements OnInit {
     f.limit = this.pageSize
 
     this.devicemanagerService.getDevicemanagersParameter(f).subscribe(res=>{
-      console.log(res)
+      console.log("This is the data", res)
       this.devicemanagersParameter = res.body
 
       let pagination = {
