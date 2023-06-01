@@ -2,35 +2,35 @@
 
   <div class="popupTitle">
     <div class="text">
-      Vehicle
+      {{ 'Vehicle' | translate }}
     </div>
     <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
   </div>
 
   <div *ngIf="data.type == constant.ADD_TYPE">
     <div class="addInfoFilter">
-      <div class="label">VIN <span>*</span> </div>
+      <div class="label">{{ 'VIN' | translate }} <span>*</span> </div>
       <div class="value">
         <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin" [disabled]="data.type == constant.MODIFY_TYPE">
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">ICCID <span>*</span> </div>
+      <div class="label">{{ 'ICCID' | translate }} <span>*</span> </div>
       <div class="value">
         <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.iccid">
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">NEMS S/N <span>*</span> </div>
+      <div class="label">{{ 'NEMS S/N' | translate }} <span>*</span> </div>
       <div class="value">
         <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.nemsSn">
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">Model Name <span>*</span> </div>
+      <div class="label">{{ 'Model Name' | translate }} <span>*</span> </div>
       <div class="value">
         <select (ngModelChange)="changeModel($event)" [(ngModel)]="addVehiclemanagerStaticinfoParameter.modelName">
           <option [value]="null"  disabled></option>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">province <span>*</span> </div>
+      <div class="label">{{ 'province' | translate }} <span>*</span> </div>
       <div class="value">
         <select (ngModelChange)="setProvince($event)" [(ngModel)]="selectProvince">
           <option *ngFor="let province of provinceList" [value]="province.province">{{province.province}}</option>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">region <span>*</span> </div>
+      <div class="label">{{ 'region' | translate }} <span>*</span> </div>
       <div class="value">
         <select (ngModelChange)="setCity($event)" [(ngModel)]="selectCity">
           <option [value]="undefined"  disabled></option>
@@ -73,46 +73,46 @@
     </div>
   -->
     <div class="addInfoFilter">
-      <div class="label">registrationPlate </div>
+      <div class="label">{{ 'registrationPlate'| translate }} </div>
       <div class="value">
         <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registrationPlate">
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">purpose </div>
+      <div class="label">{{ 'purpose' | translate }} </div>
       <div class="value">
         <select [(ngModel)]="addVehiclemanagerStaticinfoParameter.purpose">
-          <option [value]="'PERSONAL'"> PERSONAL </option>
-          <option [value]="'PUBLIC'"> PUBLIC  </option>
+          <option [value]="'PERSONAL'"> {{ 'PERSONAL' | translate }} </option>
+          <option [value]="'PUBLIC'"> {{ 'PUBLIC' | translate }}  </option>
         </select>
 
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">engineNo </div>
+      <div class="label">{{ 'engineNo' | translate }} </div>
       <div class="value">
         <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.engineNo">
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">motorNo </div>
+      <div class="label">{{ 'motorNo' | translate }} </div>
       <div class="value">
         <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.motorNo">
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">batteryCode </div>
+      <div class="label">{{ 'batteryCode' | translate }} </div>
       <div class="value">
         <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.batteryCode">
       </div>
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">manufactured date </div>
+      <div class="label">{{ 'manufactured date' | translate }} </div>
       <div class="value">
         <div class="sOffText" (click)="sOffDatePicker.open()"> {{sOffDateText}} </div>
         <input class="datePickerText" style="margin-right: 0; visibility: hidden; width: 0; height: 0;" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate" (ngModelChange)="changeSOffDate($event)">
@@ -124,7 +124,7 @@
     </div>
 
     <div class="addInfoFilter">
-      <div class="label">registDate </div>
+      <div class="label">{{ 'registDate' | translate }} </div>
       <div class="value">
         <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="registDatePicker" readonly="true" (click)="registDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registDate">
         <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false"></ngx-mat-datetime-picker>
@@ -138,28 +138,28 @@
   <mat-tab-group *ngIf="data.type == constant.MODIFY_TYPE">
     <mat-tab label="Modify">
       <div class="addInfoFilter">
-        <div class="label">VIN <span>*</span> </div>
+        <div class="label">{{ 'VIN' | translate }} <span>*</span> </div>
         <div class="value">
           <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.vin" [disabled]="data.type == constant.MODIFY_TYPE">
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">ICCID <span>*</span> </div>
+        <div class="label">{{ 'ICCID' | translate }} <span>*</span> </div>
         <div class="value">
           <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.iccid">
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">NEMS S/N <span>*</span> </div>
+        <div class="label">{{ 'NEMS S/N' | translate }} <span>*</span> </div>
         <div class="value">
           <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.nemsSn">
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">Model Name <span>*</span> </div>
+        <div class="label">{{ 'Model Name' | translate }} <span>*</span> </div>
         <div class="value">
           <select (ngModelChange)="changeModel($event)" [(ngModel)]="addVehiclemanagerStaticinfoParameter.modelName">
             <option [value]="null"  disabled></option>
@@ -169,7 +169,7 @@
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">province <span>*</span> </div>
+        <div class="label">{{ 'province' | translate }} <span>*</span> </div>
         <div class="value">
           <select (ngModelChange)="setProvince($event)" [(ngModel)]="selectProvince">
             <option *ngFor="let province of provinceList" [value]="province.province">{{province.province}}</option>
@@ -178,7 +178,7 @@
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">region <span>*</span> </div>
+        <div class="label">{{ 'region' | translate }} <span>*</span> </div>
         <div class="value">
           <select (ngModelChange)="setCity($event)" [(ngModel)]="selectCity">
             <option [value]="undefined"  disabled></option>
@@ -202,46 +202,46 @@
       </div>
     -->
       <div class="addInfoFilter">
-        <div class="label">registrationPlate </div>
+        <div class="label">{{ 'registrationPlate' | translate }} </div>
         <div class="value">
           <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registrationPlate">
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">purpose </div>
+        <div class="label">{{ 'purpose' | translate }} </div>
         <div class="value">
           <select [(ngModel)]="addVehiclemanagerStaticinfoParameter.purpose">
-            <option [value]="'PERSONAL'"> PERSONAL </option>
-            <option [value]="'PUBLIC'"> PUBLIC  </option>
+            <option [value]="'PERSONAL'"> {{ 'PERSONAL' | translate }} </option>
+            <option [value]="'PUBLIC'"> {{ 'PUBLIC' | translate }}  </option>
           </select>
 
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">engineNo </div>
+        <div class="label">{{ 'engineNo' | translate }} </div>
         <div class="value">
           <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.engineNo">
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">motorNo </div>
+        <div class="label">{{ 'motorNo' | translate }} </div>
         <div class="value">
           <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.motorNo">
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">batteryCode </div>
+        <div class="label">{{ 'batteryCode' | translate }} </div>
         <div class="value">
           <input type="text" [(ngModel)]="addVehiclemanagerStaticinfoParameter.batteryCode">
         </div>
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">manufactured date </div>
+        <div class="label">{{ 'manufactured date' | translate }} </div>
         <div class="value">
           <div class="sOffText" (click)="sOffDatePicker.open()"> {{sOffDateText}} </div>
           <input class="datePickerText" style="margin-right: 0; visibility: hidden; width: 0; height: 0;" [ngxMatDatetimePicker]="sOffDatePicker" readonly="true" (click)="sOffDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.sOffDate" (ngModelChange)="changeSOffDate($event)">
@@ -253,7 +253,7 @@
       </div>
 
       <div class="addInfoFilter">
-        <div class="label">registDate </div>
+        <div class="label">{{ 'registDate' | translate }} </div>
         <div class="value">
           <input class="datePickerText" style="margin-right: calc(10% - 10px);" [ngxMatDatetimePicker]="registDatePicker" readonly="true" (click)="registDatePicker.open()" [(ngModel)]="addVehiclemanagerStaticinfoParameter.registDate">
           <ngx-mat-datetime-picker #registDatePicker [showSpinners]="true" [hideTime]="false"  ></ngx-mat-datetime-picker>
@@ -278,13 +278,13 @@
 
   <div class="btnBox">
     <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addVehicle()" >
-      Add
+      {{ 'Add' | translate }}
     </div>
     <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (click)="modifyVehicle()" >
-      Modify
+      {{ 'Modify' | translate }}
     </div>
     <div class="btn cancel" (click)="close()">
-      Cancel
+      {{ 'Cancel' | translate }}
     </div>
   </div>
 </div>

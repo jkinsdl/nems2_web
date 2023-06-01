@@ -58,6 +58,7 @@
     "ISSUE MANAGEMENT" : "ISSUE MANAGEMENT",
     "State" : "State",
     "Comments" : "Comments",
+    "action" : "action",
     
     "vin" : "VIN",
     "createTime" : "Create Time",
@@ -110,6 +111,15 @@
     "username" : "username",
     "status" : "status",
     "latestAccess" : "latestAccess",
+    "E-mail" : "E-mail",
+    "ICCID" : "ICCID",
+    "engineNo" : "engineNo",
+    "motorNo" : "motorNo",
+    "batteryCode" : "batteryCode",
+    "province" : "province",
+    
+
+
 
     
     "battery code": "battery code",
@@ -140,6 +150,17 @@
     "connectionStatus" : "connectionStatus",
     "platformPw" : "platformPw",
     "Last sync(packet time)" : "Last sync(packet time)",
+    "serverName" : "serverName",
+    "domain" : "domain",
+    "platformId" : "platformId",
+    "startTs" : "startTs",
+    "endTs" : "endTs",
+    "noAck" : "noAck",
+    "forceLoginVehicle" : "forceLoginVehicle",
+    "filterLocationInfo" : "filterLocationInfo",
+    "encryptionMode" : "encryptionMode",
+    "encryptionKey" : "encryptionKey",
+   
 
     "serverTime" : "serverTime",
     "packetTime" : "packetTime",
