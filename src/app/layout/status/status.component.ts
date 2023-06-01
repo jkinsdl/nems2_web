@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import * as echarts from 'echarts';
+import { UiService } from 'src/app/service/ui.service';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -20,6 +21,7 @@ export class StatusComponent implements OnInit {
 
   constructor(
     private statisticsService : StatisticsService,
+    private uiService : UiService,
 
     private translate: TranslateService,
     private http: HttpClient
@@ -55,8 +57,10 @@ export class StatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Retrieve the selected language from storage or set a default value
+    this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
     console.log('status.component.ts initialized!');
-    this.selectedLanguage = 'en'; // Set the default language
+    //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
@@ -98,6 +102,8 @@ export class StatusComponent implements OnInit {
  
   onLanguageChange(event: any) {
    const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
+   localStorage.setItem('selectedLanguage', language);
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
    });

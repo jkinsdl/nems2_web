@@ -58,6 +58,7 @@
     "ISSUE MANAGEMENT" : "ISSUE MANAGEMENT",
     "State" : "State",
     "Comments" : "Comments",
+    "action" : "action",
     
     "vin" : "VIN",
     "createTime" : "Create Time",
@@ -110,6 +111,15 @@
     "username" : "username",
     "status" : "status",
     "latestAccess" : "latestAccess",
+    "E-mail" : "E-mail",
+    "ICCID" : "ICCID",
+    "engineNo" : "engineNo",
+    "motorNo" : "motorNo",
+    "batteryCode" : "batteryCode",
+    "province" : "province",
+    
+
+
 
     
     "battery code": "battery code",
@@ -126,29 +136,92 @@
     "Public Platform Management" : "Public Platform Management",
     "Public Platform For Specific Period" : "Public Platform For Specific Period",
     "Server Name" : "Server Name",
+    "IP" : "IP",
+    "port" :"port",
+    "platform ID":"platform ID",
+    "last login" : "last login",
+    "last logout" : "last logout",
+    "start/stop" :"start/stop",
+    "no Ack Mode" : "no Ack Mode",
+    "force vehcile login" : "force vehcile login",
+    "filter location info" : "filter location info",
+    "encryption Mode" : "encryption Mode",
+    "encryption Key" : "encryption Key",
+    "connectionStatus" : "connectionStatus",
+    "platformPw" : "platformPw",
+    "Last sync(packet time)" : "Last sync(packet time)",
+    "serverName" : "serverName",
+    "domain" : "domain",
+    "platformId" : "platformId",
+    "startTs" : "startTs",
+    "endTs" : "endTs",
+    "noAck" : "noAck",
+    "forceLoginVehicle" : "forceLoginVehicle",
+    "filterLocationInfo" : "filterLocationInfo",
+    "encryptionMode" : "encryptionMode",
+    "encryptionKey" : "encryptionKey",
+   
+
+    "serverTime" : "serverTime",
+    "packetTime" : "packetTime",
+    "request" :"request",
+    "response" : "response",
+    "encryption" : "encryption",
+    "flagged" : "flagged",
+    "data" : "data",
+    "responsePacket" : "responsePacket",
 
     "Firmware Name" : "Firmware Name",
+    "Force OTA" : "Force OTA",
+    "Start" : "Start",
+    
 
     "Remote control" : "Remote control",
     "CONFIGURE" : "CONFIGURE",
+    "Updated At" : "Updated At",
+    "Vehicle Static Info" : "Vehicle Static Info",
+    "Car Local Save Period" : "Car Local Save Period",
+    "Normal Submit Period" : "Normal Submit Period",
+    "Warning Submit Period" : "Warning Submit Period",
+    "Manage Platform Name" : "Manage Platform Name",
+    "Manage Platform Port" : "Manage Platform Port",
+    "Hardware Version" : "Hardware Version",
+    "Firmware Version" : "Firmware Version",
+    "Car Heart Beat Period" : "Car Heart Beat Period",
+    "Car Response Timeout" : "Car Response Timeout",
+    "Platform Response Timeout" : "Platform Response Timeout",
+    "Next Login Interval" : "Next Login Interval",
+    "Public Platform Name" : "Public Platform Name",
+    "Public Platform Port" : "Public Platform Port",
+    "Monitoring" : "Monitoring",
+    "Packet Time" : "Packet Time",
 
     "Console" : "Console",
     "Command" : "Command",
 
     "MODELS" : "MODELS",
     "Select Model" : "Select Model",
+    "Update Date" : "Update Date",
 
     "User Name" : "User Name",
     "Phone Number" : "Phone Number",
     "E-Mail" : "E-Mail",
     "Alicloud texture ID" : "Alicloud texture ID",
     "Alicloud Voice ID" : "Alicloud Voice ID",
+    "userName": "userName",
+    "eMail" : "eMail",
+    "phoneNumber": "phoneNumber",
+    "aliTextureId" : "aliTextureId",
+    "aliVoiceId" : "aliVoiceId",
+    "createdAt" : "createdAt",
+    
 
     "Abnormal Vehicle State" : "Abnormal Vehicle State",
     "Location Jump": "Location Jump",
-    "Mileage Jump" : "Mileage Jump"
-
-
+    "Mileage Jump" : "Mileage Jump",
+    "Server Time": "Server Time",
+    "Value" : "Value",
+    "Data" : "Data"
   }
 
   

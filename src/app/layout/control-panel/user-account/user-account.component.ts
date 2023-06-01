@@ -84,12 +84,21 @@ export class UserAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedLanguage = 'en'; // Set the default language
+    this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
     this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translateColumnHeaders();
+        // this.getUsers(); 
+      });
+    });
     this.uiService.currentLanguage$.subscribe((language : string)=>{
       console.log(language)
       this.selectedLanguage = language
@@ -100,27 +109,31 @@ export class UserAccountComponent implements OnInit {
       }else {
         console.log("중문")
       }
-      this.translateColumnHeaders()
-    })
+      this.translate.use(this.selectedLanguage).subscribe(() => {
+        this. translateColumnHeaders();
+        // this.getUsers(); // Load the table content after setting the translations
+        localStorage.setItem('selectedLanguage', this.selectedLanguage);
+      });
+    });
+  
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
-      this.getUsers()
+      this.getUsers();
     })
   }
 
   translateColumnHeaders(): void {
-
-    this.translate.use(this.selectedLanguage).subscribe(() => {
+     this.translate.use(this.selectedLanguage).subscribe(() => {
       this.http.get<any>(this.translationFile).subscribe((data) => {
         this.translate.setTranslation(this.selectedLanguage, data);
         console.log('Translation file loaded successfully');
-        this.translate.get([ 'username', 'email', 'authority', 'status', 'latestAccess', 'action']).subscribe((translations: any) => {
+        this.translate.get(['username', 'email', 'authority', 'status', 'latestAccess', 'action']).subscribe((translations: any) => {
 
           console.log('Language:', this.translate.currentLang); // Log the current language
           console.log('Translations:', translations); // Log the translations object
           this.columnDefs = [
             { field: 'selected', hide:true, tooltipField: 'selected'},
-            { field: 'username', headerName:translations ['username'], tooltipField: 'username' },
+            { field: 'username', headerName:translations['username'], tooltipField: 'username' },
             { field: 'email', headerName : translations['email'], tooltipField: 'email' },
             { field: 'authorityId', headerName : translations['authority'], tooltipField: 'authorityId' },
             { field: 'status', headerName :translations['status'], tooltipField: 'status'},
@@ -143,7 +156,6 @@ export class UserAccountComponent implements OnInit {
         });
       });
     });
-
    }
    
      //MINE//
@@ -152,20 +164,18 @@ export class UserAccountComponent implements OnInit {
      toggleDropdown():void{
        this.isDropdownOpen = !this.isDropdownOpen;
      }
-   
     //  changeLanguage(language:string): void{
     //    this.language = language;
-    //  } 
-   
+    //  }   
     onLanguageChange(event: any) {
      const language = event.target.value;
+     this.uiService.setCurrentLanguage(language)
+     localStorage.setItem('selectedLanguage', language);
      this.translate.use(language).subscribe(() => {
        // Translation changed successfully
-      //  this.translateColumnHeaders();
+       this.translateColumnHeaders();
      });
    }
-
-
 
   getPageSize(){
     this.gridHeight = this.userGrid.nativeElement.offsetHeight;

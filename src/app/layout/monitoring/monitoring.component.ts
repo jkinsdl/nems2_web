@@ -8,6 +8,7 @@ import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 
+
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -38,7 +39,7 @@ export class MonitoringComponent implements OnInit {
   mapsBtn$ : Subscription
 
   columnDefs: ColDef[] = [
-    { headerName: this.translate.instant('translationKeyLogin'), width:80, cellRenderer : LoginCarRendererComponent},
+    { headerName: 'Login', width:80, cellRenderer : LoginCarRendererComponent},
     { field: 'vin', headerName: 'VIN', tooltipField: 'vin', width:180},
     { field: 'regNumber', headerName : 'Reg. number', tooltipField: 'regNumber', width:130},
     { field: 'nemsSn', headerName : 'NEMS S/N', tooltipField: 'nemsSn', width:180},
@@ -71,24 +72,61 @@ export class MonitoringComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedLanguage = 'en'; // Set the default language
-    this.translate.setDefaultLang('en'); // Set the default language
+    //  // Retrieve the selected language from storage or set a default value
+    // this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en'
+    // //this.selectedLanguage = 'en'; // Set the default language
+    // this.translate.setDefaultLang('en'); // Set the default language
 
-    // Load the translation file for the selected language
-    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+    
 
-    this.uiService.currentLanguage$.subscribe((language : string)=>{
-      console.log(language)
-      this.selectedLanguage = language
-      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+    // // Load the translation file for the selected language
+    // this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
-      if(this.selectedLanguage == 'en'){
-        console.log("영어")
-      }else {
-        console.log("중문")
-      }
-      this.translateColumnHeaders()
-    })
+    // this.uiService.currentLanguage$.subscribe((language : string)=>{
+    //   console.log(language)
+    //   this.selectedLanguage = language
+    //   this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    //   if(this.selectedLanguage == 'en'){
+    //     console.log("영어")
+    //   }else {
+    //     console.log("중문")
+    //   }
+    //   this.translateColumnHeaders()
+    // })
+
+     // Retrieve the selected language from storage or set a default value
+     this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+     //this.selectedLanguage = 'en'; // Set the default language
+     this.translate.setDefaultLang('en'); // Set the default language
+   
+     // Load the translation file for the selected language
+     this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+ 
+     this.translate.use(this.selectedLanguage).subscribe(() => {
+       this.http.get<any>(this.translationFile).subscribe((data) => {
+         this.translate.setTranslation(this.selectedLanguage, data);
+         console.log('Translation file loaded successfully');
+         this.translateColumnHeaders();
+         // this.getUsers(); 
+       });
+     });
+     this.uiService.currentLanguage$.subscribe((language : string)=>{
+       console.log(language)
+       this.selectedLanguage = language
+       this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+ 
+       if(this.selectedLanguage == 'en'){
+         console.log("영어")
+       }else {
+         console.log("중문")
+       }
+       this.translate.use(this.selectedLanguage).subscribe(() => {
+         this. translateColumnHeaders();
+         // this.getUsers(); // Load the table content after setting the translations
+         localStorage.setItem('selectedLanguage', this.selectedLanguage);
+       });
+     });
 
     this.startDate = new Date(new Date().getTime() -1*1000*60*60*24);
     this.endDate = new Date(new Date().getTime());
@@ -99,18 +137,17 @@ export class MonitoringComponent implements OnInit {
    }
 
    translateColumnHeaders(): void {
-
     this.translate.use(this.selectedLanguage).subscribe(() => {
       this.http.get<any>(this.translationFile).subscribe((data) => {
         this.translate.setTranslation(this.selectedLanguage, data);
         console.log('Translation file loaded successfully');
-        this.translate.get([ 'VIN', 'Reg. number', 'NEMS S/N', 'Last Updated', 'Accumulated Mile(km)', 'Packet Count', 'model', 'region', 'Purpose', 'Warning', 'soc(%)' ]).subscribe((translations: any) => {
+        this.translate.get([ 'VIN', 'Reg. number', 'NEMS S/N', 'Last Updated', 'Accumulated Mile(km)', 'Packet Count', 'model', 'region', 'Purpose', 'Warning', 'soc(%)', 'Login' ]).subscribe((translations: any) => {
           console.log(translations['vin']); // Check the translation value
           console.log(translations['regNumber']);
           console.log('Language:', this.translate.currentLang); // Log the current language
           console.log('Translations:', translations); // Log the translations object
           this.columnDefs = [
-            { headerName: 'Login', width:80, cellRenderer : LoginCarRendererComponent},
+            { headerName: translations['Login'], width:80, cellRenderer : LoginCarRendererComponent},
             { field: 'vin', headerName: translations['VIN'], tooltipField: 'vin', width:180},
             { field: 'regNumber', headerName : translations['Reg. number'], tooltipField: 'regNumber', width:130},
             { field: 'nemsSn', headerName : translations['NEMS S/N'], tooltipField: 'nemsSn', width:180},
@@ -128,6 +165,8 @@ export class MonitoringComponent implements OnInit {
             this.gridApi.refreshHeader();
           }
           console.log("Table are translating", this.columnDefs);
+          console.log('Login Translation:', translations['Login']);
+
         });
       });
     });
@@ -145,11 +184,13 @@ export class MonitoringComponent implements OnInit {
   //    this.language = language;
   //  }
 
-  onLanguageChange(event: any) {
+  onLanguageChange(event: any): void {
    const language = event.target.value;
+   this.uiService.setCurrentLanguage(language)
+   localStorage.setItem('selectedLanguage', language);
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
-     this.translateColumnHeaders();
+     this.translateColumnHeaders();    
    });
  }
 

@@ -222,23 +222,21 @@ export class AlarmComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedLanguage = 'en'; // Set the default language
+    this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
-   
   
     // Load the translation file for the selected language
-    //const languageToLoad = this.selectedLanguage;
-    // const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    // this.translate.use(languageToLoad).subscribe(() => {
-    //   this.http.get<any>(translationFile).subscribe((data) => {
-    //     this.translate.setTranslation(languageToLoad, data);
-    //     console.log('Translation file loaded successfully');
-    //     this.translateColumnHeaders();
-    //   });
-    // });
     this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translateColumnHeaders();
+        // this.getUsers(); 
+      });
+    });
     this.uiService.currentLanguage$.subscribe((language : string)=>{
       console.log(language)
       this.selectedLanguage = language
@@ -249,9 +247,12 @@ export class AlarmComponent implements OnInit {
       }else {
         console.log("중문")
       }
-      this.translateColumnHeaders()
-    })
-
+      this.translate.use(this.selectedLanguage).subscribe(() => {
+        this. translateColumnHeaders();
+        // this.getUsers(); // Load the table content after setting the translations
+        localStorage.setItem('selectedLanguage', this.selectedLanguage);
+      });
+    });
 
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
@@ -288,7 +289,6 @@ export class AlarmComponent implements OnInit {
   }
 
   translateColumnHeaders(): void {
-
     this.translate.use(this.selectedLanguage).subscribe(() => {
       this.http.get<any>(this.translationFile).subscribe((data) => {
         this.translate.setTranslation(this.selectedLanguage, data);
@@ -310,7 +310,7 @@ export class AlarmComponent implements OnInit {
             { field: 'warningType',headerName:translations["Warning Type"], tooltipField: 'warningType', filter : CheckboxFilterComponent, filterParams :  { toppings: this.warningTypeToppings}},
             //{ field: 'warningCode',headerName: "Warning Code", tooltipField: 'warningCode'},
             //{ field: 'code',headerName: "Code", tooltipField: 'code'},
-            { field: 'action', cellRenderer: BtnCellRendererComponent,
+            { field: translations['action'], cellRenderer: BtnCellRendererComponent,
             cellRendererParams: {
               onlyRemove : true,
               delete : (field: any) => {
@@ -342,6 +342,8 @@ export class AlarmComponent implements OnInit {
    
     onLanguageChange(event: any) {
      const language = event.target.value;
+     this.uiService.setCurrentLanguage(language)
+     localStorage.setItem('selectedLanguage', language);
      this.translate.use(language).subscribe(() => {
        // Translation changed successfully
        this.translateColumnHeaders();

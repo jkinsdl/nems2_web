@@ -24,20 +24,22 @@ export class RemoteControlComponent implements OnInit {
   currentUser : any = {}
 
   ngOnInit(): void {
-    this.selectedLanguage = 'en'; // Set the default language
-    this.translate.setDefaultLang('en'); // Set the default language
-  
-    // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
-        console.log('Translation file loaded successfully');
-        
-      });
-    });
+ // Retrieve the selected language from storage or set a default value
+ this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+ // Set the default language
+ this.translate.setDefaultLang('en');
+
+ // Load the translation file for the selected language
+ const languageToLoad = this.selectedLanguage;
+ const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+
+ this.translate.use(languageToLoad).subscribe(() => {
+   this.http.get<any>(translationFile).subscribe((data) => {
+     this.translate.setTranslation(languageToLoad, data);
+     console.log('Translation file loaded successfully');
+   });
+ });
 
     this.currentUser = JSON.parse(localStorage.getItem('user'))
   }
@@ -54,6 +56,7 @@ export class RemoteControlComponent implements OnInit {
    
   onLanguageChange(event: any) {
     const language = event.target.value;
+    localStorage.setItem('selectedLanguage', language);
     this.translate.use(language).subscribe(() => {
        // Translation changed successfully
        

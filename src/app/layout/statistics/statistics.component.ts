@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StatisticsService } from 'src/app/service/statistics.service';
+import { UiService } from 'src/app/service/ui.service';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -36,25 +37,29 @@ export class StatisticsComponent implements OnInit {
   constructor(
     public router: Router,
     private statisticsService : StatisticsService,
+    private uiService :UiService,
 
     private translate: TranslateService,
     private http: HttpClient  
   ) { }
 
   ngOnInit(): void {
-    this.selectedLanguage = 'en'; // Set the default language
-    this.translate.setDefaultLang('en'); // Set the default language
-  
-    // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
-        console.log('Translation file loaded successfully');
-      });
-    });
+ // Retrieve the selected language from storage or set a default value
+ this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+ // Set the default language
+ this.translate.setDefaultLang('en');
+
+ // Load the translation file for the selected language
+ const languageToLoad = this.selectedLanguage;
+ const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+
+ this.translate.use(languageToLoad).subscribe(() => {
+   this.http.get<any>(translationFile).subscribe((data) => {
+     this.translate.setTranslation(languageToLoad, data);
+     console.log('Translation file loaded successfully');
+   });
+ });
 
     this.date = new Date()
     this.date.setDate(1)
@@ -74,6 +79,8 @@ export class StatisticsComponent implements OnInit {
    
     onLanguageChange(event: any) {
      const language = event.target.value;
+     this.uiService.setCurrentLanguage(language)
+     localStorage.setItem('selectedLanguage', language);
      this.translate.use(language).subscribe(() => {
        // Translation changed successfully
      });

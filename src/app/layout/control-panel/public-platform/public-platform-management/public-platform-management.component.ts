@@ -24,6 +24,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PublicPlatformManagementComponent implements OnInit {
   selectedLanguage: string;
+  translationFile : string = ""
 
   @ViewChild('publicPlatformManagementGrid1', { read: ElementRef }) publicPlatformManagementGrid1 : ElementRef;
 
@@ -96,6 +97,8 @@ export class PublicPlatformManagementComponent implements OnInit {
     entities : []
   }
 
+  gridApi!: GridApi;
+
   managementGridApi!: GridApi;
   mappingGridApi!: GridApi;
 
@@ -125,17 +128,35 @@ export class PublicPlatformManagementComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.selectedLanguage = 'en'; // Set the default language
+    this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
         console.log('Translation file loaded successfully');
+        this.translateColumnHeaders();
+        // this.getUsers(); 
+      });
+    });
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translate.use(this.selectedLanguage).subscribe(() => {
+        this. translateColumnHeaders();
+        // this.getUsers(); // Load the table content after setting the translations
+        localStorage.setItem('selectedLanguage', this.selectedLanguage);
       });
     });
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
@@ -148,6 +169,69 @@ export class PublicPlatformManagementComponent implements OnInit {
       this.getForwardingServerNameRelations(this.selectForwardingServerName)
     })
   }
+  translateColumnHeaders(): void {
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'name', 'IP', 'port', 'platform ID', 'last login', 'last logout', 'start/stop','state', 'no Ack Mode', 'force vehcile login', 'filter location info', 'encryption Mode', 'encryption Key', 'connectionStatus', 'platformPw', 'action', 'Last sync(packet time)', '' ]).subscribe((translations: any) => {
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.forwardingColumnDefs = [
+            { field: 'serverName', headerName : translations['name'], tooltipField: 'serverName', width : 150},
+            { field: 'domain', headerName : translations['IP'], tooltipField: 'domain', width : 150},
+            { field: 'port', headerName : translations['port'], tooltipField: 'port', width : 80},
+            { field: 'platformId', headerName :translations['platform ID'], tooltipField: 'platformId', width : 150},
+            { field: 'lastLogin', headerName : translations['last login'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogin', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogin', type : 'date' }},
+            { field: 'lastLogout', headerName : translations['last logout'], valueFormatter : this.utilService.gridDateFormat, tooltipField: 'lastLogout', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'lastLogout', type : 'date' }},
+            { field: 'connectionStatus', headerName : translations['start/stop'], tooltipField: 'connectionStatus', width : 150},
+            { headerName: translations['state'], cellRenderer: ToggleCellRendererComponent,
+            cellRendererParams: {
+              toggle:(field:any, toggle : boolean)=>{
+        
+                this.sendManagement(field,toggle)
+              }
+            }, width:120},
+            { field: 'noAck', headerName : translations['no Ack Mode'], tooltipField: 'noAck', width : 130},
+            { field: 'forceLoginVehicle', headerName : translations['force vehcile login'], tooltipField: 'forceLoginVehicle', width : 160},
+            { field: 'filterLocationInfo', headerName : translations['filter location info'], tooltipField: 'filterLocationInfo', width : 160},
+            { field: 'encryptionMode', headerName : translations['encryption Mode'], tooltipField: 'encryptionMode', width : 160},
+            { field: 'encryptionKey', headerName : translations['encryption Key'], tooltipField: 'encryptionKey', width : 150},
+            //{ field: '', headerName : 'enterprise code', tooltipField: ''},
+            { field: 'connectionStatus', headerName : translations['connectionStatus'], tooltipField: 'connectionStatus'},
+            { field: 'platformPw', headerName : translations['platformPw'], tooltipField: 'platformPw'},
+            { field: translations['action'], cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              modify: (field: any) => {
+                this.modifyManagement(field)
+              },
+              delete : (field: any) => {
+                this.deleteManagement(field)
+              },
+            }, width:120},
+          ];
+          this.relationsColumnDefs= [
+            { field: 'vin', headerName: 'VIN', tooltipField: 'vin' },
+            { field: 'synctime', headerName: translations['Last sync(packet time)'], tooltipField: 'synctime'},
+            { field: translations['action'], cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              onlyRemove : true,
+              delete : (field: any) => {
+                this.deleteMapping(field)
+              },
+            }, width:120},
+          ];
+      
+          if (this.gridApi) {
+            this.gridApi.setColumnDefs(this.forwardingColumnDefs);
+            this.gridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.forwardingColumnDefs);
+        });
+      });
+    });
+
+   }
 
      //MINE//
      isDropdownOpen = false;
@@ -162,9 +246,11 @@ export class PublicPlatformManagementComponent implements OnInit {
    
     onLanguageChange(event: any) {
      const language = event.target.value;
+     this.uiService.setCurrentLanguage(language)
+     localStorage.setItem('selectedLanguage', language);
      this.translate.use(language).subscribe(() => {
        // Translation changed successfully
-      //  this.translateColumnHeaders();
+        this.translateColumnHeaders();
      });
    }
 

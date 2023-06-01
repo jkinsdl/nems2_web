@@ -43,7 +43,7 @@
 
   <ag-grid-angular #remoteControlStateGrid style="width: 100%; height: calc(100% - 50px)" (window:resize)="onResize($event)"
     class="ag-theme-alpine"
-    [rowData]="rowData"
+    [rowData]="devicemanagersVehicles.entities" 
     [columnDefs]="columnDefs"
     [alwaysShowHorizontalScroll]="true"
     [alwaysShowVerticalScroll]="true"
