@@ -30,16 +30,21 @@
         <img src="assets/icon/yellow_alarm_icon.png">
         <div class="alarmCount">789</div>
       </div>
-      --> 
-      
-      <div class="language-selector">
+      -->
+
+      <mat-select [(ngModel)]="currntLanguage" (ngModelChange)="onLanguageChange()" style="margin-right: 20px; width: 100px;">
+        <mat-option [value]="'en'" >English</mat-option>
+        <mat-option [value]="'zh-CN'">中文</mat-option>
+      </mat-select>
+
+      <!--<div class="language-selector">
         <select name="language" (change)="onLanguageChange($event)">
           <option value="en">English</option>
 
           <option value="zh-CN">中文</option>
         </select>
       </div>
-      
+      -->
 
       <!-- <div class="language-selector">
         <select name="language" (change)="onLanguageChange($event)">
@@ -54,8 +59,8 @@
         </select>
       </div>
        -->
-      
-      
+
+
       <div class="alarm" [routerLink]="['/main/alarm/'+null+'/CRITICAL']">
         <img src="assets/icon/red_notification.png">
         <div class="alarmCount" *ngIf="warningcount.critical > 0">{{warningcount.critical}}</div>
