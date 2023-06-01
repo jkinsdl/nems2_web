@@ -23,6 +23,7 @@ export class UtilService {
     }else{
       result += "0" + (date.getMonth() + 1) + "-"
     }
+
     if(date.getDate() > 9){
       result += date.getDate() + " "
     }else {
@@ -56,11 +57,13 @@ export class UtilService {
 
     if(params.value){
       result = date.getFullYear() + "-"
+
       if(date.getMonth() + 1 > 9){
         result += (date.getMonth() + 1) + "-"
       }else{
         result += "0" + (date.getMonth() + 1) + "-"
       }
+
       if(date.getDate() > 9){
         result += date.getDate() + " "
       }else {
