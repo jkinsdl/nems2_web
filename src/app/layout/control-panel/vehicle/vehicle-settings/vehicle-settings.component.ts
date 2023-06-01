@@ -91,13 +91,21 @@ export class VehicleSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.selectedLanguage = 'en'; // Set the default language
+    this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
     this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translateColumnHeaders();
+        // this.getUsers(); 
+      });
+    });
     this.uiService.currentLanguage$.subscribe((language : string)=>{
       console.log(language)
       this.selectedLanguage = language
@@ -108,8 +116,12 @@ export class VehicleSettingsComponent implements OnInit {
       }else {
         console.log("중문")
       }
-      this.translateColumnHeaders()
-    })
+      this.translate.use(this.selectedLanguage).subscribe(() => {
+        this. translateColumnHeaders();
+        // this.getUsers(); // Load the table content after setting the translations
+        localStorage.setItem('selectedLanguage', this.selectedLanguage);
+      });
+    });
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getVehiclemanagerStaticinfo()
@@ -117,7 +129,6 @@ export class VehicleSettingsComponent implements OnInit {
   }
 
   translateColumnHeaders(): void {
-
     this.translate.use(this.selectedLanguage).subscribe(() => {
       this.http.get<any>(this.translationFile).subscribe((data) => {
         this.translate.setTranslation(this.selectedLanguage, data);
@@ -142,7 +153,7 @@ export class VehicleSettingsComponent implements OnInit {
             { field: 'histories', headerName: translations['histories'], tooltipField: 'histories'},
             //{ field: 'registrationPlate', headerName : 'registrationPlate', tooltipField: 'registrationPlate'},
             //{ field: 'pcode', headerName : 'pcode', tooltipField: 'pcode'}
-            { field: 'action', cellRenderer: BtnCellRendererComponent,
+            { field: translations['action'], cellRenderer: BtnCellRendererComponent,
             cellRendererParams: {
               modify: (field: any) => {
                 this.modifyVehicle(field)
@@ -160,10 +171,26 @@ export class VehicleSettingsComponent implements OnInit {
         });
       });
     });
-
    }
 
+       //MINE//
+  isDropdownOpen = false;
 
+  toggleDropdown():void{
+      this.isDropdownOpen = !this.isDropdownOpen;
+    }
+    //  changeLanguage(language:string): void{
+    //    this.language = language;
+    //  }   
+  onLanguageChange(event: any) {
+    const language = event.target.value;
+    this.uiService.setCurrentLanguage(language)
+    localStorage.setItem('selectedLanguage', language);
+    this.translate.use(language).subscribe(() => {
+       // Translation changed successfully
+      this.translateColumnHeaders();
+    });
+  } 
 
   getPageSize(){
     this.gridHeight = this.vehicleSettingsGrid.nativeElement.offsetHeight;

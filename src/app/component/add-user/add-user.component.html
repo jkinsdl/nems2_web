@@ -8,33 +8,33 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">E-mail <span>*</span> </div>
+    <div class="label">{{ 'E-mail' | translate }} <span>*</span> </div>
     <div class="value">
       <input type="text" [(ngModel)]="addUserParameter.email">
     </div>
   </div>
   <div class="addInfoFilter">
-    <div class="label"> User Name <span>*</span> </div>
+    <div class="label"> {{ 'User Name' | translate }} <span>*</span> </div>
     <div class="value">
       <input type="text" [(ngModel)]="addUserParameter.username">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> authority ID <span>*</span> </div>
+    <div class="label">{{ 'authority ID' | translate }} <span>*</span> </div>
     <div class="value">
       <select  [(ngModel)]="addUserParameter.authorityId">
         <option [value]='""' disabled></option>
-        <option [value]='"admin"'>admin</option>
-        <option [value]='"service-admin"'>service-admin</option>
-        <option [value]='"poweruser"'>poweruser</option>
-        <option [value]='"user"'>user</option>
+        <option [value]='"admin"'>{{ 'admin' | translate }}</option>
+        <option [value]='"service-admin"'>{{ 'service-admin' | translate }}</option>
+        <option [value]='"poweruser"'>{{ 'poweruser' | translate }}</option>
+        <option [value]='"user"'>{{ 'user' | translate }}</option>
       </select>
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> Phone Number </div>
+    <div class="label"> {{ 'Phone Number' | translate }} </div>
     <div class="value">
       <select [(ngModel)]="phoneCountryCode" style="margin-right: 10px; width: 120px;">
         <option [value]="'+1'">+1 USA</option>
@@ -46,7 +46,7 @@
   </div>
 
   <div class="addInfoFilter">
-    <div class="label"> company </div>
+    <div class="label"> {{ 'company' | translate }} </div>
     <div class="value">
       <input type="text" [(ngModel)]="company">
     </div>
@@ -55,15 +55,15 @@
   <div class="btnBox">
 
     <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addUser()">
-      Add
+      {{ 'Add'| translate }}
     </div>
 
     <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (click)="modifyUser()">
-      Modify
+      {{ 'Modify'| translate }}
     </div>
 
     <div class="btn cancel" (click)="close()">
-      Cancel
+      {{ 'Cancel' | translate }}
     </div>
 
   </div>

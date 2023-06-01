@@ -2,41 +2,41 @@
 
   <div class="popupTitle">
     <div class="text">
-      Push Info
+      {{ 'Push Info' | translate }}
     </div>
     <img class="closeImg" src="assets/icon/close_icon.png" (click)="close()">
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">User Name <span>*</span> </div>
+    <div class="label">{{ 'User Name' | translate }} <span>*</span> </div>
     <div class="value">
       <input type="text" [(ngModel)]="parameter.userName">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">Phone Number </div>
+    <div class="label">{{ 'Phone Number' | translate }} </div>
     <div class="value">
       <input type="text" [(ngModel)]="parameter.phoneNumber">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">E-Mail </div>
+    <div class="label">{{ 'E-Mail' | translate }} </div>
     <div class="value">
       <input type="text" [(ngModel)]="parameter.eMail">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">Alicloud texture ID </div>
+    <div class="label">{{ 'Alicloud texture ID' | translate }} </div>
     <div class="value">
       <input type="text" [(ngModel)]="parameter.aliTextureId">
     </div>
   </div>
 
   <div class="addInfoFilter">
-    <div class="label">Alicloud Voice ID </div>
+    <div class="label">{{ 'Alicloud Voice ID' | translate }} </div>
     <div class="value">
       <input type="text" [(ngModel)]="parameter.aliVoiceId">
     </div>
@@ -44,13 +44,13 @@
 
   <div class="btnBox">
     <div class="btn add" *ngIf="data.type == constant.ADD_TYPE" (click)="addAlarm()">
-      Add
+      {{ 'Add' | translate }}
     </div>
     <div class="btn modify" *ngIf="data.type == constant.MODIFY_TYPE" (click)="modifyAlarm()">
-      Modify
+      {{ 'Modify' | translate }}
     </div>
     <div class="btn cancel" (click)="close()">
-      Cancel
+      {{ 'Cancel' | translate }}
     </div>
   </div>
 

@@ -23,6 +23,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ConfigureComponent implements OnInit {
   selectedLanguage: string; // Property to track the selected language(MINE)
+  translationFile : string = ""
 
   @ViewChild('configure1', { read: ElementRef }) configure1 : ElementRef;
 
@@ -124,21 +125,37 @@ export class ConfigureComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedLanguage = 'en'; // Set the default language
+    this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
-    const languageToLoad = this.selectedLanguage;
-    const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
-    
-    this.translate.use(languageToLoad).subscribe(() => {
-      this.http.get<any>(translationFile).subscribe((data) => {
-        this.translate.setTranslation(languageToLoad, data);
+    this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
+
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
         console.log('Translation file loaded successfully');
-        //this.translateColumnHeaders();
+        this.translateColumnHeaders();
+        // this.getUsers(); 
       });
     });
+    this.uiService.currentLanguage$.subscribe((language : string)=>{
+      console.log(language)
+      this.selectedLanguage = language
+      this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
+      if(this.selectedLanguage == 'en'){
+        console.log("영어")
+      }else {
+        console.log("중문")
+      }
+      this.translate.use(this.selectedLanguage).subscribe(() => {
+        this. translateColumnHeaders();
+        // this.getUsers(); // Load the table content after setting the translations
+        localStorage.setItem('selectedLanguage', this.selectedLanguage);
+      });
+    });
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getDevicemanagersParameter()
@@ -149,6 +166,67 @@ export class ConfigureComponent implements OnInit {
       this.getDevicemanagersParametersConfigureNameVehicles()
     })
   }
+  translateColumnHeaders(): void {
+    this.translate.use(this.selectedLanguage).subscribe(() => {
+      this.http.get<any>(this.translationFile).subscribe((data) => {
+        this.translate.setTranslation(this.selectedLanguage, data);
+        console.log('Translation file loaded successfully');
+        this.translate.get([ 'VIN', 'Updated At', 'Vehicle Static Info', 'Car Local Save Period', 'Normal Submit Period', 'Warning Submit Period', 'Manage Platform Name', 'Manage Platform Port', 'Hardware Version', 'Firmware Version', 'Car Heart Beat Period', 'Car Response Timeout', 'Platform Response Timeout', 'Next Login Interval', 'Public Platform Name',  'Public Platform Port', 'Monitoring', 'Packet Time']).subscribe((translations: any) => {;
+          console.log('Language:', this.translate.currentLang); // Log the current language
+          console.log('Translations:', translations); // Log the translations object
+          this.configurationColumnDefs = [
+            { field: 'configureName', headerName: 'Configure Name', tooltipField: 'configureName', width:150 },
+            { field: 'carLocalSavePeriod', headerName : 'Car Local Save Period (ms)', tooltipField: 'carLocalSavePeriod', minWidth:220},
+            { field: 'normalSubmitPeriod', headerName : 'Normal Submit Period (sec)', tooltipField: 'normalSubmitPeriod', minWidth:220},
+            { field: 'warningSubmitPeriod', headerName : 'Warning Submit Period (ms)', tooltipField: 'warningSubmitPeriod', minWidth:250},
+            { field: 'managePlatformName', headerName : 'Manage Platform Name', tooltipField: 'managePlatformName'},
+            { field: 'managePlatformPort', headerName : 'Manage Platform Port', tooltipField: 'managePlatformPort'},
+            { field: 'hwVersion', headerName : 'Hardware Version(sw)', tooltipField: 'hwVersion'},
+            { field: 'fwVersion', headerName : 'Firmware Version', tooltipField: 'fwVersion', width:180 },
+            { field: 'carHeartBeatPeriod', headerName: 'Car Heart Beat Period (sec)', tooltipField: 'carHeartBeatPeriod', minWidth:220},
+            { field: 'carResponseTimeout', headerName : 'Car Response Timeout (sec)', tooltipField: 'carResponseTimeout', minWidth:250},
+            { field: 'platformResponseTimeout', headerName : 'Platform Response Timeout (sec)', tooltipField: 'platformResponseTimeout', minWidth:280},
+            { field: 'nextLoginInterval', headerName : 'Next Login Interval (sec)', tooltipField: 'nextLoginInterval'},
+            { field: 'publicPlatformName', headerName : 'Public Platform Name', tooltipField: 'publicPlatformName'},
+            { field: 'publicPlatformPort', headerName : 'Public Platform Port', tooltipField: 'publicPlatformPort'},
+            { field: 'monitoring', headerName : 'Monitoring', tooltipField: 'monitoring', width:150 },
+            //{ field: 'updatedAt', headerName : 'updatedAt', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'updatedAt', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'updatedAt' }},
+            //{ field: 'updatedUserId', headerName : 'updated User Id', tooltipField: 'updatedUserId'},
+            { field: 'action', cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              modify: (field: any) => {
+                this.modifyConfigure(field)
+              },
+              delete : (field: any) => {
+                this.deleteConfigure(field)
+              },
+            }, width:120},
+          ];
+        
+          this.mappingColumnDefs = [
+            { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
+            { field: 'matched', headerName : 'Matched', tooltipField: 'matched'},
+            { field: 'matched_date', headerName : 'Matched Date', valueFormatter : this.utilService.gridDateFormat, tooltipField: 'matched_date', tooltipComponent : GridTooltipComponent, tooltipComponentParams: { fildName: 'matched_date', type : 'date' }},
+            { field: 'action', cellRenderer: BtnCellRendererComponent,
+            cellRendererParams: {
+              onlyRemove : true,
+              delete : (field: any) => {
+                this.deleteMapping(field)
+              },
+            }, width:120},
+          ];
+        
+         
+          if (this.configureGridApi) {
+            this.configureGridApi.setColumnDefs(this.configurationColumnDefs);
+            this.configureGridApi.refreshHeader();
+          }
+          console.log("Table are translating", this.configurationColumnDefs);
+        });
+      });
+    });
+
+   }
 
      //MINE//
    isDropdownOpen = false;
@@ -165,7 +243,7 @@ export class ConfigureComponent implements OnInit {
    const language = event.target.value;
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
-     //this.translateColumnHeaders();
+     this.translateColumnHeaders();
    });
  }
 

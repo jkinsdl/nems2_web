@@ -57,8 +57,10 @@ export class StatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Retrieve the selected language from storage or set a default value
+    this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
     console.log('status.component.ts initialized!');
-    this.selectedLanguage = 'en'; // Set the default language
+    //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
   
     // Load the translation file for the selected language
@@ -101,6 +103,7 @@ export class StatusComponent implements OnInit {
   onLanguageChange(event: any) {
    const language = event.target.value;
    this.uiService.setCurrentLanguage(language)
+   localStorage.setItem('selectedLanguage', language);
    this.translate.use(language).subscribe(() => {
      // Translation changed successfully
    });
