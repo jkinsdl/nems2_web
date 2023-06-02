@@ -93,11 +93,11 @@ export class TravelDistanceStatisticsComponent implements OnInit {
       f.end = new Date(selectDate.getTime()-selectDate.getTimezoneOffset()).toISOString()
     }
     this.statisticsService.getStatisticsMileages(f).subscribe(res=>{
-      console.log(res)
+      console.log("Period Mileage:",res)
       this.setBarChart(res.body.mileageVehicles)
       this.setDonutChart(res.body.mileageVehicles)
       this.totalMileage = res.body.totalMileage
-      this.periodMileage = res.body.periodMileage
+      this.periodMileage =  Number(res.body.periodMileage.toFixed(1));  //rounding to 1 decimal place
     },error=>{
       console.log(error)
     })

@@ -237,7 +237,7 @@ export class MonitoringComponent implements OnInit {
     this.searchFilter.limit = this.pageSize
     this.realtimedataService.getRealtimedataVehiclelist(this.searchFilter).subscribe(
       res=>{
-        console.log(res)
+        console.log("Realtime vehicle", res)
         this.vehicleInfo = res.body
         let pagination = {
           count : this.vehicleInfo.totalCount,

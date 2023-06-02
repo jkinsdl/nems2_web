@@ -2,6 +2,8 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
+//import { Observable, BehaviorSubject } from 'rxjs';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   observe: 'response' as 'response'
@@ -12,6 +14,8 @@ const httpOptions = {
 })
 
 export class AuthService {
+  // private tokenExpirationTimer: any;
+  // private tokenExpirationSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private http: HttpClient,
@@ -55,4 +59,22 @@ export class AuthService {
     var url = `${this.Url}/token`;
     return this.http.put<any>(url, { observe: "response" })
   }
+
+  // setTokenExpirationTimer(expiresIn: number): void {
+  //   this.tokenExpirationTimer = setTimeout(() => {
+  //     this.logout(); // Call the logout method when the token expires
+  //   }, expiresIn * 1000);
+  // }
+
+  // clearTokenExpirationTimer(): void {
+  //   if (this.tokenExpirationTimer) {
+  //     clearTimeout(this.tokenExpirationTimer);
+  //     this.tokenExpirationTimer = null;
+  //   }
+  // }
+
+  // logout(): void {
+  //   this.clearTokenExpirationTimer();
+  //   console.log('Automatic logout called');
+  // }
 }

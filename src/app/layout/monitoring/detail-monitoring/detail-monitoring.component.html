@@ -5,6 +5,7 @@
         [color]="'primary'"
         [checked]="realTimeOnOff"
         [disabled]="selectVehicle == null || mode != 'map'"
+        
         (change)="setRealTimeSwitch()"
         style="float: left; height: 30px;">
       Real Time !
@@ -37,7 +38,7 @@
     <div class="monitoringMapList">
       <div class="listRow" *ngFor="let vehicle of vehicleInfo" (click)="clickVin(vehicle)" [ngClass]="{'selectBackground': selectVehicle == vehicle}">
         <div class="markerImage">
-          <img src="assets/icon/blue_marker.png">
+          <img [src]="vehicle.isLogin ? 'assets/icon/blue_marker.png' : 'assets/icon/marker_icon.png'"> 
         </div>
         <div class="listText">
           {{vehicle.vin}}

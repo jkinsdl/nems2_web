@@ -428,10 +428,15 @@ export class DetailMonitoringComponent implements OnInit {
         type: 'circle',
         source: 'vehiclePathsLast',
         paint: {
-        'circle-color': '#11b4da',
-        'circle-radius': 4,
-        'circle-stroke-width': 3,
-        'circle-stroke-color': '#fff'
+          'circle-color': [
+            'case',
+            ['==', ['get', 'isLogin'], true],
+            '#11b4da', // Blue color for logged-in vehicles
+            '#FF0000' // Red color for logged-out vehicles
+          ],
+          'circle-radius': 4,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#fff'
         }
       });
 
