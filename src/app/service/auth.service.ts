@@ -2,7 +2,9 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-//import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators'; // Import the tap operator
+import {Router} from '@angular/router';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -14,15 +16,15 @@ const httpOptions = {
 })
 
 export class AuthService {
-  // private tokenExpirationTimer: any;
-  // private tokenExpirationSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private tokenExpirationTimer: any;
+ 
 
   constructor(
     private http: HttpClient,
+    private router: Router
   ) { }
   private Url = environment.httpText + environment.apiServer + "/api";
-  //private Url = environment.httpText + environment.apiServer + ":" + environment.apiPort + "/api";
-  //private Url = environment.httpText + "nems.suredatalab.kr/api";
+  
 
   getPublickKey(){
     var url = `${this.Url}/auth`;
@@ -30,6 +32,7 @@ export class AuthService {
   }
 
   checkLogin(user : any){
+    console.log("checkLogin")
     var url = `${this.Url}/auth`;
     let parameter : any = {
       email : user.email,
@@ -45,9 +48,17 @@ export class AuthService {
   }
 
   getToken(){ // 토큰 요청
-    var url = `${this.Url}/token`;
+    const url = `${this.Url}/token`;
 
-    return this.http.get<any>(url, { observe: "response" })
+    return this.http.get<any>(url, { observe: 'response' }).pipe(
+      tap((response) => {
+        console.log('Response headers:', response.headers);
+        const expirationDuration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+        const expiryTime = new Date(Date.now() + expirationDuration).toLocaleString();
+        console.log('Token will expire at:', expiryTime);
+        this.setLogoutTimer(expirationDuration);
+      })
+    );
   }
 
   deleteToken(){ // Sign-out
@@ -77,4 +88,30 @@ export class AuthService {
   //   this.clearTokenExpirationTimer();
   //   console.log('Automatic logout called');
   // }
+
+  setLogoutTimer(expirationDuration: number) {
+    this.clearLogoutTimer();
+
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
+  }
+
+  clearLogoutTimer() {
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+      this.tokenExpirationTimer = null;
+    }
+  }
+
+  logout() {
+    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
+    console.log('User logged out.');
+    
+
+    // Redirect to the login page
+    this.router.navigate(['/component/login']);
+  }
 }
+

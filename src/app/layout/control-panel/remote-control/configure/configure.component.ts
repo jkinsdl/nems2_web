@@ -415,7 +415,10 @@ export class ConfigureComponent implements OnInit {
     console.log(event.data)
     this.selectConfigureRow = event.data
     this.getDevicemanagersParametersConfigureNameVehicles()
+    console.log("configname",this.selectConfigureRow.configureName)
+  
   }
+  
 
   getDevicemanagersParametersConfigureNameVehicles(){
     this.devicemanagerService.getDevicemanagersParametersConfigureNameVehicles(this.selectConfigureRow.configureName, new SearchFilter()).subscribe(res=>{

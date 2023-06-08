@@ -89,7 +89,7 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
   }
 
   modifyConfiguration(){
-    if(this.configureName == ""){
+    if(this.configureName === ""){
       this.utilService.alertPopup("Parameter Configuration ", "Please enter configure name.",this.constant.ALERT_CONFIRMATION)
       return
     }
@@ -98,11 +98,18 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
     let body = this.configureData
     body.updatedUserId = JSON.parse(localStorage.getItem('user')).userId
 
+    //console.log(this.configureData);
+
+
     for (const [key, value] of Object.entries(body)) {
+      //console.log(key, value);
       if(value == null || value == undefined || value === ""){
         delete body[key]
       }
     }
+
+    //console.log(body);
+
 
     this.devicemanagerService.putDevicemanagersParameterVehicle(configureName,body).subscribe(res=>{
       console.log(res)
@@ -110,6 +117,7 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      this.utilService.alertPopup("Register remote setting", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
     })
   }
 
@@ -118,3 +126,4 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
   }
 
 }
+

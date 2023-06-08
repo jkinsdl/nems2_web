@@ -430,7 +430,7 @@ export class DetailMonitoringComponent implements OnInit {
         paint: {
           'circle-color': [
             'case',
-            ['==', ['get', 'isLogin'], true],
+            ['==', ['get', 'vehicle.isLogin'], true],
             '#11b4da', // Blue color for logged-in vehicles
             '#FF0000' // Red color for logged-out vehicles
           ],
