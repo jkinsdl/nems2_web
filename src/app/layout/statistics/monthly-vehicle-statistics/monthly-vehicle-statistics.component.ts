@@ -16,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MonthlyVehicleStatisticsComponent implements OnInit {
   selectedLanguage: string; // Property to track the selected language(MINE)
-  stateOptions: { label: string; value: string; }[];
+  // stateOptions: { label: string; value: string; }[];
 
   constructor(
     private statisticsServce : StatisticsService,
@@ -52,6 +52,16 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
   chinaChart : any
   cityChart : any
 
+  
+
+  isMapDataDownloaded = false; //Flag to track if map data has been downlaoded
+  subPrefectureeCopyData : any = null
+  // cityMapData: any; // Variable to store the retrieved china map data
+  // chinaMapDataLoaded: boolean = false; // Flag to track if China map data is loaded
+  // chinaMapDataDownloading: boolean = false;
+
+  
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
@@ -65,6 +75,18 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
   // Set the default language
   this.translate.setDefaultLang('en');
 
+
+  this.utilService.getSubPrefectureeCopyData().subscribe(
+    (res: any) => {
+      console.log(res);
+      this.subPrefectureeCopyData = res;
+      this.isMapDataDownloaded = true; 
+    },
+    (error) => {
+      console.log(error);
+    } 
+  );
+
   // Load the translation file for the selected language
   const languageToLoad = this.selectedLanguage;
   const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
@@ -77,16 +99,39 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
   });
 
     this.date = this.statisticsServce.statisticsDate
-    this.setChinaMapChart()
-    this.getStatisticsRegistrationSummary()
+    this.setChinaMapChart();
+    // this.loadChinaMapData();
+
+    this.getStatisticsRegistrationSummary();
 
     this.statisticsDate$ = this.statisticsServce.statisticsDate$.subscribe(date=>{
       console.log(date)
       this.date = date
       this.getStatisticsRegistrationSummary()
-    })
-  }
+    });
 
+    // if (!this.isMapDataDownloaded) {
+    //   this.utilService.getSubPrefectureeCopyData().subscribe(
+    //     (res: any) => {
+    //       console.log(res);
+
+    //       for(let i = 0; i < res.features.length; i++){
+    //         if(name != res.features[i].properties.ADM1_ZH){
+    //           res.features.splice(i,1)
+    //           i--;
+    //         }
+    //       }
+    //       echarts.registerMap('city', res);
+    //       this.isMapDataDownloaded = true;           
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     } 
+    //   );
+      
+    //  } 
+  }
+  
      //MINE//
      isDropdownOpen = false;
 
@@ -106,8 +151,6 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
      });
    }
 
-
-
   getStatisticsRegistrationSummary(){
     let f = new SearchFilter()
     if(this.date){
@@ -125,7 +168,7 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
       console.log(error)
     })
   }
-
+  
   setChinaMapChart(){
     var chartDom = document.getElementById('chinaMapChart')!;
     this.chinaChart = echarts.init(chartDom);
@@ -134,6 +177,7 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
     this.utilService.getProvinceCopyData().subscribe((res : any)=>{
       console.log(res)
       echarts.registerMap('CHINA', res);
+      
 
       this.statisticsServce.getStatisticsRegistrationCount( new SearchFilter()).subscribe(count=>{
         console.log(count)
@@ -192,30 +236,54 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
       this.chinaChart.on('click',(params:any)=>{
         this.setCityMapChart(params.name)
       })
-
-
+      
     },error=>{
       console.log(error)
     })
   }
 
-  setCityMapChart(name : any){
+  setCityMapChart(name : any){  
+
+    console.log("setCityMapChart")
+
+    if (this.cityChart) {
+      this.cityChart.dispose(); // Dispose of the previous chart instance
+    } 
     var chartDom = document.getElementById('cityMapChart')!;
     this.cityChart = echarts.init(chartDom);
     var option: echarts.EChartsOption;
 
-    this.utilService.getSubPrefectureeCopyData().subscribe((res : any)=>{
-      console.log(res)
+     if (!this.isMapDataDownloaded) {
 
-      for(let i = 0; i < res.features.length; i++){
-        if(name != res.features[i].properties.ADM1_ZH){
-          res.features.splice(i,1)
-          i--;
+     }
+     
+     let features = []
+
+     for(let i = 0; i < this.subPrefectureeCopyData.features.length; i++){
+     if(name == this.subPrefectureeCopyData.features[i].properties.ADM1_ZH){
+          features.push(this.subPrefectureeCopyData.features[i])
         }
       }
 
-      echarts.registerMap('city', res);
+      let cityData : any = {
+        type:"FeatureCollection",
+        features : features
+      }
+      echarts.registerMap('city', cityData);
+     
+    // this.utilService.getSubPrefectureeCopyData().subscribe((res : any)=>{
+    //   console.log(res)
 
+      // for(let i = 0; i < res.features.length; i++){
+      //   if(name != res.features[i].properties.ADM1_ZH){
+      //     res.features.splice(i,1)
+      //     i--;
+      //   }
+      // }
+
+      //  echarts.registerMap('city', res);
+    
+  
       let f = new SearchFilter()
       f.province = name
 
@@ -228,7 +296,6 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
             value : count.body.entities[i].count
           })
         }
-
 
         option = {
           tooltip: {
@@ -268,6 +335,6 @@ export class MonthlyVehicleStatisticsComponent implements OnInit {
         };
         this.cityChart.setOption(option,true);
       })
-    })
+    //  })
   }
 }
