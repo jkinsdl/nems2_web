@@ -49,7 +49,6 @@ export class AuthService {
 
   getToken(){ // 토큰 요청
     const url = `${this.Url}/token`;
-
     return this.http.get<any>(url, { observe: 'response' }).pipe(
       tap((response) => {
         console.log('Response headers:', response.headers);

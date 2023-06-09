@@ -14,6 +14,7 @@ import { CommonConstant } from 'src/app/util/common-constant';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-settings',
@@ -33,7 +34,8 @@ export class VehicleSettingsComponent implements OnInit {
     private utilService : UtilService,
     private uiService : UiService,
     private translate: TranslateService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
 
   ) { }
 
@@ -224,6 +226,11 @@ export class VehicleSettingsComponent implements OnInit {
       this.uiService.setPagination(pagination)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
