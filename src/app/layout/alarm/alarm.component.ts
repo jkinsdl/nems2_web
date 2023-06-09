@@ -394,7 +394,7 @@ export class AlarmComponent implements OnInit {
 
         },error=>{
           console.log(error)
-          if (error.status === 401 && error.error === "Unauthorized") {
+          if (error.status === 401) {
             this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
             // Redirect to the login page
             this.router.navigate(['/component/login']);
@@ -484,7 +484,7 @@ export class AlarmComponent implements OnInit {
 
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);

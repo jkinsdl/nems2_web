@@ -214,7 +214,7 @@ export class OTAManagementComponent implements OnInit {
       this.modelList = res.body
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized"){
+      if (error.status === 401){
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -240,7 +240,7 @@ export class OTAManagementComponent implements OnInit {
       this.firmwareList = res.body
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized"){
+      if (error.status === 401){
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -252,7 +252,7 @@ export class OTAManagementComponent implements OnInit {
     this.otaService.getOtaFirmware().subscribe(res=>{
       console.log(res)
     },error=>{
-      if (error.status === 401 && error.error === "Unauthorized"){
+      if (error.status === 401){
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -265,7 +265,7 @@ export class OTAManagementComponent implements OnInit {
     this.otaService.getOtaFirmwareFirmwareNo(firmwareNo).subscribe(res=>{
       console.log(res)
     },error=>{
-      if (error.status === 401 && error.error === "Unauthorized"){
+      if (error.status === 401){
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -381,7 +381,7 @@ export class OTAManagementComponent implements OnInit {
 
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized"){
+      if (error.status === 401){
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -400,7 +400,7 @@ export class OTAManagementComponent implements OnInit {
       this.selectFirmware = {}
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized"){
+      if (error.status === 401){
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -432,7 +432,7 @@ export class OTAManagementComponent implements OnInit {
             }
           },error=>{
             console.log(error)
-            if (error.status === 401 && error.error === "Unauthorized"){
+            if (error.status === 401){
               this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
               // Redirect to the login page
               this.router.navigate(['/component/login']);

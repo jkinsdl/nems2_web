@@ -587,7 +587,7 @@ export class DashboardComponent implements OnInit {
       this.criticalVehiclewarnings = res.body
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -602,7 +602,7 @@ export class DashboardComponent implements OnInit {
       this.majorVehiclewarnings = res.body
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -617,7 +617,7 @@ export class DashboardComponent implements OnInit {
       this.minorVehiclewarnings = res.body
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -632,7 +632,7 @@ export class DashboardComponent implements OnInit {
       //this.arrayTotalVehicles = Array.from(String(this.statisticsCurrent.totalVehicles)).reverse()
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -684,7 +684,7 @@ export class DashboardComponent implements OnInit {
       });
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
@@ -757,7 +757,7 @@ export class DashboardComponent implements OnInit {
       this.statisticsVehiclesSummary = res.body
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);

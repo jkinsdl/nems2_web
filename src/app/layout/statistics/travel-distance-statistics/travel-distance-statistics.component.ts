@@ -106,7 +106,7 @@ export class TravelDistanceStatisticsComponent implements OnInit {
       this.periodMileage =  Number(res.body.periodMileage.toFixed(1));  //rounding to 1 decimal place
     },error=>{
       console.log(error)
-      if (error.status === 401 && error.error === "Unauthorized") {
+      if (error.status === 401) {
         this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
         // Redirect to the login page
         this.router.navigate(['/component/login']);
