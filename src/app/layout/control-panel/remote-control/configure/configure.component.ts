@@ -12,6 +12,7 @@ import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-toolti
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/service/ui.service';
 import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
+import {Router} from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -35,6 +36,7 @@ export class ConfigureComponent implements OnInit {
     private devicemanagerService : DevicemanagerService,
     private utilService : UtilService,
     private uiService : UiService,
+    private router: Router,
 
     private translate: TranslateService,
     private http: HttpClient
@@ -292,6 +294,11 @@ export class ConfigureComponent implements OnInit {
 
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -408,6 +415,11 @@ export class ConfigureComponent implements OnInit {
       this.getDevicemanagersParameter()
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -433,6 +445,11 @@ export class ConfigureComponent implements OnInit {
       this.uiService.setPagination2(pagination)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 

@@ -4,6 +4,7 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 import { ForwardingService } from 'src/app/service/forwarding.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-public-platform-mapping',
@@ -17,7 +18,8 @@ export class AddPublicPlatformMappingComponent implements OnInit {
     private dialogRef: MatDialogRef<AddPublicPlatformMappingComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private forwardingService : ForwardingService,
-    private utilService : UtilService
+    private utilService : UtilService,
+    private router: Router
   ) { }
 
   datePicker : any
@@ -39,6 +41,11 @@ export class AddPublicPlatformMappingComponent implements OnInit {
       this.irrelevantList = res.body.entities
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -58,7 +65,13 @@ export class AddPublicPlatformMappingComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
       this.utilService.alertPopup("Vehicle Model", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
 
 

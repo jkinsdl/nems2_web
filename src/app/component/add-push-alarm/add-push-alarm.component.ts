@@ -4,6 +4,8 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { PushinfosService } from 'src/app/service/pushinfos.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-add-push-alarm',
@@ -19,6 +21,7 @@ export class AddPushAlarmComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data : any,
     private notificationService : NotificationService,
     private utilService : UtilService,
+    private router: Router,
     private pushinfosService : PushinfosService
   ) { }
 
@@ -59,8 +62,13 @@ export class AddPushAlarmComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
-
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
       this.utilService.alertPopup("Push Alarm", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
   }
 
@@ -81,7 +89,13 @@ export class AddPushAlarmComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
       this.utilService.alertPopup("Push Alarm", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
   }
 

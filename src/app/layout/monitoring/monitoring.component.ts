@@ -7,6 +7,7 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
+import { CommonConstant } from 'src/app/util/common-constant';
 
 
 import { TranslateService } from '@ngx-translate/core';
@@ -18,6 +19,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./monitoring.component.css']
 })
 export class MonitoringComponent implements OnInit {
+  constant : CommonConstant = new CommonConstant()
   selectedLanguage: string; // Property to track the selected language(MINE)
   translationFile : string = ""
   // stateOptions: { label: string; value: string; }[];
@@ -249,6 +251,11 @@ export class MonitoringComponent implements OnInit {
 
       }, error=>{
         console.log(error)
+        if (error.status === 401 && error.error === "Unauthorized") {
+          this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+          // Redirect to the login page
+          this.router.navigate(['/component/login']);
+        }
       })
   }
 

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { SearchFilter } from 'src/app/object/searchFilter';
+import { UtilService } from 'src/app/service/util.service';
 import { StatisticsService } from 'src/app/service/statistics.service';
+import { CommonConstant } from 'src/app/util/common-constant';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -13,13 +16,16 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./travel-distance-statistics.component.css']
 })
 export class TravelDistanceStatisticsComponent implements OnInit {
+  constant : CommonConstant = new CommonConstant()
   selectedLanguage: string; // Property to track the selected language(MINE)
   stateOptions: { label: string; value: string; }[];
 
   constructor(
     private statisticsService : StatisticsService,
+    private utilService : UtilService,
     private translate : TranslateService,
-    private http : HttpClient
+    private http : HttpClient,
+    private router: Router,
   ) { }
 
   totalMileage : number = 0;
@@ -100,6 +106,11 @@ export class TravelDistanceStatisticsComponent implements OnInit {
       this.periodMileage =  Number(res.body.periodMileage.toFixed(1));  //rounding to 1 decimal place
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 

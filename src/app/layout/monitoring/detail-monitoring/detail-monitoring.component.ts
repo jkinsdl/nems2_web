@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/service/util.service';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { DetailMonitoringHistoryComponent } from 'src/app/component/detail-monitoring-history/detail-monitoring-history.component';
+import { CommonConstant } from 'src/app/util/common-constant';
 
 
 @Component({
@@ -23,8 +24,10 @@ import { DetailMonitoringHistoryComponent } from 'src/app/component/detail-monit
 })
 
 export class DetailMonitoringComponent implements OnInit {
+  constant : CommonConstant = new CommonConstant()
 
   @ViewChild('vinHistoryGrid', { read: ElementRef }) vinHistoryGrid : ElementRef;
+  
 
   constructor(private router: Router,
     private activatedRoute : ActivatedRoute,
@@ -439,6 +442,26 @@ export class DetailMonitoringComponent implements OnInit {
           'circle-stroke-color': '#fff'
         }
       });
+      
+      
+      
+
+//       const vehicleBrief = [{isLogin: true, vin: "60622400004718376", regNumber: "临BF00001", nemsSn: "NEMSDYKBDE70553"}, {isLogin: false, vin: "KNAC581E1P5137594", regNumber: "1", nemsSn: "NEMSDYKBDP00092"}];
+
+// // Check if isLogin property exists and its type is boolean
+//      if (vehicleBrief && vehicleBrief.length > 0) {
+//       const firstVehicle = vehicleBrief[0];
+//      if ('isLogin' in firstVehicle && typeof firstVehicle.isLogin === 'boolean') {
+//       console.log('isLogin property exists and is of boolean type.');
+//     } else {
+//       console.log('isLogin property does not exist or is not a boolean.');
+//     }
+//    } else {
+//      console.log('No data available in vehicleBrief.');
+//   }
+
+      
+      
 
       this.map.on('zoomend',e=>{
         console.log(this.map.getZoom())
@@ -586,6 +609,11 @@ export class DetailMonitoringComponent implements OnInit {
         this.vehicleInfo = res.body.vehicleBrief
       }, error=>{
         console.log(error)
+        if (error.status === 401 && error.error === "Unauthorized") {
+          this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+          // Redirect to the login page
+          this.router.navigate(['/component/login']);
+        }
       })
   }
 
@@ -1310,6 +1338,11 @@ export class DetailMonitoringComponent implements OnInit {
 
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -1318,6 +1351,11 @@ export class DetailMonitoringComponent implements OnInit {
       this.provinceJSONData = res2
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -1423,6 +1461,11 @@ export class DetailMonitoringComponent implements OnInit {
 
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 

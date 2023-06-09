@@ -5,6 +5,7 @@ import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-otamanagement',
@@ -18,6 +19,7 @@ export class AddOTAManagementComponent implements OnInit {
     private dialogRef: MatDialogRef<AddOTAManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private utilService : UtilService,
+    private router : Router,
     private vehiclemanagersService : VehiclemanagerService,
     private devicemanageService : DevicemanagerService
   ) { }
@@ -53,6 +55,11 @@ export class AddOTAManagementComponent implements OnInit {
       this.modelList = res.body.modelList
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -92,7 +99,13 @@ export class AddOTAManagementComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else{
       this.utilService.alertPopup("OTA Management", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
   }
 

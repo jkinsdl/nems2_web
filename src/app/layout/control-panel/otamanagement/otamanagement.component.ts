@@ -11,6 +11,7 @@ import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { GridTooltipComponent } from 'src/app/component/grid-tooltip/grid-tooltip.component';
 import { Subscription } from 'rxjs';
+import {Router} from '@angular/router';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -36,6 +37,7 @@ export class OTAManagementComponent implements OnInit {
     private dialog: MatDialog,
     private uiService : UiService,
     private utilService : UtilService,
+    private router : Router,
     private vehiclemanagersService : VehiclemanagerService,
 
     private translate: TranslateService,
@@ -212,6 +214,11 @@ export class OTAManagementComponent implements OnInit {
       this.modelList = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -233,6 +240,11 @@ export class OTAManagementComponent implements OnInit {
       this.firmwareList = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -240,6 +252,11 @@ export class OTAManagementComponent implements OnInit {
     this.otaService.getOtaFirmware().subscribe(res=>{
       console.log(res)
     },error=>{
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
       console.log(error)
     })
   }
@@ -248,6 +265,11 @@ export class OTAManagementComponent implements OnInit {
     this.otaService.getOtaFirmwareFirmwareNo(firmwareNo).subscribe(res=>{
       console.log(res)
     },error=>{
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
       console.log(error)
     })
   }
@@ -359,8 +381,14 @@ export class OTAManagementComponent implements OnInit {
 
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else{
 
       this.uiService.setAlertMessage("does not exist : " + this.inputVinText)
+      }
 
     })
   }
@@ -372,6 +400,11 @@ export class OTAManagementComponent implements OnInit {
       this.selectFirmware = {}
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -399,6 +432,11 @@ export class OTAManagementComponent implements OnInit {
             }
           },error=>{
             console.log(error)
+            if (error.status === 401 && error.error === "Unauthorized"){
+              this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+              // Redirect to the login page
+              this.router.navigate(['/component/login']);
+            }
           })
         }
       }

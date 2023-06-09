@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { StatisticsService } from 'src/app/service/statistics.service';
 import * as echarts from 'echarts';
+import { Router } from '@angular/router';
 import { UiService } from 'src/app/service/ui.service';
+import { UtilService } from 'src/app/service/util.service';
+import { CommonConstant } from 'src/app/util/common-constant';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class StatusComponent implements OnInit {
+  constant : CommonConstant = new CommonConstant()
   selectedLanguage: string; // Property to track the selected language(MINE)
   stateOptions: { label: string; value: string; }[];
   language: string;
@@ -22,6 +26,9 @@ export class StatusComponent implements OnInit {
   constructor(
     private statisticsService : StatisticsService,
     private uiService : UiService,
+    private utilService : UtilService,
+    private router: Router,
+
 
     private translate: TranslateService,
     private http: HttpClient
@@ -85,6 +92,11 @@ export class StatusComponent implements OnInit {
       this.statisticsCurrent = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -116,6 +128,11 @@ export class StatusComponent implements OnInit {
       this.statisticsVehiclesSummary = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -128,6 +145,11 @@ export class StatusComponent implements OnInit {
       this.vehicleFailure = res.body.vehicleFailure
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 

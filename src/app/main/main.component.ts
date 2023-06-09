@@ -146,17 +146,19 @@ export class MainComponent implements OnInit {
       this.realtimedataService.alarmCountSubject.next(res.body)
     },error=>{
       console.log(error)
+
     })
   }
 
   getRealtimedataWarningcount(){
 
     this.realtimedataService.getRealtimedataWarningcount().subscribe(res=>{
-      //console.log(res)
+      console.log(res)
       this.warningcount = res.body
       this.realtimedataService.alarmCountSubject.next(res.body)
     },error=>{
       console.log(error)
+
     })
   }
 

@@ -11,6 +11,7 @@ import { UserService } from 'src/app/service/user.service';
 import { RealtimedataService } from 'src/app/service/realtimedata.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
+import { CommonConstant } from 'src/app/util/common-constant';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -22,6 +23,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class DashboardComponent implements OnInit {
+  constant : CommonConstant = new CommonConstant()
   selectedLanguage: string; // Property to track the selected language(MINE)
   stateOptions: { label: string; value: string; }[];
 
@@ -585,7 +587,12 @@ export class DashboardComponent implements OnInit {
       this.criticalVehiclewarnings = res.body
     },error=>{
       console.log(error)
-    })
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
+    });
 
     filter.warningLevel = []
     filter.warningLevel.push('MAJOR')
@@ -595,6 +602,11 @@ export class DashboardComponent implements OnInit {
       this.majorVehiclewarnings = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
 
     filter.warningLevel = []
@@ -605,6 +617,11 @@ export class DashboardComponent implements OnInit {
       this.minorVehiclewarnings = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -615,6 +632,11 @@ export class DashboardComponent implements OnInit {
       //this.arrayTotalVehicles = Array.from(String(this.statisticsCurrent.totalVehicles)).reverse()
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -662,6 +684,11 @@ export class DashboardComponent implements OnInit {
       });
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -730,6 +757,11 @@ export class DashboardComponent implements OnInit {
       this.statisticsVehiclesSummary = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 

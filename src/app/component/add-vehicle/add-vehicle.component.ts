@@ -5,6 +5,7 @@ import { RegionmanagersService } from 'src/app/service/regionmanagers.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclemanagerService } from 'src/app/service/vehiclemanager.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -20,7 +21,8 @@ export class AddVehicleComponent implements OnInit {
     private vehiclemanagersService : VehiclemanagerService,
     private utilService : UtilService,
     private regionmanagersService : RegionmanagersService,
-    private vehiclemanagerService : VehiclemanagerService
+    private vehiclemanagerService : VehiclemanagerService,
+    private router: Router
   ) { }
 
   addVehiclemanagerStaticinfoParameter : any = {
@@ -76,6 +78,11 @@ export class AddVehicleComponent implements OnInit {
       this.provinceList = res.body.regions
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -140,6 +147,11 @@ export class AddVehicleComponent implements OnInit {
       this.modelList = res.body.modelList
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized") {
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -201,7 +213,13 @@ export class AddVehicleComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
       this.utilService.alertPopup("Vehicle Settings", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
   }
 
@@ -260,7 +278,13 @@ export class AddVehicleComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
       this.utilService.alertPopup("Vehicle Settings", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
   }
 

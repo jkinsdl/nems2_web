@@ -7,6 +7,9 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Terminal } from 'xterm';
 import { FunctionsUsingCSI } from 'ng-terminal';
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
+import { UtilService } from 'src/app/service/util.service';
+import { CommonConstant } from 'src/app/util/common-constant';
+import {Router} from '@angular/router'
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +20,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./terminal.component.css']
 })
 export class TerminalComponent implements OnInit {
+  constant : CommonConstant = new CommonConstant()
   selectedLanguage: string; // Property to track the selected language(MINE)
   readonly title = 'NgTerminal Live Example';
   readonly color = 'accent';
@@ -39,6 +43,8 @@ export class TerminalComponent implements OnInit {
 
   constructor(
     private deviceManagerService : DevicemanagerService,
+    private utilService : UtilService,
+    private router: Router,
 
     private translate: TranslateService,
     private http: HttpClient
@@ -140,6 +146,11 @@ export class TerminalComponent implements OnInit {
       console.log(res)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 

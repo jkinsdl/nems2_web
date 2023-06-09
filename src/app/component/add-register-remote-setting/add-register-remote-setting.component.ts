@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { DevicemanagerService } from 'src/app/service/devicemanager.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-register-remote-setting',
@@ -16,7 +17,8 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
     private dialogRef: MatDialogRef<AddRegisterRemoteSettingComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private utilService : UtilService,
-    private devicemanagerService : DevicemanagerService
+    private devicemanagerService : DevicemanagerService,
+    private router: Router
   ) { }
 
   configureName : string = ""
@@ -79,11 +81,17 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
 
 
     this.devicemanagerService.putDevicemanagersParameterVehicle(configureName,body).subscribe(res=>{
-      console.log(res)
+      console.log("devicemanager: ",res)
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else{
       this.utilService.alertPopup("Vehicle Model", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
 
   }
@@ -116,11 +124,16 @@ export class AddRegisterRemoteSettingComponent implements OnInit {
 
       this.dialogRef.close(true)
     },error=>{
-      console.log(error)
-      this.utilService.alertPopup("Register remote setting", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      console.log(error);
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
+        this.utilService.alertPopup("Register remote setting", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
   }
-
   close(){
     this.dialogRef.close()
   }

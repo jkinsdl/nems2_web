@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ForwardingService } from 'src/app/service/forwarding.service';
 import { UtilService } from 'src/app/service/util.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-public-platform-management',
@@ -16,6 +17,7 @@ export class AddPublicPlatformManagementComponent implements OnInit {
     private dialogRef: MatDialogRef<AddPublicPlatformManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private utilService: UtilService,
+    private router: Router,
     private forwardingService : ForwardingService
   ) { }
 
@@ -37,6 +39,11 @@ export class AddPublicPlatformManagementComponent implements OnInit {
       this.forwardingParameter = res.body
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
@@ -88,7 +95,13 @@ export class AddPublicPlatformManagementComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
       this.utilService.alertPopup("Public Platform", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
 
 
@@ -135,7 +148,13 @@ export class AddPublicPlatformManagementComponent implements OnInit {
       this.dialogRef.close(true)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }else {
       this.utilService.alertPopup("Public Platform", error.statusText + " : " + error.error, this.constant.ALERT_WARNING)
+      }
     })
 
   }

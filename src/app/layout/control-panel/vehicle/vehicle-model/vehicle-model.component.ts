@@ -8,6 +8,7 @@ import { SearchFilter } from 'src/app/object/searchFilter';
 import { AddVehicleModelComponent } from 'src/app/component/add-vehicle-model/add-vehicle-model.component';
 import { UtilService } from 'src/app/service/util.service';
 import { Subscription } from 'rxjs';
+import {Router} from '@angular/router';
 import { UiService } from 'src/app/service/ui.service';
 import { BtnCellRendererComponent } from 'src/app/component/btn-cell-renderer/btn-cell-renderer.component';
 @Component({
@@ -25,7 +26,8 @@ export class VehicleModelComponent implements OnInit {
     private dialog: MatDialog,
     private vehiclemanagersService : VehiclemanagerService,
     private utilService : UtilService,
-    private uiService : UiService
+    private uiService : UiService,
+    private router: Router
   ) { }
 
   columnDefs: ColDef[] = [
@@ -128,6 +130,11 @@ export class VehicleModelComponent implements OnInit {
       this.uiService.setPagination(pagination)
     },error=>{
       console.log(error)
+      if (error.status === 401 && error.error === "Unauthorized"){
+        this.utilService.alertPopup("Token has expired", "Please login again.", this.constant.ALERT_WARNING);
+        // Redirect to the login page
+        this.router.navigate(['/component/login']);
+      }
     })
   }
 
