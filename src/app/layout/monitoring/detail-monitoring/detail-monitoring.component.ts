@@ -433,7 +433,7 @@ export class DetailMonitoringComponent implements OnInit {
         paint: {
           'circle-color': [
             'case',
-            ['==', ['get', 'vehicle.isLogin'], true],
+            ['get', 'isLogin'],
             '#11b4da', // Blue color for logged-in vehicles
             '#FF0000' // Red color for logged-out vehicles
           ],
@@ -661,20 +661,33 @@ export class DetailMonitoringComponent implements OnInit {
       }
 
 
+      let vehicleBrief = this.vehicleInfo.find(vehicle => vehicle.vin === this.selectVehicle.vin);
+      let isLogin = vehicleBrief && vehicleBrief.isLogin ? true : false;
+
       let source = (this.map.getSource("vehiclePathsLast") as GeoJSONSource).setData({
         "type": "Feature",
-        "properties": {},
+        "properties": {
+          "isLogin" : isLogin
+        },
         "geometry": {
           "type": "Point",
           "coordinates": [res.body.location.longitude,res.body.location.latitude]
+          
         }
       });
 
-      this.map.setLayoutProperty("vehiclePathsLastPoint", 'visibility', 'visible');
-    },error=>{
-      console.log(error)
-    })
-  }
+          // Update circle color based on login status
+          let layerId = 'vehiclePathsLastPoint';
+          let circleColor = isLogin ? '#11b4da' : '#FF0000';
+          this.map.setPaintProperty(layerId, 'circle-color', circleColor);
+    
+          this.map.setLayoutProperty(layerId, 'visibility', 'visible');
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }  
 
   getRealtimedataPathVin(){
     let filter = new SearchFilter()
