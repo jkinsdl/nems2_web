@@ -104,6 +104,7 @@ export class DashboardComponent implements OnInit {
 
 
   dashboardInterval : any = null
+  //dataloaded = false;
 
   onResize(event : any){
     console.log("onResize")
@@ -134,6 +135,7 @@ export class DashboardComponent implements OnInit {
  // Load the translation file for the selected language
  const languageToLoad = this.selectedLanguage;
  const translationFile = `../assets/i18n/dashboard/${languageToLoad}.json`;
+ //const dataLoaded = localStorage.getItem('dataLoaded');
 
  this.translate.use(languageToLoad).subscribe(() => {
    this.http.get<any>(translationFile).subscribe((data) => {
@@ -143,9 +145,19 @@ export class DashboardComponent implements OnInit {
    });
  });
 
+//  if (!dataLoaded) {
+//   // Data not loaded, so load it
+//   this.loadData();
+
+//   // Set the flag in localStorage to indicate that the data has been loaded
+//   localStorage.setItem('dataLoaded', 'true');
+// }
+
     this.utilService.getProvinceData().subscribe((res:any)=>{
       this.provinceData = res
+      console.log("Final", res)
     })
+  
 
     this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
       this.subPrefectureData = res
@@ -158,8 +170,6 @@ export class DashboardComponent implements OnInit {
         },600)
       }
     })
-
-    
 
     setTimeout(()=>{
       mapboxgl.accessToken = "pk.eyJ1IjoiY29vbGprIiwiYSI6ImNsNTh2NWpydjAzeTQzaGp6MTEwN2E0MDcifQ.AOl86UqKc-PxKcwj9kKZtA"
@@ -554,6 +564,17 @@ export class DashboardComponent implements OnInit {
      // Translation changed successfully
    });
  }
+
+//  loadData() {
+//   this.utilService.getProvinceData().subscribe((res: any) => {
+//     this.provinceData = res;
+//     console.log("Final", res);
+//   });
+
+//   this.utilService.getSubPrefectureeData().toPromise().then((res: any) => {
+//     this.subPrefectureData = res;
+//   });
+// }
 
   refresh(){
     this.getStatisticsCurrent()

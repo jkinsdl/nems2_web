@@ -16,9 +16,13 @@ import { UiService } from 'src/app/service/ui.service';
 import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 import { CommonConstant } from 'src/app/util/common-constant';
+//import {ALERT_SUCCESS} from 'src/app/util/common-constant';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+
+
+ //const ALERT_SUCCESS = 'success';
 
 
 @Component({
@@ -30,6 +34,9 @@ export class AlarmComponent implements OnInit {
   selectedLanguage: string; // Property to track the selected language(MINE)
   translationFile : string = ""
   //stateOptions: { label: string; value: string; }[];
+  ALERT_SUCCESS: number = 1; // mine
+
+ 
 
   constant : CommonConstant = new CommonConstant()
   @ViewChild('alarmGrid', { read: ElementRef }) alarmGrid : ElementRef;
@@ -627,13 +634,14 @@ export class AlarmComponent implements OnInit {
     let parameter = {
       state : this.selectionAlarm.state
     }
-
     this.vehiclewarningService.putVehiclewarningsIssueId(this.selectionAlarm.issueId, parameter).subscribe(res=>{
       console.log(res)
       this.selectAlarm()
       //this.getVehiclewarnings()
+      this.utilService.alertPopup("State updated successfully!", "", this.ALERT_SUCCESS); //mine
     },error=>{
       console.log(error)
+      this.utilService.alertPopup("An error occured", "Please try again." , this.constant.ALERT_WARNING); //mine
     })
   }
 }

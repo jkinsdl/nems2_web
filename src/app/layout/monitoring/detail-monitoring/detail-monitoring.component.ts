@@ -536,6 +536,11 @@ export class DetailMonitoringComponent implements OnInit {
     })
   }
 
+  updateVinSearchText(vin: string) {
+    this.vinSearchText = vin;
+  }
+  
+
   getPageSize(){
     this.gridHeight = this.vinHistoryGrid.nativeElement.offsetHeight;
     this.pageSize = this.uiService.getGridPageSize(this.gridHeight)

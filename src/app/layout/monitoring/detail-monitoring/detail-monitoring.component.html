@@ -40,7 +40,7 @@
         <div class="markerImage">
           <img [src]="vehicle.isLogin ? 'assets/icon/blue_marker.png' : 'assets/icon/marker_icon.png'"> 
         </div>
-        <div class="listText">
+        <div class="listText"(click)="updateVinSearchText(vehicle.vin)">
           {{vehicle.vin}}
         </div>
       </div>
