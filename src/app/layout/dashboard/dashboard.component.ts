@@ -13,6 +13,10 @@ import { UtilService } from 'src/app/service/util.service';
 import { VehiclewarningService } from 'src/app/service/vehiclewarning.service';
 import { CommonConstant } from 'src/app/util/common-constant';
 
+import { Subject } from 'rxjs';
+//import { forkJoin } from 'rxjs';
+
+
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -30,6 +34,9 @@ export class DashboardComponent implements OnInit {
   @ViewChild('dashBorderAlarmGrid', { read: ElementRef }) alarmGrid : ElementRef;
   // language: string;
 
+  private dataLoadedSubject: Subject<boolean> = new Subject<boolean>();
+
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -41,8 +48,9 @@ export class DashboardComponent implements OnInit {
     private vehiclewarningService : VehiclewarningService,
 
     private translate: TranslateService,
-    private http: HttpClient
+    private http: HttpClient,
 
+    
   ) { }
   menuMode$ : Subscription
   alarmCount$ : Subscription
@@ -96,15 +104,21 @@ export class DashboardComponent implements OnInit {
 
   lastZoom : number
 
-  provinceData : any = {}
-  subPrefectureData : any = {}
+  provinceData : any = null
+  subPrefectureData : any = null
 
   province_statistics_registration_count_data : any[] = []
   gridHeight : number
 
 
   dashboardInterval : any = null
-  //dataloaded = false;
+  dataLoaded: boolean = false;
+  
+
+  isProvinceData: boolean = false;
+  isSubPrefectureData: boolean =  false;
+  isDataDownload: boolean = false;
+
 
   onResize(event : any){
     console.log("onResize")
@@ -144,24 +158,30 @@ export class DashboardComponent implements OnInit {
      
    });
  });
-
-//  if (!dataLoaded) {
-//   // Data not loaded, so load it
-//   this.loadData();
-
-//   // Set the flag in localStorage to indicate that the data has been loaded
-//   localStorage.setItem('dataLoaded', 'true');
-// }
-
-    this.utilService.getProvinceData().subscribe((res:any)=>{
-      this.provinceData = res
-      console.log("Final", res)
-    })
+    //this.utilService.getProvinceData().subscribe((res:any)=>{
+      //if (!this.provinceData) {
+    //if (!this.provinceData) {
+      this.utilService.getProvinceData().subscribe((res:any)=>{ 
+        //if (!this.isDataDownload) {
+        this.provinceData = res
+        console.log("Final", res);
+        this.isProvinceData = true;
+      });
+   // }
+      
+    //}
   
-
-    this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
-      this.subPrefectureData = res
-    })
+    //this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
+      //if (!this.subPrefectureData){
+    // if (!this.subPrefectureData) {
+      this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
+        //if (!this.isDataDownload) {
+        this.subPrefectureData = res
+        console.log("subPrefecture", res)
+        this.isSubPrefectureData = true;
+        });
+   // }
+   // }
 
     this.menuMode$ = this.uiService.menuMode$.subscribe(mode =>{
       if(mode == 2) {
@@ -185,6 +205,39 @@ export class DashboardComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this.map.on('load', () => {
+
+    //   if (!this.provinceData) {
+    //     this.utilService.getProvinceData().subscribe((res:any)=>{ 
+    //       //if (!this.provinceData) {
+    //       this.provinceData = res
+    //       console.log("Final", res);
+    //       this.provinceData = true;
+    //     //}
+    //    });
+    //  }
+        
+    //   //}
+    
+    //   //this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
+    //     //if (!this.subPrefectureData){
+    //   if (!this.subPrefectureData) {
+    //     this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
+    //      // if (!this.subPrefectureData) {
+    //       this.subPrefectureData = res
+    //       console.log("subPrefecture", res)
+    //       this.subPrefectureData = true;
+    //     //}
+    //   });
+    //   }
+  
+    //   this.menuMode$ = this.uiService.menuMode$.subscribe(mode =>{
+    //     if(mode == 2) {
+    //       setTimeout(()=>{
+    //         this.map.resize()
+    //       },600)
+    //     }
+    //   })
+       
       this.map.addSource('province', {
         type: 'geojson',
         data: 'assets/data/chn_province_final.json'
@@ -215,7 +268,7 @@ export class DashboardComponent implements OnInit {
           "features": []
         }
       })
-
+   
       this.map.addLayer({
         id: 'province-statistics-registration-count-clusters',
         type: 'circle',
@@ -332,6 +385,10 @@ export class DashboardComponent implements OnInit {
         }
 
         if(clickedADM1_ZH){
+          if (!this.isSubPrefectureData) {
+
+          }
+          
           for(let i = 0; i < this.subPrefectureData.features.length; i++){
             if(this.subPrefectureData.features[i].properties.ADM1_ZH == clickedADM1_ZH){
               this.map.setFeatureState(
@@ -434,6 +491,9 @@ export class DashboardComponent implements OnInit {
           );
         }
 
+        // if (!this.isSubPrefectureData) {
+
+        // }
         for(let i = 0; i < this.provinceData.features.length; i++){
           if(this.provinceData.features[i].properties.ADM1_ZH == clickedADM1_ZH){
             clickedStateId = this.provinceData.features[i].id;
@@ -447,6 +507,9 @@ export class DashboardComponent implements OnInit {
         );
 
         if(clickedADM1_ZH){
+          if (!this.isSubPrefectureData) {
+
+          }
           for(let i = 0; i < this.subPrefectureData.features.length; i++){
             if(this.subPrefectureData.features[i].properties.ADM1_ZH == clickedADM1_ZH){
               this.map.setFeatureState(
@@ -546,7 +609,6 @@ export class DashboardComponent implements OnInit {
       this.setAlarmStatisticsChartData(alamr)
     })
   }
-
    //MINE//
    isDropdownOpen = false;
 
@@ -564,17 +626,6 @@ export class DashboardComponent implements OnInit {
      // Translation changed successfully
    });
  }
-
-//  loadData() {
-//   this.utilService.getProvinceData().subscribe((res: any) => {
-//     this.provinceData = res;
-//     console.log("Final", res);
-//   });
-
-//   this.utilService.getSubPrefectureeData().toPromise().then((res: any) => {
-//     this.subPrefectureData = res;
-//   });
-// }
 
   refresh(){
     this.getStatisticsCurrent()
@@ -604,7 +655,7 @@ export class DashboardComponent implements OnInit {
     filter.limit = Math.floor((this.gridHeight - 50 - 48 - 50) / 30)
 
     this.vehiclewarningService.getVehiclewarnings(filter).subscribe(res=>{
-      console.log(res)
+      console.log("Warning",res)
       this.criticalVehiclewarnings = res.body
     },error=>{
       console.log(error)
@@ -672,7 +723,13 @@ export class DashboardComponent implements OnInit {
   getStatisticsRegistrationCount(){
     this.statisticsService.getStatisticsRegistrationCount(new SearchFilter()).subscribe(res=>{
       console.log(res)
+
+      if (!this.isProvinceData) {
+
+      }
+
       let featuresList : any[] = []
+
       for(let i = 0; i < res.body.entities.length; i++){
         for(let j = 0; j < this.provinceData.features.length; j++){
           if(this.provinceData.features[j].properties.ADM1_ZH.indexOf(res.body.entities[i].region.province) > -1){
@@ -717,6 +774,9 @@ export class DashboardComponent implements OnInit {
     let mapDiv = document.getElementById('map');
     const northwest = new mapboxgl.Point(0, 0); // 북서 쪽
     const southeast = new mapboxgl.Point(mapDiv.getBoundingClientRect().width, mapDiv.getBoundingClientRect().height); // 남동 쪽
+    if (!this.isProvinceData) {
+
+    }
     for(let i = 0; i < this.provinceData.features.length; i++){
       if(this.province_statistics_registration_count_data.map(e=>e.properties.ADM1_ZH).indexOf(this.provinceData.features[i].properties.ADM1_ZH) < 0 &&
         this.map.unproject(northwest).lng <= this.provinceData.features[i].geometry.center[0] &&
@@ -726,7 +786,7 @@ export class DashboardComponent implements OnInit {
         let filter = new SearchFilter()
         filter.province = this.provinceData.features[i].properties.ADM1_ZH
         await this.statisticsService.getStatisticsRegistrationCount(filter).toPromise().then(async (res2 : any)=>{
-          console.log(res2)
+          console.log("staticService", res2)
           for(let j = 0; j < res2.body.entities.length; j++){
             for(let k = 0; k < this.subPrefectureData.features.length; k++){
               if(this.subPrefectureData.features[k].properties.ADM2_ZH.indexOf(res2.body.entities[j].region.city) > -1){
