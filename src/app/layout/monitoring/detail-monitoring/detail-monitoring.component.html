@@ -8,11 +8,19 @@
         
         (change)="setRealTimeSwitch()"
         style="float: left; height: 30px;">
-      Real Time !
+      Real Time!
     </mat-slide-toggle>
 
-    <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;position: absolute; right: 0;">
+    <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;position: absolute; right: 75px;">
       <span>deselect</span>
+    </button>
+
+   <!--HAVE TO PUT THE FUNCTION OF THE BUTTON-->
+    <!-- <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;position: absolute; right: 0;">
+      <span>Enter</span>
+    </button>  -->
+    <button mat-raised-button color="primary" (click)="changeInfoMode($event)" style="margin: 0 5px; height: 30px;position: absolute; right: 0;" [ngClass]="{'selectMode': mode == 'info'}">
+      <span>Enter</span>
     </button>
 
     <div class="listSearch">
@@ -29,8 +37,10 @@
 
     </div>
     <div class="listSearch">
-      <div class="searchTitle">VIN</div>
-      <input class="" [(ngModel)]="vinSearchText" (keydown.enter)="getRealtimedataVehiclelist()" (ngModelChange)="getRealtimedataVehiclelist()">
+      <div class="searchTitle" >VIN</div>
+      <input class="" [(ngModel)]="vinSearchText" (keydown.enter)="getRealtimedataVehiclelist()" (ngModelChange)="getRealtimedataVehiclelist()"
+      [disabled]="selectVehicle == null || mode != 'map'" [ngClass]="{'textDisabled': selectVehicle == null || mode != 'map'}"
+      (focus)="updateVinSearchText('')">
       <!--<div style="width:20px; margin-left: 5px; display: flex; align-items: center; cursor: pointer;" (click)="getRealtimedataVehiclelist()">
         <img src="assets/icon/find.png" style="width:20px">
       </div>-->

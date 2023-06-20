@@ -139,7 +139,7 @@
 }
 
 .listAbsoluteBox{
-  width: 250px;
+  width: 270px;
   height: calc(100% - 40px);
   position: absolute;
   z-index: 1;
@@ -150,7 +150,7 @@
 }
 
 .listSearch{
-  width: 100%;
+  width: 103%;
   height: 50px;
   display: flex;
   align-items: center;

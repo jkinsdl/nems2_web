@@ -583,26 +583,31 @@ export class DetailMonitoringComponent implements OnInit {
     }
   }
 
-  setRealTimeSwitch(){
-    this.realTimeOnOff = !this.realTimeOnOff
-
-    if(this.realTimeOnOff){
-      this.startRealTime = new Date()
-
-      this.interval = interval(7000).pipe().subscribe(x =>{
-        this.getRealtimedataInfoVin()
-        this.getRealtimedataPathVin()
-        //this.getRealtimedataInfoVinSubject()
+  setRealTimeSwitch() {
+    this.realTimeOnOff = !this.realTimeOnOff;
+  
+    if (this.realTimeOnOff) {
+      if (this.selectVehicleInfo.car.time) {
+        // Use the car's time if available
+        this.startRealTime = new Date(this.selectVehicleInfo.car.time);
+      } else {
+        // Use the current time if car's time is not available
+        this.startRealTime = new Date();
       }
-      );
-
-    }else {
-      this.interval.unsubscribe()
-      this.startRealTime = null
+  
+      this.interval = interval(7000).pipe().subscribe(x => {
+        this.getRealtimedataInfoVin();
+        this.getRealtimedataPathVin();
+        //this.getRealtimedataInfoVinSubject()
+      });
+    } else {
+      this.interval.unsubscribe();
+      this.startRealTime = null;
     }
-
-    console.log(this.realTimeOnOff)
+  
+    console.log("Time", this.realTimeOnOff);
   }
+  
 
   getRealtimedataVehiclelist(){
 
@@ -626,6 +631,7 @@ export class DetailMonitoringComponent implements OnInit {
     this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none')
     this.realTimeOnOff = false
     this.selectVehicle = vehicle
+    this.selectVehicle.time = vehicle.time; // Add this line to assign the vehicle's time
     this.isPanelOnOff = true
     this.getRealtimedataInfoVin()
     this.getRealtimedataPathVin()
@@ -638,11 +644,11 @@ export class DetailMonitoringComponent implements OnInit {
     filter.vin = this.selectVehicle.vin
     filter.time = new Date().toISOString()
 
-    /*if(this.startRealTime == null){
+    // if(this.startRealTime == null){
 
-    }else {
-      filter.time = this.startRealTime.toISOString()
-    }*/
+    // }else {
+    //   filter.time = this.startRealTime.toISOString()
+    // }
 
     this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(res=>{
       console.log(res)
