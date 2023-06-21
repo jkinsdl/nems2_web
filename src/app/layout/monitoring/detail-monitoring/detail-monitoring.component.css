@@ -139,7 +139,7 @@
 }
 
 .listAbsoluteBox{
-  width: 270px;
+  width: 315px;
   height: calc(100% - 40px);
   position: absolute;
   z-index: 1;

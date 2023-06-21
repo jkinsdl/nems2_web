@@ -104,8 +104,8 @@ export class DashboardComponent implements OnInit {
 
   lastZoom : number
 
-  provinceData : any = null
-  subPrefectureData : any = null
+  provinceData : any
+  subPrefectureData : any 
 
   province_statistics_registration_count_data : any[] = []
   gridHeight : number
@@ -160,27 +160,6 @@ export class DashboardComponent implements OnInit {
  });
     //this.utilService.getProvinceData().subscribe((res:any)=>{
       //if (!this.provinceData) {
-    //if (!this.provinceData) {
-      this.utilService.getProvinceData().subscribe((res:any)=>{ 
-        //if (!this.isDataDownload) {
-        this.provinceData = res
-        console.log("Final", res);
-        this.isProvinceData = true;
-      });
-   // }
-      
-    //}
-  
-    //this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
-      //if (!this.subPrefectureData){
-    // if (!this.subPrefectureData) {
-      this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
-        //if (!this.isDataDownload) {
-        this.subPrefectureData = res
-        console.log("subPrefecture", res)
-        this.isSubPrefectureData = true;
-        });
-   // }
    // }
 
     this.menuMode$ = this.uiService.menuMode$.subscribe(mode =>{
@@ -205,53 +184,31 @@ export class DashboardComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this.map.on('load', () => {
-
-    //   if (!this.provinceData) {
-    //     this.utilService.getProvinceData().subscribe((res:any)=>{ 
-    //       //if (!this.provinceData) {
-    //       this.provinceData = res
-    //       console.log("Final", res);
-    //       this.provinceData = true;
-    //     //}
-    //    });
-    //  }
-        
-    //   //}
-    
-    //   //this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
-    //     //if (!this.subPrefectureData){
-    //   if (!this.subPrefectureData) {
-    //     this.utilService.getSubPrefectureeData().toPromise().then((res : any)=>{
-    //      // if (!this.subPrefectureData) {
-    //       this.subPrefectureData = res
-    //       console.log("subPrefecture", res)
-    //       this.subPrefectureData = true;
-    //     //}
-    //   });
-    //   }
-  
-    //   this.menuMode$ = this.uiService.menuMode$.subscribe(mode =>{
-    //     if(mode == 2) {
-    //       setTimeout(()=>{
-    //         this.map.resize()
-    //       },600)
-    //     }
-    //   })
-       
+      
       this.map.addSource('province', {
         type: 'geojson',
-        data: 'assets/data/chn_province_final.json'
       });
 
       this.map.addSource('sub_prefecture', {
         type: 'geojson',
-        data: 'assets/data/chn_sub_prefecture_v2.json'
       });
 
-      this.map.addSource('sub_prefecture2', {
-        type: 'geojson',
-        data: 'assets/data/chn_sub_prefecture_v2.json'
+      this.utilService.getProvinceData().subscribe((res:any)=>{ 
+        this.provinceData = res;
+        (this.map.getSource("province") as GeoJSONSource).setData(res);
+        console.log("Final", res);
+
+        this.utilService.getSubPrefectureeData().subscribe((subRes : any)=>{
+          this.subPrefectureData = subRes;
+          (this.map.getSource("sub_prefecture") as GeoJSONSource).setData(subRes);
+          console.log("subPrefecture", subRes);
+        });
       });
+
+      // this.map.addSource('sub_prefecture2', {
+      //   type: 'geojson',
+      //   data: 'assets/data/chn_sub_prefecture_v2.json'
+      // });
 
       this.map.addSource('statistics_registration_count',{
         type: 'geojson',
@@ -277,7 +234,6 @@ export class DashboardComponent implements OnInit {
           "circle-radius": 18,
           "circle-color": "#e14a7b",
         },
-
       });
 
       this.map.on('mousemove', 'province-statistics-registration-count-clusters', (e : any) => {
@@ -323,7 +279,6 @@ export class DashboardComponent implements OnInit {
       this.map.on('mouseout', 'statistics-registration-count-clusters', (e : any) => {
         popup.remove()
       });
-
 
       this.map.addLayer({
         id: 'statistics-registration-count-text',
@@ -490,10 +445,7 @@ export class DashboardComponent implements OnInit {
             { click: false }
           );
         }
-
-        // if (!this.isSubPrefectureData) {
-
-        // }
+        // if (!this.isSubPrefectureData) {}
         for(let i = 0; i < this.provinceData.features.length; i++){
           if(this.provinceData.features[i].properties.ADM1_ZH == clickedADM1_ZH){
             clickedStateId = this.provinceData.features[i].id;
@@ -616,10 +568,6 @@ export class DashboardComponent implements OnInit {
      this.isDropdownOpen = !this.isDropdownOpen;
    }
  
-  //  changeLanguage(language:string): void{
-  //    this.language = language;
-  //  } 
- 
   onLanguageChange(event: any) {
    const language = event.target.value;
    this.translate.use(language).subscribe(() => {
@@ -723,13 +671,9 @@ export class DashboardComponent implements OnInit {
   getStatisticsRegistrationCount(){
     this.statisticsService.getStatisticsRegistrationCount(new SearchFilter()).subscribe(res=>{
       console.log(res)
-
-      if (!this.isProvinceData) {
-
-      }
+      if (!this.isProvinceData) { }
 
       let featuresList : any[] = []
-
       for(let i = 0; i < res.body.entities.length; i++){
         for(let j = 0; j < this.provinceData.features.length; j++){
           if(this.provinceData.features[j].properties.ADM1_ZH.indexOf(res.body.entities[i].region.province) > -1){
@@ -774,9 +718,9 @@ export class DashboardComponent implements OnInit {
     let mapDiv = document.getElementById('map');
     const northwest = new mapboxgl.Point(0, 0); // 북서 쪽
     const southeast = new mapboxgl.Point(mapDiv.getBoundingClientRect().width, mapDiv.getBoundingClientRect().height); // 남동 쪽
-    if (!this.isProvinceData) {
+    // if (!this.isProvinceData) {
 
-    }
+    // }
     for(let i = 0; i < this.provinceData.features.length; i++){
       if(this.province_statistics_registration_count_data.map(e=>e.properties.ADM1_ZH).indexOf(this.provinceData.features[i].properties.ADM1_ZH) < 0 &&
         this.map.unproject(northwest).lng <= this.provinceData.features[i].geometry.center[0] &&

@@ -5,32 +5,22 @@
         [color]="'primary'"
         [checked]="realTimeOnOff"
         [disabled]="selectVehicle == null || mode != 'map'"
-        
         (change)="setRealTimeSwitch()"
         style="float: left; height: 30px;">
       Real Time!
     </mat-slide-toggle>
 
-    <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;position: absolute; right: 75px;">
+    <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;position: absolute; right: 0;">
       <span>deselect</span>
-    </button>
-
-   <!--HAVE TO PUT THE FUNCTION OF THE BUTTON-->
-    <!-- <button mat-raised-button [disabled]="selectVehicleInfo == null" color="primary" (click)="vinDeSelect()" style="margin: 0 5px; height: 30px;position: absolute; right: 0;">
-      <span>Enter</span>
-    </button>  -->
-    <button mat-raised-button color="primary" (click)="changeInfoMode($event)" style="margin: 0 5px; height: 30px;position: absolute; right: 0;" [ngClass]="{'selectMode': mode == 'info'}">
-      <span>Enter</span>
     </button>
 
     <div class="listSearch">
       <div class="searchTitle" [ngClass]="{'textDisabled': selectVehicle == null || mode != 'map'}">Time</div>
-
       <div class="value">
         <input class="datePickerText" [ngxMatDatetimePicker]="packetTime" readonly="true" (click)="packetTime.open()"
         [(ngModel)]="startRealTime"
         [max]="currentTime"
-        [disabled]="selectVehicle == null || mode != 'map'"
+        [disabled]="selectVehicle == null || mode != 'map' || !realTimeOnOff"
         (ngModelChange)="setTime()">
         <ngx-mat-datetime-picker #packetTime [showSpinners]="true" [hideTime]="false" [showSeconds]="true"></ngx-mat-datetime-picker>
       </div>
@@ -40,10 +30,15 @@
       <div class="searchTitle" >VIN</div>
       <input class="" [(ngModel)]="vinSearchText" (keydown.enter)="getRealtimedataVehiclelist()" (ngModelChange)="getRealtimedataVehiclelist()"
       [disabled]="selectVehicle == null || mode != 'map'" [ngClass]="{'textDisabled': selectVehicle == null || mode != 'map'}"
-      (focus)="updateVinSearchText('')">
+      (mousedown)="updateVinSearchText(vinSearchText)" (focus)="updateVinSearchText(vinSearchText)">
+
       <!--<div style="width:20px; margin-left: 5px; display: flex; align-items: center; cursor: pointer;" (click)="getRealtimedataVehiclelist()">
         <img src="assets/icon/find.png" style="width:20px">
       </div>-->
+      <button mat-raised-button color="primary" (click)="searchButtonClick()" style="margin: 0 5px; height: 30px; position: absolute; left: calc(78% - 10px);" [ngClass]="{'selectMode': mode == 'info'}">
+        <span>Search</span>
+      </button>
+      
     </div>
     <div class="monitoringMapList">
       <div class="listRow" *ngFor="let vehicle of vehicleInfo" (click)="clickVin(vehicle)" [ngClass]="{'selectBackground': selectVehicle == vehicle}">
