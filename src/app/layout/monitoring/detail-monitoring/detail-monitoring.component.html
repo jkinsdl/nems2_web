@@ -3,9 +3,9 @@
     <mat-slide-toggle
         class="example-margin"
         [color]="'primary'"
-        [checked]="realTimeOnOff"
+        [(ngModel)]="realTimeOnOff"
         [disabled]="selectVehicle == null || mode != 'map'"
-        (change)="setRealTimeSwitch()"
+        (ngModelChange)="setRealTimeSwitch()"
         style="float: left; height: 30px;">
       Real Time!
     </mat-slide-toggle>

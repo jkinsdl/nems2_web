@@ -121,6 +121,8 @@ export class DetailMonitoringComponent implements OnInit {
   isSubPrefectureData: boolean = false;
   isProvinceeData : boolean = false;
 
+  
+
   // Declare a variable to store the selected vehicle time
   selectedVehicleTime: string;
 
@@ -619,16 +621,6 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
 
-  // clickVin(vehicle : any){
-  //   this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none')
-  //   this.selectVehicle = vehicle;
-  //   this.isPanelOnOff = true;
-  //   this.setRealTimeSwitch();
-  //   this.getRealtimedataInfoVin();
-  //   this.getRealtimedataPathVin();
-  //   this.getRealtimedataInfoVinSubject();
-  // }
-
   searchButtonClick() {
     if (!this.realTimeOnOff) {
       // Call the APIs here when real-time is off
@@ -639,31 +631,27 @@ export class DetailMonitoringComponent implements OnInit {
     }
   }
 
-
   setRealTimeSwitch() {
     if (this.selectVehicleInfo != null && this.mode === 'map') {
+      console.log("selectVehicleInfo: ", this.selectVehicleInfo);
+      console.log("mode: ", this.mode);
       if (this.selectVehicleInfo.car.time) {
         this.startRealTime = new Date(this.selectVehicleInfo.car.time);
       } else {
         this.startRealTime = new Date();
       }
-      
-      if (this.realTimeOnOff) {
-        this.interval.unsubscribe();
-        this.realTimeOnOff = false; // Add this line to update the toggle status immediately
-      } else {
+  
+      if (!this.realTimeOnOff) {
         this.interval = interval(7000).subscribe(() => {
           this.getRealtimedataInfoVin();
           this.getRealtimedataPathVin();
         });
-         this.realTimeOnOff = true;
+        this.realTimeOnOff = true; // Set to true only if it was previously false
       }
-      //this.realTimeOnOff = !this.realTimeOnOff;
-      // this.realTimeOnOff = true;
-      //this.setTime();
+  
     }
   }
-
+  
   getRealtimedataVehiclelist(){
     let f = new SearchFilter()
     f.vin = this.vinSearchText
@@ -678,93 +666,106 @@ export class DetailMonitoringComponent implements OnInit {
           // Redirect to the login page
           this.router.navigate(['/component/login']);
         }
-      })
+    })
   }
 
-  clickVin(vehicle : any){
-    console.log("???");
-    this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none')
+  clickVin(vehicle: any) {
+    this.map.setLayoutProperty("realtimedata-location-clusters", 'visibility', 'none');
     this.selectVehicle = vehicle;
     this.isPanelOnOff = true;
-    this.startRealTime = null; // Reset the startRealTime variable
-
-    this.getRealtimedataInfoVin().subscribe(() => {
-    this.setRealTimeSwitch();
-    this.getRealtimedataPathVin();
-    this.getRealtimedataInfoVinSubject();
-  });
- }
-
-  getRealtimedataInfoVin(){
-    return new Observable((observer) => {
-    let filter = new SearchFilter()
-    filter.vin = this.selectVehicle.vin
-    //filter.time = new Date().toISOString()
-
-    if (this.startRealTime === null && this.realTimeOnOff) {
-      this.startRealTime = new Date();
-    } else if (this.startRealTime !== null && !this.realTimeOnOff) {
-      this.startRealTime = null;
-    }
   
+    this.getRealtimedataInfoVin().subscribe((locationCoordinates: any) => {
+      console.log(this.selectVehicleInfo)
+      this.setRealTimeSwitch();
+      this.getRealtimedataPathVin();
+      this.getRealtimedataInfoVinSubject();
+  
+      // Move the flyTo logic here
+
+      this.map.flyTo({
+        center: [this.selectVehicleInfo.location.longitude, this.selectVehicleInfo.location.latitude],
+        duration: 1500,
+        zoom: 13
+      });
+    });
+  }
+  
+
+ getRealtimedataInfoVin() {
+  return new Observable((observer) => {
+    let filter = new SearchFilter();
+    filter.vin = this.selectVehicle.vin;
+
+    if (this.realTimeOnOff) { // Check if real-time update is enabled
+      if (this.startRealTime === null) {
+        this.startRealTime = new Date(); // Set initial startRealTime value
+      }
+    } else {
+      this.startRealTime = null; // Reset startRealTime when real-time update is disabled
+    }
+
     if (this.startRealTime === null) {
       filter.time = new Date().toISOString();
     } else {
       filter.time = this.startRealTime.toISOString();
     }
 
-    this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(res=>{
-      console.log(res)
+    this.realtimedataService.getRealtimedataInfoVin(filter).subscribe(
+      res => {
+        console.log(res);
 
-      this.selectVehicleInfo = res.body
-      this.setSpeedChartOption(this.selectVehicleInfo.car.speed)
-      this.soc = this.selectVehicleInfo.car.soc
-      //this.setBatteryChartOption(this.selectVehicleInfo.car.soc)
-       
-      if(this.realTimeOnOff){
-        let currentMapCenter = this.map.getCenter();
-        this.map.flyTo({
-          center: currentMapCenter,
-          duration: 1500,
+        this.selectVehicleInfo = res.body;
+        this.setSpeedChartOption(this.selectVehicleInfo.car.speed);
+        this.soc = this.selectVehicleInfo.car.soc;
+
+        let locationCoordinates = [res.body.location.longitude, res.body.location.latitude];
+        observer.next(locationCoordinates); // Emit the location coordinates
+
+        // if (this.realTimeOnOff) {
+        //   let currentMapCenter = this.map.getCenter();
+        //   this.map.flyTo({
+        //     center: currentMapCenter,
+        //     duration: 1500,
+        //   });
+        // } else {
+        //   this.map.flyTo({
+        //     center: [res.body.location.longitude, res.body.location.latitude],
+        //     duration: 1500,
+        //     zoom: 13
+        //   });
+        // }
+
+        let vehicleBrief = this.vehicleInfo.find(vehicle => vehicle.vin === this.selectVehicle.vin);
+        let isLogin = vehicleBrief && vehicleBrief.isLogin ? true : false;
+
+        let source = (this.map.getSource("vehiclePathsLast") as GeoJSONSource).setData({
+          "type": "Feature",
+          "properties": {
+            "isLogin": isLogin
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [res.body.location.longitude, res.body.location.latitude]
+          }
         });
-      }else{
-        this.map.flyTo({
-          center: [res.body.location.longitude,res.body.location.latitude],
-          duration: 1500,
-          zoom: 13
-        });
+
+        let layerId = 'vehiclePathsLastPoint';
+        let circleColor = isLogin ? '#11b4da' : '#FF0000';
+        this.map.setPaintProperty(layerId, 'circle-color', circleColor);
+
+        this.map.setLayoutProperty(layerId, 'visibility', 'visible');
+        
+        observer.next(); // Emit completion signal
+        observer.complete();
+  
+      },
+      error => {
+        console.log(error);
+        observer.error(error);
       }
-
-      let vehicleBrief = this.vehicleInfo.find(vehicle => vehicle.vin === this.selectVehicle.vin);
-      let isLogin = vehicleBrief && vehicleBrief.isLogin ? true : false;
-
-      let source = (this.map.getSource("vehiclePathsLast") as GeoJSONSource).setData({
-        "type": "Feature",
-        "properties": {
-          "isLogin" : isLogin
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [res.body.location.longitude,res.body.location.latitude]
-          
-        }
-      });
-          // Update circle color based on login status
-          let layerId = 'vehiclePathsLastPoint';
-          let circleColor = isLogin ? '#11b4da' : '#FF0000';
-          this.map.setPaintProperty(layerId, 'circle-color', circleColor);
-    
-          this.map.setLayoutProperty(layerId, 'visibility', 'visible');
-          observer.next(); // Emit completion signal
-          observer.complete();
-        },
-        error => {
-          console.log(error);
-          observer.error(error);
-        }
-      );
-    });
-    }  
+    );
+  });
+}  
 
   getRealtimedataPathVin(){
     let filter = new SearchFilter()
