@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import mapboxgl, { GeoJSONSource } from 'mapbox-gl';
 import * as echarts from 'echarts';
 import { Subscription } from 'rxjs';
@@ -20,13 +21,23 @@ import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  
 })
 
 export class DashboardComponent implements OnInit {
+  statisticsVehiclesSummary : any = {
+    totalVehicles: 0,
+    newVehicles: 0,
+    loginVehicles: 0,
+    totalMileage: 0,
+    totalEnergyUsage: 0
+  }
+  //statisticsVehiclesSummary: any;
   constant : CommonConstant = new CommonConstant()
   selectedLanguage: string; // Property to track the selected language(MINE)
   stateOptions: { label: string; value: string; }[];
@@ -49,6 +60,7 @@ export class DashboardComponent implements OnInit {
 
     private translate: TranslateService,
     private http: HttpClient,
+    //private route: ActivatedRoute
 
     
   ) { }
@@ -74,13 +86,13 @@ export class DashboardComponent implements OnInit {
   }
 
   //arrayTotalVehicles : string[] = []
-  statisticsVehiclesSummary : any = {
-    totalVehicles: 0,
-    newVehicles: 0,
-    loginVehicles: 0,
-    totalMileage: 0,
-    totalEnergyUsage: 0
-  }
+  // statisticsVehiclesSummary : any = {
+  //   totalVehicles: 0,
+  //   newVehicles: 0,
+  //   loginVehicles: 0,
+  //   totalMileage: 0,
+  //   totalEnergyUsage: 0
+  // }
 
   alarmStatisticsChart : echarts.ECharts
 
@@ -140,6 +152,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /*this.route.data.subscribe(data => {
+      setTimeout(() => {
+        this.statisticsVehiclesSummary = data['statistics'];
+      }, 0);
+    });*/
+
  // Retrieve the selected language from storage or set a default value
  this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
 
@@ -182,12 +200,13 @@ export class DashboardComponent implements OnInit {
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
-
+    
     this.map.on('load', () => {
-      
+      console.log("map load")
       this.map.addSource('province', {
         type: 'geojson',
       });
+
 
       this.map.addSource('sub_prefecture', {
         type: 'geojson',
@@ -197,7 +216,7 @@ export class DashboardComponent implements OnInit {
         this.provinceData = res;
         (this.map.getSource("province") as GeoJSONSource).setData(res);
         console.log("Final", res);
-
+        this.getStatisticsRegistrationCount()
         this.utilService.getSubPrefectureeData().subscribe((subRes : any)=>{
           this.subPrefectureData = subRes;
           (this.map.getSource("sub_prefecture") as GeoJSONSource).setData(subRes);
@@ -325,7 +344,7 @@ export class DashboardComponent implements OnInit {
 
           if (clickedCityId) {
             this.map.setFeatureState(
-              { source: 'sub_prefecture2', id: clickedCityId },
+              { source: 'sub_prefecture', id: clickedCityId },
               { click: false }
             );
           }
@@ -409,7 +428,7 @@ export class DashboardComponent implements OnInit {
       this.map.addLayer({
         'id': 'sub_prefecture_click_layer2',
         'type': 'fill',
-        'source': 'sub_prefecture2',
+        'source': 'sub_prefecture',
         'layout': {},
         'paint': {
           'fill-color': '#c16285',
@@ -428,13 +447,13 @@ export class DashboardComponent implements OnInit {
         if (e.features.length > 0) {
           if (clickedCityId) {
             this.map.setFeatureState(
-              { source: 'sub_prefecture2', id: clickedCityId },
+              { source: 'sub_prefecture', id: clickedCityId },
               { click: false }
             );
           }
           clickedCityId = e.features[0].id;
           this.map.setFeatureState(
-            { source: 'sub_prefecture2', id: clickedCityId },
+            { source: 'sub_prefecture', id: clickedCityId },
             { click: true }
           );
         }
@@ -534,7 +553,8 @@ export class DashboardComponent implements OnInit {
       this.refresh()
       this.changeBoundaries('province')
       this.showProvinceLayer()
-      this.getStatisticsRegistrationCount()
+      console.log("getStatisticsRegistrationCount")
+      
       //this.getProvinceStatisticsRegistrationCount()
 
       this.dashboardInterval = setInterval(()=>{

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { AlarmComponent } from './layout/alarm/alarm.component';
 import { ControlPanelComponent } from './layout/control-panel/control-panel.component';
@@ -19,7 +19,7 @@ import { UserAccountComponent } from './layout/control-panel/user-account/user-a
 import { VehicleModelComponent } from './layout/control-panel/vehicle/vehicle-model/vehicle-model.component';
 import { VehicleSettingsComponent } from './layout/control-panel/vehicle/vehicle-settings/vehicle-settings.component';
 import { VehicleComponent } from './layout/control-panel/vehicle/vehicle.component';
-import { DashboardComponent } from './layout/dashboard/dashboard.component';
+//import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { DetailMonitoringComponent } from './layout/monitoring/detail-monitoring/detail-monitoring.component';
 import { MonitoringComponent } from './layout/monitoring/monitoring.component';
 import { MonthlyVehicleStatisticsComponent } from './layout/statistics/monthly-vehicle-statistics/monthly-vehicle-statistics.component';
@@ -29,16 +29,21 @@ import { TravelDistanceStatisticsComponent } from './layout/statistics/travel-di
 import { UserChargingPatternAnalysisComponent } from './layout/statistics/user-charging-pattern-analysis/user-charging-pattern-analysis.component';
 import { WarningStatisticsComponent } from './layout/statistics/warning-statistics/warning-statistics.component';
 import { MainComponent } from './main/main.component';
+//import { MainRoutingModule } from './main/main-routing.module';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { MileageJumpComponent } from './layout/control-panel/datect-error/mileage-jump/mileage-jump.component';
 import { LocationJumpComponent } from './layout/control-panel/datect-error/location-jump/location-jump.component';
 import { AbnormalVehicleStateComponent } from './layout/control-panel/datect-error/abnormal-vehicle-state/abnormal-vehicle-state.component';
+import { DashboardComponent } from './layout/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'main', component: MainComponent, children:[
+    //{ path: 'dashboard', loadChildren: () => import('./layout/dashboard/dashboard.module').then(m => m.DashboardModule) },
     { path: 'dashboard', component: DashboardComponent },
+  //{ path: 'main', loadChildren: () => import('./main/main.module').then(m => m.MainModule) },
+    // { path: 'dashboard', component: DashboardComponent },
     { path: 'monitoring', canActivate: [AuthGuard], component: MonitoringComponent },
     { path: 'monitoring/detail/:vin', canActivate: [AuthGuard], component: DetailMonitoringComponent },
     { path: 'status', canActivate: [AuthGuard], component: StatusComponent },
@@ -79,9 +84,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
+
   imports: [RouterModule.forRoot(routes, { useHash : true })],
+
+  /*imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true })
+  ],*/
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
 
 
+ 

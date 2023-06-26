@@ -630,6 +630,7 @@ export class DetailMonitoringComponent implements OnInit {
       this.getRealtimedataInfoVinSubject()
     }
   }
+  
 
   setRealTimeSwitch() {
     if (this.selectVehicleInfo != null && this.mode === 'map') {
@@ -641,16 +642,30 @@ export class DetailMonitoringComponent implements OnInit {
         this.startRealTime = new Date();
       }
   
-      if (!this.realTimeOnOff) {
-        this.interval = interval(7000).subscribe(() => {
-          this.getRealtimedataInfoVin();
-          this.getRealtimedataPathVin();
-        });
-        this.realTimeOnOff = true; // Set to true only if it was previously false
+      if (this.realTimeOnOff) {
+        if (!this.interval) {
+          this.interval = interval(7000).subscribe(() => {
+            this.getRealtimedataInfoVin();
+            this.getRealtimedataPathVin();
+          });
+        }
+      } else {
+        // Turn off real-time mode
+        if (this.interval) {
+          this.interval.unsubscribe();
+          this.interval = null;
+        }
       }
-  
+    } else {
+      // Turn off real-time mode and toggle
+      if (this.interval) {
+        this.interval.unsubscribe();
+        this.interval = null;
+      }
+      this.realTimeOnOff = false;
     }
   }
+  
   
   getRealtimedataVehiclelist(){
     let f = new SearchFilter()
@@ -674,21 +689,49 @@ export class DetailMonitoringComponent implements OnInit {
     this.selectVehicle = vehicle;
     this.isPanelOnOff = true;
   
-    this.getRealtimedataInfoVin().subscribe((locationCoordinates: any) => {
-      console.log(this.selectVehicleInfo)
-      this.setRealTimeSwitch();
+    this.getRealtimedataInfoVin().subscribe(() => {
+      console.log(this.selectVehicleInfo);
+      if (this.selectVehicleInfo.car.time) {
+        this.startRealTime = new Date(this.selectVehicleInfo.car.time);
+      } else {
+        this.startRealTime = new Date();
+      }
+  
+      // Automatically turn on the real-time toggle
+      this.realTimeOnOff = true;
+  
       this.getRealtimedataPathVin();
       this.getRealtimedataInfoVinSubject();
   
-      // Move the flyTo logic here
-
-      this.map.flyTo({
-        center: [this.selectVehicleInfo.location.longitude, this.selectVehicleInfo.location.latitude],
-        duration: 1500,
-        zoom: 13
-      });
+      const flyToVehicleLocation = () => {
+        setTimeout(() => {
+          this.map.flyTo({
+            center: [this.selectVehicleInfo.location.longitude, this.selectVehicleInfo.location.latitude],
+            duration: 1500,
+            zoom: 13
+          });
+        }, 500); // Delay of 3 seconds (3000 milliseconds)
+      };
+  
+      // Fly to the vehicle location when the VIN is clicked
+      flyToVehicleLocation();
+  
+      const flyBackToVehicleLocation = () => {
+        // Check if the user moved the map away from the vehicle location
+        if (!this.map.getBounds().contains([this.selectVehicleInfo.location.longitude, this.selectVehicleInfo.location.latitude])) {
+          // Fly back to the vehicle location
+          flyToVehicleLocation();
+        }
+      };
+  
+      this.map.on('dragend', flyBackToVehicleLocation);
     });
   }
+  
+  
+  
+  
+  
   
 
  getRealtimedataInfoVin() {
@@ -721,19 +764,19 @@ export class DetailMonitoringComponent implements OnInit {
         let locationCoordinates = [res.body.location.longitude, res.body.location.latitude];
         observer.next(locationCoordinates); // Emit the location coordinates
 
-        // if (this.realTimeOnOff) {
-        //   let currentMapCenter = this.map.getCenter();
-        //   this.map.flyTo({
-        //     center: currentMapCenter,
-        //     duration: 1500,
-        //   });
-        // } else {
-        //   this.map.flyTo({
-        //     center: [res.body.location.longitude, res.body.location.latitude],
-        //     duration: 1500,
-        //     zoom: 13
-        //   });
-        // }
+      // if (this.realTimeOnOff) {
+      //     let currentMapCenter = this.map.getCenter();
+      //     this.map.flyTo({
+      //       center: currentMapCenter,
+      //       duration: 1500,
+      //     });
+      //   } else {
+      //     this.map.flyTo({
+      //       center: [res.body.location.longitude, res.body.location.latitude],
+      //       duration: 1500,
+      //       zoom: 13
+      //     });
+      //   }
 
         let vehicleBrief = this.vehicleInfo.find(vehicle => vehicle.vin === this.selectVehicle.vin);
         let isLogin = vehicleBrief && vehicleBrief.isLogin ? true : false;
@@ -757,7 +800,6 @@ export class DetailMonitoringComponent implements OnInit {
         
         observer.next(); // Emit completion signal
         observer.complete();
-  
       },
       error => {
         console.log(error);
@@ -1358,7 +1400,7 @@ export class DetailMonitoringComponent implements OnInit {
   }
 
   setTime(){
-    console.log(this.startRealTime)
+    console.log("time",this.startRealTime)
   }
 
   historyExport(){

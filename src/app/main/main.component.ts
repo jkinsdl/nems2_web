@@ -71,6 +71,9 @@ export class MainComponent implements OnInit {
   currntLanguage = 'en';
 
   ngOnInit(): void {
+
+    console.log("!@!@!@")
+
  // Retrieve the selected language from storage or set a default value
   this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
 
