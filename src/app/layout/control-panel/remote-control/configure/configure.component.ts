@@ -357,12 +357,12 @@ export class ConfigureComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result:any) => {
       if(result){
-        this.deleteForwardingServerNameRelations(field.vin);
+        this.deleteDevicemanagersParametersConfigureNameVehiclesVin(field.vin);
       }
     });
   }
 
-  deleteForwardingServerNameRelations(vin : string){
+  deleteDevicemanagersParametersConfigureNameVehiclesVin(vin : string){
     let filter = new SearchFilter()
     filter.vin = vin
     this.devicemanagerService.deleteDevicemanagersParametersConfigureNameVehiclesVin(this.selectConfigureRow.configureName,filter).subscribe(res=>{
