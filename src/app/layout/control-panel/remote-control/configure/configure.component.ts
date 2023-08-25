@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { ForwardingService } from 'src/app/service/forwarding.service';
 
 @Component({
   selector: 'app-configure',
@@ -130,7 +131,7 @@ export class ConfigureComponent implements OnInit {
     this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
     //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
-  
+
     // Load the translation file for the selected language
     this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
@@ -139,7 +140,7 @@ export class ConfigureComponent implements OnInit {
         this.translate.setTranslation(this.selectedLanguage, data);
         console.log('Translation file loaded successfully');
         this.translateColumnHeaders();
-        // this.getUsers(); 
+        // this.getUsers();
       });
     });
     this.uiService.currentLanguage$.subscribe((language : string)=>{
@@ -204,7 +205,7 @@ export class ConfigureComponent implements OnInit {
               },
             }, width:120},
           ];
-        
+
           this.mappingColumnDefs = [
             { field: 'vin', headerName: 'VIN', tooltipField: 'vin'},
             { field: 'matched', headerName : 'Matched', tooltipField: 'matched'},
@@ -217,8 +218,8 @@ export class ConfigureComponent implements OnInit {
               },
             }, width:120},
           ];
-        
-         
+
+
           if (this.configureGridApi) {
             this.configureGridApi.setColumnDefs(this.configurationColumnDefs);
             this.configureGridApi.refreshHeader();
@@ -236,11 +237,11 @@ export class ConfigureComponent implements OnInit {
    toggleDropdown():void{
      this.isDropdownOpen = !this.isDropdownOpen;
    }
- 
+
   //  changeLanguage(language:string): void{
   //    this.language = language;
-  //  } 
- 
+  //  }
+
   onLanguageChange(event: any) {
    const language = event.target.value;
    this.translate.use(language).subscribe(() => {
@@ -345,8 +346,6 @@ export class ConfigureComponent implements OnInit {
     }
   }
 
-
-
   deleteMapping(field: any){
     const dialogRef = this.dialog.open( AlertPopupComponent, {
       data:{
@@ -358,11 +357,24 @@ export class ConfigureComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result:any) => {
       if(result){
-        this.mappingGridApi.applyTransaction({ remove: this.mappingGridApi.getSelectedRows() })!;
+        this.deleteForwardingServerNameRelations(field.vin);
       }
     });
-
   }
+
+  deleteForwardingServerNameRelations(vin : string){
+    let filter = new SearchFilter()
+    filter.vin = vin
+    this.devicemanagerService.deleteDevicemanagersParametersConfigureNameVehiclesVin(this.selectConfigureRow.configureName,filter).subscribe(res=>{
+      console.log(res)
+      this.mappingGridApi.applyTransaction({ remove: this.mappingGridApi.getSelectedRows() })!;
+    },error=>{
+      console.log(error)
+    })
+  }
+
+
+
 
   addConfigure(){
     const dialogRef = this.dialog.open( AddRegisterRemoteSettingComponent, {
@@ -428,9 +440,9 @@ export class ConfigureComponent implements OnInit {
     this.selectConfigureRow = event.data
     this.getDevicemanagersParametersConfigureNameVehicles()
     console.log("configname",this.selectConfigureRow.configureName)
-  
+
   }
-  
+
 
   getDevicemanagersParametersConfigureNameVehicles(){
     this.devicemanagerService.getDevicemanagersParametersConfigureNameVehicles(this.selectConfigureRow.configureName, new SearchFilter()).subscribe(res=>{

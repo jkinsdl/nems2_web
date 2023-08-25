@@ -206,6 +206,12 @@ export class DevicemanagerService {
     return this.http.put<any>(url, JSON.stringify(body), { observe: "response" })
   }
 
+  deleteDevicemanagersParametersConfigureNameVehiclesVin(configureName : string, filter : SearchFilter){// 차량 - 설정 관계 삭제
+    var url = `${this.Url}/parameters/${configureName}/vehicles/${filter.vin}`;
+    return this.http.delete<any>(url, { observe: "response" })
+  }
+
+
   deleteDevicemanagersParameterVehicleID(filter : SearchFilter){// 차량 - 설정 관계 삭제
     var url = `${this.Url}/parameter/vehicle/id`;
 
