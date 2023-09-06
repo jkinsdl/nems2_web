@@ -89,7 +89,7 @@ export class UserAccountComponent implements OnInit {
     this.selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
     //this.selectedLanguage = 'en'; // Set the default language
     this.translate.setDefaultLang('en'); // Set the default language
-  
+
     // Load the translation file for the selected language
     this.translationFile = `../assets/i18n/dashboard/${this.selectedLanguage}.json`;
 
@@ -98,7 +98,7 @@ export class UserAccountComponent implements OnInit {
         this.translate.setTranslation(this.selectedLanguage, data);
         console.log('Translation file loaded successfully');
         this.translateColumnHeaders();
-        // this.getUsers(); 
+        // this.getUsers();
       });
     });
     this.uiService.currentLanguage$.subscribe((language : string)=>{
@@ -117,7 +117,7 @@ export class UserAccountComponent implements OnInit {
         localStorage.setItem('selectedLanguage', this.selectedLanguage);
       });
     });
-  
+
     this.page$ = this.uiService.page$.subscribe((page : number)=>{
       this.currentPage = page
       this.getUsers();
@@ -159,7 +159,7 @@ export class UserAccountComponent implements OnInit {
       });
     });
    }
-   
+
      //MINE//
      isDropdownOpen = false;
 
@@ -168,7 +168,7 @@ export class UserAccountComponent implements OnInit {
      }
     //  changeLanguage(language:string): void{
     //    this.language = language;
-    //  }   
+    //  }
     onLanguageChange(event: any) {
      const language = event.target.value;
      this.uiService.setCurrentLanguage(language)
@@ -244,6 +244,9 @@ export class UserAccountComponent implements OnInit {
       this.getUsers()
     },error=>{
       console.log(error)
+
+      this.utilService.alertPopup("Adding user failed", error.headers.get('Grpc-Message'), this.constant.ALERT_WARNING);
+
     })
   }
 
@@ -268,6 +271,9 @@ export class UserAccountComponent implements OnInit {
       this.getUsers()
     },error=>{
       console.log(error)
+
+      this.utilService.alertPopup("User modification failed", error.headers.get('Grpc-Message'), this.constant.ALERT_WARNING);
+
     })
   }
 
