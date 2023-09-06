@@ -1,7 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SearchFilter } from '../object/searchFilter';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -121,7 +123,10 @@ export class UserService {
   putUsersUserId(parameter : any){
     var url = `${this.Url}/${parameter.userId}`;
 
-    return this.http.put<any>(url, JSON.stringify(parameter), {observe: "response" })
+    return this.http.put<any>(url, JSON.stringify(parameter), {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      observe: "response"
+    })
   }
 
   deleteUsersUserId(userId : string){
