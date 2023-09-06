@@ -350,7 +350,7 @@ export class ConfigureComponent implements OnInit {
     const dialogRef = this.dialog.open( AlertPopupComponent, {
       data:{
         alertTitle : "Delete Vehicle",
-        alertContents : "Do you want to delete the mapping ? (VIN : " + field.vin+ ")",
+        alertContents : "Do you want to delete? (VIN : " + field.vin+ ")",
         alertType : this.constant.ALERT_WARNING,
         popupType : this.constant.POPUP_CHOICE,
       }
